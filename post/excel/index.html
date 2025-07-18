@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,minimal-ui" />
+    <title>我常用的 Excel 函数 | 百川随笔</title>
+<link rel='stylesheet' id='puma-css'  href='https://tamhaywoo.github.io/styles/main.css' type='text/css' media='screen' />
+<link rel='stylesheet' id='puma-css'  href='https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css' media='screen' />
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://tamhaywoo.github.io/media/scripts/jquery.js'></script>
+<script type='text/javascript' src='https://tamhaywoo.github.io/media/scripts/jquery-migrate.min.js'></script>
+        <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+         <script >hljs.initHighlightingOnLoad();</script>
+         
+</head>
+<body class="single single-post postid-3788 single-format-standard">
+	<!--加入跟随滑动的顶部-->
+	<header id="masthead" class="site-header" role="banner">
+		<a class="primary-nav-trigger" href="javascript:void(0)">
+			<span class="menu-icon"></span>
+		</a>
+	</header>
+		<div class="site-navigation-wrapper">
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<ul class="primary-nav">
+                    
+				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="首页" href="https://tamhaywoo.github.io">首页</a></li>
+                
+				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="目录" href="https://tamhaywoo.github.io/archives">目录</a></li>
+                
+				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="标签" href="https://tamhaywoo.github.io/tags">标签</a></li>
+                
+				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="关于" href="https://tamhaywoo.github.io/post/about">关于</a></li>
+                
+	
+			</ul>
+		</nav>			
+	</div>
+	<!--跟随滑动的顶部结束-->
+	<div class="surface-content">    <main class="main-content">
+        <section class="section-body">
+                            <header class="section-header u-textAlignCenter">
+                    <h1 class="grap--h1">我常用的 Excel 函数</h1>
+                    <div class="block-postMetaWrap">
+                     <time>2025-04-08</time> <a href="https://tamhaywoo.github.io/study/" rel="category tag"> # 学习</a>   
+                    </div>
+                </header>
+                <div class="grap">
+					
+					<p>2002 年刚参加工作的时候，财务部蕾姐总是会找我修修电脑、整整表格。我其实不怎么会捣腾这些，考虑到刚参加工作，应该要搞好关系，于是硬着头皮上。了解到具体的问题之后，在网上找相关资料，在报刊亭买电脑爱好者的刊物，虽不能每个问题都能立刻处理，但最后总能解决掉。</p>
+<p>经营正常一点的企业，管理者会通过分析数据来做决策。而各个环节的基础表格各不相同，所以助理们在收到老板的数据报表需求时，得花个大半天来整合计算表格。我在做董事长助理的时候，就开始做数据表格规范，可以做到 5-10 分钟左右就将老板需要的表格打印好呈上。主要是我认为办公自动化软件一定要能够促进办公自动化，不能让人去做一些重复的动作，于是总是钻进 EXCEL 软件中，让数据自动生成我们想要的表格。</p>
+<p>以下是我在工作过程中常用到的一些函数公式，现汇聚在一起，方便自己查阅，也方便网络搜索过来的人。</p>
+<h2 id="去掉-div0-错误信息">去掉 #DIV/0! 错误信息</h2>
+<p>单元格中的数据，输入了除以 0 时，会出现这个<code>#DIV/0!</code>的错误信息。如果 A3=1，B3=0，那么 A3/B3 的结果是<code>#DIV/0!</code>，公式如下：</p>
+<pre><code>=A3/B3
+</code></pre>
+<p>如果不想看到满表格显示<code>#DIV/0!</code>，就需要使用 IFERROR 函数，公式如下：</p>
+<pre><code>=IFERROR(A3/B3,&quot;&quot;)
+</code></pre>
+<p>使用以上公式之后，原本显示的计算错误信息#DIV/0!会显示空白。如果在&quot;&quot;内输入文字，则在 B3 为 0 的情况下，计算结果显示为&quot;&quot;内输入的文字。</p>
+<h2 id="避免-ref-错误信息">避免 #REF! 错误信息</h2>
+<p>当单元格引用无效时，会出现这个错误。一般是因为引用了其他工作表的数据，且所引用的工作表被删除所导致。还有一种情况是因为所链接的外部文件无法找到或没有正确更新。</p>
+<p>一旦出现这种情况，千万别保存文件，否则还需要手动修复出现<code>#REF</code> 的地方。正确的做法是先找到问题所在，撤销删除的工作表或查看链接的外部文件是否出现类似错误，之后再打开该文件。</p>
+<h2 id="年月日周天数等相关函数">年月日周天数等相关函数</h2>
+<p>日期、星期几可以通过 EXCEL 中的单元格格式解决，但一个月的天数、当前是一年的第几天、当前是一年的第几周、当前是一周的第几天这些信息都需要用到函数。</p>
+<p>这些函数看似平时用不上，其实用处大着呢，当我们的基础表格是以日期作为数据标签序列的时候，我们要用到这些函数来调取基础表格里的数据信息。</p>
+<p>相关函数如下：</p>
+<h3 id="获得当前日期-星期-月份的函数">获得当前日期、星期、月份的函数</h3>
+<p>通过 TODAY 函数可以输出当前日期信息。通过设置单元格格式，选择日期类别，能够实现“月份（2020-7 或 2020 年 7 月）”、“日期（2020 年 3 月 14 日或 3 月 14 日）”、“星期（星期三或周三）”三种信息输出。公式如下：</p>
+<pre><code>=TODAY()
+</code></pre>
+<h3 id="获得-a1-单元格所属月份天数的函数">获得 A1 单元格所属月份天数的函数</h3>
+<p>假如 A1 单元格内的公式是上面的那个公式“=TODAY()”，或者手动输入了日期，那么可以通过下面的格式获得 A1 单元格日期或所属月份的总天数。</p>
+<pre><code>=DAY(DATE(YEAR(A1),MONTH(A1)+1,0))
+</code></pre>
+<h3 id="获得当前日期所属周数">获得当前日期所属周数</h3>
+<p>以周日为一周的第一天，周六为一周的最后一天，计算当前日期为一年的第几周。公式如下：</p>
+<pre><code>=WEEKNUM(TODAY())
+</code></pre>
+<p>获得已知周数的第一天日期，公式如下：</p>
+<pre><code>=(2020&amp;-1)-WEEKDAY(2020&amp;-1,2)+A1*7-7
+</code></pre>
+<p>获得已知周数的最后一天日期，公式如下：</p>
+<pre><code>=(2020&amp;-1)-WEEKDAY(2020&amp;-1,2)+A1*7-1
+</code></pre>
+<p>注：2020 为计算的年份，A1 为参与计算的单元格<br>
+如果要获取 A1 单元格的日期是一年的第多少天，公式如下：</p>
+<pre><code>=A1-DATE(YEAR(A1),1,0)
+</code></pre>
+<h2 id="常用符号通配符~除外">常用符号（通配符*?~除外）</h2>
+<h3 id="连接符">连接符 &amp;</h3>
+<p>如果 A1=10，A2=24，那么下面的公式结果显示为：1024</p>
+<pre><code>=A1&amp;A2
+</code></pre>
+<h3 id="引号">引号 &quot; &quot;</h3>
+<p>如果需要引用文本，必须在外面套个引号&quot;&quot;</p>
+<pre><code>=IFERROR(A1/A2,&quot;错误&quot;)
+</code></pre>
+<p>如果引号&quot;&quot;中间口径白，则显示为空数据</p>
+<pre><code>=IFERROR(A1/A2,&quot;&quot;)
+</code></pre>
+<h3 id="绝对引用符号">绝对引用符号 $</h3>
+<p>这个符号用在单元格的引用上，方便我们通过拖动来复制带有公式的单元格，不会因为拖动而改变引用的单元格位置。</p>
+<p>下面的公式在通过拖动单元格进行复制公式时，A1 单元格是不会变的。</p>
+<pre><code>=$A$1/A2
+</code></pre>
+<p>下面的公式在复制公式时，A 列不变，但 A 列的单元格会发生变化。</p>
+<pre><code>=$A1/A2
+</code></pre>
+<h2 id="countifs-函数">COUNTIFS 函数</h2>
+<p>当进行复杂的计数统计时，COUNT 函数已经不够用了，需要用到 COUNTIFS 函数。<br>
+下方是“基础信息”表格，可看到日期、邀约人员等信息。如果持续使用该表格，则可以形成类似数据库的感觉。后期可以通过数据透视表的方式进行调用，也可以通过预设表格形式进行数据格式化。<br>
+图片</p>
+<p>若通过预设表格，调取上面“基础信息”表格里面的数据，只要在下表 A2 单元格输入月份就可以即时得到对应时间范围内的各项数据。如何做？<br>
+图片</p>
+<p>需要在 C3 单元格用到下面的公式：</p>
+<pre><code>=COUNTIFS('基础信息'!$A$3:$A$1048576,&quot;&gt;&quot; &amp; $A$3,'基础信息'!$A$3:$A$1048576,&quot;&lt;&quot; &amp; $A$4,'基础信息'!$B$3:$B$1048576,B3,'基础信息'!$D$3:$D$1048576,&quot;&lt;&gt;&quot;)
+</code></pre>
+<p>如何解读这个公式？<br>
+说给人听：统计基础信息在 2020 年 6 月 30 日以后、2020 年 8 月 1 日之前，邀约人员为张斌的电话号码个数。<br>
+说给电脑听：统计名为“基础信息”工作表 A 列时间值大于本表 A3 单元格但小于 A4 单元格、“基础信息”工作表 B 列数值匹配本表 B3 单元格数值、“基础信息”D 列数值不为空的个数。</p>
+<h2 id="countif-函数">COUNTIF 函数</h2>
+<p>如果只有 1 个统计条件，那就不需要用到上面那个 COUNTIFS 函数，只要用 COUNTIF 函数就可以了。比如：在本单元格统计出“基础信息”工作表 B 列包含“刘丹丹”的个数，按照下面的公式就可以了。</p>
+<pre><code>=COUNTIF(基础信息!B3:B1048576,&quot;刘丹丹&quot;)
+</code></pre>
+<p>还有一种用到通配符的方式，也比较常用。如下：</p>
+<pre><code>=COUNTIF(基础信息!B3:B1048576,&quot;*丹*&quot;)
+</code></pre>
+<h2 id="vlookup-函数">VLOOKUP 函数</h2>
+<p>VLOOKUP 函数被称之为函数之王，因为它可以用在很多地方，可以快速查找出对应的数据。它的语法是：</p>
+<pre><code>VLOOKUP（lookup_value，table_array，col_index_num，[range_lookup]）
+</code></pre>
+<p>lookup_value：要搜索的值；table_array：查找数据的单元格范围；col_index_num：在 table_array 中查找第几列的列号：range_lookup：用于指定精确匹配或近似匹配模式（用数字 1 来表示）。</p>
+<pre><code>VLOOKUP($A$1, '基础信息'!$B$118:$G$129,6,TRUE)
+</code></pre>
+<p>想要获取不同日期的对应数据，只要修改 A1 单元格的日期就可以了。</p>
+<p>除此之外，还可以应用于模糊查找和多项查找，不过我一般用数据透视表来解决，更加方便快捷。</p>
+<h2 id="sumproduct-函数">SUMPRODUCT 函数</h2>
+<p>我主要用 SUMPRODUCT 函数用来做多个条件的统计</p>
+<p>A - 统计某个月份的某个数值</p>
+<p>上表是“基础信息”表格，我在当前工作表的 A1 单元格输入了“2020-4”，我想在 A2 单元格生成“基础信息”表格中 2020 年 4 月的花费金额，公式如下：</p>
+<pre><code>=SUMPRODUCT((MONTH('基础信息'!$B$118:$B$129)=MONTH($A$1))*'基础信息'!$E$118:$E$129)
+</code></pre>
+<p>B - 统计某个星期的某个数值<br>
+还是以“基础表格”的数据为蓝本，我在当前工作表的 A1 单元格输入了“16”，我想在 A2 单元格生成“基础信息”表格中第 16 周的花费金额，公式如下：</p>
+<pre><code>=SUMPRODUCT((('基础信息'!$A$118:$A$129)=$A$1)*'基础信息'!$E$118:$E$129)
+</code></pre>
+<h2 id="ifs-函数">IFS 函数</h2>
+<p>对于需要在多个条件下反馈多个不同的值，可以应用在每日的运营管理工作中，比如下表就是很明显的应用示范。</p>
+<p>可以通过其他的表格数据生成每个单元格对应的数据状态，比如“未投放”、“没有达成目标”、“达成了并达成了多少”、“没达成但达成了多少”、“花了钱没结果”。<br>
+参考公式如下：</p>
+<pre><code>IFS($AK$5=0,全月每日客资数据!C5,全月每日花费数据!C5&lt;50,&quot;未投&quot;,全月每日客资数据!C5=0,&quot;挂蛋&quot;,全月每日客资数据!C5&lt;$AK$5,全月每日客资数据!C5,全月每日客资数据!C5&gt;=$AK$5,&quot;W&quot;&amp;全月每日客资数据!C5)
+</code></pre>
+<p>上面这些是我常用到的一些 EXCEL 函数，如果有新的需求出现，就再找新的办法。如果基础数据表能够汇集在同一张工作表里面的话，我就不用这些函数来整合数据了。我肯定优先使用数据透视表的功能，那样更加方便快捷。<br>
+如果在使用 EXCEL 过程中遇到什么问题，也欢迎后台发送消息给我，一般会在不能主动和你说话之前回复你的，到时候也不要感到着急。</p>
+<h2 id="找出单元格内是否包含非中文字符">找出单元格内是否包含非中文字符</h2>
+<pre><code>=IF(LENB(A1)=2*LEN(A1),&quot;都是汉字&quot;,&quot;含有非汉字字符&quot;)
+</code></pre>
+<hr>
+<p>更新日期：<code>2025 年 4 月 8 日</code></p>
+
+                </div>
+
+                <div class="post--keywords" itemprop="keywords">
+				</div>
+
+
+
+                      </section>
+    </main>
+</div>
+
+	<div class="back-to-top u-hide" onclick="backToTop();"><i class="iconfont icon-xiangshang"></i></div>
+<script type='text/javascript' src='https://tamhaywoo.github.io/media/scripts/main.js'></script>
+</body>
+</html>
