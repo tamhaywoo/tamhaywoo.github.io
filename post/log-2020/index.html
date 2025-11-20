@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="个人博客" />
+    <meta name="author" content="" />
+    <title>2020年随笔合集 | 百川随笔</title>
+    
+    <!-- 主要样式文件 -->
+    <link rel="stylesheet" href="https://tamhaywoo.github.io/styles/main.css" type="text/css" media="screen" />
+    
+    <!-- 代码高亮样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    
+    <!-- 目录样式和返回顶部按钮样式 -->
+    <style>
+        /* 目录样式 */
+        .post-layout {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .post-toc {
+            position: sticky;
+            top: 100px;
+            align-self: flex-start;
+            width: 200px;
+            height: fit-content;
+            max-height: calc(100vh - 130px);
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .toc-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .toc-nav ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        
+        .toc-nav li {
+            line-height: 1.5;
+        }
+        
+        .toc-nav li a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-block;
+            padding: 3px 0;
+        }
+        
+        .toc-nav li a:hover {
+            color: #0066cc;
+        }
+        
+        .toc-nav li.toc-h2 {
+            font-weight: 500;
+        }
+        
+        .toc-nav li.toc-h3 {
+            padding-left: 15px;
+            font-size: 0.95em;
+        }
+        
+        .toc-nav li.toc-h4 {
+            padding-left: 30px;
+            font-size: 0.9em;
+        }
+        
+        .toc-nav li.active a {
+            color: #0066cc;
+            font-weight: 600;
+        }
+        
+        /* 文章内容区域调整 */
+        .main-content {
+            flex: 1;
+        }
+        
+        /* 移动端适配 - 完全隐藏目录 */
+        @media (max-width: 968px) {
+            .post-toc {
+                display: none;
+            }
+            
+            .post-layout {
+                flex-direction: column;
+            }
+        }
+        
+        /* 返回顶部按钮样式 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+        }
+        
+        .back-to-top:not(.u-hide) {
+            opacity: 1;
+        }
+        
+        .back-to-top:hover {
+            background-color: #555;
+        }
+        
+        /* 添加一个简单的箭头图标，不依赖字体图标 */
+        .back-to-top::before {
+            content: '↑';
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+    
+    <!-- JavaScript 库 -->
+    <script src="https://tamhaywoo.github.io/media/scripts/jquery.js" defer></script>
+    <script src="https://tamhaywoo.github.io/media/scripts/jquery-migrate.min.js" defer></script>
+    <script src="https://tamhaywoo.github.io/media/scripts/main.js" defer></script>
+    <script defer>
+        // 返回顶部功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建返回顶部按钮
+            const backToTopBtn = document.createElement('div');
+            backToTopBtn.className = 'back-to-top u-hide';
+            backToTopBtn.id = 'backToTop';
+            document.body.appendChild(backToTopBtn);
+            
+            // 显示/隐藏返回顶部按钮
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.remove('u-hide');
+                } else {
+                    backToTopBtn.classList.add('u-hide');
+                }
+            });
+            
+            // 返回顶部点击事件
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" defer></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+        
+        // 文章目录生成和滚动监听
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检测是否为移动设备
+            function isMobileDevice() {
+                return typeof window.orientation !== "undefined" || navigator.userAgent.indexOf('IEMobile') !== -1 || navigator.userAgent.indexOf('Mobile') !== -1 || navigator.userAgent.indexOf('Android') !== -1 || navigator.userAgent.indexOf('iPhone') !== -1 || navigator.userAgent.indexOf('iPad') !== -1 || navigator.userAgent.indexOf('iPod') !== -1 || window.innerWidth <= 968;
+            }
+            
+            // 仅在非移动设备上生成目录
+            if (!isMobileDevice()) {
+                // 获取元素
+                var postContent = document.querySelector('.post-content');
+                var tocList = document.getElementById('post-toc');
+                
+                if (postContent && tocList) {
+                    var headings = postContent.querySelectorAll('h2, h3, h4');
+                    
+                    if (headings.length > 0) {
+                        // 生成目录项
+                        for (var i = 0; i < headings.length; i++) {
+                            var heading = headings[i];
+                            // 为每个标题添加ID
+                            var headingId = heading.getAttribute('id') || 'heading-' + i;
+                            heading.setAttribute('id', headingId);
+                            
+                            // 创建目录项
+                            var listItem = document.createElement('li');
+                            listItem.className = 'toc-' + heading.tagName.toLowerCase();
+                            
+                            var link = document.createElement('a');
+                            link.href = '#' + headingId;
+                            link.textContent = heading.textContent;
+                            
+                            // 平滑滚动到标题
+                            link.onclick = function(e) {
+                                e.preventDefault();
+                                var targetId = this.getAttribute('href').substring(1);
+                                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                            };
+                            
+                            listItem.appendChild(link);
+                            tocList.appendChild(listItem);
+                        }
+                        
+                        // 滚动监听，高亮当前目录项
+                        window.onscroll = function() {
+                            var scrollPosition = window.scrollY + 100;
+                            
+                            for (var i = 0; i < headings.length; i++) {
+                                var heading = headings[i];
+                                var headingTop = heading.offsetTop;
+                                var nextHeading = i + 1 < headings.length ? headings[i + 1] : null;
+                                var nextHeadingTop = nextHeading ? nextHeading.offsetTop : Infinity;
+                                
+                                var tocItem = tocList.children[i];
+                                
+                                if (scrollPosition >= headingTop && scrollPosition < nextHeadingTop) {
+                                    // 移除所有active类
+                                    for (var j = 0; j < tocList.children.length; j++) {
+                                        tocList.children[j].classList.remove('active');
+                                    }
+                                    // 添加当前项active类
+                                    tocItem.classList.add('active');
+                                }
+                            }
+                        };
+                        
+                        // 触发一次滚动事件，确保初始状态正确
+                        window.onscroll();
+                    } else {
+                        // 如果没有标题，隐藏目录
+                        document.querySelector('.post-toc').style.display = 'none';
+                    }
+                }
+            }
+        });
+    </script>
+    
+    <!-- Google Analytics -->
+    
+</head>
+<body class="single single-post">
+	<!-- 导航栏区域 -->
+	<header id="masthead" class="site-header" role="banner">
+	<div class="header-container">
+		<!-- 网站标题/Logo -->
+		<div class="site-branding">
+			<h1 class="site-title">
+				<a href="/" rel="home">
+					<!-- 百川随笔 -->
+				</a>
+			</h1>
+			
+		</div>
+		
+		<!-- 移动端导航触发按钮 -->
+		<button 
+			class="primary-nav-trigger" 
+			type="button"
+			aria-expanded="false"
+			aria-controls="site-navigation"
+			aria-label="打开菜单"
+		>
+			<span class="menu-icon"></span>
+		</button>
+	</div>
+</header>
+	<div class="site-navigation-wrapper">
+		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="主导航">
+			<ul class="primary-nav">
+				
+					<li class="menu-item menu-item-1">
+						<a 
+							title="首页" 
+							href="https://tamhaywoo.github.io"
+							class="menu-link"
+						>
+							首页
+						</a>
+					</li>
+				
+					<li class="menu-item menu-item-2">
+						<a 
+							title="目录" 
+							href="https://tamhaywoo.github.io/archives"
+							class="menu-link"
+						>
+							目录
+						</a>
+					</li>
+				
+					<li class="menu-item menu-item-3">
+						<a 
+							title="标签" 
+							href="https://tamhaywoo.github.io/tags"
+							class="menu-link"
+						>
+							标签
+						</a>
+					</li>
+				
+					<li class="menu-item menu-item-4">
+						<a 
+							title="关于" 
+							href="https://tamhaywoo.github.io/post/about"
+							class="menu-link"
+						>
+							关于
+						</a>
+					</li>
+				
+			</ul>
+		</nav>
+	</div>
+	<!-- 导航栏区域结束 -->
+	
+	<div class="surface-content">
+		<div class="post-layout">
+			<aside class="post-toc">
+				<div class="toc-container">
+					<h3 class="toc-title">文章目录</h3>
+					<nav class="toc-nav">
+						<ul id="post-toc"></ul>
+					</nav>
+				</div>
+			</aside>
+			<main class="main-content" role="main">
+			<article class="post-article" itemscope itemtype="http://schema.org/Article">
+				<section class="section-body">
+					<header class="section-header u-textAlignCenter">
+						<h1 class="grap--h1" itemprop="headline">2020年随笔合集</h1>
+					</header>
+					<div class="grap post-content" itemprop="articleBody">
+						
+						<h2 id="2020-10-05">2020-10-05</h2>
+<p>一个真正成熟的管理者看谁都顺眼，承认并且接受真正的多样性。</p>
+<p>看顺眼并不代表认同，不代表认为对方就是完全正确的，并不代表“换成是我，也会这么做”。他可能一辈子都不会那么做，但是他知道这是站在对方的角度后，对方的选择，对方的价值观，对方的逻辑。</p>
+<p><strong>一个人同时保有两种相反的观念，还能正常行事，这是第一流智慧的标志</strong>。</p>
+<h2 id="2020-10-19">2020-10-19</h2>
+<p>记得老妈在去年对我说：“谢谢你告诉我怎么用微信。”</p>
+<p>这点小事在她看来非常重要，因为她学会了一个新的交流方式。昨天还特地发消息告诉我，她又想起来怎么发文字消息了。 ​​​</p>
+<h2 id="2020-10-20">2020-10-20</h2>
+<p>看了好些个办公场地，还是没有看到哪个场地符合扩大一倍规模的包容度。</p>
+<p>大部分的办公场地有一半的空间隔成了独立空间，而<strong>我理想的办公室空间规划是：70%的开阔办公空间、20%的会议空间、10%的私下沟通空间。</strong></p>
+<!-- more -->
+<h2 id="2020-10-20-2">2020-10-20</h2>
+<p>凌晨三点四十才回到家，悄悄进到卧室后，发现小宝躺在床上睁开眼睛盯着我呢，接着就开始哼哼地哭了起来。</p>
+<p>我赶紧走到床边蹲下来对他说：“<strong>对不起，爸爸回家太晚了，谢谢你等着我，以后回家晚的话提前和你说。</strong>”反复说了两三次，小宝才收了声，停止了哭泣，翻个身抱住了妈妈。 ​​​</p>
+<h2 id="2020-10-22">2020-10-22</h2>
+<p>我选办公空间的标准前些天说了，需要占整体面积70%的开放式办公空间。</p>
+<p>在选自己的办公位时，有一个基本条件：“<strong>该位置能够最大限度地将整个办公空间一览无余。</strong>” ​​​</p>
+<p>我这该死的控制欲啊。</p>
+<h2 id="2020-11-02">2020-11-02</h2>
+<p>说压垮成年人只需一个家长群，有点太武断了哈。</p>
+<p>换个说法我认同：“<strong>最近这些年，小学家长承担了50%以上的学校教育责任，与30年前这些小学家长们的父母所承担的学校教育责任相比差异很大。</strong>”</p>
+<p>全职在家照顾孩子的母亲协助孩子做完各类学习作业到晚上十点以后的情况比比皆是，如果孩子的父母工作后还需辅导家庭作业，肯定得晚上十点以后才能休息了。</p>
+<h2 id="2020-11-12">2020-11-12</h2>
+<p>当我回家和小宝玩耍的时候，我不能无所顾忌地看手机上的消息。</p>
+<p>只要我拿起手机，他就会看着我：＂拿手机干嘛？＂；</p>
+<p>如果我已经打开手机屏幕，盯着手机看，他就会问我：＂看手机干什么？＂或者＂有工作要处理吗？＂；</p>
+<p>有次我回答他正准备关机，他看我把手机放下，特地走向桌子，确认手机是不是真的关机了。</p>
+<p>嗯，要是我公司的管理人员有这种做事风格，那团队的作风一定很赞。</p>
+<h2 id="2020-11-05">2020-11-05</h2>
+<p>晚上陪老同事一起吃个便饭，席间聊到未来发展的问题。关于精力投入之后如何快速恢复状态？</p>
+<p>有钱的老板吃虫草，我们吃草也可以恢复状态。两点到家，六点多照样起床！Fighting！</p>
+<h2 id="2020-11-17">2020-11-17</h2>
+<p>尽管公司招聘的时候没有写上年龄限制，但实际筛选过程中已经圈定了20岁左右的应届毕业生。</p>
+<p><strong>只有当代青年最了解当代青年的普遍需求，是创造时代的主力军。</strong></p>
+<p>80后若还没有达到中产阶段，不要去打工了，创业吧。梭哈！ ​​​</p>
+<h2 id="2020-11-27">2020-11-27</h2>
+<p>当员工的求知欲望及践行大于管理者的求知欲和践行时，管理者的个人能力将逐渐无法满足员工发展的需求。此时的组织要么出现变革，要么出现人员流失。管理者只有不断奔跑，才能勉强留在原地。只有不断学习和奋斗，才能勉强保持职业发展的优势。</p>
+<h2 id="2020-11-28">2020-11-28</h2>
+<p>团队需要时不时拉练一下，整几次连续几天到一两点的共识沟通或目标促进，自然就能挑出那些有要性、愿付出、有结果的好苗子。</p>
+<h2 id="2020-12-08">2020-12-08</h2>
+<p>人生在世几十年，与父母相处多少年？<br>
+与夫妻相处多少年？<br>
+与儿女相处多少年？<br>
+各人自知。</p>
+<p>生命之旅以何为重？<br>
+亦各人不同。</p>
+<p><strong>我前半生为父母，中间为小家，后半生为自己。</strong><br>
+虽有交错，但主次分明。</p>
+
+					</div>
+					
+					<!-- 文章关键词 -->
+					
+				</section>
+				
+				<!-- 文章导航 -->
+				<div class="post-navigation">
+					
+					
+				</div>
+				
+				<!-- 评论区域 -->
+				
+			</article>
+		</main>
+		</div>
+	</div>
+</body>
+</html>

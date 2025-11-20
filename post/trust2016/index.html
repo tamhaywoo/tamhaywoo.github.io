@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="个人博客" />
+    <meta name="author" content="" />
+    <title>让员工重新信任公司 | 百川随笔</title>
+    
+    <!-- 主要样式文件 -->
+    <link rel="stylesheet" href="https://tamhaywoo.github.io/styles/main.css" type="text/css" media="screen" />
+    
+    <!-- 代码高亮样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    
+    <!-- 目录样式和返回顶部按钮样式 -->
+    <style>
+        /* 目录样式 */
+        .post-layout {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .post-toc {
+            position: sticky;
+            top: 100px;
+            align-self: flex-start;
+            width: 200px;
+            height: fit-content;
+            max-height: calc(100vh - 130px);
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .toc-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .toc-nav ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        
+        .toc-nav li {
+            line-height: 1.5;
+        }
+        
+        .toc-nav li a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-block;
+            padding: 3px 0;
+        }
+        
+        .toc-nav li a:hover {
+            color: #0066cc;
+        }
+        
+        .toc-nav li.toc-h2 {
+            font-weight: 500;
+        }
+        
+        .toc-nav li.toc-h3 {
+            padding-left: 15px;
+            font-size: 0.95em;
+        }
+        
+        .toc-nav li.toc-h4 {
+            padding-left: 30px;
+            font-size: 0.9em;
+        }
+        
+        .toc-nav li.active a {
+            color: #0066cc;
+            font-weight: 600;
+        }
+        
+        /* 文章内容区域调整 */
+        .main-content {
+            flex: 1;
+        }
+        
+        /* 移动端适配 - 完全隐藏目录 */
+        @media (max-width: 968px) {
+            .post-toc {
+                display: none;
+            }
+            
+            .post-layout {
+                flex-direction: column;
+            }
+        }
+        
+        /* 返回顶部按钮样式 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+        }
+        
+        .back-to-top:not(.u-hide) {
+            opacity: 1;
+        }
+        
+        .back-to-top:hover {
+            background-color: #555;
+        }
+        
+        /* 添加一个简单的箭头图标，不依赖字体图标 */
+        .back-to-top::before {
+            content: '↑';
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+    
+    <!-- JavaScript 库 -->
+    <script src="https://tamhaywoo.github.io/media/scripts/jquery.js" defer></script>
+    <script src="https://tamhaywoo.github.io/media/scripts/jquery-migrate.min.js" defer></script>
+    <script src="https://tamhaywoo.github.io/media/scripts/main.js" defer></script>
+    <script defer>
+        // 返回顶部功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建返回顶部按钮
+            const backToTopBtn = document.createElement('div');
+            backToTopBtn.className = 'back-to-top u-hide';
+            backToTopBtn.id = 'backToTop';
+            document.body.appendChild(backToTopBtn);
+            
+            // 显示/隐藏返回顶部按钮
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.remove('u-hide');
+                } else {
+                    backToTopBtn.classList.add('u-hide');
+                }
+            });
+            
+            // 返回顶部点击事件
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" defer></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+            hljs.highlightAll();
+        });
+        
+        // 文章目录生成和滚动监听
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检测是否为移动设备
+            function isMobileDevice() {
+                return typeof window.orientation !== "undefined" || navigator.userAgent.indexOf('IEMobile') !== -1 || navigator.userAgent.indexOf('Mobile') !== -1 || navigator.userAgent.indexOf('Android') !== -1 || navigator.userAgent.indexOf('iPhone') !== -1 || navigator.userAgent.indexOf('iPad') !== -1 || navigator.userAgent.indexOf('iPod') !== -1 || window.innerWidth <= 968;
+            }
+            
+            // 仅在非移动设备上生成目录
+            if (!isMobileDevice()) {
+                // 获取元素
+                var postContent = document.querySelector('.post-content');
+                var tocList = document.getElementById('post-toc');
+                
+                if (postContent && tocList) {
+                    var headings = postContent.querySelectorAll('h2, h3, h4');
+                    
+                    if (headings.length > 0) {
+                        // 生成目录项
+                        for (var i = 0; i < headings.length; i++) {
+                            var heading = headings[i];
+                            // 为每个标题添加ID
+                            var headingId = heading.getAttribute('id') || 'heading-' + i;
+                            heading.setAttribute('id', headingId);
+                            
+                            // 创建目录项
+                            var listItem = document.createElement('li');
+                            listItem.className = 'toc-' + heading.tagName.toLowerCase();
+                            
+                            var link = document.createElement('a');
+                            link.href = '#' + headingId;
+                            link.textContent = heading.textContent;
+                            
+                            // 平滑滚动到标题
+                            link.onclick = function(e) {
+                                e.preventDefault();
+                                var targetId = this.getAttribute('href').substring(1);
+                                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                            };
+                            
+                            listItem.appendChild(link);
+                            tocList.appendChild(listItem);
+                        }
+                        
+                        // 滚动监听，高亮当前目录项
+                        window.onscroll = function() {
+                            var scrollPosition = window.scrollY + 100;
+                            
+                            for (var i = 0; i < headings.length; i++) {
+                                var heading = headings[i];
+                                var headingTop = heading.offsetTop;
+                                var nextHeading = i + 1 < headings.length ? headings[i + 1] : null;
+                                var nextHeadingTop = nextHeading ? nextHeading.offsetTop : Infinity;
+                                
+                                var tocItem = tocList.children[i];
+                                
+                                if (scrollPosition >= headingTop && scrollPosition < nextHeadingTop) {
+                                    // 移除所有active类
+                                    for (var j = 0; j < tocList.children.length; j++) {
+                                        tocList.children[j].classList.remove('active');
+                                    }
+                                    // 添加当前项active类
+                                    tocItem.classList.add('active');
+                                }
+                            }
+                        };
+                        
+                        // 触发一次滚动事件，确保初始状态正确
+                        window.onscroll();
+                    } else {
+                        // 如果没有标题，隐藏目录
+                        document.querySelector('.post-toc').style.display = 'none';
+                    }
+                }
+            }
+        });
+    </script>
+    
+    <!-- Google Analytics -->
+    
+</head>
+<body class="single single-post">
+	<!-- 导航栏区域 -->
+	<header id="masthead" class="site-header" role="banner">
+	<div class="header-container">
+		<!-- 网站标题/Logo -->
+		<div class="site-branding">
+			<h1 class="site-title">
+				<a href="/" rel="home">
+					<!-- 百川随笔 -->
+				</a>
+			</h1>
+			
+		</div>
+		
+		<!-- 移动端导航触发按钮 -->
+		<button 
+			class="primary-nav-trigger" 
+			type="button"
+			aria-expanded="false"
+			aria-controls="site-navigation"
+			aria-label="打开菜单"
+		>
+			<span class="menu-icon"></span>
+		</button>
+	</div>
+</header>
+	<div class="site-navigation-wrapper">
+		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="主导航">
+			<ul class="primary-nav">
+				
+					<li class="menu-item menu-item-1">
+						<a 
+							title="首页" 
+							href="https://tamhaywoo.github.io"
+							class="menu-link"
+						>
+							首页
+						</a>
+					</li>
+				
+					<li class="menu-item menu-item-2">
+						<a 
+							title="目录" 
+							href="https://tamhaywoo.github.io/archives"
+							class="menu-link"
+						>
+							目录
+						</a>
+					</li>
+				
+					<li class="menu-item menu-item-3">
+						<a 
+							title="标签" 
+							href="https://tamhaywoo.github.io/tags"
+							class="menu-link"
+						>
+							标签
+						</a>
+					</li>
+				
+					<li class="menu-item menu-item-4">
+						<a 
+							title="关于" 
+							href="https://tamhaywoo.github.io/post/about"
+							class="menu-link"
+						>
+							关于
+						</a>
+					</li>
+				
+			</ul>
+		</nav>
+	</div>
+	<!-- 导航栏区域结束 -->
+	
+	<div class="surface-content">
+		<div class="post-layout">
+			<aside class="post-toc">
+				<div class="toc-container">
+					<h3 class="toc-title">文章目录</h3>
+					<nav class="toc-nav">
+						<ul id="post-toc"></ul>
+					</nav>
+				</div>
+			</aside>
+			<main class="main-content" role="main">
+			<article class="post-article" itemscope itemtype="http://schema.org/Article">
+				<section class="section-body">
+					<header class="section-header u-textAlignCenter">
+						<h1 class="grap--h1" itemprop="headline">让员工重新信任公司</h1>
+					</header>
+					<div class="grap post-content" itemprop="articleBody">
+						
+						<p>从2016年7月份开始，我和黄志峰、任伟煌、任杏之、罗武等其他艾特数码的核心老员工一起以“艾上影像”的品牌名称在长沙向韶村工区经营数码摄影相关产品的生产业务，直到2017年1月份，我因参与BOSS提出的股份制改革之事未达成共识而自愿退出，前后经历大约7个月的时间。</p>
+<p>数码影像产品的生产工作不好做。公司需要提前垫付费用采购生产原料；采购量也是个问题，采购少了没有价格优势、也担心缺货的问题，采购多了可能会因为缺少足够的订单而产生材料积压的情况（库存）；交付产品之后还要面临货款不能及时到账的问题（回款率、坏账）。最不应该有的问题是内部企业延迟结算费用，影响公司现金流的运转。</p>
+<p>至于生产当中的问题，那是我们没有任何借口的环节，一切从自己身上找原因。如果生产工艺需要更新，该买的设备需要买，该学习培训的技能得培训。要计算出真实的经营利润出来真不容易啊。</p>
+<!-- more -->
+<p>回想起在艾上影像的经营管理工作，我梳理的核心重点是：</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-9210359"><label class="task-list-item-label" for="task-item-9210359"> 修复与建立员工对公司的信任；</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8984951"><label class="task-list-item-label" for="task-item-8984951"> 梳理产品线，去除短时间内无法保证品质的产品线；</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-2792419"><label class="task-list-item-label" for="task-item-2792419"> 增加集团外部客户量；</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-436696"><label class="task-list-item-label" for="task-item-436696"> 建立研发机制，打造独特产品；</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-2132430"><label class="task-list-item-label" for="task-item-2132430"> 建立储值预收款制，规避收款难的问题；</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1194323"><label class="task-list-item-label" for="task-item-1194323"> 建立“”产品包邮到家”及“同城配送及安装”业务；</label></li>
+</ul>
+<h2 id="借事立信">借事立信</h2>
+<p>由于刚到公司的前一个月经常听到不少员工说公司不好，说公司讲话不算话。员工普遍说在公司赚不到钱，还要下班后去跑摩的赚钱。于是，我到岗之后的第一件事情就是“修复公司与员工之间的关系，建立员工对公司的信任。”并特别注意对员工所做承诺的兑现。</p>
+<p>在与员工沟通调研过程中，员工认为公司之前的管理者只是大BOSS的传话筒和监工，缺少落地执行的思想与管理的独立自主性。</p>
+<p>不久后发生的一件事情让公司员工彻底相信我说话算话，并真正主动积极配合公司安排的工作。</p>
+<p>总部董事长助理发通知说某日要进行全集团的集中培训学习，需要各分店分部安排好工作准时出席。艾上影像需要面对诸多非本集团的客户，每天需要按时交付外部的订单，很难做到停工学习。尽管如此，我们还是尽可能地支持总部的工作，于是与客户沟通交付时间，与员工沟通值班安排，只等通知上所说的日子到来。</p>
+<p>临近预定日期的前几天，总部又发布了修改后的通知，日期有变化。我的态度是：“按原计划进行工作安排，不做临时变动”。并在当日安排正常休假。BOSS打来电话说安排上有些变动，请务必带着公司成员去总部参加会议。我很坚决地拒绝，因为所有工作都是提前安排好的，临时变动不好处理工作，更重要的是会让员工觉得“公司说话不算话，这个新来的负责人其实也只是个传话筒而已。”就这样，BOSS亲自到生产工厂做情况说明，把人带去了会场，我没有参会，公司也没有就此事再找我。</p>
+<p>这件事以后，虽然公司的领导会觉得我不好说话，但在我负责的团队当中，我想要的氛围已经开始形成。大家知道我是一个言而有信之人，且不会根据BOSS的施压而改变既定安排。</p>
+<h2 id="后话">后话</h2>
+<p>这件事情让董事长助理陈欣非常难过和自责，让BOSS团队非常难堪。可能也因此让他们觉得我非常难以驾驭，没有服从意识，为之后的股份改革的失败埋下了伏笔，以至于出现了除BOSS之外的股东团成员集体上书反对的情形。尽管如此，我与BOSS之间并没有因此而产生隔阂。</p>
+<p>回头再看，这应该是我第一次没有听BOSS的话，不是我之前的职业风格，但又是一件疯狂且有必要的往事。</p>
+
+					</div>
+					
+					<!-- 文章关键词 -->
+					
+				</section>
+				
+				<!-- 文章导航 -->
+				<div class="post-navigation">
+					
+					
+				</div>
+				
+				<!-- 评论区域 -->
+				
+			</article>
+		</main>
+		</div>
+	</div>
+</body>
+</html>
