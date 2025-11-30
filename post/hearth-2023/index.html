@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="个人博客" />
+    <meta name="author" content="" />
+    <title>漫长的咳嗽 | 百川随笔集</title>
+    
+    <!-- 主要样式文件 -->
+    <link rel="stylesheet" href="https://tamhaywoo.github.io/styles/main.css" type="text/css" media="screen" />
+    
+    <!-- 代码高亮样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    
+    <!-- 目录样式和返回顶部按钮样式 -->
+    <style>
+        /* 目录样式 */
+        .post-layout {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .post-toc {
+            position: sticky;
+            top: 100px;
+            align-self: flex-start;
+            width: 200px;
+            height: fit-content;
+            max-height: calc(100vh - 130px);
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .toc-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .toc-nav ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        
+        .toc-nav li {
+            line-height: 1.5;
+        }
+        
+        .toc-nav li a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-block;
+            padding: 3px 0;
+        }
+        
+        .toc-nav li a:hover {
+            color: #23B175;
+        }
+        
+        .toc-nav li.toc-h2 {
+            font-weight: 500;
+        }
+        
+        .toc-nav li.toc-h3 {
+            padding-left: 15px;
+            font-size: 0.95em;
+        }
+        
+        .toc-nav li.toc-h4 {
+            padding-left: 30px;
+            font-size: 0.9em;
+        }
+        
+        /* 文章元信息样式 */
+        .post-meta {
+            margin-top: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .post-date {
+            margin-right: 0.5rem;
+        }
+        
+        .post-word-count {
+            margin-right: 0.5rem;
+        }
+        
+        .post-tags {
+            display: inline-block;
+        }
+        
+        .post-tags a {
+            color: #666;
+            text-decoration: none;
+            padding: 0.2rem 0.3rem;
+            background-color: #f5f5f5;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .post-tags a:hover {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        
+        .toc-nav li.active a {
+            color: #23B175;
+            font-weight: 600;
+        }
+        
+        /* 文章内容区域调整 */
+        .main-content {
+            flex: 1;
+        }
+        
+        /* 移动端适配 - 完全隐藏目录 */
+        @media (max-width: 968px) {
+            .post-toc {
+                display: none;
+            }
+            
+            .post-layout {
+                flex-direction: column;
+            }
+        }
+        
+        /* 返回顶部按钮样式 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #23B175;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+        }
+        
+        .back-to-top:not(.u-hide) {
+            opacity: 1;
+        }
+        
+        .back-to-top:hover {
+            background-color: #23B175;
+        }
+        
+        /* 添加一个简单的箭头图标，不依赖字体图标 */
+        .back-to-top::before {
+            content: '↑';
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* 阅读进度条样式 */
+        #reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background-color: #23B175;
+            z-index: 10001;
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+    </style>
+    
+    <!-- JavaScript 库 -->
+    <script src="https://tamhaywoo.github.io/media/scripts/jquery.js" defer></script>
+    <script src="https://tamhaywoo.github.io/media/scripts/jquery-migrate.min.js" defer></script>
+    <script src="https://tamhaywoo.github.io/media/scripts/main.js" defer></script>
+    <script defer>
+        // 返回顶部功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建返回顶部按钮
+            const backToTopBtn = document.createElement('div');
+            backToTopBtn.className = 'back-to-top u-hide';
+            backToTopBtn.id = 'backToTop';
+            document.body.appendChild(backToTopBtn);
+            
+            // 显示/隐藏返回顶部按钮
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.remove('u-hide');
+                } else {
+                    backToTopBtn.classList.add('u-hide');
+                }
+            });
+            
+            // 返回顶部点击事件
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    
+    <!-- 阅读进度条脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBar = document.getElementById('reading-progress');
+            if (progressBar) {
+                function updateProgress() {
+                    const windowHeight = window.innerHeight;
+                    const documentHeight = document.documentElement.scrollHeight;
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+                    progressBar.style.width = scrollPercentage + '%';
+                }
+                
+                // 添加滚动事件监听
+                window.addEventListener('scroll', updateProgress);
+                // 初始加载时更新一次
+                updateProgress();
+            }
+        });
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" defer></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 代码高亮
+            if (typeof hljs !== 'undefined') {
+                hljs.highlightAll();
+            }
+            
+            // 文章字数统计
+            function countWords() {
+                const contentElement = document.querySelector('.post-content');
+                const wordCountElement = document.getElementById('word-count');
+                
+                if (contentElement && wordCountElement) {
+                    // 获取纯文本内容
+                    const text = contentElement.textContent || contentElement.innerText;
+                    // 移除多余的空白字符
+                    const cleanedText = text.replace(/\s+/g, ' ').trim();
+                    // 计算字数（中英文混合）
+                    let wordCount = 0;
+                    // 匹配中文、日文、韩文字符
+                    const asianChars = cleanedText.match(/[\u4e00-\u9fa5\u3040-\u30ff\u3400-\u4dbf\uac00-\ud7af]/g);
+                    if (asianChars) wordCount += asianChars.length;
+                    // 匹配英文单词（连续的非空白字符）
+                    const words = cleanedText.match(/[a-zA-Z]+/g);
+                    if (words) wordCount += words.length;
+                    // 显示结果
+                    wordCountElement.textContent = wordCount;
+                }
+            }
+            
+            // 执行字数统计
+            countWords();
+            
+            // 文章目录生成和滚动监听
+            // 检测是否为移动设备（基于屏幕宽度）
+            function isMobileDevice() {
+                return window.innerWidth <= 968;
+            }
+            
+            // 仅在非移动设备上生成目录
+            if (!isMobileDevice()) {
+                // 获取元素
+                var postContent = document.querySelector('.post-content');
+                var tocList = document.getElementById('post-toc');
+                
+                if (postContent && tocList) {
+                    var headings = postContent.querySelectorAll('h2, h3, h4');
+                    
+                    if (headings.length > 0) {
+                        // 生成目录项
+                        for (var i = 0; i < headings.length; i++) {
+                            var heading = headings[i];
+                            // 为每个标题添加ID
+                            var headingId = heading.getAttribute('id') || 'heading-' + i;
+                            heading.setAttribute('id', headingId);
+                            
+                            // 创建目录项
+                            var listItem = document.createElement('li');
+                            listItem.className = 'toc-' + heading.tagName.toLowerCase();
+                            
+                            var link = document.createElement('a');
+                            link.href = '#' + headingId;
+                            link.textContent = heading.textContent;
+                            
+                            // 平滑滚动到标题
+                            link.onclick = function(e) {
+                                e.preventDefault();
+                                var targetId = this.getAttribute('href').substring(1);
+                                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                            };
+                            
+                            listItem.appendChild(link);
+                            tocList.appendChild(listItem);
+                        }
+                        
+                        // 滚动监听，高亮当前目录项
+                        window.onscroll = function() {
+                            var scrollPosition = window.scrollY + 100;
+                            
+                            for (var i = 0; i < headings.length; i++) {
+                                var heading = headings[i];
+                                var headingTop = heading.offsetTop;
+                                var nextHeading = i + 1 < headings.length ? headings[i + 1] : null;
+                                var nextHeadingTop = nextHeading ? nextHeading.offsetTop : Infinity;
+                                
+                                var tocItem = tocList.children[i];
+                                
+                                if (scrollPosition >= headingTop && scrollPosition < nextHeadingTop) {
+                                    // 移除所有active类
+                                    for (var j = 0; j < tocList.children.length; j++) {
+                                        tocList.children[j].classList.remove('active');
+                                    }
+                                    // 添加当前项active类
+                                    tocItem.classList.add('active');
+                                }
+                            }
+                        };
+                        
+                        // 触发一次滚动事件，确保初始状态正确
+                        window.onscroll();
+                    } else {
+                        // 如果没有标题，隐藏目录
+                        document.querySelector('.post-toc').style.display = 'none';
+                    }
+                }
+            }
+        });
+    </script>
+    
+    <!-- Google Analytics -->
+    
+</head>
+<body class="single single-post">
+	<!-- 阅读进度条 -->
+	<div id="reading-progress"></div>
+	<!-- 导航栏区域 -->
+	<header id="masthead" class="site-header" role="banner">
+	<div class="header-container">
+		<!-- 网站标题/Logo -->
+		<div class="site-branding">
+			<h2 class="site-title">
+				<a href="/" rel="home">
+					百川随笔集 
+				</a>
+			</h2>
+			
+		</div>
+		
+		<!-- 移动端导航触发按钮 -->
+		<button 
+			class="primary-nav-trigger" 
+			type="button"
+			aria-expanded="false"
+			aria-controls="site-navigation"
+			aria-label="打开菜单"
+		>
+			<span class="menu-icon"></span>
+		</button>
+	</div>
+</header>
+	<div class="site-navigation-wrapper">
+		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="主导航">
+			<ul class="primary-nav">
+				
+					<li class="menu-item menu-item-1">
+						<a 
+							title="首页" 
+							href="https://tamhaywoo.github.io"
+							class="menu-link"
+						>
+							首页
+						</a>
+					</li>
+				
+					<li class="menu-item menu-item-2">
+						<a 
+							title="目录" 
+							href="https://tamhaywoo.github.io/archives"
+							class="menu-link"
+						>
+							目录
+						</a>
+					</li>
+				
+					<li class="menu-item menu-item-3">
+						<a 
+							title="标签" 
+							href="https://tamhaywoo.github.io/tags"
+							class="menu-link"
+						>
+							标签
+						</a>
+					</li>
+				
+					<li class="menu-item menu-item-4">
+						<a 
+							title="关于" 
+							href="https://tamhaywoo.github.io/post/about"
+							class="menu-link"
+						>
+							关于
+						</a>
+					</li>
+				
+			</ul>
+		</nav>
+	</div>
+	<!-- 导航栏区域结束 -->
+	
+	<div class="surface-content">
+		<div class="post-layout">
+			<aside class="post-toc">
+				<div class="toc-container">
+					<h2 class="toc-title">文章目录</h2>
+					<nav class="toc-nav">
+						<ul id="post-toc"></ul>
+					</nav>
+				</div>
+			</aside>
+			<main class="main-content" role="main">
+			<article class="post-article" itemscope itemtype="http://schema.org/Article">
+				<section class="section-body">
+					<header class="section-header u-textAlignCenter">
+						<h1 class="grap--h1" itemprop="headline">漫长的咳嗽</h1>
+						<div class="post-meta">
+							<span class="post-date" itemprop="datePublished">发布: 2023-10-06</span>
+							<span class="post-word-count"><span id="word-count">--</span>字</span>
+							
+								<span class="post-tags">
+								
+									<a href="https://tamhaywoo.github.io/health/">健康</a>
+									
+								
+								</span>
+							
+						</div>
+					</header>
+					<div class="grap post-content" itemprop="articleBody">
+						
+						<p>我知道自己有慢性咽炎，也知道它无法根治，所以也接受它将一直存在于我的生活之中。对于出现咳嗽的情况，我一般选择让其自然疗愈。</p>
+<p>最早出现歇斯底里地咳嗽是在2011年，那个时候我在长沙市蔡锷路世纪新娘婚纱摄影担任店经理。开始咳嗽到完全康复的时间尽管长，但还不算特别严重。解决方案也挺简单的，当我喉咙痒、想要咳嗽的时候，只要小口小口地喝冰可乐就能把咳嗽压下去，一个星期就能痊愈。这样的咳嗽，每年会来一次。</p>
+<p>再往后就是2015年至2016年。我在长沙市开福区二十四节气草本生活家担任店经理的工作时，受到艾灸产生的浓烟刺激，每年会有至少2次以上的持续性咳嗽，持续时间也是一个星期左右。</p>
+<p>2023年的咳嗽特别漫长、也特别严重。晚上会被咳嗽搞醒来，睡不着，最严重的时候感觉无法呼吸、透不过气来。这次咳嗽从9月份开始，持续了1个月，至今还没有康复。</p>
+<p>最初只是咽喉有不适的感觉，我认为我可以挺过去，所以没有打针吃药，任由咳嗽自由发展。</p>
+<!-- more -->
+<h2 id="关联时间和事件">关联时间和事件</h2>
+<ul>
+<li>2023年5月8日晚，与吴长服一起陪同韩杰招待无聊和蒙雨，喝冰啤酒大约10斤。次日有流鼻涕的症状，喉咙感到不适，经过抗原检测显示为阳性。</li>
+<li>2023年6月1日晚，与吴长服一同前往广州庆祝春雷的婚纱店知一视觉开张，晚上喝冰啤酒大约10斤。回酒店之后，长服把房卡取走外出未归，早上热醒来之后就感到不适，像是热感冒。</li>
+<li>2023年7月19日凌晨3点，咽喉痛到咽口水都疼，赶紧爬起来跑到医院急诊去寻求解决方案。医生开了CT 检查单和验血单，等了三四个小时后，检测数据显示一切正常。</li>
+<li>2023年7月20日，跑到社区诊所问医生怎么办，医生问诊后给我开了2片消炎药，然后开了10天的中药，说把体虚的问题解决一下。</li>
+<li>2023年9月2日，开始咳嗽</li>
+<li>2023年9月7日，喉咙痒、强烈咳嗽、流鼻涕、鼻塞、咳得眼泪水都出来了</li>
+<li>2023年10月8日，咳嗽已经不再频繁，估计这几天就会完全康复。</li>
+<li>2023年10月10日，全天咳嗽不超过5次，基本恢复正常。</li>
+</ul>
+<h2 id="久咳症结在哪里">久咳症结在哪里</h2>
+<ul>
+<li>大量饮用冰啤酒，导致胃寒</li>
+<li>感染新冠肺炎之后，身体素质不如以前</li>
+<li>睡得晚，身体抵抗力差</li>
+<li>没有持续做体育锻炼</li>
+<li>30年前人寻病，30年后病寻人</li>
+<li>未找到正确的解决方案</li>
+</ul>
+<h2 id="对应的解决方案">对应的解决方案</h2>
+<ul>
+<li>找医生看病，配合医生吃药治疗</li>
+<li>不吃冰箱里的寒食</li>
+<li>不吃海鲜等寒性食物</li>
+<li>吃冰糖炖雪梨</li>
+<li>吃容易上火的食物，中和身体中的寒气</li>
+<li>注意保暖</li>
+<li>不吹空调</li>
+</ul>
+<hr>
+<p>最后更新：<code>2023 年 10 月 10 日</code></p>
+
+					</div>
+					
+					<!-- 文章关键词 -->
+					
+				</section>
+				
+				<!-- 文章导航 -->
+				<div class="post-navigation">
+					
+					
+				</div>
+				
+				<!-- 评论区域 -->
+				
+			</article>
+		</main>
+		</div>
+	</div>
+</body>
+</html>
