@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="个人博客" />
+    <meta name="author" content="" />
+    <title>暑期暴走北京城 | 百川随笔</title>
+    
+    <!-- 主要样式文件 -->
+    <link rel="stylesheet" href="https://tamhaywoo.github.io/styles/main.css" type="text/css" media="screen" />
+    
+    <!-- 代码高亮样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    
+    <!-- 目录样式和返回顶部按钮样式 -->
+    <style>
+        /* 目录样式 */
+        .post-layout {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .post-toc {
+            position: sticky;
+            top: 100px;
+            align-self: flex-start;
+            width: 200px;
+            height: fit-content;
+            max-height: calc(100vh - 130px);
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .toc-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .toc-nav ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        
+        .toc-nav li {
+            line-height: 1.5;
+        }
+        
+        .toc-nav li a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-block;
+            padding: 3px 0;
+        }
+        
+        .toc-nav li a:hover {
+            color: #23B175;
+        }
+        
+        .toc-nav li.toc-h2 {
+            font-weight: 500;
+        }
+        
+        .toc-nav li.toc-h3 {
+            padding-left: 15px;
+            font-size: 0.95em;
+        }
+        
+        .toc-nav li.toc-h4 {
+            padding-left: 30px;
+            font-size: 0.9em;
+        }
+        
+        /* 文章元信息样式 */
+        .post-meta {
+            margin-top: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .post-date {
+            margin-right: 0.5rem;
+        }
+        
+        .post-word-count {
+            margin-right: 0.5rem;
+        }
+        
+        .post-tags {
+            display: inline-block;
+        }
+        
+        .post-tags a {
+            color: #666;
+            text-decoration: none;
+            padding: 0.2rem 0.3rem;
+            background-color: #f5f5f5;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .post-tags a:hover {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        
+        .toc-nav li.active a {
+            color: #23B175;
+            font-weight: 600;
+        }
+        
+        /* 文章内容区域调整 */
+        .main-content {
+            flex: 1;
+        }
+        
+        /* 移动端适配 - 完全隐藏目录 */
+        @media (max-width: 968px) {
+            .post-toc {
+                display: none;
+            }
+            
+            .post-layout {
+                flex-direction: column;
+            }
+        }
+        
+        /* 返回顶部按钮样式 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #23B175;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+        }
+        
+        .back-to-top:not(.u-hide) {
+            opacity: 1;
+        }
+        
+        .back-to-top:hover {
+            background-color: #23B175;
+        }
+        
+        /* 添加一个简单的箭头图标，不依赖字体图标 */
+        .back-to-top::before {
+            content: '↑';
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* 阅读进度条样式 */
+        #reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background-color: #23B175;
+            z-index: 10001;
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+    </style>
+    
+    <!-- JavaScript 库 -->
+    <script src="https://tamhaywoo.github.io/media/scripts/jquery.js" defer></script>
+    <script src="https://tamhaywoo.github.io/media/scripts/jquery-migrate.min.js" defer></script>
+    <script src="https://tamhaywoo.github.io/media/scripts/main.js" defer></script>
+    <script defer>
+        // 返回顶部功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建返回顶部按钮
+            const backToTopBtn = document.createElement('div');
+            backToTopBtn.className = 'back-to-top u-hide';
+            backToTopBtn.id = 'backToTop';
+            document.body.appendChild(backToTopBtn);
+            
+            // 显示/隐藏返回顶部按钮
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.remove('u-hide');
+                } else {
+                    backToTopBtn.classList.add('u-hide');
+                }
+            });
+            
+            // 返回顶部点击事件
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    
+    <!-- 阅读进度条脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBar = document.getElementById('reading-progress');
+            if (progressBar) {
+                function updateProgress() {
+                    const windowHeight = window.innerHeight;
+                    const documentHeight = document.documentElement.scrollHeight;
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+                    progressBar.style.width = scrollPercentage + '%';
+                }
+                
+                // 添加滚动事件监听
+                window.addEventListener('scroll', updateProgress);
+                // 初始加载时更新一次
+                updateProgress();
+            }
+        });
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" defer></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 代码高亮
+            if (typeof hljs !== 'undefined') {
+                hljs.highlightAll();
+            }
+            
+            // 文章字数统计
+            function countWords() {
+                const contentElement = document.querySelector('.post-content');
+                const wordCountElement = document.getElementById('word-count');
+                
+                if (contentElement && wordCountElement) {
+                    // 获取纯文本内容
+                    const text = contentElement.textContent || contentElement.innerText;
+                    // 移除多余的空白字符
+                    const cleanedText = text.replace(/\s+/g, ' ').trim();
+                    // 计算字数（中英文混合）
+                    let wordCount = 0;
+                    // 匹配中文、日文、韩文字符
+                    const asianChars = cleanedText.match(/[\u4e00-\u9fa5\u3040-\u30ff\u3400-\u4dbf\uac00-\ud7af]/g);
+                    if (asianChars) wordCount += asianChars.length;
+                    // 匹配英文单词（连续的非空白字符）
+                    const words = cleanedText.match(/[a-zA-Z]+/g);
+                    if (words) wordCount += words.length;
+                    // 显示结果
+                    wordCountElement.textContent = wordCount;
+                }
+            }
+            
+            // 执行字数统计
+            countWords();
+            
+            // 文章目录生成和滚动监听
+            // 检测是否为移动设备（基于屏幕宽度）
+            function isMobileDevice() {
+                return window.innerWidth <= 968;
+            }
+            
+            // 仅在非移动设备上生成目录
+            if (!isMobileDevice()) {
+                // 获取元素
+                var postContent = document.querySelector('.post-content');
+                var tocList = document.getElementById('post-toc');
+                
+                if (postContent && tocList) {
+                    var headings = postContent.querySelectorAll('h2, h3, h4');
+                    
+                    if (headings.length > 0) {
+                        // 生成目录项
+                        for (var i = 0; i < headings.length; i++) {
+                            var heading = headings[i];
+                            // 为每个标题添加ID
+                            var headingId = heading.getAttribute('id') || 'heading-' + i;
+                            heading.setAttribute('id', headingId);
+                            
+                            // 创建目录项
+                            var listItem = document.createElement('li');
+                            listItem.className = 'toc-' + heading.tagName.toLowerCase();
+                            
+                            var link = document.createElement('a');
+                            link.href = '#' + headingId;
+                            link.textContent = heading.textContent;
+                            
+                            // 平滑滚动到标题
+                            link.onclick = function(e) {
+                                e.preventDefault();
+                                var targetId = this.getAttribute('href').substring(1);
+                                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                            };
+                            
+                            listItem.appendChild(link);
+                            tocList.appendChild(listItem);
+                        }
+                        
+                        // 滚动监听，高亮当前目录项
+                        window.onscroll = function() {
+                            var scrollPosition = window.scrollY + 100;
+                            
+                            for (var i = 0; i < headings.length; i++) {
+                                var heading = headings[i];
+                                var headingTop = heading.offsetTop;
+                                var nextHeading = i + 1 < headings.length ? headings[i + 1] : null;
+                                var nextHeadingTop = nextHeading ? nextHeading.offsetTop : Infinity;
+                                
+                                var tocItem = tocList.children[i];
+                                
+                                if (scrollPosition >= headingTop && scrollPosition < nextHeadingTop) {
+                                    // 移除所有active类
+                                    for (var j = 0; j < tocList.children.length; j++) {
+                                        tocList.children[j].classList.remove('active');
+                                    }
+                                    // 添加当前项active类
+                                    tocItem.classList.add('active');
+                                }
+                            }
+                        };
+                        
+                        // 触发一次滚动事件，确保初始状态正确
+                        window.onscroll();
+                    } else {
+                        // 如果没有标题，隐藏目录
+                        document.querySelector('.post-toc').style.display = 'none';
+                    }
+                }
+            }
+        });
+    </script>
+    
+    <!-- Google Analytics -->
+    
+</head>
+<body class="single single-post">
+	<!-- 阅读进度条 -->
+	<div id="reading-progress"></div>
+	<!-- 导航栏区域 -->
+	<header id="masthead" class="site-header" role="banner">
+	<div class="header-container">
+		<!-- 网站标题/Logo -->
+	<div class="site-branding">
+		
+		<h2 class="site-title">
+			<a href="/" rel="home">
+				百川随笔 
+			</a>
+		</h2>
+			
+		</div>
+		
+		<!-- 移动端导航触发按钮 -->
+		<button 
+			class="primary-nav-trigger" 
+			type="button"
+			aria-expanded="false"
+			aria-controls="site-navigation"
+			aria-label="打开菜单"
+		>
+			<span class="menu-icon"></span>
+		</button>
+	</div>
+</header>
+	<div class="site-navigation-wrapper">
+		<!-- 关闭按钮 -->
+		<div class="close-nav-btn">&times;</div>
+		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="主导航">
+			<ul class="primary-nav">
+				 
+					<li class="menu-item menu-item-1">
+						<a 
+							title="首页" 
+							href="https://tamhaywoo.github.io"
+							class="menu-link"
+						>
+							首页
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-2">
+						<a 
+							title="目录" 
+							href="https://tamhaywoo.github.io/archives"
+							class="menu-link"
+						>
+							目录
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-3">
+						<a 
+							title="标签" 
+							href="https://tamhaywoo.github.io/tags"
+							class="menu-link"
+						>
+							标签
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-4">
+						<a 
+							title="关于" 
+							href="https://tamhaywoo.github.io/post/about"
+							class="menu-link"
+						>
+							关于
+						</a>
+					</li>
+				 
+			</ul>
+		</nav>
+	</div>
+	<!-- 导航栏区域结束 -->
+	
+	<div class="surface-content">
+		<div class="post-layout">
+			<aside class="post-toc">
+				<div class="toc-container">
+					<h2 class="toc-title">文章目录</h2>
+					<nav class="toc-nav">
+						<ul id="post-toc"></ul>
+					</nav>
+				</div>
+			</aside>
+			<main class="main-content" role="main">
+			<article class="post-article" itemscope itemtype="http://schema.org/Article">
+				<section class="section-body">
+					<header class="section-header u-textAlignCenter">
+						<h1 class="grap--h1" itemprop="headline">暑期暴走北京城</h1>
+						<div class="post-meta">
+							<span class="post-date" itemprop="datePublished">发布: 2023-07-07</span>
+							<span class="post-word-count"><span id="word-count">--</span>字</span>
+							
+								<span class="post-tags">
+								
+									<a href="https://tamhaywoo.github.io/travel/">旅行</a>
+									
+								
+								</span>
+							
+						</div>
+					</header>
+					<div class="grap post-content" itemprop="articleBody">
+						
+						<p>我第一次去北京是2014年8月，之后的2个月又去了2趟，那时候去北京是为了学习教练技术的课程。</p>
+<p>今年7月，时隔9年，我和夫人带着大小宝以及岳母一起在北京游玩。这次北京游的主要起因，是夫人之前曾提出在大宝小学毕业考试之后参观北大清华，另外一个原因是岳母快要过60岁生日了，请她去北京旅游算是给她一个小小的生日礼物。（后记：参观清华北大对于孩子的成长帮助非常有限。另，不能进入北大清华校园内。）</p>
+<p>安排旅游行程并不是一件简单的事情，尤其是北京的旅游安排。北京很多景区和场馆需要提前预约，而去北京旅游的人特别多，所以预约时特别困难，基本上是秒无。当预约不上相应的场馆时，需要调整行程安排。</p>
+<h2 id="景点场馆安排">景点场馆安排</h2>
+<p>岳母想去的地方是毛主席纪念堂、天安门城楼、故宫博物院、颐和园、圆明园、八达岭长城、天安门广场升旗仪式；</p>
+<p>我想让大宝去参观的地方是清华大学、北京大学、故宫博物院、国家博物馆；</p>
+<p>大宝和小宝都想去天安门广场看升旗仪式，还有去军事博物馆看武器装备；</p>
+<p>夫人则认为来一趟北京很不容易，哪儿都想去看看，安排充实一点；</p>
+<p>我呢，受到炎热天气的影响，只想去有遮挡太阳的地方，比如颐和园、国家博物馆、军事博物馆。</p>
+<p>最后我们分别去了这些地方：</p>
+<ul>
+<li>清华大学</li>
+<li>故宫博物院</li>
+<li>国家博物馆</li>
+<li>颐和园</li>
+<li>圆明园</li>
+<li>毛主席纪念馆</li>
+<li>军事博物馆</li>
+<li>天坛公园</li>
+<li>景山公园</li>
+<li>天安门广场升旗仪式</li>
+<li>人民英雄纪念碑</li>
+<li>鸟巢</li>
+<li>水立方</li>
+<li>八达岭长城</li>
+</ul>
+<h2 id="交通出行方式">交通出行方式</h2>
+<blockquote>
+<p>推荐：地铁、网约车、高铁、巴士<br>
+慎重：租车</p>
+</blockquote>
+<p>长沙与北京之间的交通方式，可以选择乘坐高铁或飞机，这两者就是时间和成本的区别。考虑到岳母从没有坐过飞机，且我的假期时间有限，最终选择往返乘坐飞机的交通方式。</p>
+<p>在北京城内外出行方式的规划上，我准备到北京后用租赁车辆的方式解决交通的问题。因为我这次出行一共5人，如果通过网约车出行，每次出行时要需要2台5座的车。如果这样算，神州租车的价格并不贵。不过，最终我还是放弃了这个安排方式。因为堵车、停车难、停车费贵，隐形成本大得很。</p>
+<p>北京的交通拥堵情况特别严重，但地铁交通还不错，可以灵活解决北京城内的出行问题。但，在北京的这些天里，我只乘坐了2次地铁，其他时间都是通过网约车的方式解决出行的问题。</p>
+<p>另外，如果去八达岭长城，推荐长城官方直通车DarlingBus，会给乘坐巴士的游客4.5小时的游览时间，其他巴士则只有3小时的游览时间可以安排。</p>
+<h2 id="票务及预约">票务及预约</h2>
+<p>一定要重视这个事情！这关系到整个行程安排，因为如果没有预约上，根本进不去。</p>
+<p>1分钟不到就能把预约票抢完，你会感到深深的无助。你能做的就是不断地退出和进入，等待别人没来得及付款或者自动退出之后捡漏。只要按时守着手机，一家人参与抢票，一般是可以抢到的，就是有点糟心，每次抢票花费时间大约在20分钟-60分钟不等。</p>
+<table>
+<thead>
+<tr>
+<th>提前天数</th>
+<th>预约场馆</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15天</td>
+<td>八达岭长城</td>
+</tr>
+<tr>
+<td>10天</td>
+<td>中国人民革命军事博物馆</td>
+</tr>
+<tr>
+<td>9天</td>
+<td>天安门广场升旗仪式</td>
+</tr>
+<tr>
+<td>7天</td>
+<td>国家博物馆、故宫博物院</td>
+</tr>
+<tr>
+<td>6天</td>
+<td>毛主席纪念堂</td>
+</tr>
+</tbody>
+</table>
+<h2 id="按区域安排日程">按区域安排日程</h2>
+<table>
+<thead>
+<tr>
+<th>DAY</th>
+<th>安 排</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DAY0</td>
+<td>由于乘坐的飞机到达北京大兴机场已接近0点，考虑就近安排酒店A，以便让家人们尽快休息。</td>
+</tr>
+<tr>
+<td>DAY1</td>
+<td>北京大兴国际机场 - 中关村梵屋公寓 - 清华大学 - 北京大学 - 酒店B - 圆明园 - 颐和园 - 酒店B</td>
+</tr>
+<tr>
+<td>DAY2</td>
+<td>酒店B - 国家图书馆 - 八达岭长城 - 奥运村体育场 - 鸟巢 - 水立方 - 酒店B</td>
+</tr>
+<tr>
+<td>DAY3</td>
+<td>酒店B - 酒店C - 故宫博物院 - 景山公园 - 北海公园 - 酒店C</td>
+</tr>
+<tr>
+<td>DAY4</td>
+<td>酒店C - 天安门广场升旗仪式 - 毛主席纪念堂 - 国家博物馆 - 天坛公园 - 酒店C</td>
+</tr>
+<tr>
+<td>DAY5</td>
+<td>酒店C - 军事博物馆 - 玉渊潭公园 - 北京大兴国际机场 - 长沙黄花国际机场</td>
+</tr>
+</tbody>
+</table>
+<h2 id="旅行开支情况">旅行开支情况</h2>
+<p>旅行中最大的开支是车马费，其次是住宿费，再次就是餐饮费。景区或场馆的门票倒是不要什么钱。</p>
+<table>
+<thead>
+<tr>
+<th>费用项目</th>
+<th>金额</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>交通费</td>
+<td>¥12632.64</td>
+</tr>
+<tr>
+<td>住宿费</td>
+<td>¥4877</td>
+</tr>
+<tr>
+<td>餐费</td>
+<td>¥3400</td>
+</tr>
+<tr>
+<td>门票费</td>
+<td>¥1278</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>最后更新：<code>2025 年 4 月 13 日</code></p>
+
+					</div>
+					
+					<!-- 文章关键词 -->
+					
+				</section>
+				
+				<!-- 文章导航 -->
+				<div class="post-navigation">
+					
+					
+				</div>
+				
+				<!-- 评论区域 -->
+				
+			</article>
+		</main>
+		</div>
+	</div>
+</body>
+</html>
