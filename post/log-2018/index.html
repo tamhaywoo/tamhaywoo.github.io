@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="个人博客" />
+    <meta name="author" content="" />
+    <title>2018年随笔合集 | 百川随笔</title>
+    
+    <!-- 立即应用暗模式，避免闪烁 - 必须在CSS加载前执行 -->
+    <script>
+        // 早期检测暗模式设置，避免页面加载时的闪烁
+        (function() {
+            // 直接检查系统偏好，不依赖localStorage，确保实时响应系统设置
+            var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // 直接在documentElement上添加dark类，这样CSS加载后就会立即应用
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+    
+    <!-- 引入字节跳动字体 - Noto Sans Simplified Chinese -->
+    <link rel="stylesheet" href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/noto-sans-sc/10.0.0/css/noto-sans-sc.css">
+    
+    <!-- 主要样式文件 -->
+    <link rel="stylesheet" href="https://i.tanhaiyu.com/styles/main.css" type="text/css" media="screen" />
+    
+    <!-- 代码高亮样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    
+    <!-- 目录样式和返回顶部按钮样式 -->
+    <style>
+        /* 目录样式 */
+        .post-layout {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .post-toc {
+            position: sticky;
+            top: 100px;
+            align-self: flex-start;
+            width: 200px;
+            height: fit-content;
+            max-height: calc(100vh - 130px);
+            overflow-y: auto;
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .toc-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            padding: 0 0 10px 0;
+            border-bottom: 2px solid #e3e2e2;
+        }
+        
+        .toc-nav ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        
+        .toc-nav li {
+            line-height: 1.35rem;
+        }
+        
+        .toc-nav li a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-block;
+            /* 限制文本长度为11个汉字 */
+            width: 176px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .toc-nav li a:hover {
+            color: #23B175;
+        }
+        
+        .toc-nav li.toc-h2 {
+            font-weight: 500;
+        }
+        
+        .toc-nav li.toc-h3 {
+            padding-left: 15px;
+            font-size: 0.95em;
+        }
+        
+        .toc-nav li.toc-h4 {
+            padding-left: 30px;
+            font-size: 0.9em;
+        }
+        
+        /* 文章元信息样式 */
+        .post-meta {
+            margin-top: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            padding: 0 0 10px 0;
+            border-bottom: 2px solid #bdbaba;
+            opacity: 0.5;
+        }
+        
+        .post-word-count {
+            margin-right: 0.5rem;
+        }
+        
+        .post-tags {
+            display: inline-block;
+        }
+        
+        .post-tags a {
+            color: #666;
+            text-decoration: none;
+            padding: 0.2rem 0.3rem;
+            background-color: #f5f5f5;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .post-tags a:hover {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        
+        .toc-nav li.active a {
+            color: #23B175;
+            font-weight: 600;
+        }
+        
+        /* 文章内容区域调整 */
+        .main-content {
+            flex: 1;
+        }
+        
+        /* 移动端适配 - 完全隐藏目录 */
+        @media (max-width: 968px) {
+            .post-toc {
+                display: none;
+            }
+            
+            .post-layout {
+                flex-direction: column;
+            }
+        }
+        
+        /* 返回顶部按钮样式 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #23B175;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+        }
+        
+        .back-to-top:not(.u-hide) {
+            opacity: 0.88;
+        }
+        
+        .back-to-top:hover {
+            background-color: #23B175;
+        }
+        
+        /* 添加一个简单的箭头图标，不依赖字体图标 */
+        .back-to-top::before {
+            content: '▲';
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* 阅读进度条样式 */
+        #reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background-color: #23B175;
+            z-index: 10001;
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+    </style>
+    
+    <!-- JavaScript 库 -->
+    <script src="https://i.tanhaiyu.com/media/scripts/jquery.js" defer></script>
+    <script src="https://i.tanhaiyu.com/media/scripts/jquery-migrate.min.js" defer></script>
+    <script src="https://i.tanhaiyu.com/media/scripts/main.js" defer></script>
+    <script defer>
+        // 返回顶部功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建返回顶部按钮
+            const backToTopBtn = document.createElement('div');
+            backToTopBtn.className = 'back-to-top u-hide';
+            backToTopBtn.id = 'backToTop';
+            document.body.appendChild(backToTopBtn);
+            
+            // 显示/隐藏返回顶部按钮
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.remove('u-hide');
+                } else {
+                    backToTopBtn.classList.add('u-hide');
+                }
+            });
+            
+            // 返回顶部点击事件
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    
+    <!-- 阅读进度条脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBar = document.getElementById('reading-progress');
+            if (progressBar) {
+                function updateProgress() {
+                    const windowHeight = window.innerHeight;
+                    const documentHeight = document.documentElement.scrollHeight;
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+                    progressBar.style.width = scrollPercentage + '%';
+                }
+                
+                // 添加滚动事件监听
+                window.addEventListener('scroll', updateProgress);
+                // 初始加载时更新一次
+                updateProgress();
+            }
+        });
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" defer></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 代码高亮
+            if (typeof hljs !== 'undefined') {
+                hljs.highlightAll();
+            }
+            
+            // 文章字数统计
+            function countWords() {
+                const contentElement = document.querySelector('.post-content');
+                const wordCountElement = document.getElementById('word-count');
+                
+                if (contentElement && wordCountElement) {
+                    // 获取纯文本内容
+                    const text = contentElement.textContent || contentElement.innerText;
+                    // 移除多余的空白字符
+                    const cleanedText = text.replace(/\s+/g, ' ').trim();
+                    // 计算字数（中英文混合）
+                    let wordCount = 0;
+                    // 匹配中文、日文、韩文字符
+                    const asianChars = cleanedText.match(/[\u4e00-\u9fa5\u3040-\u30ff\u3400-\u4dbf\uac00-\ud7af]/g);
+                    if (asianChars) wordCount += asianChars.length;
+                    // 匹配英文单词（连续的非空白字符）
+                    const words = cleanedText.match(/[a-zA-Z]+/g);
+                    if (words) wordCount += words.length;
+                    // 显示结果
+                    wordCountElement.textContent = wordCount;
+                }
+            }
+            
+            // 执行字数统计
+            countWords();
+            
+            // 文章目录生成和滚动监听
+            // 检测是否为移动设备（基于屏幕宽度）
+            function isMobileDevice() {
+                return window.innerWidth <= 968;
+            }
+            
+            // 仅在非移动设备上生成目录
+            if (!isMobileDevice()) {
+                // 获取元素
+                var postContent = document.querySelector('.post-content');
+                var tocList = document.getElementById('post-toc');
+                
+                if (postContent && tocList) {
+                    var headings = postContent.querySelectorAll('h2, h3, h4');
+                    
+                    if (headings.length > 0) {
+                        // 生成目录项
+                        for (var i = 0; i < headings.length; i++) {
+                            var heading = headings[i];
+                            // 为每个标题添加ID
+                            var headingId = heading.getAttribute('id') || 'heading-' + i;
+                            heading.setAttribute('id', headingId);
+                            
+                            // 创建目录项
+                            var listItem = document.createElement('li');
+                            listItem.className = 'toc-' + heading.tagName.toLowerCase();
+                            
+                            var link = document.createElement('a');
+                            link.href = '#' + headingId;
+                            link.textContent = heading.textContent;
+                            
+                            // 平滑滚动到标题
+                            link.onclick = function(e) {
+                                e.preventDefault();
+                                var targetId = this.getAttribute('href').substring(1);
+                                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                            };
+                            
+                            listItem.appendChild(link);
+                            tocList.appendChild(listItem);
+                        }
+                        
+                        // 滚动监听，高亮当前目录项
+                        window.onscroll = function() {
+                            var scrollPosition = window.scrollY + 100;
+                            
+                            for (var i = 0; i < headings.length; i++) {
+                                var heading = headings[i];
+                                var headingTop = heading.offsetTop;
+                                var nextHeading = i + 1 < headings.length ? headings[i + 1] : null;
+                                var nextHeadingTop = nextHeading ? nextHeading.offsetTop : Infinity;
+                                
+                                var tocItem = tocList.children[i];
+                                
+                                if (scrollPosition >= headingTop && scrollPosition < nextHeadingTop) {
+                                    // 移除所有active类
+                                    for (var j = 0; j < tocList.children.length; j++) {
+                                        tocList.children[j].classList.remove('active');
+                                    }
+                                    // 添加当前项active类
+                                    tocItem.classList.add('active');
+                                }
+                            }
+                        };
+                        
+                        // 触发一次滚动事件，确保初始状态正确
+                        window.onscroll();
+                    } else {
+                        // 如果没有标题，隐藏目录
+                        document.querySelector('.post-toc').style.display = 'none';
+                    }
+                }
+            }
+        });
+    </script>
+    
+    <!-- Google Analytics -->
+    
+</head>
+<body class="single single-post">
+	<!-- 阅读进度条 -->
+	<div id="reading-progress"></div>
+	<!-- 导航栏区域 -->
+	<header id="masthead" class="site-header" role="banner">
+	<div class="header-container">
+		<!-- 网站标题/Logo -->
+	<div class="site-branding">
+			<div class="site-avatar">
+				<a href="/" rel="home">
+					<img src="/images/avatar.png" alt="百川随笔" />
+				</a>
+			</div>
+			
+		</div>
+		
+		<!-- 暗色调切换按钮 -->
+		<button 
+			class="dark-mode-toggle" 
+			type="button"
+			aria-label="切换暗色调"
+			id="darkModeToggle"
+		>
+			🌙
+		</button>
+		
+		<!-- 移动端导航触发按钮 -->
+		<button 
+			class="primary-nav-trigger" 
+			type="button"
+			aria-expanded="false"
+			aria-controls="site-navigation"
+			aria-label="打开菜单"
+		>
+			<span class="menu-icon"></span>
+		</button>
+	</div>
+</header>
+	<div class="site-navigation-wrapper">
+		<!-- 关闭按钮 -->
+		<div class="close-nav-btn">&times;</div>
+		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="主导航">
+			<ul class="primary-nav">
+				 
+					<li class="menu-item menu-item-1">
+						<a 
+							title="首页" 
+							href="https://i.tanhaiyu.com"
+							class="menu-link"
+						>
+							首页
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-2">
+						<a 
+							title="目录" 
+							href="https://i.tanhaiyu.com/archives"
+							class="menu-link"
+						>
+							目录
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-3">
+						<a 
+							title="标签" 
+							href="https://i.tanhaiyu.com/tags"
+							class="menu-link"
+						>
+							标签
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-4">
+						<a 
+							title="关于" 
+							href="https://i.tanhaiyu.com/post/about"
+							class="menu-link"
+						>
+							关于
+						</a>
+					</li>
+				 
+			</ul>
+		</nav>
+	</div>
+	<!-- 导航栏区域结束 -->
+	
+	<div class="surface-content">
+		<div class="post-layout">
+			<aside class="post-toc">
+				<div class="toc-container">
+					<h2 class="toc-title">目录</h2>
+					<nav class="toc-nav">
+						<ul id="post-toc"></ul>
+					</nav>
+				</div>
+			</aside>
+			<main class="main-content" role="main">
+			<article class="post-article" itemscope itemtype="http://schema.org/Article">
+				<section class="section-body">
+					<header class="section-header u-textAlignCenter">
+						<h1 class="grap-h1" itemprop="headline">2018年随笔合集</h1>
+						<div class="post-meta">
+							<span class="post-date" itemprop="datePublished">2018-10-11</span>
+							
+								<span class="post-tags">
+								
+									<a href="https://i.tanhaiyu.com/essay/">随笔</a>
+									
+								
+								</span>
+							
+						</div>
+					</header>
+					<div class="grap post-content" itemprop="articleBody">
+						
+						<h2 id="2018-03-04">2018-03-04</h2>
+<p>只对自己负责时，成功的全部就是自我成长；对团队负责时，成功的全部就变成了帮助他人成长。</p>
+<h2 id="2018-03-09">2018-03-09</h2>
+<p>商业不是依靠你的一己之力，而是依靠你们的群策群力，你要尽最大努力去征求他人的建议和想法，获取他人的帮助。</p>
+<p><strong>商业归根结底是一项团队运动，必须依靠团队的力量。</strong></p>
+<h2 id="2018-03-27">2018-03-27</h2>
+<p>若有人愿意为你的商品或服务付费，说明你创造了价值。收益是对价值创造的一种肯定，有了利润，整个价值创造链才能继续满足更多人的需求。</p>
+<p>倘若东西卖不出去，只能说明你做的事情对别人没有意义，是一种资源浪费，应该停止，并让资源投入到价值创造中去。</p>
+<p>因此市场中的每一次消费都是一次投票，决定着资源要如何配置。没有了货币的参与，那么商业中的资源分配机制就会被打破，我们也就无法判断自己做的事情是否真正有意义。</p>
+<h2 id="2018-04-04">2018-04-04</h2>
+<p>工作中对伙伴的用心程度可以通过其他人的评价来测评，如果有人说你对谁很用心，而你很感动并且眼眶湿润想哭，那我可以肯定你真的是用心了的。</p>
+<!-- more -->
+<h2 id="2018-04-30">2018-04-30</h2>
+<p>为客户业绩增长再多承担一些，再深入一些。为团队伙伴成长再要求多一点，再耐心一点。</p>
+<h2 id="2018-06-25">2018-06-25</h2>
+<p>什么才是你的源动力？<br>
+还未实现的梦想。</p>
+<h2 id="2018-07-29">2018-07-29</h2>
+<p>SEVEN说：老爸，为什么快过生日的时候，你突然对我这么好？</p>
+<p>我很惊讶：你说的好，是指什么？</p>
+<p>她告诉我：就是不需要我要求你，你就给我安排好了我想要的。</p>
+<p>嗯，看来我关注她的时间确实比以前少了。要反省。</p>
+<h2 id="2018-08-13">2018-08-13</h2>
+<p>让生活变得幸福的秘诀在于两个字：感恩（也可以理解成知足）</p>
+<h2 id="2018-08-31">2018-08-31</h2>
+<p>分享知识的价值在于能够令人行动，并促进成果。如能在此基础上扶持出知识的传承者，更佳。</p>
+<h2 id="2018-09-01">2018-09-01</h2>
+<p>夜读《清醒》，突然领悟了多年前黄钰茗老师在艾特婚纱培训高管时，在课间常常提及的“地狱”。</p>
+<p>他提及的所谓“天堂”和“地狱”并非死后的世界，而是两种心境。</p>
+<p>以不清醒的状态生活和工作时，境遇如同“地狱”。如果能够点亮清醒之光，同样的境遇却犹如“天堂”。</p>
+<h2 id="2018-09-04">2018-09-04</h2>
+<p>遭遇鲁莽的对手，谨慎的指挥官也会不知所措；偶然的分神可能在不经意间给人带来灵感；为了达到量化的目标，人们反而会制定有悖常理的激励措施；唱反调的人貌似偏离团队和谐，其实独具慧眼；当我们对在线问卷视而不见时，反而找到了灵魂伴侣。</p>
+<p>如果我们只受秩序驱使，错过的是更广阔的天地。</p>
+<h2 id="2018-09-06">2018-09-06</h2>
+<p>如果有团队协同作战、有战略规划的思维、善于数据分析总结、有稳定的心态、愿意每天投入75%的时间精力，社交媒体广告投放的事情并没有想象中那么复杂。</p>
+<p>如果团队具备产品开发能力，那么还可以通过研发工具来提高工作效率和工作精度。</p>
+<h2 id="2018-09-10">2018-09-10</h2>
+<p>如果在团队成员出现问题时，没有给予不留情面的“指正”及“全力协同支持”，那就是假借“给予成长机会与自我生长“的名义抛弃了本应由团队领袖承担的责任。</p>
+<h2 id="2018-09-11">2018-09-11</h2>
+<p>良好的沟通，有一个必要条件：就是在沟通前期不要立刻进行主观意识的回应，先充分的倾听，理解对方所表达的信息，然后再谦逊地提供不带情绪的解决方案。</p>
+<h2 id="2018-09-13">2018-09-13</h2>
+<p>和团队成员探讨分享推广运营技巧的时候，只有那些“相信”并“亲身体验”的伙伴才有收获。而那些觉得“迟疑”、“看看再说”、“试试看”的人往往只入了门便退了出去，并且“没有什么感觉”，甚至“不再相信”。</p>
+<p><strong>就算已经很厉害了，还是应该要：保持谦卑、保持好奇和创新、不怕失败、全力去做。</strong></p>
+<h2 id="2018-09-17">2018-09-17</h2>
+<p>问题本身就是问题。</p>
+<p>把问题放一边，想想真正要解决的是什么？</p>
+<h2 id="2018-09-17-2">2018-09-17</h2>
+<p>谁能够让用户愿意付出大量的时间参与其中，谁就掌握了直接与用户对话的先机。</p>
+<h2 id="2018-09-29">2018-09-29</h2>
+<p>正向竞争观：</p>
+<p>我可以全力以赴去追求我想要的胜利，但绝不会因为要赢而去伤害别人，也不会因为对胜利的渴望而恐惧失败。</p>
+<p>我拼尽全力，我更享受这个我拼尽全力的过程。</p>
+<h2 id="2018-10-09">2018-10-09</h2>
+<p>把工作中的事情梳理出操作标准，然后推行之，比一个个手把手地从头教起更有效果和效率。</p>
+<h2 id="2018-10-10">2018-10-10</h2>
+<p>宵夜后，团队感悟共识：</p>
+<p><strong>团队成员之间非常有必要多做坦诚的沟通，甚至要针对对方的舒适区进行刺激，激发出被他潜藏在深处的性情。只要方向一致，可以是不同方法和观点。</strong></p>
+<p>如此以来，行事坦荡荡，无畏猜忌。</p>
+<h2 id="2018-11-03">2018-11-03</h2>
+<p>就解决问题而言，意愿度比方法更重要。有了意愿度，自然会想到各种办法，创造可能性。</p>
+<h2 id="2018-12-02">2018-12-02</h2>
+<p><strong>企业管理不能只是立规矩，也不能立了规矩却没有奖惩，而最有效的管理是激发意愿度，让意愿度驱动行为。</strong></p>
+<p>今天在企业管理之外的日常生活中，对10后进行了激发意愿度的实践，效果是很不错的。</p>
+<p>感谢莎莎老师的法布施。</p>
+<h2 id="2018-12-11">2018-12-11</h2>
+<p>把你的问题，当成我的问题来解决。<br>
+把你的事业，当成我的事业来奋斗。<br>
+把你变成我，法门自开。</p>
+<h2 id="2018-12-24">2018-12-24</h2>
+<p>每一个时代的人都有其特定的生活方式和政治诉求，这是由于人性的自我所决定的。</p>
+<p>如果前几个年代的人把自己的诉求强加在后几个年代的人身上，自然是不会被理解和被接受。</p>
+<h2 id="2018-12-25">2018-12-25</h2>
+<p>市面上自己写（不是别人代笔）的自传体书籍可以概括为两种：一种是生前出版的，另一种是死后出版的。</p>
+<p>后面那种对自我剖析更透彻、更真实，因为他已经不在人世，不在乎别人如何评价。</p>
+
+					</div>
+					
+					<!-- 文章关键词 -->
+					
+				</section>
+				
+				<!-- 文章导航 -->
+				<div class="post-navigation">
+					
+					
+				</div>
+				
+				<!-- 评论区域 -->
+				
+			</article>
+		</main>
+		</div>
+	</div>
+</body>
+</html>

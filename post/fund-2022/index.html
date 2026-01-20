@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="个人博客" />
+    <meta name="author" content="" />
+    <title>2022年基金投资情况 | 百川随笔</title>
+    
+    <!-- 立即应用暗模式，避免闪烁 - 必须在CSS加载前执行 -->
+    <script>
+        // 早期检测暗模式设置，避免页面加载时的闪烁
+        (function() {
+            // 直接检查系统偏好，不依赖localStorage，确保实时响应系统设置
+            var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // 直接在documentElement上添加dark类，这样CSS加载后就会立即应用
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+    
+    <!-- 引入字节跳动字体 - Noto Sans Simplified Chinese -->
+    <link rel="stylesheet" href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/noto-sans-sc/10.0.0/css/noto-sans-sc.css">
+    
+    <!-- 主要样式文件 -->
+    <link rel="stylesheet" href="https://i.tanhaiyu.com/styles/main.css" type="text/css" media="screen" />
+    
+    <!-- 代码高亮样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    
+    <!-- 目录样式和返回顶部按钮样式 -->
+    <style>
+        /* 目录样式 */
+        .post-layout {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .post-toc {
+            position: sticky;
+            top: 100px;
+            align-self: flex-start;
+            width: 200px;
+            height: fit-content;
+            max-height: calc(100vh - 130px);
+            overflow-y: auto;
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .toc-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            padding: 0 0 10px 0;
+            border-bottom: 2px solid #e3e2e2;
+        }
+        
+        .toc-nav ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        
+        .toc-nav li {
+            line-height: 1.35rem;
+        }
+        
+        .toc-nav li a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-block;
+            /* 限制文本长度为11个汉字 */
+            width: 176px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .toc-nav li a:hover {
+            color: #23B175;
+        }
+        
+        .toc-nav li.toc-h2 {
+            font-weight: 500;
+        }
+        
+        .toc-nav li.toc-h3 {
+            padding-left: 15px;
+            font-size: 0.95em;
+        }
+        
+        .toc-nav li.toc-h4 {
+            padding-left: 30px;
+            font-size: 0.9em;
+        }
+        
+        /* 文章元信息样式 */
+        .post-meta {
+            margin-top: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            padding: 0 0 10px 0;
+            border-bottom: 2px solid #bdbaba;
+            opacity: 0.5;
+        }
+        
+        .post-word-count {
+            margin-right: 0.5rem;
+        }
+        
+        .post-tags {
+            display: inline-block;
+        }
+        
+        .post-tags a {
+            color: #666;
+            text-decoration: none;
+            padding: 0.2rem 0.3rem;
+            background-color: #f5f5f5;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .post-tags a:hover {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        
+        .toc-nav li.active a {
+            color: #23B175;
+            font-weight: 600;
+        }
+        
+        /* 文章内容区域调整 */
+        .main-content {
+            flex: 1;
+        }
+        
+        /* 移动端适配 - 完全隐藏目录 */
+        @media (max-width: 968px) {
+            .post-toc {
+                display: none;
+            }
+            
+            .post-layout {
+                flex-direction: column;
+            }
+        }
+        
+        /* 返回顶部按钮样式 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #23B175;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+        }
+        
+        .back-to-top:not(.u-hide) {
+            opacity: 0.88;
+        }
+        
+        .back-to-top:hover {
+            background-color: #23B175;
+        }
+        
+        /* 添加一个简单的箭头图标，不依赖字体图标 */
+        .back-to-top::before {
+            content: '▲';
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* 阅读进度条样式 */
+        #reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background-color: #23B175;
+            z-index: 10001;
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+    </style>
+    
+    <!-- JavaScript 库 -->
+    <script src="https://i.tanhaiyu.com/media/scripts/jquery.js" defer></script>
+    <script src="https://i.tanhaiyu.com/media/scripts/jquery-migrate.min.js" defer></script>
+    <script src="https://i.tanhaiyu.com/media/scripts/main.js" defer></script>
+    <script defer>
+        // 返回顶部功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建返回顶部按钮
+            const backToTopBtn = document.createElement('div');
+            backToTopBtn.className = 'back-to-top u-hide';
+            backToTopBtn.id = 'backToTop';
+            document.body.appendChild(backToTopBtn);
+            
+            // 显示/隐藏返回顶部按钮
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.remove('u-hide');
+                } else {
+                    backToTopBtn.classList.add('u-hide');
+                }
+            });
+            
+            // 返回顶部点击事件
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    
+    <!-- 阅读进度条脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBar = document.getElementById('reading-progress');
+            if (progressBar) {
+                function updateProgress() {
+                    const windowHeight = window.innerHeight;
+                    const documentHeight = document.documentElement.scrollHeight;
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+                    progressBar.style.width = scrollPercentage + '%';
+                }
+                
+                // 添加滚动事件监听
+                window.addEventListener('scroll', updateProgress);
+                // 初始加载时更新一次
+                updateProgress();
+            }
+        });
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" defer></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 代码高亮
+            if (typeof hljs !== 'undefined') {
+                hljs.highlightAll();
+            }
+            
+            // 文章字数统计
+            function countWords() {
+                const contentElement = document.querySelector('.post-content');
+                const wordCountElement = document.getElementById('word-count');
+                
+                if (contentElement && wordCountElement) {
+                    // 获取纯文本内容
+                    const text = contentElement.textContent || contentElement.innerText;
+                    // 移除多余的空白字符
+                    const cleanedText = text.replace(/\s+/g, ' ').trim();
+                    // 计算字数（中英文混合）
+                    let wordCount = 0;
+                    // 匹配中文、日文、韩文字符
+                    const asianChars = cleanedText.match(/[\u4e00-\u9fa5\u3040-\u30ff\u3400-\u4dbf\uac00-\ud7af]/g);
+                    if (asianChars) wordCount += asianChars.length;
+                    // 匹配英文单词（连续的非空白字符）
+                    const words = cleanedText.match(/[a-zA-Z]+/g);
+                    if (words) wordCount += words.length;
+                    // 显示结果
+                    wordCountElement.textContent = wordCount;
+                }
+            }
+            
+            // 执行字数统计
+            countWords();
+            
+            // 文章目录生成和滚动监听
+            // 检测是否为移动设备（基于屏幕宽度）
+            function isMobileDevice() {
+                return window.innerWidth <= 968;
+            }
+            
+            // 仅在非移动设备上生成目录
+            if (!isMobileDevice()) {
+                // 获取元素
+                var postContent = document.querySelector('.post-content');
+                var tocList = document.getElementById('post-toc');
+                
+                if (postContent && tocList) {
+                    var headings = postContent.querySelectorAll('h2, h3, h4');
+                    
+                    if (headings.length > 0) {
+                        // 生成目录项
+                        for (var i = 0; i < headings.length; i++) {
+                            var heading = headings[i];
+                            // 为每个标题添加ID
+                            var headingId = heading.getAttribute('id') || 'heading-' + i;
+                            heading.setAttribute('id', headingId);
+                            
+                            // 创建目录项
+                            var listItem = document.createElement('li');
+                            listItem.className = 'toc-' + heading.tagName.toLowerCase();
+                            
+                            var link = document.createElement('a');
+                            link.href = '#' + headingId;
+                            link.textContent = heading.textContent;
+                            
+                            // 平滑滚动到标题
+                            link.onclick = function(e) {
+                                e.preventDefault();
+                                var targetId = this.getAttribute('href').substring(1);
+                                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                            };
+                            
+                            listItem.appendChild(link);
+                            tocList.appendChild(listItem);
+                        }
+                        
+                        // 滚动监听，高亮当前目录项
+                        window.onscroll = function() {
+                            var scrollPosition = window.scrollY + 100;
+                            
+                            for (var i = 0; i < headings.length; i++) {
+                                var heading = headings[i];
+                                var headingTop = heading.offsetTop;
+                                var nextHeading = i + 1 < headings.length ? headings[i + 1] : null;
+                                var nextHeadingTop = nextHeading ? nextHeading.offsetTop : Infinity;
+                                
+                                var tocItem = tocList.children[i];
+                                
+                                if (scrollPosition >= headingTop && scrollPosition < nextHeadingTop) {
+                                    // 移除所有active类
+                                    for (var j = 0; j < tocList.children.length; j++) {
+                                        tocList.children[j].classList.remove('active');
+                                    }
+                                    // 添加当前项active类
+                                    tocItem.classList.add('active');
+                                }
+                            }
+                        };
+                        
+                        // 触发一次滚动事件，确保初始状态正确
+                        window.onscroll();
+                    } else {
+                        // 如果没有标题，隐藏目录
+                        document.querySelector('.post-toc').style.display = 'none';
+                    }
+                }
+            }
+        });
+    </script>
+    
+    <!-- Google Analytics -->
+    
+</head>
+<body class="single single-post">
+	<!-- 阅读进度条 -->
+	<div id="reading-progress"></div>
+	<!-- 导航栏区域 -->
+	<header id="masthead" class="site-header" role="banner">
+	<div class="header-container">
+		<!-- 网站标题/Logo -->
+	<div class="site-branding">
+			<div class="site-avatar">
+				<a href="/" rel="home">
+					<img src="/images/avatar.png" alt="百川随笔" />
+				</a>
+			</div>
+			
+		</div>
+		
+		<!-- 暗色调切换按钮 -->
+		<button 
+			class="dark-mode-toggle" 
+			type="button"
+			aria-label="切换暗色调"
+			id="darkModeToggle"
+		>
+			🌙
+		</button>
+		
+		<!-- 移动端导航触发按钮 -->
+		<button 
+			class="primary-nav-trigger" 
+			type="button"
+			aria-expanded="false"
+			aria-controls="site-navigation"
+			aria-label="打开菜单"
+		>
+			<span class="menu-icon"></span>
+		</button>
+	</div>
+</header>
+	<div class="site-navigation-wrapper">
+		<!-- 关闭按钮 -->
+		<div class="close-nav-btn">&times;</div>
+		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="主导航">
+			<ul class="primary-nav">
+				 
+					<li class="menu-item menu-item-1">
+						<a 
+							title="首页" 
+							href="https://i.tanhaiyu.com"
+							class="menu-link"
+						>
+							首页
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-2">
+						<a 
+							title="目录" 
+							href="https://i.tanhaiyu.com/archives"
+							class="menu-link"
+						>
+							目录
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-3">
+						<a 
+							title="标签" 
+							href="https://i.tanhaiyu.com/tags"
+							class="menu-link"
+						>
+							标签
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-4">
+						<a 
+							title="关于" 
+							href="https://i.tanhaiyu.com/post/about"
+							class="menu-link"
+						>
+							关于
+						</a>
+					</li>
+				 
+			</ul>
+		</nav>
+	</div>
+	<!-- 导航栏区域结束 -->
+	
+	<div class="surface-content">
+		<div class="post-layout">
+			<aside class="post-toc">
+				<div class="toc-container">
+					<h2 class="toc-title">目录</h2>
+					<nav class="toc-nav">
+						<ul id="post-toc"></ul>
+					</nav>
+				</div>
+			</aside>
+			<main class="main-content" role="main">
+			<article class="post-article" itemscope itemtype="http://schema.org/Article">
+				<section class="section-body">
+					<header class="section-header u-textAlignCenter">
+						<h1 class="grap-h1" itemprop="headline">2022年基金投资情况</h1>
+						<div class="post-meta">
+							<span class="post-date" itemprop="datePublished">2022-12-31</span>
+							
+								<span class="post-tags">
+								
+									<a href="https://i.tanhaiyu.com/Investment/">投资</a>
+									
+								
+								</span>
+							
+						</div>
+					</header>
+					<div class="grap post-content" itemprop="articleBody">
+						
+						<p>投资时间区间：2022年1月1日至2022年12月31日<br>
+整体持仓收益率：<strong>-16.55%</strong>（比巴菲特低了5.93%）<br>
+整体净值：<strong>0.9168</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">基金名称</th>
+<th style="text-align:right">持仓占比</th>
+<th style="text-align:right">持仓收益率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">汇添富中证主要消费ETF联接A</td>
+<td style="text-align:right">3.26%</td>
+<td style="text-align:right">-1.15%</td>
+</tr>
+<tr>
+<td style="text-align:left">交银先进制造混合A</td>
+<td style="text-align:right">2.26%</td>
+<td style="text-align:right">-2.21%</td>
+</tr>
+<tr>
+<td style="text-align:left">广发制造业精选混合</td>
+<td style="text-align:right">0.59%</td>
+<td style="text-align:right">-4.33%</td>
+</tr>
+<tr>
+<td style="text-align:left">嘉实价值优势混合A</td>
+<td style="text-align:right">3.50%</td>
+<td style="text-align:right">-5.87%</td>
+</tr>
+<tr>
+<td style="text-align:left">万家行业优选</td>
+<td style="text-align:right">8.64%</td>
+<td style="text-align:right">-7.74%</td>
+</tr>
+<tr>
+<td style="text-align:left">易方达上证50增强A</td>
+<td style="text-align:right">12.47%</td>
+<td style="text-align:right">-7.97%</td>
+</tr>
+<tr>
+<td style="text-align:left">南方中证500信息联接C</td>
+<td style="text-align:right">3.16%</td>
+<td style="text-align:right">-8.21%</td>
+</tr>
+<tr>
+<td style="text-align:left">富国中证500指数增强（LOF）</td>
+<td style="text-align:right">2.11%</td>
+<td style="text-align:right">-8.84%</td>
+</tr>
+<tr>
+<td style="text-align:left">中欧医疗健康混合C</td>
+<td style="text-align:right">6.47%</td>
+<td style="text-align:right">-9.37%</td>
+</tr>
+<tr>
+<td style="text-align:left">广发多因子混合</td>
+<td style="text-align:right">2.04%</td>
+<td style="text-align:right">-9.64%</td>
+</tr>
+<tr>
+<td style="text-align:left">工银文体产业股票</td>
+<td style="text-align:right">2.27%</td>
+<td style="text-align:right">-9.66%</td>
+</tr>
+<tr>
+<td style="text-align:left">华商主题精选</td>
+<td style="text-align:right">0.92%</td>
+<td style="text-align:right">-10.89%</td>
+</tr>
+<tr>
+<td style="text-align:left">前海开源国家比较优势</td>
+<td style="text-align:right">6.86%</td>
+<td style="text-align:right">-12.99%</td>
+</tr>
+<tr>
+<td style="text-align:left">易方达深证100ETF联接C</td>
+<td style="text-align:right">6.44%</td>
+<td style="text-align:right">-13.82%</td>
+</tr>
+<tr>
+<td style="text-align:left">景顺长城环保优势股票</td>
+<td style="text-align:right">2.88%</td>
+<td style="text-align:right">-16.28%</td>
+</tr>
+<tr>
+<td style="text-align:left">交银新生活力</td>
+<td style="text-align:right">7.11%</td>
+<td style="text-align:right">-16.90%</td>
+</tr>
+<tr>
+<td style="text-align:left">国投瑞银创新动力混合</td>
+<td style="text-align:right">8.38%</td>
+<td style="text-align:right">-17.39%</td>
+</tr>
+<tr>
+<td style="text-align:left">南方创业板ETF联接A</td>
+<td style="text-align:right">5.46%</td>
+<td style="text-align:right">-18.13%</td>
+</tr>
+<tr>
+<td style="text-align:left">易方达新兴成长混合</td>
+<td style="text-align:right">4.63%</td>
+<td style="text-align:right">-18.46%</td>
+</tr>
+<tr>
+<td style="text-align:left">恒越核心精选混合C</td>
+<td style="text-align:right">4.64%</td>
+<td style="text-align:right">-20.96%</td>
+</tr>
+<tr>
+<td style="text-align:left">富国创新科技混合</td>
+<td style="text-align:right">5.91%</td>
+<td style="text-align:right">-25.98%</td>
+</tr>
+</tbody>
+</table>
+<!-- more -->
+<h2 id="总结优化">总结&amp;优化</h2>
+<h3 id="问题1没有留意基金规模大小">问题1：没有留意基金规模大小</h3>
+<p>在总持仓的21支基金中，规模小于10亿元的基金有5支，占总持仓金额的比例为18.8%，占总亏损金额的比例为24.5%，这5支基金分别为：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">基金名称</th>
+<th style="text-align:right">基金规模（亿元）</th>
+<th style="text-align:right">亏损占比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">华商主题精选</td>
+<td style="text-align:right">4.02</td>
+<td style="text-align:right">0.49%</td>
+</tr>
+<tr>
+<td style="text-align:left">工银文体产业股票</td>
+<td style="text-align:right">2.21</td>
+<td style="text-align:right">1.64%</td>
+</tr>
+<tr>
+<td style="text-align:left">南方中证500信息联接C</td>
+<td style="text-align:right">1.99</td>
+<td style="text-align:right">0.49%</td>
+</tr>
+<tr>
+<td style="text-align:left">易方达深证100ETF联接C</td>
+<td style="text-align:right">1.19</td>
+<td style="text-align:right">6.74%</td>
+</tr>
+<tr>
+<td style="text-align:left">富国创新科技混合</td>
+<td style="text-align:right">0.64</td>
+<td style="text-align:right">15.19%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>基于该项问题，后续的优化动作是</strong>：</p>
+<ul>
+<li>每季度留意基金规模的变化情况，如果其规模在持续缩小，则尽快清仓离场；</li>
+<li>富国创新科技是持仓收益率最低的一支基金，主要原因可能是该基金当前规模仅为6400万，有清盘风险。后续操作策略：不再补仓，逐渐离场；</li>
+</ul>
+<h3 id="问题2投资标的所属行业重复">问题2：投资标的所属行业重复</h3>
+<p>在总持仓的21支基金中，有9支基金的主要配置行业是制造业，占总持仓金额的比例为46.4%，占总亏损金额的比例为48.6%，这9支基金分别为：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">基金名称</th>
+<th style="text-align:right">投资行业</th>
+<th style="text-align:right">持仓收益率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">恒越核心精选混合C</td>
+<td style="text-align:right">制造业</td>
+<td style="text-align:right">-17.11%</td>
+</tr>
+<tr>
+<td style="text-align:left">国投瑞银创新动力混合</td>
+<td style="text-align:right">制造业</td>
+<td style="text-align:right">-16.72%</td>
+</tr>
+<tr>
+<td style="text-align:left">交银新生活力</td>
+<td style="text-align:right">制造业、运输仓储</td>
+<td style="text-align:right">-15.16%</td>
+</tr>
+<tr>
+<td style="text-align:left">易方达新兴成长混合</td>
+<td style="text-align:right">制造业</td>
+<td style="text-align:right">-13.15%</td>
+</tr>
+<tr>
+<td style="text-align:left">前海开源国家比较优势</td>
+<td style="text-align:right">制造业</td>
+<td style="text-align:right">-11.38%</td>
+</tr>
+<tr>
+<td style="text-align:left">景顺长城环保优势股票</td>
+<td style="text-align:right">制造业</td>
+<td style="text-align:right">-10.78%</td>
+</tr>
+<tr>
+<td style="text-align:left">万家行业优选</td>
+<td style="text-align:right">信息技术、制造业</td>
+<td style="text-align:right">-4.11%</td>
+</tr>
+<tr>
+<td style="text-align:left">广发制造业精选混合</td>
+<td style="text-align:right">制造业</td>
+<td style="text-align:right">-2.26%</td>
+</tr>
+<tr>
+<td style="text-align:left">交银先进制造混合A</td>
+<td style="text-align:right">制造业</td>
+<td style="text-align:right">-1.61%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>基于该项问题，后续的优化动作是</strong>：</p>
+<ul>
+<li>只保留收益率最好的3支基金，且后续陆续加仓；</li>
+<li>其他6支基金不再补仓，并逐渐清仓。</li>
+</ul>
+<blockquote>
+<p>潜在问题：基金投资标的因基金经理的选择而发生变化，以上基金可能会不属于制造业。</p>
+</blockquote>
+<h3 id="问题3投资基金数量过多">问题3：投资基金数量过多</h3>
+<p>同时投资基金的数量太多，导致没有精力分析研究每支基金的投资数据和报表，无法及时了解投资基金的行业发展趋势变化，且容易造成资金周转不够的问题。</p>
+<p><strong>基于该项问题，后续的优化动作是</strong>：</p>
+<ul>
+<li>通过解决问题1和问题2，将陆续减少11支基金，同时也会释放约48.9%的资金投资其他基金；</li>
+<li>后续不再另外追加资金投入其中</li>
+</ul>
+<h2 id="核心原则">核心原则</h2>
+<p>每年在基金理财的具体操作上会有修正，但核心原则一直没有变：</p>
+<ul>
+<li><strong>不满仓操作，极限八成资金</strong>；</li>
+<li><strong>不追高入场，只买低位筹码</strong>；</li>
+<li><strong>不割肉离场，保持长期主义</strong>。</li>
+</ul>
+<hr>
+<p>最后更新：<code>2023年1月4日</code></p>
+
+					</div>
+					
+					<!-- 文章关键词 -->
+					
+				</section>
+				
+				<!-- 文章导航 -->
+				<div class="post-navigation">
+					
+					
+				</div>
+				
+				<!-- 评论区域 -->
+				
+			</article>
+		</main>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://i.tanhaiyu.com</id>
+    <title>百川随笔</title>
+    <updated>2026-01-20T03:26:24.799Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://i.tanhaiyu.com"/>
+    <link rel="self" href="https://i.tanhaiyu.com/atom.xml"/>
+    <logo>https://i.tanhaiyu.com/images/avatar.png</logo>
+    <icon>https://i.tanhaiyu.com/favicon.ico</icon>
+    <rights>All rights reserved 2026, 百川随笔</rights>
+    <entry>
+        <title type="html"><![CDATA[短距离通勤，没必要自己开车]]></title>
+        <id>https://i.tanhaiyu.com/post/car1/</id>
+        <link href="https://i.tanhaiyu.com/post/car1/">
+        </link>
+        <updated>2025-12-31T02:04:22.000Z</updated>
+        <content type="html"><![CDATA[<p>2005年的时候，没有几万块钱的汽车，一辆汽车十几万，一套房子也是十几万，这个时候，买房子更容易实现了。买房的时候，可以贷款二三十年，买汽车也可以贷款，一般也就两年的样子。同样的贷款金额，买车的还款压力大多了。</p>
+<p>如今，买车的门槛低多了，几万块钱的车多的是，就算贷款两年，每月的还款并不多，所以很容易实现。</p>
+<p>可是，使用汽车是有成本的，从买到手的第一天开始，汽车就贬值了。</p>
+<h2 id="汽车使用成本">汽车使用成本</h2>
+<p>如果购买一辆30万的小汽车，使用15年，每日平均行使25KM，每天的综合使用费为93.88元。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th style="text-align:right">年均</th>
+<th style="text-align:right">月均</th>
+<th style="text-align:right">日均</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>购车款</td>
+<td style="text-align:right">¥20000</td>
+<td style="text-align:right">¥1666.67</td>
+<td style="text-align:right">¥54.79</td>
+</tr>
+<tr>
+<td>交强险</td>
+<td style="text-align:right">¥760</td>
+<td style="text-align:right">¥63.33</td>
+<td style="text-align:right">¥2.08</td>
+</tr>
+<tr>
+<td>商业险</td>
+<td style="text-align:right">¥1000</td>
+<td style="text-align:right">¥83.33</td>
+<td style="text-align:right">¥2.74</td>
+</tr>
+<tr>
+<td>车船税</td>
+<td style="text-align:right">¥360</td>
+<td style="text-align:right">¥30</td>
+<td style="text-align:right">¥0.98</td>
+</tr>
+<tr>
+<td>燃油费</td>
+<td style="text-align:right">¥3600</td>
+<td style="text-align:right">¥300</td>
+<td style="text-align:right">¥10</td>
+</tr>
+<tr>
+<td>停车费</td>
+<td style="text-align:right">¥7200</td>
+<td style="text-align:right">¥600</td>
+<td style="text-align:right">¥20</td>
+</tr>
+<tr>
+<td>年检费</td>
+<td style="text-align:right">¥320</td>
+<td style="text-align:right">¥26.6</td>
+<td style="text-align:right">¥0.88</td>
+</tr>
+<tr>
+<td>保养费</td>
+<td style="text-align:right">¥1000</td>
+<td style="text-align:right">¥83.33</td>
+<td style="text-align:right">¥2.74</td>
+</tr>
+<tr>
+<td>综合</td>
+<td style="text-align:right">¥34240</td>
+<td style="text-align:right">¥2853.6</td>
+<td style="text-align:right">¥93.88</td>
+</tr>
+</tbody>
+</table>
+<p>如果只买价值10万的车辆，在使用15年、每日行驶25Km的情况下，每天的综合使用费为57.88元。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th style="text-align:right">年均</th>
+<th style="text-align:right">月均</th>
+<th style="text-align:right">日均</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>综合</td>
+<td style="text-align:right">¥20907</td>
+<td style="text-align:right">¥1742.6</td>
+<td style="text-align:right">¥57.88</td>
+</tr>
+</tbody>
+</table>
+<h2 id="公共交通使用成本">公共交通使用成本</h2>
+<p>如果采用公共交通工具通行，25公里的路程，打车大约50元，坐地铁3.6元。</p>
+<table>
+<thead>
+<tr>
+<th>交通方式</th>
+<th>年均</th>
+<th>月均</th>
+<th>日均</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>打车</td>
+<td>¥18250</td>
+<td>¥1500</td>
+<td>¥50</td>
+</tr>
+<tr>
+<td>地铁</td>
+<td>¥1314</td>
+<td>¥108</td>
+<td>¥3.6</td>
+</tr>
+</tbody>
+</table>
+<p>我每天的通勤距离在25公里以内，使用公共交通更便利和更划算，只有在城市周边外出游玩的时候，才会开车出行。</p>
+<hr>
+<p>最后更新：2025 年 12 月 31 日</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[我的Kindle使用体验]]></title>
+        <id>https://i.tanhaiyu.com/post/kindle/</id>
+        <link href="https://i.tanhaiyu.com/post/kindle/">
+        </link>
+        <updated>2025-12-17T02:18:47.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="最具性价比-kindle">最具性价比 Kindle</h2>
+<p>我用过基础版的 Kindle（第7代和第8代入门版），上手过 Kindle Voyage 和  Kindle X（咪咕版），正在使用的是 Kindle Paperwhite（第11代，KPW5）。</p>
+<p>虽然很心水 Kindle Oasis 的设计感觉， 可考虑到价格及各种参数，我认为最具性价比的产品是2021年发布的Kindle Paperwhite（第11代，KPW5），其次就是2024年发布的 Kindle（第11代入门版）。</p>
+<table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>Kindle 11</strong></th>
+<th><strong>Kindle Paperwhite 5</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>屏幕尺寸</strong></td>
+<td>6 英寸</td>
+<td><strong>6.8 英寸</strong></td>
+</tr>
+<tr>
+<td><strong>分辨率</strong></td>
+<td>300 ppi</td>
+<td>300 ppi</td>
+</tr>
+<tr>
+<td><strong>前光</strong></td>
+<td>可调节白色前光</td>
+<td>可调节暖光（<strong>色温</strong>）</td>
+</tr>
+<tr>
+<td><strong>屏幕类型</strong></td>
+<td>内嵌式屏幕</td>
+<td><strong>纯平屏幕</strong></td>
+</tr>
+<tr>
+<td><strong>防水性能</strong></td>
+<td>无防水功能</td>
+<td><strong>IPX8 级防水</strong></td>
+</tr>
+<tr>
+<td><strong>存储空间</strong></td>
+<td>16GB</td>
+<td>16GB / 32GB</td>
+</tr>
+<tr>
+<td><strong>续航时间</strong></td>
+<td>最长 6 周</td>
+<td><strong>最长 10 周</strong></td>
+</tr>
+<tr>
+<td><strong>重量</strong></td>
+<td><strong>158 克</strong></td>
+<td>211 克</td>
+</tr>
+<tr>
+<td><strong>充电接口</strong></td>
+<td>USB-C</td>
+<td>USB-C</td>
+</tr>
+</tbody>
+</table>
+<h2 id="阅读器显示字体">阅读器显示字体</h2>
+<p>在阅读时，我通常选择默认文字大小，那是最小的1号字体，屏幕可显示的文字最多。倘若稍微走个神，一屏的文字都看不完，Kindle 就猛地进入了休眠模式。</p>
+<p>我在选择字体时，首先考虑的是，要能够看清楚。其次是字库得齐全，不要出现豆腐方块，不能出现默认字体做替补的情况。第三个，就是字体设计得精致、符合我个人主观上感受的漂亮。</p>
+<p>在上百次的显示测试之后，我的 Kindle 里留下了这些字体。</p>
+<p><strong>苍耳系列字体</strong></p>
+<ul>
+<li><a href="https://tsanger.cn/product/396">苍耳华新体</a></li>
+<li><a href="https://tsanger.cn/product/7">苍耳今楷</a></li>
+</ul>
+<p><strong>微软雅黑系列字体</strong></p>
+<ul>
+<li><a href="https://github.com/maxsky/Yahei-Monaco-Hybrid-Font">微软雅黑 + Hybrid</a></li>
+<li><a href="https://github.com/chenyium/Microsoft-Yahei-Mono">微软雅黑 + Mono</a></li>
+<li><a href="https://github.com/byzod/Microsoft-Yahei-Consolas">微软雅黑 + Consolas</a></li>
+</ul>
+<p><strong>思源系列字体</strong></p>
+<ul>
+<li><a href="https://github.com/adobe-fonts/source-han-sans/tree/release">思源黑体</a></li>
+<li><a href="https://github.com/adobe-fonts/source-han-serif/tree/release/">思源宋体</a></li>
+<li><a href="https://github.com/GuiWonder/EarlySummerSerif">初夏明朝体</a></li>
+</ul>
+<p><strong>IBM Plex Sans系列字体</strong></p>
+<ul>
+<li><a href="https://www.ibm.com/plex/">IBM Plex Sans</a></li>
+<li><a href="https://github.com/cathree3/Plix">普力士 Plix</a></li>
+<li><a href="https://drive.google.com/drive/folders/14naJSasVxrPstbWkHtK696LLGAb5H-vm">卜力士 Blix</a></li>
+</ul>
+<p><strong>Klee One系列字体</strong></p>
+<ul>
+<li><a href="https://github.com/lxgw/LxgwNeoXiZhi-Screen">霞鹜新晰黑屏幕阅读版</a></li>
+<li><a href="https://github.com/lxgw/LxgwWenKai-Screen">霞鹜文楷屏幕阅读版</a></li>
+<li><a href="https://github.com/ItMarki/jyunsaikaai">芫茜雅楷</a></li>
+<li><a href="https://github.com/GuiWonder/MoonStarsKai">月星楷</a></li>
+</ul>
+<p><strong>獅尾系列字体</strong></p>
+<ul>
+<li><a href="https://github.com/max32002/swei-sugar/blob/master/CJK%20SC/SweiSugarCJKsc-Medium.ttf">獅尾加糖宋体</a></li>
+<li><a href="https://github.com/max32002/swei-xd/blob/master/CJK%20SC/SweiXDPearlCJKsc-Medium.ttf">獅尾XD珍珠</a></li>
+</ul>
+<p>把需要的字体文件复制到 kindle 内置驱动器的 fonts 文件夹内，就可以用了。</p>
+<h2 id="一些必要的设置">一些必要的设置</h2>
+<p>由于 Amazon 已停止在国内的运营，我只好在网上下载书籍，然后通过连接数据线，把书籍文件存到 Kindle 中。</p>
+<p><strong>以下设置，我认为是必要的。</strong></p>
+<ul>
+<li>登录个人账户</li>
+<li>取消同步（<strong>设置 - 设备选项 - 同步</strong>）</li>
+<li>开启省电功能（<strong>设置 - 设备选项 - 省电功能</strong>）</li>
+<li>通过<strong>设置 - 我的账户 - 家长监护 - 限制（商店、云端内容）</strong>，阻止 Kindle 商店和购买内容，阻止下载电子书和其他云端内容，可以避免 Kindle 自作主张同步云端内容和清空离线下载的书籍。</li>
+</ul>
+<h2 id="找书和格式转换">找书和格式转换</h2>
+<p><strong>我常用的电子书下载网站</strong></p>
+<ul>
+<li><a href="https://sobooks.cc/">SOBOOKS</a></li>
+<li><a href="https://www.ershu.org/">尔书网</a></li>
+<li><a href="https://library.proletarian.me/My_library_table.php">无产阶级图书馆</a></li>
+<li><a href="https://www.haodoo.net/">好读</a></li>
+<li><a href="https://http561856124.wordpress.com/">多读书，读好书</a></li>
+<li><a href="https://obook.cc/">偶书</a></li>
+<li><a href="https://github.com/jbiaojerry/ebook-treasure-chest?tab=readme-ov-file">电子书下载宝库</a></li>
+<li><a href="https://www.xiaolipan.com/index.html">小力盘 - 沉金书屋</a></li>
+<li><a href="https://yabook.org/">雅书</a></li>
+</ul>
+<p>存储到 Kindle 的书籍，我会使用 <a href="http://calibre-ebook.com/download">Calibre</a> 转换格式，清除掉书籍中原本的字体样式，以便完全以 Kindle 中选择的字体进行显示。</p>
+<p>关于 <a href="http://calibre-ebook.com/download">Calibre</a> 的使用，可以看<a href="https://bookfere.com/tools#calibre">书伴</a>的介绍。</p>
+<h2 id="扩充字典">扩充字典</h2>
+<p>Kindle 默认内置了一些亚马逊官方提供的字典，但还不够。可以在<a href="https://bookfere.com/tools#calibre">书伴</a>的<a href="https://bookfere.com/dict">这个页面</a>去找到需要增加的字典文件，按照文章中介绍的方法去操作就好。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[逐年加薪]]></title>
+        <id>https://i.tanhaiyu.com/post/jiaxin/</id>
+        <link href="https://i.tanhaiyu.com/post/jiaxin/">
+        </link>
+        <updated>2025-12-12T09:13:07.000Z</updated>
+        <content type="html"><![CDATA[<p>不知道是什么时候，我在一本金融相关的书里面了解到一个新的观点：<strong>公司在给员工发放薪资福利时，应该要将通货膨胀计算进去，通俗点讲就是应该逐年加薪才对。</strong></p>
+<p>通货膨胀一般指的是：在纸币流通条件下，因货币供给大于货币实际需求，即现实购买力大于产出供给，导致货币贬值，而引起的一段时间内物价持续而普遍地上涨现象。在宏观经济学中，通胀主要是指价格和工资的普遍上涨。</p>
+<p>公司成立之初，在设计薪资方案的时候，就考虑了要控制固定成本。我们非常愿意让员工拿到高收入，但肯定不是通过提高员工的基本工资来提高他们的收入。员工的基本工资与他们的出勤情况相关联，在岗一天，就需要支付一天的钱。哪怕员工坐在公司没有事情干，公司也需要给员工支付基本工资。员工没有事情干，那是公司的问题，是经营管理的问题，我们不能让这种状况发生。</p>
+<p><strong>逐年加薪</strong>，我的公司做不到。现在，员工的薪资水平与公司的发展以及行业发展高度关联。</p>
+<p>公司业务好、客户多的情况下，员工可以做的工作就会变多，除基本工资外的提成就会多；反之，当员工负责的客户出现流失、行业发展低迷、潜在消费群体的意愿度降低等这一系列问题出现时，员工的收入肯定会下降。</p>
+<p>这个基本工资，在员工的整体薪资收入中所占比例大约为三至五成左右，员工的工作量越少，提成越少，基本工资占比越大；员工的工作成效越低，提成越低，基本工资占比也会变大。</p>
+<p>公司所设置的基本工资一般只能<strong>勉强应付</strong>一个人一个月在长沙租房、乘车、吃饭的生活开销。这就意味着员工如果想要获得基本工资几倍以上的总收入就必须努力工作，否则总收入可能只是基本工资的1.5至2倍左右。要想把工资收入存下来，就需要对自己的生活要求紧巴一点。</p>
+<p>so，员工怎样才可以获得更高的收入？</p>
+<hr>
+<p>最后更新：2025 年 12 月 12 日</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[母亲]]></title>
+        <id>https://i.tanhaiyu.com/post/mother/</id>
+        <link href="https://i.tanhaiyu.com/post/mother/">
+        </link>
+        <updated>2025-12-10T08:15:19.000Z</updated>
+        <content type="html"><![CDATA[<p>她说：“如果没有回来，我现在应该在北京。”</p>
+<p>她的大哥从部队转业，在北京工作，把她也带了过去，帮大哥照看孩子。</p>
+<p>母亲突然病重，做为唯一的女儿，她得照顾她的母亲。</p>
+<p>没办法，她必须回乡。</p>
+<p>她的母亲，是我的外婆。</p>
+<p>不记得外婆是什么时候去世的，我没有一点印象。</p>
+<h2 id="母亲与父亲">母亲与父亲</h2>
+<p>母亲比我大了23岁，比父亲小了4岁。</p>
+<p>没见过母亲的结婚证，也从没见过她和父亲庆祝结婚。所以，我不知道他们是哪一年结婚的，也不知道他们的结婚纪念日是哪天。</p>
+<p>哥哥和我出生之后，爷爷奶奶没有帮忙照看我们，也不让其他亲戚和邻居帮忙照看。去田地里干活的时候，母亲只好把我背在背上，让哥哥在田地上玩。</p>
+<p>为什么会这样？母亲没有说，我没有问。</p>
+<p>有次和父亲喝酒，父亲告诉我，是因为钱的事情。爷爷奶奶要父亲将收入交给他们去支配，因为父亲的弟弟妹妹还没有成家，需要他帮衬。父亲不同意，于是爷爷奶奶与父亲之间产生了隔阂，分了家。</p>
+<p>母亲与父亲也会偶尔产生矛盾，有次特别激烈。母亲哭着从酒坛里舀出自己酿造的米酒，大口大口地往嘴里倒，只想把自己搞醉。醉了，继续哭，跑到池塘边，不顾别人拉扯，使劲往水里面走。</p>
+<p>最近几年，母亲说自己的身体状况不太好，不是这里痛，就是那里痛。身体不舒服的时候，不想搞饭菜，也不想下地干活。可是事情在那里，她看不下去，总是把事情捡起来。</p>
+<p>母亲知道，父亲在村子周边帮别人建房子的收入更高。家里的事情，她想一个人尽量做完。</p>
+<p>她希望父亲能关心她的身体状况，主动参与家务事。她觉得父亲应该能看见她的情况，应该能看到那些事情，不需要开口提醒，应该能主动去做。确实，只要母亲叫父亲做什么事情，父亲会去做。但母亲不愿意总是招呼父亲做这个做那个，她觉得那样很没有意思。</p>
+<p>我不记得父母是什么时候分房睡的，我没有太在意，也没觉得有什么异样或不妥。或许，这也是让双方缺少沟通的原因之一，若是睡在一张床上，多少还是会多说一些话的。</p>
+<p>父亲一直很认可母亲，没有说过母亲的不是。确实，也没有什么能说的。她属牛，“俯首甘为孺子牛”说的就是她了。</p>
+<h2 id="母亲与我们">母亲与我们</h2>
+<p>我与母亲朝夕相处的时间，是1984年至1988年，还有1989年至1994年。入学的前一年，我在永州，在姨妈家生活。小学之后，因为在镇上读初中，寄宿，一个星期回家一次；到长沙读书，暑假在家；参加工作之后，一年见一两回；定居长沙之后，一年不见得见一次。</p>
+<p>小学三年级之前，我和哥哥在同一个班。每天早上七点多，母亲叫醒我哥俩，让我们洗漱完，在窗沿下端坐，大声朗读课本上的文章。吃早餐前，先喝一碗米浆。做法如下：用柴火煮饭，煮饭时多放水，饭烧开时，把米浆盛出，加葡萄糖粉和鸡蛋。有时候母亲会在中午把午餐送到学校，顺便看看我和哥哥学习有没有开小差。</p>
+<p>母亲要求我们怎么做，我们必须要按照她的要求去做。如若不然，少不了会被说几句。</p>
+<p>在她的影响下，我也能看见事儿。地面脏了，打扫下；太阳下山了，收衣服；没水了，去打水；脸色不太对，避一避；如此这般，渐渐学会了揣摩心思，也常常收获别人的夸赞。</p>
+<p>有时候，我会比母亲更早看见事儿。当我动了念头，正准备做那件事情的时候，母亲也看见了，恰好吩咐我去做。这时候，我的内心会郁闷，不需要母亲吩咐的主动做，变成了被动做，本来可以展现出主动积极的那一面，如此一来，感觉邀功的机会被剥夺了。</p>
+<p>母亲似乎对哥哥的要求会更严格一些，哥哥被父母教训得多一些。哥哥一直陪伴在父母亲的身边，哥哥的孩子们也在一起生活和长大。从亲情的感受来说，不管是哥哥还是哥哥的孩子们，对于母亲的亲情体会更深刻。</p>
+<h2 id="万能的母亲">万能的母亲</h2>
+<p>母亲知道做北方人的食物，饺子、春卷、烙饼这些，她都会。她喜欢吃面食，只是怕胖，就刻意少吃了。</p>
+<p>她有自己的体重控制方式，简单暴力，就是少吃多动。尽管会觉得饿，也不吃晚餐，傍晚时分瘪着空肚子去和村民们一起跳舞。</p>
+<p>田地间、池塘里，所有的农活，她都会做。有时候会随父亲去工地，做上料帮工，运送砂浆砖瓦等建筑材料。</p>
+<p>种田是没办法挣钱的，只能说是有口饭吃。黄花菜是我们那一块的经济作物，从6月到9月，可以有个几万块钱的收入。但是，人也会瘦下来很多，黑不溜秋的。最忙的时候，每天两三点就得起床，干到上午九十点才能收工。如果连续几天下雨，人很容易整得不舒服。这种活，我坚持不了几天。</p>
+<p>家里也会种一些玉米、菜籽、花生、大豆、红薯，甚至有一年还种了向日葵。向日葵、菜籽、花生可以榨油，玉米和红薯是用来喂养家禽的，有时也会取一些，做成红薯干，做零食吃。</p>
+<p>母亲每年都酿造米酒，有时候一年酿造两次。父亲喝不完，多出来的，会拿去卖掉。如今已经名声在外，买酒的人会自己上门来取走。</p>
+<hr>
+<p>最后更新：2025 年 12 月 12 日</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[献血]]></title>
+        <id>https://i.tanhaiyu.com/post/xianxie/</id>
+        <link href="https://i.tanhaiyu.com/post/xianxie/">
+        </link>
+        <updated>2025-11-29T08:52:52.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="首次献血">首次献血</h2>
+<p>献血这个事情，是从2001年开始的。如果没有记错的话，应该是跟唐朝云一起去的。</p>
+<p>我骑自行车载着朝云回学校，经过长沙河西溁湾镇通程电器的时候，正好看见有一辆献血车停在门口。</p>
+<p>不知道为啥，我突然跟朝云说：“我要去献血，你要不要一起？”</p>
+<p>朝云随我一起上了献血车，但没有献血。这是我预料之中的事情。</p>
+<p>他一向把照顾好自己放在第一位，不饿着自己，不做可能伤害自己的事情。献血对身体是不是有不好的影响，到现在还是会有很多人表示疑惑，那个时候就更别说了。</p>
+<p>我呢，平时就靠压缩自己的口粮来节省费用，把节省出来的伙食费花在自己喜欢的物品上。献血这种事情，我是可以接受的。</p>
+<p>那次献血，我得到了一瓶牛奶和一把雨伞。</p>
+<p>再次献血，已是十年之后。</p>
+<h2 id="心态变化">心态变化</h2>
+<p>最初就是想尝试下新鲜事物。看过资料，在自身身体健康的情况下，献血这件事情应该不会对身体有什么负面作用。</p>
+<p>当身边的亲属知道我献血之后，会担心我的身体受到影响，也担心因为献血可能产生血液类别的传染病。他们建议我不要去献血，这种建议在我40岁之前比较管用。</p>
+<p>再往后，我想为自己积攒免费用血的权限。万一本人或亲属出现需要紧急用血的情况，也许会因此而受益。</p>
+<p>当通过新闻消息报道知道有些献血者没有享受到相关权益的时候，我就不想去献血了。</p>
+<p>今年两次献血，都是为了朋友的亲属。现在的病人在做手术之前，需要用献血证获得用血权限，所以我这两次献血就很明确知道是为了谁而献血。</p>
+<h2 id="献血记录">献血记录</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">日期</th>
+<th style="text-align:left">地点</th>
+<th style="text-align:right">献血量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">2001-10-27</td>
+<td style="text-align:left">通程电器</td>
+<td style="text-align:right">300ml</td>
+</tr>
+<tr>
+<td style="text-align:center">2011-01-14</td>
+<td style="text-align:left">东方红广场</td>
+<td style="text-align:right">300ml</td>
+</tr>
+<tr>
+<td style="text-align:center">2011-10-15</td>
+<td style="text-align:left">司门口</td>
+<td style="text-align:right">300ml</td>
+</tr>
+<tr>
+<td style="text-align:center">2012-09-07</td>
+<td style="text-align:left">司门口</td>
+<td style="text-align:right">300ml</td>
+</tr>
+<tr>
+<td style="text-align:center">2014-03-09</td>
+<td style="text-align:left">南门口</td>
+<td style="text-align:right">300ml</td>
+</tr>
+<tr>
+<td style="text-align:center">2023-04-15</td>
+<td style="text-align:left">东塘</td>
+<td style="text-align:right">400ml</td>
+</tr>
+<tr>
+<td style="text-align:center">2025-04-29</td>
+<td style="text-align:left">中山亭</td>
+<td style="text-align:right">400ml</td>
+</tr>
+<tr>
+<td style="text-align:center">2025-11-20</td>
+<td style="text-align:left">湘雅二医院</td>
+<td style="text-align:right">400ml</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>最后更新：2025 年 11 月 29 日</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[国道318线路，去过了。]]></title>
+        <id>https://i.tanhaiyu.com/post/318/</id>
+        <link href="https://i.tanhaiyu.com/post/318/">
+        </link>
+        <updated>2025-11-17T06:22:39.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="行程起源">行程起源</h2>
+<p>2024年的时候，小龙老师经常提起要去318国道自驾走一趟。考虑到自驾318的行程起码要半个月的时间，实在是代价太大，就没有响应他。今年夏天，他又提起什么时候走一趟川藏线，照旧没有回应。那时，我刚去了一趟新疆伊犁。</p>
+<p>2025年11月份，服哥说客户在丽江拍样片，我们要派人过去拍摄视频，客户想让他一起过去。于是他问我要不要一起过去，如果去的话，就可以顺便陪他去一趟拉萨，只是可能需要三五天时间。恰巧我在10月份的时候已经去过了拉萨，但我觉得从丽江到拉萨这一路自驾应该挺有意思的，于是就答应了下来。</p>
+<h2 id="路途概要">路途概要</h2>
+<p>这次丽江到拉萨的自驾之行，从云南开车到四川，然后再从四川开车到西藏；经过了金沙江、澜沧江、雅鲁藏布江；从海拔3000多米到海拔5000多米；路的两旁有雪山、金松、草原，有滚落的碎石和憨憨的牦牛，还有像老鼠一样的鼠兔和大尾巴的狼；我们经历了驾车以来最多的弯道，当我们经过怒江72拐时，我们看到了那句话“走过今天的弯路，今后人生尽是坦途”。弯道或坦途，其实都OK的，面对就好了。在看到怒江72拐之前，我们早就经过了比它更多的弯道，早已习惯了。</p>
+<p>网络上有很多318线路上出现状况的视频，让我对318线路保持高度的警惕。在11月走318线路很有可能会遇到雨雪天气，如果遇到那种情况，那将是一种深刻的体验。那种状况，我不想经历。不过，这次出行的时间点很巧，在我们抵达丽江之前，西藏地区刚好已经下过雪。11月5日至11月11日期间，从云南到西藏沿线都是好天气，太阳大得很，道路上也很干爽，只是偶尔有些路段的路旁有碎石。</p>
+<p>如果不担心可能会出现的雨雪天气，我们这个行程起码还需要再增加五天时间。由于着急把318线路走完，我们路过波密的时候，没有去墨脱看看，有一些小遗憾。</p>
+<h2 id="行程安排">行程安排</h2>
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>出发地</th>
+<th>目的地</th>
+<th>里程</th>
+<th>途径旅游景点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11-05</td>
+<td>丽江</td>
+<td>香格里拉</td>
+<td>180KM</td>
+<td>松赞干寺、独克宗古城</td>
+</tr>
+<tr>
+<td>11-06</td>
+<td>香格里拉</td>
+<td>稻城</td>
+<td>233KM</td>
+<td>无底湖（沃迪错）、稻城亚丁</td>
+</tr>
+<tr>
+<td>11-07</td>
+<td>稻城</td>
+<td>巴塘</td>
+<td>344KM</td>
+<td>未做安排</td>
+</tr>
+<tr>
+<td>11-08</td>
+<td>巴塘</td>
+<td>然乌</td>
+<td>533KM</td>
+<td>然乌湖</td>
+</tr>
+<tr>
+<td>11-09</td>
+<td>然乌</td>
+<td>拉萨</td>
+<td>745KM</td>
+<td>布达拉宫</td>
+</tr>
+<tr>
+<td>11-10</td>
+<td>拉萨</td>
+<td>纳木错</td>
+<td>430KM</td>
+<td>纳木错</td>
+</tr>
+<tr>
+<td>11-11</td>
+<td>拉萨</td>
+<td>羊卓雍错</td>
+<td>180KM</td>
+<td>羊卓雍错</td>
+</tr>
+</tbody>
+</table>
+<h2 id="费用情况">费用情况</h2>
+<h3 id="交通费用">交通费用</h3>
+<ul>
+<li>租车费：¥4568</li>
+<li>机票费：¥5000</li>
+<li>燃油费：¥1481</li>
+<li>过路费：¥128</li>
+</ul>
+<h3 id="食宿费用">食宿费用</h3>
+<ul>
+<li>住宿费：¥800</li>
+<li>餐食费：¥1285</li>
+</ul>
+<h3 id="其他费用">其他费用</h3>
+<ul>
+<li>门票费：¥700</li>
+<li>物资费：¥200</li>
+<li>导游费：¥600</li>
+</ul>
+<hr>
+<p>最后更新：2025 年 11 月 25 日</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[你不必如此]]></title>
+        <id>https://i.tanhaiyu.com/post/nbbrc/</id>
+        <link href="https://i.tanhaiyu.com/post/nbbrc/">
+        </link>
+        <updated>2025-05-19T03:27:35.000Z</updated>
+        <content type="html"><![CDATA[<p>你不必如此。</p>
+<p>我们过往的那些年，不论现在和未来会如何，那些共同经历的，始终存在，这是不可否认的。</p>
+<p>如果记忆消褪，照片和视频会唤起那些记忆。</p>
+<p>从18岁到40岁的这段时间，我们相互见证了彼此的年龄增长，我们和孩子们一起在成长。</p>
+<p>三十几岁之前，我是一个特别在意别人评价的人，希望得到肯定。父母教诲和“增广贤文”让我对传统世俗观念深信不疑，想将自己修炼成千年以来人们认为的那种有精神高度的人。而在骨子里，我却是只想归隐乡野的人。</p>
+<p>从谈恋爱到结婚，我们用了7年时间。最初我希望能够早点结婚，一次次地试探你的意见，一次次忽略或淡然回应，之后我就不再问了，也不再考虑结婚的事情。2009年我们领结婚证其实是处于分手的边缘，我做好了什么都不要并离开的准备。</p>
+<p>说到结婚，我是亏欠你的。没有钻戒、没有求婚、没有订婚、没有彩礼、没有婚礼、没有父母在场……</p>
+<p>我的内心深处，是自卑的。</p>
+<p>正因为我内心的亏欠感和自卑，在你指出我的各种问题时，起初我会情绪爆发面对，后面渐渐地变成悄然接受和偶尔爆发。我觉得爱是包容，于是尽可能不产生争执，我自己消化内心的不快。</p>
+<p>渐渐地，不面对你，我会感觉更轻松。</p>
+<p>曾经，我认可人们所说的“女孩陪着男孩从一无所有到越来越好，是女孩陪着男孩吃苦”，现在我不这么看了，一切都是各自的选择。每个人都应该对自己的选择负责。</p>
+<p>你说自己并不是没有别的选择，但最终选择了我。</p>
+<p>我只能说：对不起！让你选错了、赌输了。</p>
+<p>我不值得！</p>
+<p>你越坚持，越受伤。</p>
+<p>对你，我已封心。</p>
+<p>你不必寻求我回心转意。</p>
+<p>回不去了。</p>
+<p>不回去了。</p>
+<hr>
+<p>最后更新：2025 年 5 月 19 日</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[我想对20年前的自己说]]></title>
+        <id>https://i.tanhaiyu.com/post/20nianqian/</id>
+        <link href="https://i.tanhaiyu.com/post/20nianqian/">
+        </link>
+        <updated>2025-05-08T00:58:57.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>今天看到《人物》公众号刊发了一篇文章<a href="https://mp.weixin.qq.com/s/iNeuMOE33yBIM9pWiSJgKQ">遇见20年前的自己，你想对TA说些什么？</a>，看到人们不同的回应，引发了我对这个话题的思考。</p>
+</blockquote>
+<p>20年前啊？那是2005年。那一年我21岁，已经到社会上参加工作3年了。那一年，我做了最重要的事情是凑钱买房。</p>
+<p>我想告诉那时的我：</p>
+<p>不要着急买房。对你而言，房子不是最重要的。虽然你是一个愿意承担责任的人，买房是为了让她觉得你值得托付，但这一件事情还不足以让她觉得你值得托付，且这件事情会让你接下来的三年时间只会围绕房子、装修、还钱的事情而焦虑，失去了关注其他可能创业方向的经验积累和行动。</p>
+<p>结婚生子和成家也不是最重要的。世俗观念觉得成家立业、传宗接代是必须要做的事情。但也并非必须如此，你更应该关注自己的生活体验，并且把自我成长放在第一位。</p>
+<p>你有些害怕“失败”，因为这，你会错过很多机会。一定要把“失败”这个词丢掉。所谓的失败，只是为了测试某件事情是否可行的阶段测试结果。不能因为害怕失败而止步不前，或绕道而行。测试事务的可行性应该要成为常态，对于不懂的事务，若感兴趣就投入其中，了解其逻辑和规律。</p>
+<p>别在乎别人对你的看法，说你好的人未必对你好，有人说你不好也不一定是坏事。你自己呢？要永远说真话，哪怕没那么好听（当然也可以选择不说）。你现在之所以说话迎合别人，是为了让别人舒服，是为了让别人觉得你好打交道。直言能够让对方成长，就别拐弯去讲，别人以为你夸他。（不过，你讲的确实也是对方的可夸之处）</p>
+<p>人生的意义就是体验人生。你应该把你自己放在第一位。在过往的思维观念中，把自己放在最重要的位置就是自私，对吧？没关系，你只要这样想，那就是在意别人的看法了，不是吗？如果你不把自己放在第一位，你会发现终有一天你觉得人生毫无意义。到那个时候，你会不开心，觉得过去的很多时间浪费掉了，有可能会黑化哦……变得身边的人都不认识你的模样。</p>
+<p>不要拒绝任何向外链接的机会。向外链接不是攀炎附势，也不是为了满足拥有众多朋友的虚荣，而是为了相互成长。要主动去寻找那些比自己厉害的人，请对方解答你的疑惑，分享他的有效经验或者无效经验。如果对方不愿意分享，你可以送礼物或者直接给红包表示对他的尊重和感谢。</p>
+<p>先说这么多吧。说多了可能觉得我烦人，最后依然成为现在的我。</p>
+<hr>
+<p>更新日期：2025 年 5 月 8 日</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[我常用的 Excel 函数]]></title>
+        <id>https://i.tanhaiyu.com/post/excel/</id>
+        <link href="https://i.tanhaiyu.com/post/excel/">
+        </link>
+        <updated>2025-04-08T12:48:41.000Z</updated>
+        <content type="html"><![CDATA[<p>2002 年刚参加工作的时候，财务部蕾姐总是会找我修修电脑、整整表格。我其实不怎么会捣腾这些，考虑到刚参加工作，应该要搞好关系，于是硬着头皮上。了解到具体的问题之后，在网上找相关资料，在报刊亭买电脑爱好者的刊物，虽不能每个问题都能立刻处理，但最后总能解决掉。</p>
+<p>经营正常一点的企业，管理者会通过分析数据来做决策。而各个环节的基础表格各不相同，所以助理们在收到老板的数据报表需求时，得花个大半天来整合计算表格。我在做董事长助理的时候，就开始做数据表格规范，可以做到 5-10 分钟左右就将老板需要的表格打印好呈上。主要是我认为办公自动化软件一定要能够促进办公自动化，不能让人去做一些重复的动作，于是总是钻进 EXCEL 软件中，让数据自动生成我们想要的表格。</p>
+<p>以下是我在工作过程中常用到的一些函数公式，现汇聚在一起，方便自己查阅，也方便网络搜索过来的人。</p>
+<h2 id="去掉-div0-错误信息">去掉 #DIV/0! 错误信息</h2>
+<p>单元格中的数据，输入了除以 0 时，会出现这个<code>#DIV/0!</code>的错误信息。如果 A3=1，B3=0，那么 A3/B3 的结果是<code>#DIV/0!</code>，公式如下：</p>
+<pre><code>=A3/B3
+</code></pre>
+<p>如果不想看到满表格显示<code>#DIV/0!</code>，就需要使用 IFERROR 函数，公式如下：</p>
+<pre><code>=IFERROR(A3/B3,&quot;&quot;)
+</code></pre>
+<p>使用以上公式之后，原本显示的计算错误信息#DIV/0!会显示空白。如果在&quot;&quot;内输入文字，则在 B3 为 0 的情况下，计算结果显示为&quot;&quot;内输入的文字。</p>
+<h2 id="避免-ref-错误信息">避免 #REF! 错误信息</h2>
+<p>当单元格引用无效时，会出现这个错误。一般是因为引用了其他工作表的数据，且所引用的工作表被删除所导致。还有一种情况是因为所链接的外部文件无法找到或没有正确更新。</p>
+<p>一旦出现这种情况，千万别保存文件，否则还需要手动修复出现<code>#REF</code> 的地方。正确的做法是先找到问题所在，撤销删除的工作表或查看链接的外部文件是否出现类似错误，之后再打开该文件。</p>
+<h2 id="年月日周天数等相关函数">年月日周天数等相关函数</h2>
+<p>日期、星期几可以通过 EXCEL 中的单元格格式解决，但一个月的天数、当前是一年的第几天、当前是一年的第几周、当前是一周的第几天这些信息都需要用到函数。</p>
+<p>这些函数看似平时用不上，其实用处大着呢，当我们的基础表格是以日期作为数据标签序列的时候，我们要用到这些函数来调取基础表格里的数据信息。</p>
+<p>相关函数如下：</p>
+<h3 id="获得当前日期-星期-月份的函数">获得当前日期、星期、月份的函数</h3>
+<p>通过 TODAY 函数可以输出当前日期信息。通过设置单元格格式，选择日期类别，能够实现“月份（2020-7 或 2020 年 7 月）”、“日期（2020 年 3 月 14 日或 3 月 14 日）”、“星期（星期三或周三）”三种信息输出。公式如下：</p>
+<pre><code>=TODAY()
+</code></pre>
+<h3 id="获得-a1-单元格所属月份天数的函数">获得 A1 单元格所属月份天数的函数</h3>
+<p>假如 A1 单元格内的公式是上面的那个公式“=TODAY()”，或者手动输入了日期，那么可以通过下面的格式获得 A1 单元格日期或所属月份的总天数。</p>
+<pre><code>=DAY(DATE(YEAR(A1),MONTH(A1)+1,0))
+</code></pre>
+<h3 id="获得当前日期所属周数">获得当前日期所属周数</h3>
+<p>以周日为一周的第一天，周六为一周的最后一天，计算当前日期为一年的第几周。公式如下：</p>
+<pre><code>=WEEKNUM(TODAY())
+</code></pre>
+<p>获得已知周数的第一天日期，公式如下：</p>
+<pre><code>=(2020&amp;-1)-WEEKDAY(2020&amp;-1,2)+A1*7-7
+</code></pre>
+<p>获得已知周数的最后一天日期，公式如下：</p>
+<pre><code>=(2020&amp;-1)-WEEKDAY(2020&amp;-1,2)+A1*7-1
+</code></pre>
+<p>注：2020 为计算的年份，A1 为参与计算的单元格<br>
+如果要获取 A1 单元格的日期是一年的第多少天，公式如下：</p>
+<pre><code>=A1-DATE(YEAR(A1),1,0)
+</code></pre>
+<h2 id="常用符号通配符~除外">常用符号（通配符*?~除外）</h2>
+<h3 id="连接符">连接符 &amp;</h3>
+<p>如果 A1=10，A2=24，那么下面的公式结果显示为：1024</p>
+<pre><code>=A1&amp;A2
+</code></pre>
+<h3 id="引号">引号 &quot; &quot;</h3>
+<p>如果需要引用文本，必须在外面套个引号&quot;&quot;</p>
+<pre><code>=IFERROR(A1/A2,&quot;错误&quot;)
+</code></pre>
+<p>如果引号&quot;&quot;中间口径白，则显示为空数据</p>
+<pre><code>=IFERROR(A1/A2,&quot;&quot;)
+</code></pre>
+<h3 id="绝对引用符号">绝对引用符号 $</h3>
+<p>这个符号用在单元格的引用上，方便我们通过拖动来复制带有公式的单元格，不会因为拖动而改变引用的单元格位置。</p>
+<p>下面的公式在通过拖动单元格进行复制公式时，A1 单元格是不会变的。</p>
+<pre><code>=$A$1/A2
+</code></pre>
+<p>下面的公式在复制公式时，A 列不变，但 A 列的单元格会发生变化。</p>
+<pre><code>=$A1/A2
+</code></pre>
+<h2 id="countifs-函数">COUNTIFS 函数</h2>
+<p>当进行复杂的计数统计时，COUNT 函数已经不够用了，需要用到 COUNTIFS 函数。<br>
+下方是“基础信息”表格，可看到日期、邀约人员等信息。如果持续使用该表格，则可以形成类似数据库的感觉。后期可以通过数据透视表的方式进行调用，也可以通过预设表格形式进行数据格式化。<br>
+图片</p>
+<p>若通过预设表格，调取上面“基础信息”表格里面的数据，只要在下表 A2 单元格输入月份就可以即时得到对应时间范围内的各项数据。如何做？<br>
+图片</p>
+<p>需要在 C3 单元格用到下面的公式：</p>
+<pre><code>=COUNTIFS('基础信息'!$A$3:$A$1048576,&quot;&gt;&quot; &amp; $A$3,'基础信息'!$A$3:$A$1048576,&quot;&lt;&quot; &amp; $A$4,'基础信息'!$B$3:$B$1048576,B3,'基础信息'!$D$3:$D$1048576,&quot;&lt;&gt;&quot;)
+</code></pre>
+<p>如何解读这个公式？<br>
+说给人听：统计基础信息在 2020 年 6 月 30 日以后、2020 年 8 月 1 日之前，邀约人员为张斌的电话号码个数。<br>
+说给电脑听：统计名为“基础信息”工作表 A 列时间值大于本表 A3 单元格但小于 A4 单元格、“基础信息”工作表 B 列数值匹配本表 B3 单元格数值、“基础信息”D 列数值不为空的个数。</p>
+<h2 id="countif-函数">COUNTIF 函数</h2>
+<p>如果只有 1 个统计条件，那就不需要用到上面那个 COUNTIFS 函数，只要用 COUNTIF 函数就可以了。比如：在本单元格统计出“基础信息”工作表 B 列包含“刘丹丹”的个数，按照下面的公式就可以了。</p>
+<pre><code>=COUNTIF(基础信息!B3:B1048576,&quot;刘丹丹&quot;)
+</code></pre>
+<p>还有一种用到通配符的方式，也比较常用。如下：</p>
+<pre><code>=COUNTIF(基础信息!B3:B1048576,&quot;*丹*&quot;)
+</code></pre>
+<h2 id="vlookup-函数">VLOOKUP 函数</h2>
+<p>VLOOKUP 函数被称之为函数之王，因为它可以用在很多地方，可以快速查找出对应的数据。它的语法是：</p>
+<pre><code>VLOOKUP（lookup_value，table_array，col_index_num，[range_lookup]）
+</code></pre>
+<p>lookup_value：要搜索的值；table_array：查找数据的单元格范围；col_index_num：在 table_array 中查找第几列的列号：range_lookup：用于指定精确匹配或近似匹配模式（用数字 1 来表示）。</p>
+<pre><code>VLOOKUP($A$1, '基础信息'!$B$118:$G$129,6,TRUE)
+</code></pre>
+<p>想要获取不同日期的对应数据，只要修改 A1 单元格的日期就可以了。</p>
+<p>除此之外，还可以应用于模糊查找和多项查找，不过我一般用数据透视表来解决，更加方便快捷。</p>
+<h2 id="sumproduct-函数">SUMPRODUCT 函数</h2>
+<p>我主要用 SUMPRODUCT 函数用来做多个条件的统计</p>
+<p>A - 统计某个月份的某个数值</p>
+<p>上表是“基础信息”表格，我在当前工作表的 A1 单元格输入了“2020-4”，我想在 A2 单元格生成“基础信息”表格中 2020 年 4 月的花费金额，公式如下：</p>
+<pre><code>=SUMPRODUCT((MONTH('基础信息'!$B$118:$B$129)=MONTH($A$1))*'基础信息'!$E$118:$E$129)
+</code></pre>
+<p>B - 统计某个星期的某个数值<br>
+还是以“基础表格”的数据为蓝本，我在当前工作表的 A1 单元格输入了“16”，我想在 A2 单元格生成“基础信息”表格中第 16 周的花费金额，公式如下：</p>
+<pre><code>=SUMPRODUCT((('基础信息'!$A$118:$A$129)=$A$1)*'基础信息'!$E$118:$E$129)
+</code></pre>
+<h2 id="ifs-函数">IFS 函数</h2>
+<p>对于需要在多个条件下反馈多个不同的值，可以应用在每日的运营管理工作中，比如下表就是很明显的应用示范。</p>
+<p>可以通过其他的表格数据生成每个单元格对应的数据状态，比如“未投放”、“没有达成目标”、“达成了并达成了多少”、“没达成但达成了多少”、“花了钱没结果”。<br>
+参考公式如下：</p>
+<pre><code>IFS($AK$5=0,全月每日客资数据!C5,全月每日花费数据!C5&lt;50,&quot;未投&quot;,全月每日客资数据!C5=0,&quot;挂蛋&quot;,全月每日客资数据!C5&lt;$AK$5,全月每日客资数据!C5,全月每日客资数据!C5&gt;=$AK$5,&quot;W&quot;&amp;全月每日客资数据!C5)
+</code></pre>
+<p>上面这些是我常用到的一些 EXCEL 函数，如果有新的需求出现，就再找新的办法。如果基础数据表能够汇集在同一张工作表里面的话，我就不用这些函数来整合数据了。我肯定优先使用数据透视表的功能，那样更加方便快捷。<br>
+如果在使用 EXCEL 过程中遇到什么问题，也欢迎后台发送消息给我，一般会在不能主动和你说话之前回复你的，到时候也不要感到着急。</p>
+<h2 id="找出单元格内是否包含非中文字符">找出单元格内是否包含非中文字符</h2>
+<pre><code>=IF(LENB(A1)=2*LEN(A1),&quot;都是汉字&quot;,&quot;含有非汉字字符&quot;)
+</code></pre>
+<hr>
+<p>更新日期：<code>2025 年 4 月 8 日</code></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[首次日本之行]]></title>
+        <id>https://i.tanhaiyu.com/post/gotojapan/</id>
+        <link href="https://i.tanhaiyu.com/post/gotojapan/">
+        </link>
+        <updated>2024-12-04T09:50:08.000Z</updated>
+        <content type="html"><![CDATA[<p>我总是和CF说，我想要去日本体验一次泡泡浴。我心里面在想的是：有没有可能，我会遇到类似于教学片中的美丽老师。</p>
+<p>不过，这个念头也就只是想一想而已。在缺乏语言交流基础的情况下，去做泡泡浴很容易闹出笑话，并且容易给别人带来麻烦（导游说这是泡泡浴不接待外国人的主要原因），一不小心就被拉到局子里。</p>
+<p>想去日本的念头，在心里面放了很久。</p>
+<p>在长沙读书的那段时间，学校每个星期都有电影赏析课程，其中就有日本电影导演黑泽明的作品；平面设计的学习课程中，有接触到原研哉的《设计中的设计》；建筑设计方面有了解到安藤忠雄的作品。我很想知道是怎样的文化环境造就了这些各领域的厉害角色。</p>
+<p>我想在日本的国土上感受日本人的生活，品味日本的风土人情。当我站在东京、大阪的街头，当我站在富士山顶，日本人的那种礼节、严谨、不给别人添麻烦的表象，到底会以怎样的方式出现在我的面前？我很好奇。</p>
+<p>在我的内心里面，抛开家人独自去旅行是可耻的。若不安排家属同行，我内心会感到不安。家人里面，似乎只有我对日本这个国家感兴趣，其他人不知道内心是怎么考虑的，嘴上都表达着不想去日本。</p>
+<p>我一直没有确定去日本的出行时间，最终下定决心独自出行日本，是想突破自己，不考虑别人的感受，做自己想做的事情。（事后发现，我的那些感受其实是我强加给自己的，别人并没有我担心的那些想法。）</p>
+<h2 id="办理签证">办理签证</h2>
+<p>湖南省内居民如办理赴日签证需要在日本国驻华大使馆（北京）办理，官网上有<a href="https://www.cn.emb-japan.go.jp/files/100693914.pdf">关于旅游签证申请所需资料和签证费等</a>文件可以查看。</p>
+<p>不管是个人自由行还是参团出行，都需要旅行社代签证。旅行社代办个人旅游（单次）签证时，让我提交的资料是这些：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">资料</th>
+<th style="text-align:left">要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">护照</td>
+<td style="text-align:left">原件、有效期范围内</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.cn.emb-japan.go.jp/files/100034897.pdf">签证申请表</a></td>
+<td style="text-align:left">电脑上填写后再打印</td>
+</tr>
+<tr>
+<td style="text-align:left">个人信息处理同意书</td>
+<td style="text-align:left">含在<a href="https://www.cn.emb-japan.go.jp/files/100034897.pdf">签证申请表</a>内，需签字</td>
+</tr>
+<tr>
+<td style="text-align:left">日本国旅游签证申请信息表</td>
+<td style="text-align:left">需签字</td>
+</tr>
+<tr>
+<td style="text-align:left">个人照片电子版</td>
+<td style="text-align:left">3.5x4.5mm、白背景</td>
+</tr>
+<tr>
+<td style="text-align:left">身份证复印件</td>
+<td style="text-align:left">正反面彩色复印</td>
+</tr>
+<tr>
+<td style="text-align:left">户口本复印件</td>
+<td style="text-align:left">整本彩色复印</td>
+</tr>
+<tr>
+<td style="text-align:left">在职证明</td>
+<td style="text-align:left">证明人不能是本人或同行人</td>
+</tr>
+<tr>
+<td style="text-align:left">公司营业执照</td>
+<td style="text-align:left">复印件、加盖公章</td>
+</tr>
+<tr>
+<td style="text-align:left">收入证明</td>
+<td style="text-align:left">20万以上存款证明（理财不算）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="旅行费用">旅行费用</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">项目</th>
+<th style="text-align:right">金额</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">成人团费</td>
+<td style="text-align:right">¥4,999.00</td>
+<td style="text-align:left">给旅行社</td>
+</tr>
+<tr>
+<td style="text-align:left">小费</td>
+<td style="text-align:right">¥600.00</td>
+<td style="text-align:left">给导游和司机</td>
+</tr>
+<tr>
+<td style="text-align:left">签证费</td>
+<td style="text-align:right">¥150.00</td>
+<td style="text-align:left">给领事馆</td>
+</tr>
+<tr>
+<td style="text-align:left">签证代办费</td>
+<td style="text-align:right">¥400.00</td>
+<td style="text-align:left">给中介</td>
+</tr>
+<tr>
+<td style="text-align:left">其他开支</td>
+<td style="text-align:right">-</td>
+<td style="text-align:left">不予记录</td>
+</tr>
+</tbody>
+</table>
+<h2 id="行程安排">行程安排</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">日期</th>
+<th style="text-align:left">项目&amp;安排</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">29/11/2024</td>
+<td style="text-align:left">长沙至广州</td>
+</tr>
+<tr>
+<td style="text-align:left">29/11/2024</td>
+<td style="text-align:left">广州至大阪</td>
+</tr>
+<tr>
+<td style="text-align:left">30/11/2024</td>
+<td style="text-align:left">大阪城天守阁、奈良神鹿公园</td>
+</tr>
+<tr>
+<td style="text-align:left">01/12/2024</td>
+<td style="text-align:left">金阁寺、八坂神社、花间小路、袛园</td>
+</tr>
+<tr>
+<td style="text-align:left">02/12/2024</td>
+<td style="text-align:left">富士山五合目、河口湖、忍野八海</td>
+</tr>
+<tr>
+<td style="text-align:left">03/12/2024</td>
+<td style="text-align:left">浅草雷门观音寺、银座</td>
+</tr>
+<tr>
+<td style="text-align:left">04/12/2024</td>
+<td style="text-align:left">东京至广州</td>
+</tr>
+</tbody>
+</table>
+<h2 id="购物清单">购物清单</h2>
+<ul>
+<li><s>iPhone 16 Pro Max 日版</s></li>
+<li>西铁城手表</li>
+<li>香奈儿香水</li>
+<li><s>索尼XM4</s></li>
+<li><s>HHKB Studio键盘</s></li>
+</ul>
+<hr>
+<p>最后更新：2025 年 3 月 24 日</p>
+]]></content>
+    </entry>
+</feed>

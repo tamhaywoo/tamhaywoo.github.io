@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="个人博客" />
+    <meta name="author" content="" />
+    <title>2011年随笔合集 | 百川随笔</title>
+    
+    <!-- 立即应用暗模式，避免闪烁 - 必须在CSS加载前执行 -->
+    <script>
+        // 早期检测暗模式设置，避免页面加载时的闪烁
+        (function() {
+            // 直接检查系统偏好，不依赖localStorage，确保实时响应系统设置
+            var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // 直接在documentElement上添加dark类，这样CSS加载后就会立即应用
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+    
+    <!-- 引入字节跳动字体 - Noto Sans Simplified Chinese -->
+    <link rel="stylesheet" href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/noto-sans-sc/10.0.0/css/noto-sans-sc.css">
+    
+    <!-- 主要样式文件 -->
+    <link rel="stylesheet" href="https://i.tanhaiyu.com/styles/main.css" type="text/css" media="screen" />
+    
+    <!-- 代码高亮样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    
+    <!-- 目录样式和返回顶部按钮样式 -->
+    <style>
+        /* 目录样式 */
+        .post-layout {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .post-toc {
+            position: sticky;
+            top: 100px;
+            align-self: flex-start;
+            width: 200px;
+            height: fit-content;
+            max-height: calc(100vh - 130px);
+            overflow-y: auto;
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .toc-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            padding: 0 0 10px 0;
+            border-bottom: 2px solid #e3e2e2;
+        }
+        
+        .toc-nav ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        
+        .toc-nav li {
+            line-height: 1.35rem;
+        }
+        
+        .toc-nav li a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-block;
+            /* 限制文本长度为11个汉字 */
+            width: 176px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .toc-nav li a:hover {
+            color: #23B175;
+        }
+        
+        .toc-nav li.toc-h2 {
+            font-weight: 500;
+        }
+        
+        .toc-nav li.toc-h3 {
+            padding-left: 15px;
+            font-size: 0.95em;
+        }
+        
+        .toc-nav li.toc-h4 {
+            padding-left: 30px;
+            font-size: 0.9em;
+        }
+        
+        /* 文章元信息样式 */
+        .post-meta {
+            margin-top: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            padding: 0 0 10px 0;
+            border-bottom: 2px solid #bdbaba;
+            opacity: 0.5;
+        }
+        
+        .post-word-count {
+            margin-right: 0.5rem;
+        }
+        
+        .post-tags {
+            display: inline-block;
+        }
+        
+        .post-tags a {
+            color: #666;
+            text-decoration: none;
+            padding: 0.2rem 0.3rem;
+            background-color: #f5f5f5;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .post-tags a:hover {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        
+        .toc-nav li.active a {
+            color: #23B175;
+            font-weight: 600;
+        }
+        
+        /* 文章内容区域调整 */
+        .main-content {
+            flex: 1;
+        }
+        
+        /* 移动端适配 - 完全隐藏目录 */
+        @media (max-width: 968px) {
+            .post-toc {
+                display: none;
+            }
+            
+            .post-layout {
+                flex-direction: column;
+            }
+        }
+        
+        /* 返回顶部按钮样式 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #23B175;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+        }
+        
+        .back-to-top:not(.u-hide) {
+            opacity: 0.88;
+        }
+        
+        .back-to-top:hover {
+            background-color: #23B175;
+        }
+        
+        /* 添加一个简单的箭头图标，不依赖字体图标 */
+        .back-to-top::before {
+            content: '▲';
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* 阅读进度条样式 */
+        #reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background-color: #23B175;
+            z-index: 10001;
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+    </style>
+    
+    <!-- JavaScript 库 -->
+    <script src="https://i.tanhaiyu.com/media/scripts/jquery.js" defer></script>
+    <script src="https://i.tanhaiyu.com/media/scripts/jquery-migrate.min.js" defer></script>
+    <script src="https://i.tanhaiyu.com/media/scripts/main.js" defer></script>
+    <script defer>
+        // 返回顶部功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建返回顶部按钮
+            const backToTopBtn = document.createElement('div');
+            backToTopBtn.className = 'back-to-top u-hide';
+            backToTopBtn.id = 'backToTop';
+            document.body.appendChild(backToTopBtn);
+            
+            // 显示/隐藏返回顶部按钮
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.remove('u-hide');
+                } else {
+                    backToTopBtn.classList.add('u-hide');
+                }
+            });
+            
+            // 返回顶部点击事件
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    
+    <!-- 阅读进度条脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBar = document.getElementById('reading-progress');
+            if (progressBar) {
+                function updateProgress() {
+                    const windowHeight = window.innerHeight;
+                    const documentHeight = document.documentElement.scrollHeight;
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+                    progressBar.style.width = scrollPercentage + '%';
+                }
+                
+                // 添加滚动事件监听
+                window.addEventListener('scroll', updateProgress);
+                // 初始加载时更新一次
+                updateProgress();
+            }
+        });
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" defer></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 代码高亮
+            if (typeof hljs !== 'undefined') {
+                hljs.highlightAll();
+            }
+            
+            // 文章字数统计
+            function countWords() {
+                const contentElement = document.querySelector('.post-content');
+                const wordCountElement = document.getElementById('word-count');
+                
+                if (contentElement && wordCountElement) {
+                    // 获取纯文本内容
+                    const text = contentElement.textContent || contentElement.innerText;
+                    // 移除多余的空白字符
+                    const cleanedText = text.replace(/\s+/g, ' ').trim();
+                    // 计算字数（中英文混合）
+                    let wordCount = 0;
+                    // 匹配中文、日文、韩文字符
+                    const asianChars = cleanedText.match(/[\u4e00-\u9fa5\u3040-\u30ff\u3400-\u4dbf\uac00-\ud7af]/g);
+                    if (asianChars) wordCount += asianChars.length;
+                    // 匹配英文单词（连续的非空白字符）
+                    const words = cleanedText.match(/[a-zA-Z]+/g);
+                    if (words) wordCount += words.length;
+                    // 显示结果
+                    wordCountElement.textContent = wordCount;
+                }
+            }
+            
+            // 执行字数统计
+            countWords();
+            
+            // 文章目录生成和滚动监听
+            // 检测是否为移动设备（基于屏幕宽度）
+            function isMobileDevice() {
+                return window.innerWidth <= 968;
+            }
+            
+            // 仅在非移动设备上生成目录
+            if (!isMobileDevice()) {
+                // 获取元素
+                var postContent = document.querySelector('.post-content');
+                var tocList = document.getElementById('post-toc');
+                
+                if (postContent && tocList) {
+                    var headings = postContent.querySelectorAll('h2, h3, h4');
+                    
+                    if (headings.length > 0) {
+                        // 生成目录项
+                        for (var i = 0; i < headings.length; i++) {
+                            var heading = headings[i];
+                            // 为每个标题添加ID
+                            var headingId = heading.getAttribute('id') || 'heading-' + i;
+                            heading.setAttribute('id', headingId);
+                            
+                            // 创建目录项
+                            var listItem = document.createElement('li');
+                            listItem.className = 'toc-' + heading.tagName.toLowerCase();
+                            
+                            var link = document.createElement('a');
+                            link.href = '#' + headingId;
+                            link.textContent = heading.textContent;
+                            
+                            // 平滑滚动到标题
+                            link.onclick = function(e) {
+                                e.preventDefault();
+                                var targetId = this.getAttribute('href').substring(1);
+                                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                            };
+                            
+                            listItem.appendChild(link);
+                            tocList.appendChild(listItem);
+                        }
+                        
+                        // 滚动监听，高亮当前目录项
+                        window.onscroll = function() {
+                            var scrollPosition = window.scrollY + 100;
+                            
+                            for (var i = 0; i < headings.length; i++) {
+                                var heading = headings[i];
+                                var headingTop = heading.offsetTop;
+                                var nextHeading = i + 1 < headings.length ? headings[i + 1] : null;
+                                var nextHeadingTop = nextHeading ? nextHeading.offsetTop : Infinity;
+                                
+                                var tocItem = tocList.children[i];
+                                
+                                if (scrollPosition >= headingTop && scrollPosition < nextHeadingTop) {
+                                    // 移除所有active类
+                                    for (var j = 0; j < tocList.children.length; j++) {
+                                        tocList.children[j].classList.remove('active');
+                                    }
+                                    // 添加当前项active类
+                                    tocItem.classList.add('active');
+                                }
+                            }
+                        };
+                        
+                        // 触发一次滚动事件，确保初始状态正确
+                        window.onscroll();
+                    } else {
+                        // 如果没有标题，隐藏目录
+                        document.querySelector('.post-toc').style.display = 'none';
+                    }
+                }
+            }
+        });
+    </script>
+    
+    <!-- Google Analytics -->
+    
+</head>
+<body class="single single-post">
+	<!-- 阅读进度条 -->
+	<div id="reading-progress"></div>
+	<!-- 导航栏区域 -->
+	<header id="masthead" class="site-header" role="banner">
+	<div class="header-container">
+		<!-- 网站标题/Logo -->
+	<div class="site-branding">
+			<div class="site-avatar">
+				<a href="/" rel="home">
+					<img src="/images/avatar.png" alt="百川随笔" />
+				</a>
+			</div>
+			
+		</div>
+		
+		<!-- 暗色调切换按钮 -->
+		<button 
+			class="dark-mode-toggle" 
+			type="button"
+			aria-label="切换暗色调"
+			id="darkModeToggle"
+		>
+			🌙
+		</button>
+		
+		<!-- 移动端导航触发按钮 -->
+		<button 
+			class="primary-nav-trigger" 
+			type="button"
+			aria-expanded="false"
+			aria-controls="site-navigation"
+			aria-label="打开菜单"
+		>
+			<span class="menu-icon"></span>
+		</button>
+	</div>
+</header>
+	<div class="site-navigation-wrapper">
+		<!-- 关闭按钮 -->
+		<div class="close-nav-btn">&times;</div>
+		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="主导航">
+			<ul class="primary-nav">
+				 
+					<li class="menu-item menu-item-1">
+						<a 
+							title="首页" 
+							href="https://i.tanhaiyu.com"
+							class="menu-link"
+						>
+							首页
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-2">
+						<a 
+							title="目录" 
+							href="https://i.tanhaiyu.com/archives"
+							class="menu-link"
+						>
+							目录
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-3">
+						<a 
+							title="标签" 
+							href="https://i.tanhaiyu.com/tags"
+							class="menu-link"
+						>
+							标签
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-4">
+						<a 
+							title="关于" 
+							href="https://i.tanhaiyu.com/post/about"
+							class="menu-link"
+						>
+							关于
+						</a>
+					</li>
+				 
+			</ul>
+		</nav>
+	</div>
+	<!-- 导航栏区域结束 -->
+	
+	<div class="surface-content">
+		<div class="post-layout">
+			<aside class="post-toc">
+				<div class="toc-container">
+					<h2 class="toc-title">目录</h2>
+					<nav class="toc-nav">
+						<ul id="post-toc"></ul>
+					</nav>
+				</div>
+			</aside>
+			<main class="main-content" role="main">
+			<article class="post-article" itemscope itemtype="http://schema.org/Article">
+				<section class="section-body">
+					<header class="section-header u-textAlignCenter">
+						<h1 class="grap-h1" itemprop="headline">2011年随笔合集</h1>
+						<div class="post-meta">
+							<span class="post-date" itemprop="datePublished">2011-11-02</span>
+							
+								<span class="post-tags">
+								
+									<a href="https://i.tanhaiyu.com/essay/">随笔</a>
+									
+								
+								</span>
+							
+						</div>
+					</header>
+					<div class="grap post-content" itemprop="articleBody">
+						
+						<h2 id="2011-11-10">2011-11-10</h2>
+<p>湖南艺术职业学院其实是由湖南省艺术学校和湖南省电影学校合并而成，但湖南省艺术学校和湖南省电影学校也各自有很漫长的成长历程。湖南省艺术学校最初成立于1951年，当时也是叫湖南省艺术学校，后来在1953年的时候改为湘剧小演员训练班，在1957年时改为湖南省戏曲学校，1959年为湖南艺术学院，1961年为湖南省戏曲艺术学校，1964年为湖南省戏剧学校，1976年复名为湖南省艺术学校。</p>
+<p>湖南省电影学校最初成立于1979年，当时叫湖南省电影技工学校，1985年改为湖南省电影职工中等专业学校，1994年正式命名为湖南省电影学校。我入校时，母校叫湖南省电影学校。毕业那年，湖南省电影学校和湖南省艺术学校合并，升格为现在的湖南艺术职业学院。</p>
+<p>转眼间已经毕业12年了，时间过得真快啊。湖南艺术职业学院建校60周年庆典活动将于11月18日举行，上午8:30在左家垅校区（原湖南省艺术学校）和望城坡校区（原湖南省电影学校）由各系分别举行校友联谊活动。下午14:30在贺龙体育馆（长沙天心区劳动西路339号）隆重举行校庆庆典大会暨《母校·摇篮》（暂定名）大型文艺演出活动。届时，张也、甘萍、吴军、瞿颖、雷佳、王丽达、周浩等一大批著名校友将登台演出。我们热忱期盼海内外校友、各级领导、各界人士热情支持和参与校庆活动，共襄盛典，同谱华章！</p>
+<h2 id="2011-10-13">2011-10-13</h2>
+<p>岁月如刀，刀刀催人老，转眼间朝云兄就30岁了。再过几年，我也30了。我们是1999年因为求学而认识的，因为XX原因和爱兵、磊一起结拜兄弟，朝云兄最早成家，最早为人父。现在，我们四人都已经成家了，也只有二哥爱兵还未为人父。30而立，修身、齐家、安天下！铭记！</p>
+<!-- more -->
+<h2 id="2011-10-06">2011-10-06</h2>
+<p>第一时间了解到乔布斯去世的消息，是早上8点多在芒果RADIO听到的。当时并不相信，于是打开微博，才发现整个页面全部都是有关乔布斯的信息。对于他的离世，我感到非常惋惜。苹果的产品虽然不便宜，但其设计理念是我推崇的，拥有苹果全系列产品也是我的目标。这不仅仅是有关标新立异的观念，更多地是苹果的产品可以提高我们的工作效率，极大地减少使用电脑玩游戏或做杂事的时间。</p>
+<p>奔迈是智能手机的始祖，同样配置的机器，使用奔迈系统就是要快速一些；而黑莓让我们将事情做得更细，发短信和电子邮件最方便，商务沟通首选；安卓让我们将娱乐和网络无障碍，沟通尽量通过电话进行，就是电池太不给力；苹果系列还没用过，以后会用的… …</p>
+<h2 id="2011-10-04">2011-10-04</h2>
+<h3 id="mb525搭配miui的defy-rom非常好用">MB525搭配MIUI的DEFY ROM非常好用</h3>
+<p>从MIUI刚刚放出支持DEFY的ROM开始，我就追随着它，每周五等候更新包的发布。在不断地刷机过程中，能够看到MIUI的ROM在不断地进步，但有的功能却在走回头路。关于移动通话的用户，节电和信号永远是最关注的关键词，连持续性和网络性能都没法保障的ROM绝对是有问题的。经过N多次折腾之后，就目前为止，最好的ROM应该是MIUI稳定版2.3.5a。这个ROM的信号不好，所以需要安装一个基带切换软件，可以提升网络通话性能。至于system的app，是可以精简一些的。</p>
+<p>建议删除的有：</p>
+<ul>
+<li>AppShare.apk 你没必要为这个浪费流量吧；</li>
+<li>Calculator.apk（计算器）如果没有安装替代计算器，就不要删除，我用Arity代替这个的；</li>
+<li>CloudService.apk 如果你不想MIUI时不时地推送信息到它的云服务器，那就删掉吧；</li>
+<li>Email.apk 如果你只用GMAIL，这个就可以删除了；</li>
+<li>LatinIME.apk 如果你安装了其它输入法，比如QQ的或者MOTO的，那你就删掉这个吧；</li>
+<li>Stk.apk 如果你不用SIM卡的那些菜单，就可以删掉这个；</li>
+<li>SuperMarket.apk 这个是MIUI自己整的一个程序聚合平台，可以无视；</li>
+<li>Talk.apk 有几个人和你一起用Google Talk进行交流？如果没有或很少，那就清理掉吧；</li>
+<li>TtsService.apk 我们不是那啥，用不上这个；</li>
+<li>Updater.apk 检查系统ROM更新的，如果你是通过PC下载到手机安装的，这个也不要了；</li>
+<li>VoiceDialer.apk 语音拨号功能，它听不懂中文，你说要不要删除呢</li>
+</ul>
+<p>除了精简上面这些程序外，尽量少安装一些平时用不上的程序，桌面上也少安装一些插件，少开WIFI，如果这样使用的话，两天的电力持续是没有一点问题的。</p>
+<h2 id="2011-10-02">2011-10-02</h2>
+<p>辞职，是一种决定；<br>
+辞职，是一种坚持。</p>
+<p>前些日子看文静在兰州、上海等地云游的照片，感到一种亲切，貌似是帮我完成心中愿望似的。每个人都有自己的理想和爱好，但生活却让人们只知道工作，而工作却因这个社会而变味，变味的工作让人们成了围墙里的囚徒。于是，那些同事们就做出了决定，坚持她们自己的理想；</p>
+<p>于是，她们辞职了… …</p>
+<h2 id="2011-09-25">2011-09-25</h2>
+<p>人在世界上，都是独一无二的个体，每个人的思想都不一样。我们在接受各种教育之后会变得拘束，这里面有家庭教育、学校教育、社会教育等等，正是因为这些，导致人们的思想忽左忽右，会感到某些事情可能做错了，某些事情想做却不敢做。于是，内心痛苦了，内心纠结了。放下那些约束和禁锢的思想吧，大胆去尝试，每一次尝试都是对思想的历练。</p>
+<p>人生只有不断去尝试才会精彩！</p>
+<h2 id="2011-08-15">2011-08-15</h2>
+<p>前段时间工作有点不顺利，总感觉有些人或问题无法沟通，想着无法解决的问题就头痛，只好放弃。而事实上，员工没做好，一定是主管没带好，团队协作要比单兵作战带劲得多。问题得不到解决，是因为没有找到关键点，只要关键点一抓住，什么都是水到渠成，什么都是浮云。</p>
+<p>经过深入沟通，直接了当地畅谈，每个人都找到了自己的定位，一切都很顺利。一个非公司的朋友，在酒席间对我说出了她的见解：放手让别人去发挥，要给予充分的信任，要肯定大家的工作，否则她们也会和你一样饱受挫折感。</p>
+<p>现在，一切都挺好！全新思维，全力以赴！阿彬，向你学习！</p>
+<h2 id="2011-04-24">2011-04-24</h2>
+<p>发帖自摩托罗拉手机论坛itfunz的MB525 2.2.2 ROM 阿拉伯3.4.3.20固件使得手机不断重启，建议不要使用这个ROM。</p>
+<p>另外，本ROM可以ROOT。</p>
+<h2 id="2011-04-05">2011-04-05</h2>
+<h4 id="有规律地生活未必是件好事">有规律地生活未必是件好事</h4>
+<p>决定写这些文字之前，我痛失了心爱的自行车。为了避免更多人遭遇到这种情况，我觉得需要分析这个问题，究其原因，还是“规律”两个字惹的祸。也许很多人都会说，丢车就丢车吧，和规律有什么关系呢？这不是扯蛋吧？没错，还真是TM的扯蛋了。</p>
+<p>为什么会是“规律”？</p>
+<p>想必大家都同意顺应“自然规律”，并且通过掌握自然规律来规避大自然带来的风险吧？没错，当你熟悉自然的运动规律之后，你就能够提前或者预防。同理，当你掌握一个人的规律之后，你就能够在他的规律运动过程中设立一些突发事件。如果那个人是你，你就有麻烦了。</p>
+<p>在电视或者电影作品中，我们无数次地看到，各种特战队员在精心计算对手的哨岗换防时间，换防人数；也无数次地看到在刺杀某人的时候，对此人的规律性调查，以便在期间穿插一些能够得手的机会；还无数次地在现实生活中看到或者体会到小偷在掌握一个人或一个群体的运动时间规律之后，轻易地实施偷窃而不让人发觉。</p>
+<h2 id="2011-03-31">2011-03-31</h2>
+<p>记得开始迷恋数码产品应该是从2003-2004年期间购买的第一台掌上电脑开始的，它叫Palm Tungsten E，内置Palm OS。那时候没有云计算，行程日志需要与电脑同步（OUTLOOK及PALM DESKTOP）。从那时候开始，我觉得Palm OS系统是最快速的，甚至比iOS以及Windows都好用，比Windows Mobile OS更是没话说。不过，真正让我震撼的还是Palm Treo 600，那是我的第一台全键盘智能手机，搭配“巨硬输入法”之后的输入速度是你没法想象的，从那以后我再也看不上非全键盘的机器。</p>
+<p>在PALM被HP收购之前，我使用过TREO 600和TREO 680，它的全键盘以及中文支持让我很满意，只是屏幕太落后了。怀着对WEB OS的梦想，我又用了PALM PIXI PLUS。只是，它的中文支持让我很失望，居然没有官方的中文输入法。再这样下去，中国区的市场份额岌岌可危。所以，希望开发好用的官方中文支持，这很重要。</p>
+<h2 id="2011-03-28">2011-03-28</h2>
+<p>商业人像摄影行业里面有一个奇怪的现象，大家都喜欢请一些培训公司到店辅导。这些培训公司要么是做企业文化，这是内功修炼；要么就是重在做秀场，这是刀光剑影的战场；或者是一些纯专业性的辅导，比如挑样部、接单部、数码部、摄影部、造型部、礼服部等各个专业的技术提升。</p>
+<p>做秀场的公司大多都受到浮夸风的影响，在做企业宣传的时候往往夸大其词。有的甚至会说2天内接单2000多单，实际营收900多万。很多老板非常相信这种短信，因为大家都相信成功学，都相信这个行业总是会有一个又一个的奇迹出现；他们相信这2000多单是可以完成的，他们相信按照48小时计算，每小时可以成交41.7个单，每天的进客量可以有1000多人，成交率100%，平均订单价可以达到4500元，按照这个进度计算，公司每年的收入可以达到16.4亿元。</p>
+<p>这些数字是不是很有诱惑力？是的！太有诱惑力了！那么你会相信吗？</p>
+<h2 id="2011-02-22">2011-02-22</h2>
+<p>一直想要一台安卓（Android）系统的机器，人称机器人。而复式一直都在向我推荐DEFY，说是性价比非常好，但我其实更喜欢MOTO PRO。因为PRO有物理全键盘，呵呵，不折不扣的全键盘控，玩黑莓久了自然改不了这个习惯。</p>
+<p>Defy是我的第一个安卓机器人，在不断的折腾过程中，已经刷机了N次，现在的Moto Defy Rom已经更新至Android 2.2.2版，用起来还挺稳定的，一次充电的最长的使用时间是3天15小时。</p>
+<p>以前使用Palm机器的时候，我也有用过PALM PIXI PLUS的GPS自动标绘骑行路线。感觉有些误差，但误差不大。这次使用MOTO DEFY的GPS功能自动标绘路线时，还是有些位移，使用的软件是“My Tracks”，实际绘图是有很大差异的，不知道导出KML文件到谷歌地球里面去是不是仍然会有大的误差。</p>
+
+					</div>
+					
+					<!-- 文章关键词 -->
+					
+				</section>
+				
+				<!-- 文章导航 -->
+				<div class="post-navigation">
+					
+					
+				</div>
+				
+				<!-- 评论区域 -->
+				
+			</article>
+		</main>
+		</div>
+	</div>
+</body>
+</html>

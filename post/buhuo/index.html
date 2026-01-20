@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="个人博客" />
+    <meta name="author" content="" />
+    <title>四十略不惑 | 百川随笔</title>
+    
+    <!-- 立即应用暗模式，避免闪烁 - 必须在CSS加载前执行 -->
+    <script>
+        // 早期检测暗模式设置，避免页面加载时的闪烁
+        (function() {
+            // 直接检查系统偏好，不依赖localStorage，确保实时响应系统设置
+            var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // 直接在documentElement上添加dark类，这样CSS加载后就会立即应用
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+    
+    <!-- 引入字节跳动字体 - Noto Sans Simplified Chinese -->
+    <link rel="stylesheet" href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/noto-sans-sc/10.0.0/css/noto-sans-sc.css">
+    
+    <!-- 主要样式文件 -->
+    <link rel="stylesheet" href="https://i.tanhaiyu.com/styles/main.css" type="text/css" media="screen" />
+    
+    <!-- 代码高亮样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    
+    <!-- 目录样式和返回顶部按钮样式 -->
+    <style>
+        /* 目录样式 */
+        .post-layout {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .post-toc {
+            position: sticky;
+            top: 100px;
+            align-self: flex-start;
+            width: 200px;
+            height: fit-content;
+            max-height: calc(100vh - 130px);
+            overflow-y: auto;
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .toc-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            padding: 0 0 10px 0;
+            border-bottom: 2px solid #e3e2e2;
+        }
+        
+        .toc-nav ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        
+        .toc-nav li {
+            line-height: 1.35rem;
+        }
+        
+        .toc-nav li a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-block;
+            /* 限制文本长度为11个汉字 */
+            width: 176px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .toc-nav li a:hover {
+            color: #23B175;
+        }
+        
+        .toc-nav li.toc-h2 {
+            font-weight: 500;
+        }
+        
+        .toc-nav li.toc-h3 {
+            padding-left: 15px;
+            font-size: 0.95em;
+        }
+        
+        .toc-nav li.toc-h4 {
+            padding-left: 30px;
+            font-size: 0.9em;
+        }
+        
+        /* 文章元信息样式 */
+        .post-meta {
+            margin-top: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            padding: 0 0 10px 0;
+            border-bottom: 2px solid #bdbaba;
+            opacity: 0.5;
+        }
+        
+        .post-word-count {
+            margin-right: 0.5rem;
+        }
+        
+        .post-tags {
+            display: inline-block;
+        }
+        
+        .post-tags a {
+            color: #666;
+            text-decoration: none;
+            padding: 0.2rem 0.3rem;
+            background-color: #f5f5f5;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .post-tags a:hover {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        
+        .toc-nav li.active a {
+            color: #23B175;
+            font-weight: 600;
+        }
+        
+        /* 文章内容区域调整 */
+        .main-content {
+            flex: 1;
+        }
+        
+        /* 移动端适配 - 完全隐藏目录 */
+        @media (max-width: 968px) {
+            .post-toc {
+                display: none;
+            }
+            
+            .post-layout {
+                flex-direction: column;
+            }
+        }
+        
+        /* 返回顶部按钮样式 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #23B175;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+        }
+        
+        .back-to-top:not(.u-hide) {
+            opacity: 0.88;
+        }
+        
+        .back-to-top:hover {
+            background-color: #23B175;
+        }
+        
+        /* 添加一个简单的箭头图标，不依赖字体图标 */
+        .back-to-top::before {
+            content: '▲';
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* 阅读进度条样式 */
+        #reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background-color: #23B175;
+            z-index: 10001;
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+    </style>
+    
+    <!-- JavaScript 库 -->
+    <script src="https://i.tanhaiyu.com/media/scripts/jquery.js" defer></script>
+    <script src="https://i.tanhaiyu.com/media/scripts/jquery-migrate.min.js" defer></script>
+    <script src="https://i.tanhaiyu.com/media/scripts/main.js" defer></script>
+    <script defer>
+        // 返回顶部功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建返回顶部按钮
+            const backToTopBtn = document.createElement('div');
+            backToTopBtn.className = 'back-to-top u-hide';
+            backToTopBtn.id = 'backToTop';
+            document.body.appendChild(backToTopBtn);
+            
+            // 显示/隐藏返回顶部按钮
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.remove('u-hide');
+                } else {
+                    backToTopBtn.classList.add('u-hide');
+                }
+            });
+            
+            // 返回顶部点击事件
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    
+    <!-- 阅读进度条脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBar = document.getElementById('reading-progress');
+            if (progressBar) {
+                function updateProgress() {
+                    const windowHeight = window.innerHeight;
+                    const documentHeight = document.documentElement.scrollHeight;
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+                    progressBar.style.width = scrollPercentage + '%';
+                }
+                
+                // 添加滚动事件监听
+                window.addEventListener('scroll', updateProgress);
+                // 初始加载时更新一次
+                updateProgress();
+            }
+        });
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" defer></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 代码高亮
+            if (typeof hljs !== 'undefined') {
+                hljs.highlightAll();
+            }
+            
+            // 文章字数统计
+            function countWords() {
+                const contentElement = document.querySelector('.post-content');
+                const wordCountElement = document.getElementById('word-count');
+                
+                if (contentElement && wordCountElement) {
+                    // 获取纯文本内容
+                    const text = contentElement.textContent || contentElement.innerText;
+                    // 移除多余的空白字符
+                    const cleanedText = text.replace(/\s+/g, ' ').trim();
+                    // 计算字数（中英文混合）
+                    let wordCount = 0;
+                    // 匹配中文、日文、韩文字符
+                    const asianChars = cleanedText.match(/[\u4e00-\u9fa5\u3040-\u30ff\u3400-\u4dbf\uac00-\ud7af]/g);
+                    if (asianChars) wordCount += asianChars.length;
+                    // 匹配英文单词（连续的非空白字符）
+                    const words = cleanedText.match(/[a-zA-Z]+/g);
+                    if (words) wordCount += words.length;
+                    // 显示结果
+                    wordCountElement.textContent = wordCount;
+                }
+            }
+            
+            // 执行字数统计
+            countWords();
+            
+            // 文章目录生成和滚动监听
+            // 检测是否为移动设备（基于屏幕宽度）
+            function isMobileDevice() {
+                return window.innerWidth <= 968;
+            }
+            
+            // 仅在非移动设备上生成目录
+            if (!isMobileDevice()) {
+                // 获取元素
+                var postContent = document.querySelector('.post-content');
+                var tocList = document.getElementById('post-toc');
+                
+                if (postContent && tocList) {
+                    var headings = postContent.querySelectorAll('h2, h3, h4');
+                    
+                    if (headings.length > 0) {
+                        // 生成目录项
+                        for (var i = 0; i < headings.length; i++) {
+                            var heading = headings[i];
+                            // 为每个标题添加ID
+                            var headingId = heading.getAttribute('id') || 'heading-' + i;
+                            heading.setAttribute('id', headingId);
+                            
+                            // 创建目录项
+                            var listItem = document.createElement('li');
+                            listItem.className = 'toc-' + heading.tagName.toLowerCase();
+                            
+                            var link = document.createElement('a');
+                            link.href = '#' + headingId;
+                            link.textContent = heading.textContent;
+                            
+                            // 平滑滚动到标题
+                            link.onclick = function(e) {
+                                e.preventDefault();
+                                var targetId = this.getAttribute('href').substring(1);
+                                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                            };
+                            
+                            listItem.appendChild(link);
+                            tocList.appendChild(listItem);
+                        }
+                        
+                        // 滚动监听，高亮当前目录项
+                        window.onscroll = function() {
+                            var scrollPosition = window.scrollY + 100;
+                            
+                            for (var i = 0; i < headings.length; i++) {
+                                var heading = headings[i];
+                                var headingTop = heading.offsetTop;
+                                var nextHeading = i + 1 < headings.length ? headings[i + 1] : null;
+                                var nextHeadingTop = nextHeading ? nextHeading.offsetTop : Infinity;
+                                
+                                var tocItem = tocList.children[i];
+                                
+                                if (scrollPosition >= headingTop && scrollPosition < nextHeadingTop) {
+                                    // 移除所有active类
+                                    for (var j = 0; j < tocList.children.length; j++) {
+                                        tocList.children[j].classList.remove('active');
+                                    }
+                                    // 添加当前项active类
+                                    tocItem.classList.add('active');
+                                }
+                            }
+                        };
+                        
+                        // 触发一次滚动事件，确保初始状态正确
+                        window.onscroll();
+                    } else {
+                        // 如果没有标题，隐藏目录
+                        document.querySelector('.post-toc').style.display = 'none';
+                    }
+                }
+            }
+        });
+    </script>
+    
+    <!-- Google Analytics -->
+    
+</head>
+<body class="single single-post">
+	<!-- 阅读进度条 -->
+	<div id="reading-progress"></div>
+	<!-- 导航栏区域 -->
+	<header id="masthead" class="site-header" role="banner">
+	<div class="header-container">
+		<!-- 网站标题/Logo -->
+	<div class="site-branding">
+			<div class="site-avatar">
+				<a href="/" rel="home">
+					<img src="/images/avatar.png" alt="百川随笔" />
+				</a>
+			</div>
+			
+		</div>
+		
+		<!-- 暗色调切换按钮 -->
+		<button 
+			class="dark-mode-toggle" 
+			type="button"
+			aria-label="切换暗色调"
+			id="darkModeToggle"
+		>
+			🌙
+		</button>
+		
+		<!-- 移动端导航触发按钮 -->
+		<button 
+			class="primary-nav-trigger" 
+			type="button"
+			aria-expanded="false"
+			aria-controls="site-navigation"
+			aria-label="打开菜单"
+		>
+			<span class="menu-icon"></span>
+		</button>
+	</div>
+</header>
+	<div class="site-navigation-wrapper">
+		<!-- 关闭按钮 -->
+		<div class="close-nav-btn">&times;</div>
+		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="主导航">
+			<ul class="primary-nav">
+				 
+					<li class="menu-item menu-item-1">
+						<a 
+							title="首页" 
+							href="https://i.tanhaiyu.com"
+							class="menu-link"
+						>
+							首页
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-2">
+						<a 
+							title="目录" 
+							href="https://i.tanhaiyu.com/archives"
+							class="menu-link"
+						>
+							目录
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-3">
+						<a 
+							title="标签" 
+							href="https://i.tanhaiyu.com/tags"
+							class="menu-link"
+						>
+							标签
+						</a>
+					</li>
+				 
+					<li class="menu-item menu-item-4">
+						<a 
+							title="关于" 
+							href="https://i.tanhaiyu.com/post/about"
+							class="menu-link"
+						>
+							关于
+						</a>
+					</li>
+				 
+			</ul>
+		</nav>
+	</div>
+	<!-- 导航栏区域结束 -->
+	
+	<div class="surface-content">
+		<div class="post-layout">
+			<aside class="post-toc">
+				<div class="toc-container">
+					<h2 class="toc-title">目录</h2>
+					<nav class="toc-nav">
+						<ul id="post-toc"></ul>
+					</nav>
+				</div>
+			</aside>
+			<main class="main-content" role="main">
+			<article class="post-article" itemscope itemtype="http://schema.org/Article">
+				<section class="section-body">
+					<header class="section-header u-textAlignCenter">
+						<h1 class="grap-h1" itemprop="headline">四十略不惑</h1>
+						<div class="post-meta">
+							<span class="post-date" itemprop="datePublished">2024-03-26</span>
+							
+								<span class="post-tags">
+								
+									<a href="https://i.tanhaiyu.com/essay/">随笔</a>
+									
+								
+								</span>
+							
+						</div>
+					</header>
+					<div class="grap post-content" itemprop="articleBody">
+						
+						<blockquote>
+<p>孔子《论语·为政》：“吾十有五而志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲，不逾矩。”</p>
+</blockquote>
+<p>这个“不惑”，不同的人理解不一样。如果从孔子本人的立场来思考，就需要从他的作品中找到相关信息进行梳理。</p>
+<blockquote>
+<p>孔子《论语·子罕》：“知者不惑，仁者不忧，勇者不惧。”</p>
+</blockquote>
+<p>这一段的意思是：“有智慧的人不迷惑，具有仁德的人不忧虑，勇敢的人不畏惧。”</p>
+<p>把这个“知者不惑”与“四十而不惑”放到一起，就能知道孔子想表达的意思是他40岁的时候是一个有智慧的人。</p>
+<p>我今年四十岁，如果按照孔子的标准，应该是“不惑”之人，一个有智慧的人。然而，我自知并不智慧，甚至还很愚钝。只是经过四十年的生命体验，对一些事情略知一二而已。</p>
+<!-- more -->
+<p><strong>以下是我的一些体悟</strong>：</p>
+<hr>
+<h2 id="有意识地觉察自己的情绪">有意识地觉察自己的情绪</h2>
+<p>我成长于一个有情绪的教育环境里，母亲是一个有要求的人，她会不断要求你做到她的标准；父亲言语不多，但有些时候也会动手，直到他认为祖先对他的教育方式不认同的时候才收手。父亲最后几次打人似乎有点玄乎，有一次教育哥哥的时候用手打人，结果手受伤了；还有一次用脚踢人，结果脚也受伤了。从那以后，他就说，可能是你们的祖宗不让我打。那就算了吧……</p>
+<p>父母曾经呈现的情绪和教育方式，我也有的。三十几年来，我一直习惯情绪地表达，而非表达情绪。</p>
+<p>/</p>
+<p>2024年的一个夜晚，我在公司加班后回到居住的小区。迎面走来三个人，最前面的女生似乎头上斜着缠了一个白色的布条，紧随她身后的应该是她的父亲，再后面跟着的人应该是她的母亲。她的父亲大声呵斥着什么，我没有听明白，也没有停留、继续向前走着。忽然听到女生在大声尖叫，特别的刺耳，也让人感到害怕，似乎承受着什么暴力一样。女孩的母亲没有多说什么，只是静静地跟在女孩父亲的身后，可能是准备随时制止危险行为的发生。</p>
+<p>到家后，我对女儿说：在你小的时候爸爸曾大声地训斥你、打过你，应该让你感到害怕了，对于我的行为，我向你道歉。以后应该不会再有打你的行为了。女儿不以为然，不知道是不是仍然对我保持着警惕。</p>
+<p>/</p>
+<p>刚开车的那两年，我看不惯路上的一切：别人开车快的时候，我说人家赶着去投胎；别人开车慢，我说人家应该下车散步；别人借道加塞的时候，我猛踩油门往前挤；别人黄灯的时候停车等待，我也忍不住嘟哝几句……</p>
+<p>坐在副驾驶的夫人总是在我来情绪的时候提醒我，要保持好的心态，安全第一。这种不断地叮嘱在一定程度上让我留意到自己的情绪变化，实时调整情绪。而真正让我在开车的时候保持良好心态，是在买入了途昂 X 之后，我倒是怕别人开车莽撞伤到我的车，能让就让。尽管有理的时候可以让对方支付维修费用，但我不想新车受损或出现需要维修的情况，所以我没必要抢道或应激开车。</p>
+<p>/</p>
+<p>我知道有情绪的状态对于解决问题没有什么帮助，对我的健康也没有帮助，保持平和的状态更有利于清晰地思考和沟通。</p>
+<ul>
+<li>情绪稳定的父母能够让孩子自如表达，不用在乎父母的情绪而被迫营业，自然也不会将情绪波动的状态学了过去。</li>
+<li>情绪稳定的管理者更能激发团队成员贡献不同的想法，可以减少恭维或表面服从的问题，也能避免一言堂导致的方向错误。</li>
+</ul>
+<p>时至今日，我依然还不能做到完全的情绪稳定与平和，但我会有意识地觉察自己的情绪，提醒自己快速调整状态，保持平和。</p>
+<h2 id="喜欢美好事物而无须独占">喜欢美好事物而无须独占</h2>
+<p>我喜欢一切美好的事物：高山流水、花草树木、云彩星空等大自然的美；陶、瓷、绘画、雕塑、建筑、设计等艺术提炼的美；还有那些自信、青春、气质、天然的美丽女子……</p>
+<p>喜欢大自然和艺术没有任何压力，喜欢美丽女子也没有什么压力，这是因为我知道喜欢的分寸，喜欢不是据为己有。</p>
+<p>如果有“据为己有”的独占之心，那就是动了“贪欲”。“据为己有”实际上就是想要所谓的“归属权”或“独占权”，艺术品的归属权直接可以通过谈判和支付金钱就可以实现，而美丽女子则不是单独使用金钱就可以“据为己有”的，就算美丽女子看在金钱的面子上愿意让人接近，还需要超级多的时间和精力投入“用真心换真情”，就算如此，也不代表她会“独爱你一人”。若我同时拥有“财富、独宠、青春、健康、性爱”并与美丽女子共享，兴许可以获得红颜芳心。</p>
+<p>我自知家庭责任之所在，且无“财富、独宠、青春、健康、性爱”的优势，遇上美丽女子时毫无“独占”之贪欲，更不可能期待从中产生所谓的“爱情”。</p>
+<p>所以，当我遇见美好事物的时候，欣赏、赞美以及体验当下拥有的感觉足矣。</p>
+<h2 id="失败和复盘是成功的过程">失败和复盘是成功的过程</h2>
+<p>我一度特别惧怕失败，对于一件事情的成功或者失败特别在意。究其原因，是我小时候非常在意父母和老师的评价，希望自己在父母和老师的面前，是一个好孩子或是一个好学生。所以，如果我已经保持了某种优势，我就害怕失去这种优势而不会向着更好的方向前进；如果我评估某件事情可能做不成，就会选择放弃或者绕道而行。</p>
+<p>/</p>
+<p>这种情况直到30多岁与朋友一起创业之后才有一些改观，阿里文化中的“苛求过程、释怀结果”足以表达现在的我在面对“失败”时的态度。为什么呢？正因为我太在意结果，导致我选择逃避；如果对于任何的结果都接受，但在过程中极致地去做到更好，这个过程是能够成长很多能力的。不管所谓好结果还是不好的结果，都只是一个呈现而已，真正成长人能力的不是结果，而是经历的过程。</p>
+<p>还有一句话叫做“尽人事，听天命”。貌似很多人都会将这一观点视为消极，放弃的意思。其实这句话和前面那句“苛求过程、释怀结果”有相通之处，重要的不是“听天命”，而是“尽人事”。“尽人事”就是去做我们可以控制的事，将事情做到极致，尽我们的洪荒之力；“听天命”的意思是将人事尽了，至于结果如何，就不必患得患失，接受一切因我们“尽人事”所带来的结果。</p>
+<p>/</p>
+<p>我反思自己在面对“失败”的心态变化源自于内部和外部两种维度的力量：</p>
+<p>内部的力量：通过20多年的工作，已经积累了一些让家人过得还行的资本，不会因为失败几次就爬不起来，不用担心失败给家人带来风险。</p>
+<p>外部的启示：埃隆·马斯克为“失败”的火箭发射鼓掌，在不断地“失败”之后终于成功回收了火箭，将火箭发射成本降低至行业最低水平，进而在火箭发射市场上取得了领先地位。另外，还有其他社会上极致苛求过程、释怀结果的案例。</p>
+<p>从本质上来看，我已经可以承受一定程度的失败，也参与过不同的失败投资项目，每次失败之后都能够让我从当中有所收获，并且能让我更接近我想要去的那个方向。</p>
+<h2 id="健康和平安比什么都重要">健康和平安比什么都重要</h2>
+<p>有这么几件事情，让我对于生命、健康和平安的理解发生了变化。</p>
+<p>2001年9月11日，美国世界贸易组织大厦被飞机撞倒的时候，我算是个十足的愤青，对于那么多逝去的生命拍手称快，现在回想起来深感惭愧。</p>
+<p>2008年5月12日，四川省的汶川县发生了8级大地震，我和夫人在吃饭的时候不能坐在电视机面前，因为电视里面播出的画面让我们哽咽难受。</p>
+<p>2014年3月8日，马来西亚MH370次航班莫名消失，我虽没有看到坠机的悲惨画面，但对于这种不知死活、不知所在何处的情况深感不安。</p>
+<p>2019年8月13日，突发脑溢血在ICU抢救了8天依然无意识的岳父，等到了从外地赶来看望他的三弟。没过多久，我和他的另一个女婿坐在岳父的床前，亲眼见他紧闭双眼、张大嘴巴用力吸入他在人间的最后一口气，接着无意识地从躺下的姿态抬起了头，然后长长地吐出最后一口气，再也没有了呼吸。</p>
+<p>2024年4月5日，夫人的小舅妈因心梗而突然离世。我和夫人4月2日还在她的家里做客，吃了她亲手做的饭菜。谁知道那竟然是见她的最后一面呢？早知道是这样，我那天就应该多吃一点饭菜。</p>
+<p>岳父的去世，是我第一次面对死亡。从那以后，我给自己买了人寿保险，总额度覆盖了当时还没有还款完毕的房贷金额；还给家人买了意外保险和医疗保险。下意识地减少了在工作上的时间投入，把更多的时间用来陪伴家人。大约1年之后，我继续增加了在工作上的时间投入，因为时间的陪伴不足以给家人保障。我尽可能地平衡获取更多的收入与给家人的陪伴。</p>
+<p>而<strong>家人的健康和平安</strong>是我生日或佛前许愿的首要心愿，至今未曾改变。</p>
+<p>在生死面前，什么都是小事。</p>
+<h2 id="事物的本质比现象更重要">事物的本质比现象更重要</h2>
+<p>我不再轻易地追随主流新闻、热点舆论，不再因为发表意见的人的身份和地位而无脑相信，哪怕是身边人转发的内容，不因对方的地位或权威而盲目轻信，不在意的事情穿耳过，在意的事情亲自查验确认。</p>
+<p>小时候判断好人、坏人、好事、坏事特别直接，就是简单的非黑即白。现在看人或看事，不会因为某一个点、某一件事情或某一个场景去轻易定性并贴上绝对化的标签。我会思考一个人做某件事情是基于什么样的场景、什么样的出发点，一个事情发生的背后有怎样的影响因素，从正反和尽可能多的维度去思考。</p>
+<p>老板狠狠地指出一个人的成长点，逼着他付出特别多的时间精力去工作，站在员工的角度来看，是老板在剥削他，也许老板真的是真么想，希望员工把事情做好，顺便赚点钱。这样的老板是坏人吗？</p>
+<p>同样还是说老板和员工的事情，公司老板不管事，也不会指出员工需要成长的地方，员工每天做的事情没有什么新的思考和成长，然后经过两三年之后，公司倒闭了，员工的能力比刚进公司的时候稍微好一点。这样的老板是个好人吗？</p>
+<p>如果说老板和员工可能天生存在一定的阶级对立和剥削的关系，那么可以尝试把这里面的那个老板角色换成主管，再想想是不是一回事？</p>
+<p>那么，我是一个好人吗？我是一个坏人吗？我觉得我既不是好人，也不是坏人，我只是一个人而已。</p>
+<h2 id="为自己而活的人生更精彩">为自己而活的人生更精彩</h2>
+<p>父母一生扎根于农村，虽改革开放时期在云南、广西两地搞了一些基建相关的工作，但往后的时间就没有外出务工了。</p>
+<p>父母深知农村的生活太过艰辛，一心希望我和哥哥兄弟二人能够走出农村，去大城市生活。我自然知道农村的生活怎样，毕竟天天看到父母“日未出而出、日已落方归”的工作状态，所以在选择“继续读3年高中去考大学”还是“补习绘画去考艺校”的时候，我选择了考艺校，最终来到了省会长沙。</p>
+<p>那时，我立志18岁以后不再需要父母的资助，24岁立业（<em>未明确所立之业是什么业</em>）。在工作和生活中遇到困难的时候，我的力量来源就是父母的期待，他们期待我走出农村，立足城市。</p>
+<p>/</p>
+<p>谈恋爱之后，我总想早点结婚。每次提及结婚的事情时，女友总是不语或认为未到时机。为了能够让当时的女友也是现在的夫人对我有信心，我决定在长沙买房，定居长沙。</p>
+<p>于是，在谈恋爱3年之后，我向同事借钱，把付款前会发到手的工资也计算在内，与她一起凑了67833元首付款，买下了人生中的第一套房。</p>
+<p>接下来的三年时间，我不敢有其他想法，只想稳定一点，将所买房和装修时借的钱早日还清。终于，在24岁的时候，我还清了房贷，拿到了抵押在银行里面的房产证。</p>
+<p>再往后的时间里，我过得比较消极，我觉得自己过得很紧张，一直都没有松下来过。我的内心总是问自己：如果只有我一个人过日子，是不是就不需要这么努力了？</p>
+<p>这个时候的我，应该是为自己的小家而活。</p>
+<p>/</p>
+<p>我接受当下的自己，并感恩当下所拥有的一切：父母健在、儿女双全、夫妻和睦、家人健康平安、居有定所、行有私车、衣食无忧……尽管当前的生活没有什么可担忧的地方，但我还不能放松，因为孩子的教育、父母的健康、夫妻的养老都需要开销，我还没有完全准备好。</p>
+<p>现在，我不认为我为家人而活，因为让家人过得更好是我自己期待和想要的，我所做的一切是为了满足我自己的需求。</p>
+<p>从被迫接受到主动接受，我的思维转变来自于夫人，那是关于我对父母情感需要的一次对话。我想让夫人和孩子们随我一同回我的家乡看望父母，夫人对我说：你回家看望父母，那是你基于你对父母的爱和父母对你的爱，这是你自己的需要。如果你想回家看望父母，你可以决定自己去或不去，不要因为我和孩子们不去而影响你自己的决定。</p>
+<p><strong>现在的我为自己而活</strong>。</p>
+<hr>
+<p>最后更新：2025 年 11 月 28 日</p>
+
+					</div>
+					
+					<!-- 文章关键词 -->
+					
+				</section>
+				
+				<!-- 文章导航 -->
+				<div class="post-navigation">
+					
+					
+				</div>
+				
+				<!-- 评论区域 -->
+				
+			</article>
+		</main>
+		</div>
+	</div>
+</body>
+</html>
