@@ -80,8 +80,6 @@ a:hover {
 em {
   font-style: normal;
   font-weight: 600;
-  padding: 5px 10px;
-  background-color: #FFE61B;
 }
 
 blockquote {
@@ -961,7 +959,7 @@ body.dark-theme {
 .dark-theme .mod-post__entry a { color: #EC5858; }
 
 .dark-theme pre { background: #282a30; }
-.dark-theme em { color: #f0e68c; background: rgba(255, 255, 255, 0.1); }
+.dark-theme em { color: inherit; }
 .dark-theme ol li,
 .dark-theme ul li { color: #9a9da5; }
 .dark-theme blockquote { color: #9898a0; border-left-color: var(--accent-color); }
