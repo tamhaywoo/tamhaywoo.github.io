@@ -1,0 +1,534 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>2007年随笔合集 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="2007-02-25 农历初六的晚上，卢哥打电话告诉我：一个只有21岁的同事因为心脏有问题&amp;hellip;走了。 我怎么也不相信这件事情是真的，曾经在一起工作生活的那个小伙子平时不是挺好的吗？怎么突然就没了？ 曾经将死看得淡如水的我如今胆怯了，死亡也许对逝者来说并不可怕也并不悲伤，但死亡却给逝者的亲人和朋友带来无尽的伤痛。它让生者明白，必须要好好的珍惜现有的生活和活着的每一瞬间，善待自己和亲人以及朋友！ 2007-05-13 本来一直没打算安装电话和宽带，因为大部分时间都是在公司里度过的，回家之后除了玩游戏或特殊事情外，一般都不会用电脑；而电话方面都是用移动电话，所以也觉得没有安装电话的必要。不过，公司老大赞助我装宽带，所以还是决定去电信营业厅新装电话和宽带。预计六月份就可以在家里上网了。 另外，关于电话号码的凶吉问题倒是挺吓人的，亮哥^亮哥说去世的那个同事手机号码尾数为4。听到之后，我只觉得背后一凉。虽然不太相信这些，心里却有些担心和害怕。找到测试电话凶吉的网站一试，发现周围的圈子用的都是凶凶的号码，大家也都挺好！无所谓啦！">
+<link rel="canonical" href="https://tam.haywoo.com/post/log-2007/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"2007年随笔合集","url":"https://tam.haywoo.com/post/log-2007/","description":"2007-02-25 农历初六的晚上，卢哥打电话告诉我：一个只有21岁的同事因为心脏有问题\u0026hellip;走了。 我怎么也不相信这件事情是真的，曾经在一起工作生活的那个小伙子平时不是挺好的吗？怎么突然就没了？ 曾经将死看得淡如水的我如今胆怯了，死亡也许对逝者来说并不可怕也并不悲伤，但死亡却给逝者的亲人和朋友带来无尽的伤痛。它让生者明白，必须要好好的珍惜现有的生活和活着的每一瞬间，善待自己和亲人以及朋友！ 2007-05-13 本来一直没打算安装电话和宽带，因为大部分时间都是在公司里度过的，回家之后除了玩游戏或特殊事情外，一般都不会用电脑；而电话方面都是用移动电话，所以也觉得没有安装电话的必要。不过，公司老大赞助我装宽带，所以还是决定去电信营业厅新装电话和宽带。预计六月份就可以在家里上网了。 另外，关于电话号码的凶吉问题倒是挺吓人的，亮哥^亮哥说去世的那个同事手机号码尾数为4。听到之后，我只觉得背后一凉。虽然不太相信这些，心里却有些担心和害怕。找到测试电话凶吉的网站一试，发现周围的圈子用的都是凶凶的号码，大家也都挺好！无所谓啦！","datePublished":"2007-02-25T14:29:51+08:00","dateModified":"2007-02-25T14:29:51+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/log-2007/","name":"2007年随笔合集","position":2}]}</script>
+<meta property="og:title" content="2007年随笔合集">
+<meta property="og:description" content="2007-02-25 农历初六的晚上，卢哥打电话告诉我：一个只有21岁的同事因为心脏有问题&amp;hellip;走了。 我怎么也不相信这件事情是真的，曾经在一起工作生活的那个小伙子平时不是挺好的吗？怎么突然就没了？ 曾经将死看得淡如水的我如今胆怯了，死亡也许对逝者来说并不可怕也并不悲伤，但死亡却给逝者的亲人和朋友带来无尽的伤痛。它让生者明白，必须要好好的珍惜现有的生活和活着的每一瞬间，善待自己和亲人以及朋友！ 2007-05-13 本来一直没打算安装电话和宽带，因为大部分时间都是在公司里度过的，回家之后除了玩游戏或特殊事情外，一般都不会用电脑；而电话方面都是用移动电话，所以也觉得没有安装电话的必要。不过，公司老大赞助我装宽带，所以还是决定去电信营业厅新装电话和宽带。预计六月份就可以在家里上网了。 另外，关于电话号码的凶吉问题倒是挺吓人的，亮哥^亮哥说去世的那个同事手机号码尾数为4。听到之后，我只觉得背后一凉。虽然不太相信这些，心里却有些担心和害怕。找到测试电话凶吉的网站一试，发现周围的圈子用的都是凶凶的号码，大家也都挺好！无所谓啦！">
+<meta property="og:url" content="https://tam.haywoo.com/post/log-2007/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/log-2007/">
+<meta name="twitter:title" content="2007年随笔合集">
+<meta name="twitter:description" content="2007-02-25 农历初六的晚上，卢哥打电话告诉我：一个只有21岁的同事因为心脏有问题&amp;hellip;走了。 我怎么也不相信这件事情是真的，曾经在一起工作生活的那个小伙子平时不是挺好的吗？怎么突然就没了？ 曾经将死看得淡如水的我如今胆怯了，死亡也许对逝者来说并不可怕也并不悲伤，但死亡却给逝者的亲人和朋友带来无尽的伤痛。它让生者明白，必须要好好的珍惜现有的生活和活着的每一瞬间，善待自己和亲人以及朋友！ 2007-05-13 本来一直没打算安装电话和宽带，因为大部分时间都是在公司里度过的，回家之后除了玩游戏或特殊事情外，一般都不会用电脑；而电话方面都是用移动电话，所以也觉得没有安装电话的必要。不过，公司老大赞助我装宽带，所以还是决定去电信营业厅新装电话和宽带。预计六月份就可以在家里上网了。 另外，关于电话号码的凶吉问题倒是挺吓人的，亮哥^亮哥说去世的那个同事手机号码尾数为4。听到之后，我只觉得背后一凉。虽然不太相信这些，心里却有些担心和害怕。找到测试电话凶吉的网站一试，发现周围的圈子用的都是凶凶的号码，大家也都挺好！无所谓啦！">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        2007年随笔合集
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2007-02-25">
+                        2007-02-25
+                    </time> • 8 分钟阅读 •
+                        
+                            <a href="/tag/sui-bi/">
+                                随笔
+                            </a>
+                            
+                                    
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <h2 id="2007-02-25">2007-02-25</h2>
+<p>农历初六的晚上，卢哥打电话告诉我：一个只有21岁的同事因为心脏有问题&hellip;走了。</p>
+<p>我怎么也不相信这件事情是真的，曾经在一起工作生活的那个小伙子平时不是挺好的吗？怎么突然就没了？</p>
+<p>曾经将死看得淡如水的我如今胆怯了，死亡也许对逝者来说并不可怕也并不悲伤，但死亡却给逝者的亲人和朋友带来无尽的伤痛。它让生者明白，必须要好好的珍惜现有的生活和活着的每一瞬间，善待自己和亲人以及朋友！</p>
+<h2 id="2007-05-13">2007-05-13</h2>
+<p>本来一直没打算安装电话和宽带，因为大部分时间都是在公司里度过的，回家之后除了玩游戏或特殊事情外，一般都不会用电脑；而电话方面都是用移动电话，所以也觉得没有安装电话的必要。不过，公司老大赞助我装宽带，所以还是决定去电信营业厅新装电话和宽带。预计六月份就可以在家里上网了。</p>
+<p>另外，关于电话号码的凶吉问题倒是挺吓人的，亮哥<a href="%E5%BB%96%E6%99%93%E4%BA%AE">^亮哥</a>说去世的那个同事手机号码尾数为4。听到之后，我只觉得背后一凉。虽然不太相信这些，心里却有些担心和害怕。找到测试电话凶吉的网站一试，发现周围的圈子用的都是凶凶的号码，大家也都挺好！无所谓啦！</p>
+<!-- more -->
+<h2 id="2007-05-17">2007-05-17</h2>
+<p>今天终于将电话装好了，遗憾的是书房没有电话接口，所以上网的时候只能用无线猫和无线网卡来实现了，希望速度方面不要太慢。在这里得提醒正在装修或即将装修的朋友，一定要在各个房间预留电话接口，因为房屋建设方预留的那些网线接口其实是没有用处的（除非是小区宽带）。</p>
+<p>另外，可能要去成都半个月，不知道有没有机会接触网络，如果不能接触网络的话，网站更新就要耽搁一段时间了！回来的时候估计正好过完儿童节！预祝一切顺利！</p>
+<h2 id="2007-05-19">2007-05-19</h2>
+<p>日前在淘宝上看中了一款Palm Tero 600智能手机，商家开价880元人民币，想想这其实挺划算的，于是就下了订单。不过，由于这款手机的上市时间是在2004年，市场上已经很难见到它的踪迹，店家也要到别处去拿货（一般都是14天机，需要店家自行破解网络锁）才行。由于店家出售的货物不是自有库存，这给网上交易带来了不确定性。也就是说，没有实体店的商家做网店生意，是等订单来了之后才会去其他实体店拿货。这样的操作方式降低了店家的风险，却耽误了顾客的时间，让顾客的体验不太好。虽然店家一直都非常友好地在交流，辛苦地去找货，但我觉得手头没有现货就开卖的做法还是不太合适的。</p>
+<p>最后，经过反复的退款、下定单等等操作，店家仍然没有合适的货物。我与Palm Tero 600智能手机失之交臂，希望以后有机会使用Tero系列的手机！</p>
+<p>最近这几天我所经历的事情似乎都存在不确定性和反复非常的特性，除了上面所讲的网上购机事件如此，还有自己外出学习的事情也是变动很大。具体如何决定就得看下午我自己是如何看待此事了</p>
+<h2 id="2007-05-25">2007-05-25</h2>
+<p>来到成都已经有段时间，发现成都真是一个学习和交流的好地方，每个人都很喜欢和其他人交流技术方面的问题，不存在什么技术保密之类的。然后大家都喜欢聚到一起，喝着啤酒聊聊啊。成都的人真的很懂得享受生活，难怪有人将它称为耍都，叫年轻人不要来成都（少不入蜀），因为来了之后就不想走了</p>
+<p>其实学习时间安排都还算紧张，所以太多没有时间去各个地方游玩，今天抽空来到了四川师范大学，见见天天在网上见到却没见过真人的志刚（Denis）.嘿嘿……就是照片上的这两个傻蛋，其中有一个是我，一个是他！具体谁是谁，还是不说。</p>
+<p>嘿嘿……回客栈去咯。</p>
+<h2 id="2007-06-02">2007-06-02</h2>
+<p>本来决定今天下午去一些朋友那边交流交流，但从公寓出来走了很长一段路都没有拦到的士，很是郁闷。于是抱着试试看的心情继续往前走，不时的回过头来看身后，希望能有好心的司机开着的士往我的方向前进。</p>
+<p>很遗憾，从纱帽街（后来想起我原来住的地方叫纱帽街，听起来有些歧义哦）走到红星路四段仍然无果，朋友们听说没打到车，于是说：今天不去了，改天吧。改天吧，改天。呵呵……既然已经走出来了，干脆继续走走，边走边看边玩嘛。走路可真累啊，回到公寓（从八宝街的家乐福附近打公交车回去的）再将自己的暴走路线用黑笔画出来，就是上面那张地图啦。强吧？简直是围着成都内环转了一圈！</p>
+<h2 id="2007-06-04">2007-06-04</h2>
+<p>在成都呆了十来天，结识了许多朋友，谢谢卢哥、军还有阿峰在这段时间里对我的关照。以后有机会自己再去成都，到时候再认认真真地、痛痛快快地喝喝酒、聊聊天，逛逛周边的景区。</p>
+<p>川航的小飞机在经过气流的时候感觉像在坐拖拉机！终于平安地降落到了长沙，有许多事情需要去处理，加油啊！！</p>
+<h2 id="2007-07-15">2007-07-15</h2>
+<p>最近这段时间里，iPhone的相关新闻出现在各大网站的显要位置，尤其是那些数码相关信息网站。</p>
+<p>iPhone确实好啊，可因为官方解释的那些原因（包括只能用ATT公司提供的网络服务），我们暂时没法享用。我可不想跟随着那些仿制iPhone的潮流，去手机城买个盗版的iPhone手机，那纯粹属于意淫。</p>
+<p>思前想后，还是决定买下Palm的Treo 600作为自己的通讯工具。主要是因为4年前就在用Palm Tungsten E掌上电脑，心里一直在想着，要是这台掌上电脑能够当电话用该多好。</p>
+<p>其实Treo 600并不是Palm公司的最新产品，为什么还要买它呢？这个&hellip;嗯&hellip;这是一个秘密&hellip;呵呵&hellip;希望它能够正常服役3年，说不定那个时候就可以用到iPhone了，那样最好啦。</p>
+<h2 id="2007-07-17">2007-07-17</h2>
+<p>成都其实很漂亮的。</p>
+<p>我绕着成都的内环走了好久，算是暴走吧！算我厉害，找到了目的地，只是没有找到朋友托我带回长沙的天友牌米粉，估计她很失望，我也是很失望啊！</p>
+<p>成都的公交车也很有意思，除了广告印在上面很漂亮外，好像还有一路公交车是木头做的，很经典啊！希望以后也好好保留着，不要当柴火烧了它，估计在别的地方会被报废处理。</p>
+<p>成都的自行车和电动车也是非常多的，在过马路的时候我其实不怕那些机动车，就怕非机动车。因为在你过马路的时候，迎面而来的是飞快的汽车自行车和电动车的人，似乎很赶时间似的。不过，只要一离开车子步行的话，那就很慢啦，似乎是在享受脚板与地板的那种摩擦的感觉。</p>
+<p>有机会再去成都，好好玩玩</p>
+<h2 id="2007-07-24">2007-07-24</h2>
+<p>本来准备去张家界漂流的，而且也是我们此行的最主要目的，只是正好碰上张家界连日大雨，茅岩河的水势猛涨，所以我们的漂流计划破灭了。</p>
+<p>虽然是在雨中游张家界似乎令人不快，但比起长沙的炎热酷暑来，还是张家界这边凉快地好。我们的汽车刚驶出张家界，天气便逐渐放晴，我们又回到了炎热的世界……</p>
+<p>提醒驾车的朋友注意：当驾车遭遇大雨的时候，尽量不要出行，如果是在高速公路上行车，请驶入安全区域停泊，并开启安全灯，以免发生事故。在去张家界的第一天晚上，我一位朋友的家人就因为雨中驾车而遭遇了车祸，他们是在张家界返程的途中遭遇不幸的，一位亲人走了……</p>
+<h2 id="2007-08-11">2007-08-11</h2>
+<p>不知道科学的角度来讲，炎热的天气是不是会让人产生困意，以至于注意力不集中，不想做事。如果没有这种说法，那这纯粹是在为我现在的状态找借口，是自己懒惰的借口。（在来公司的路上，我忽然想到了一个问题：是不是因为睡在空调房里面，使人进入深度的睡眠状态，当闹钟响起的时候，我们还没有真正清醒过来。实际上，在以前的夏天里，我是最容易在六点左右自然醒过来的，可现在看来似乎是不可能的。）</p>
+<p>在成都的时候就已经答应大卢哥，回到长沙后便立即将他的过渡网站做好，现在快两个月了，仍然没有做完，我都无法面对他了。哦，也许是无法面对自己吧。</p>
+<p>最近对自己的网站更新也很不正常，即便是有更新也难得有几篇真正用心写出来的稿子，写稿子确实需要很多时间，而现在的工作已无法抽半天时间来查找资料和撰写注释。</p>
+<p>现在必须更加严谨地规划和利用自己的时间，否则它就在我这种混沌状态下悄然离去。</p>
+<p>这应该算是自己的心路历程，记录在此算是释放一种心情。也是让无数的眼睛来盯住自己，提醒自己一定要振作起来，清理混乱的思绪，别糟蹋自己&hellip;&hellip;</p>
+<h2 id="2007-09-06">2007-09-06</h2>
+<p>昨天经历了一件怪事，凌晨2点的时候她忽然说胡话：&ldquo;那是什么？那是什么？&ldquo;当我问她哪里的时候，她并不回答，只是说：&ldquo;那里是什么？&ldquo;最后才回答&quot;它已经不在那里了&rdquo;。</p>
+<p>之后，我继续睡，在我睡着了的时候。又突然被一种强烈的声音震醒，那似乎是一种撞击声，并夹带着餐具被摔破的声音，我赶紧爬起来冲到厨房。打开灯之后的情景让我很惊讶，或者说是很诡异。因为我发现厨房里的一切都完好地摆放在那里，丝毫没有动过的痕迹，但为什么我会被那种声音惊醒呢？按理说，我该感到庆幸，庆幸不是家里来了小偷或是别的什么不好的事情。但此时的我却感到背后阵阵发凉&mdash;-难道是我的神经太过于敏感？我可从没有经历过这种事情啊，并且是近乎于恐怖电影中的情节，希望一切不算太坏。希望仅仅是我的幻觉，或许我该去看医生了吧。</p>
+<p>以上文字是凌晨2点用手机记录下来的，就是为了想早上起床的时候问起她是否经历过我梦中的有关她的情节。早上问了她，她说自己没有做梦，也没听见什么声音。只是发现原本放在窗台的一个大玻璃瓶出现在洗碗池中。经过一上午的分析和讨论，最后返回家中勘查现场，发现厨房窗户的边上是一个下水管道，我们终于确定是小偷所为。多亏我的窗台有个大瓶子，多亏大瓶子的下面有一摞碗，否则他就得逞了。至于为什么会出现她说胡话而我却在问她的那个情节，我就无法解释和理解了，只能说是我的祖先想让我知道，一会儿会有个梁上君子光临我家，让我清醒点。</p>
+<p>想起来确实有点不可思议，今天晚上做饭的时候她叫我的名字，我就从书房出来，结果她说了一句话又让我出了一身冷汗，她说：“你怎么又从那边出来了？”我说是啊，我本来就在书房啊。她却说：“我就是因为看到从书房出来才叫你的呀。”汗~~不止是一点点凉啊，那就是冷的感觉。唉，又是一件无法解释的事情！</p>
+<h2 id="2007-09-19">2007-09-19</h2>
+<p>我还没长大不能做爸爸。</p>
+<p>很多要好的朋友看到我的签名上出现这句话的时候很惊讶并替我着急，大多数人都以为是我不小心干了什么坏事情，被逼要承担做爸爸的责任。实际上我的本意只是觉得自己还不够成熟，虽然平时在工作中没有出现什么大的问题，但与SUNNY（准内人）相处的时候总不能有大的胸怀，容易对她说重话，感觉自己仍然是个小孩子，不懂得容忍和包容，这一点很不好，需要调整。</p>
+<p>2年前带着东拼西凑的6W块钱排一通宵的队，懵懵懂懂地买下了柠檬丽都的一户小房子，从那时候起就真正地成了房奴一族，每个月所有的钱都拿去还债，还了朋友的钱还要还银行的钱，真的是恨不得把一块钱撕成两半去坐公交车。</p>
+<p>就一直这样坚持着，到现在稍微好一点之后，银行贷款利率却已经涨到了7.83%，也不知道明年会涨到什么样的高度。虽然房价也在不断攀升，但那些都是虚拟的，并非现金流动，对我来说没有太大的作用。更何况台海问题箭在弦上，上海试鸣最大规模防空警报，也不知道无法预知的战事会不会影响房地产市场。</p>
+<p>比我更着急更后悔的却是我的朝云大哥，当初为了孝敬老爸，花了6W在老家修了一栋房子，错过了最佳的买房时间。按照他的话说，房价涨得比工资要比涨工资快多了，根本没法比。更可气的是现在凑足了钱都没法买到自己中意的房子，上次他特意从深圳飞到长沙来，交了2W的意向金，希望能买到星沙的鹏基.诺亚山林，但由于摇号预售闹得不欢而散，还是没能够圆他的安家梦。</p>
+<h2 id="2007-09-24">2007-09-24</h2>
+<p>前几天SUNNY的爷爷去世了，这似乎是前几天那件事情<a href="2007%E5%B9%B49%E6%9C%886%E6%97%A5%E5%87%8C%E6%99%A8%E7%9A%84%E6%A2%A6%E5%A2%83">^前几天那件事情</a>的一种解答。农村里叫托梦或者暗示什么的，我外公去世的时候也是做了一个梦，我梦见自己掉牙齿了。</p>
+<p>为了赶上葬礼，22日下了班后和SUNNY连夜赶往杉木桥，23日凌晨4点终于到了她家。一家子人都围在一起哭得不成样了，我看着也觉得鼻子一酸……</p>
+<p>其实我了解爷爷的情况，他检查出自己是肠道癌晚期之后，仍然坚持要切除肿瘤，并且做过三四次手术，最后导致癌细胞扩散至全身。对于患有癌症的病人来说，那种痛苦是难以言喻的，我老家就有人因为承受不了那种痛苦而自寻解脱。所以，我倒觉得去世对于爷爷来说是一种解脱，再也不用那么痛苦了，尽管他还很留恋这个世界，希望看到四世同堂的热闹气氛……</p>
+
+                </div>
+
+            </article>
+
+
+            
+                
+	<div class="mod-post__foot">
+	 文章标签: 
+     
+        <a href="/tag/sui-bi/">随笔</a>
+     
+     </br>
+	</div>
+
+                    
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/log-2008/">2008年随笔合集</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/log-2006/">2006年随笔合集</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

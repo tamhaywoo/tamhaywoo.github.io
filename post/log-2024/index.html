@@ -1,0 +1,544 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>2024年随笔合集 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="2024-10-23 我希望孩子们能够早一些找到自己喜欢的事情，如果能够从幼儿园到大学这十几年里面找到自己的目标，并且持续为之积累经验，比考上北大清华更好。30年前的高考录取率只有36%，现在的录取率已经超过了90%，文凭不能代表能力，只能表示基础教育的底子不一样（科学研究除外），就业的标准被拉高了。 2024-10-19 辅导儿子做作业的时候，如果把目标调整为：“只要做正确一次就可以了”。那么整个过程还是非常愉快（愉悦和快速）的。现在他还在学习拼音阶段，老师要求直接发音不要逐字拼音的那些题目，他都需要逐字拼音，我觉得没所谓，搞对就可以了。在不能脱口而出的阶段，还是需要通过这种大声拼读来练习发音的。">
+<link rel="canonical" href="https://tam.haywoo.com/post/log-2024/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"2024年随笔合集","url":"https://tam.haywoo.com/post/log-2024/","description":"2024-10-23 我希望孩子们能够早一些找到自己喜欢的事情，如果能够从幼儿园到大学这十几年里面找到自己的目标，并且持续为之积累经验，比考上北大清华更好。30年前的高考录取率只有36%，现在的录取率已经超过了90%，文凭不能代表能力，只能表示基础教育的底子不一样（科学研究除外），就业的标准被拉高了。 2024-10-19 辅导儿子做作业的时候，如果把目标调整为：“只要做正确一次就可以了”。那么整个过程还是非常愉快（愉悦和快速）的。现在他还在学习拼音阶段，老师要求直接发音不要逐字拼音的那些题目，他都需要逐字拼音，我觉得没所谓，搞对就可以了。在不能脱口而出的阶段，还是需要通过这种大声拼读来练习发音的。","datePublished":"2024-10-23T13:21:08+08:00","dateModified":"2024-10-23T13:21:08+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/log-2024/","name":"2024年随笔合集","position":2}]}</script>
+<meta property="og:title" content="2024年随笔合集">
+<meta property="og:description" content="2024-10-23 我希望孩子们能够早一些找到自己喜欢的事情，如果能够从幼儿园到大学这十几年里面找到自己的目标，并且持续为之积累经验，比考上北大清华更好。30年前的高考录取率只有36%，现在的录取率已经超过了90%，文凭不能代表能力，只能表示基础教育的底子不一样（科学研究除外），就业的标准被拉高了。 2024-10-19 辅导儿子做作业的时候，如果把目标调整为：“只要做正确一次就可以了”。那么整个过程还是非常愉快（愉悦和快速）的。现在他还在学习拼音阶段，老师要求直接发音不要逐字拼音的那些题目，他都需要逐字拼音，我觉得没所谓，搞对就可以了。在不能脱口而出的阶段，还是需要通过这种大声拼读来练习发音的。">
+<meta property="og:url" content="https://tam.haywoo.com/post/log-2024/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/log-2024/">
+<meta name="twitter:title" content="2024年随笔合集">
+<meta name="twitter:description" content="2024-10-23 我希望孩子们能够早一些找到自己喜欢的事情，如果能够从幼儿园到大学这十几年里面找到自己的目标，并且持续为之积累经验，比考上北大清华更好。30年前的高考录取率只有36%，现在的录取率已经超过了90%，文凭不能代表能力，只能表示基础教育的底子不一样（科学研究除外），就业的标准被拉高了。 2024-10-19 辅导儿子做作业的时候，如果把目标调整为：“只要做正确一次就可以了”。那么整个过程还是非常愉快（愉悦和快速）的。现在他还在学习拼音阶段，老师要求直接发音不要逐字拼音的那些题目，他都需要逐字拼音，我觉得没所谓，搞对就可以了。在不能脱口而出的阶段，还是需要通过这种大声拼读来练习发音的。">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        2024年随笔合集
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2024-10-23">
+                        2024-10-23
+                    </time> • 7 分钟阅读 •
+                        
+                            <a href="/tag/sui-bi/">
+                                随笔
+                            </a>
+                            
+                                    
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <h2 id="2024-10-23">2024-10-23</h2>
+<p>我希望孩子们能够早一些找到自己喜欢的事情，如果能够从幼儿园到大学这十几年里面找到自己的目标，并且持续为之积累经验，比考上北大清华更好。30年前的高考录取率只有36%，现在的录取率已经超过了90%，文凭不能代表能力，只能表示基础教育的底子不一样（科学研究除外），就业的标准被拉高了。</p>
+<h2 id="2024-10-19">2024-10-19</h2>
+<p>辅导儿子做作业的时候，如果把目标调整为：“只要做正确一次就可以了”。那么整个过程还是非常愉快（愉悦和快速）的。现在他还在学习拼音阶段，老师要求直接发音不要逐字拼音的那些题目，他都需要逐字拼音，我觉得没所谓，搞对就可以了。在不能脱口而出的阶段，还是需要通过这种大声拼读来练习发音的。</p>
+<!-- more -->
+<h2 id="2024-10-18">2024-10-18</h2>
+<p>自信的根源是相信人人平等，并以此处事。如果加上内心富足、不与人攀比财富与智慧、不为财米油盐姜醋茶而困扰，那应该可以在很多场景下可以坦然面对。不过，即便拥有这些，男人或女人在自己喜欢的人面前，还是会因为年龄和身体素质而出现不自信的情况；如果能够让别人发自内心尊重你，那你真的很厉害。</p>
+<h2 id="2024-10-17">2024-10-17</h2>
+<p>如果你不想挤公交车和挤地铁上班，那你也不会喜欢开车挤在马路上。</p>
+<h2 id="2024-10-16">2024-10-16</h2>
+<p>我对公司的同桌（2004年出生）说：在你出生的前两年，我大学毕业了。当你工作的两年后，我又上学了。（考虑专升本）</p>
+<h2 id="2024-10-15">2024-10-15</h2>
+<p>昨天开始拆掉了 iPhone 15 Pro Max 和 HUAWEI Pura 70 Ultra 的保护套，因为我想通了，这两款手机的最终归宿不是转手卖出，而是收藏，我没必要为了手机的完美外观而失去其原本的使用体验，当初买它们的动力之一就是拿在手中的手感啊（尤其是 HUAWEI Pura 70 Ultra）。</p>
+<h2 id="2024-10-10">2024-10-10</h2>
+<p>花个三十万买的途昂 X，自己爱惜得很，却总是被停车位隔壁的车开门碰伤，数下来怕是有六七个痕迹了，得亏还贴了车衣，要不然就掉漆了。这些人真是没有一点意识，估计对自己的车也不在意。唉，想开点。又不是收藏用的车，就是个代步工具，算了算了，与全世界和解，与自己和解。不在意，就不会有烦恼。</p>
+<h2 id="2024-10-09">2024-10-09</h2>
+<p>股市基金投资的事情，赚了多少还是亏了多少，坚持不对别人讲。最不能讲的就是家人和朋友（家人操心所产生的情绪影响会决策，朋友见你挣钱徒增烦恼）如果朋友的朋友问及，可以不回应。实在不能推脱、必须要讲的时候，最好说自己没关注这些事情，把公司经营好比关注这些的收益更有确定性。如此这般……</p>
+<h2 id="2024-10-08">2024-10-08</h2>
+<p>儿子是我在外体验足浴按摩（绿色）的最大受益者，因为我所体验到的各种按摩手法应用于他身上的次数最多。就在刚才，他睡不着、也不想睡，我把他抱过来放在他的床上，开始给他按摩，大约20分钟左右，他就睡着了。他是挺喜欢我给他按摩的，有一回还接受了我请他去足浴店按摩的邀请，只是最后没带他去。</p>
+<h2 id="2024-10-03">2024-10-03</h2>
+<p>有的人在电话里面对别人没有一句好话，脾气坏得很；见面和人聊天却卑微得不得了，连说话的勇气都没有，怂得很。不是他不想说，而是他不愿意面对面冲突。似乎看不到对面的脸，就能让他够放飞自我、让情绪飘扬。</p>
+<h2 id="2024-10-02">2024-10-02</h2>
+<p>曾经动了不良念头，对人有非分之想。动之以情、诱之以利之后依旧被婉拒，多年后，对方给了个机会，我却不愿意面对了。反思自己为何是这种变化，一个是本来应该心正，再就是不想在情感方面额外付出，最后就是不想付出精力和时间。保持简单的关系就挺好的，一旦付出了时间和情感，就一定希望有所期待啊。</p>
+<h2 id="2024-10-01">2024-10-01</h2>
+<p>统计1996-2015年期间上证综合指数回报，由于2015是个牛市，这20年投资并持有上证综合指数的回报可以接近每年10%；如果你错过其中上涨最大的5天，回报就会下跌到每年 7%左右；如果你错过上涨最大的那40天，回报就变成了每年-3.8%。当闪电劈下来的时候，你最好保证自己在场.</p>
+<h2 id="2024-09-30">2024-09-30</h2>
+<p>每次大股东带着出去参加狄哥的酒局，我都要出几千块钱，第一次3000、第二次2000、第三次2000，似乎我并没有什么收获。总结下来有几点在以后需要注意的事情：1、喝酒之后不打麻将炸金花（本来就不会，大脑迷糊更容易输）；2、每一种规则发生变化之后，要谨慎操作，摸透规则才能放大机会。</p>
+<h2 id="2024-09-29">2024-09-29</h2>
+<p>小朋友每年买了学平险，从来没有当作一回事。只有今年给大宝买学平险的时候，才了解到原来被保人如果被狗咬了也可以报销费用。我和夫人提了下这个事情，她就找出小宝的学平险来，准备各种资料提交了上去，因为小宝这两年被自己家里的狗十一不小心弄伤了好几回。来来回回折腾好些天，竟然报销了几百块。</p>
+<h2 id="2024-09-27">2024-09-27</h2>
+<p>到底是卖掉已经获利的基金去补仓亏损的基金，还是继续持有已获利的基金？原本的想法是选择前者，但现在我决定选择后者。因为卖出要时间，买入也要时间，浪费了至少两天时间。另外还需要支出手续费。我还是等行情发生变化开始向下的时候选择前者。</p>
+<h2 id="2024-09-26">2024-09-26</h2>
+<p>公司同桌凌晨一点发个朋友圈（始于2021年，终于2024年），我一看，估计是她失恋了。就给她回了个“3年学习期已过，你升级了。”早上她回复“是”，坐实了我的猜测。早上上班之后，我问她“你还好吗？”忽然觉得有点腹痛，于是接着说“我想拉屎”，她笑着笑着就哭了（为前一句话苦，为后一句话笑）</p>
+<h2 id="2024-09-20">2024-09-20</h2>
+<p>夫人对女儿的学习特别上心，自然对于女儿的考试成绩特别在意。前些天考试成绩出来了，数学是C，女儿不敢把试卷带回家，搪塞了好几天。夫人问女儿考试成绩不好的原因是什么？女儿说不上来，夫人说了她近半个小时，把女儿说哭了。我对此有些担心，怕她们的关系受到影响，怕女儿对别人的评价看得很重。</p>
+<h2 id="2024-09-19">2024-09-19</h2>
+<p>黎巴嫩寻呼机批量爆破事件让我再次对科技产品表示担忧。早期在电影《我是机器人》《变形金刚》等科技电影中看到智能汽车被远程控制，车主无能为力的那些画面在当下应该是真实可以复现的。</p>
+<h2 id="2024-09-18">2024-09-18</h2>
+<p>那个小股东拿着我送给她的手机收了客户的钱没有交到公司，原本以为只是最近的事情，今天接手工作和客户对接的时候，发现竟然从6月份就有“偷油”的行为了。我竟然没有发现！</p>
+<h2 id="2024-09-17">2024-09-17</h2>
+<p>不管身处在什么样的场景，从来只有自己在场，周围的一切是内心世界的投影，所见之人和事其实是一面镜，眼中所看到的，就是镜子中的自己，眼中的别人就是自己。当意识到自己一生中从头到尾只有自己独自在场，从始至终体验的只不过是自己的感受，那么便能去掉尘世的所有枷锁，走向真正的自由。</p>
+<h2 id="2024-09-13">2024-09-13</h2>
+<p>唉，今天推了儿子，用力打他的屁股好几下，还对夫人说了“滚”。我不喜欢这个样子。</p>
+<p>这一切，只因为夫人让我带着儿子完成家庭作业。儿子不想做作业，叫不动。装宝。小学一年级三点半就放学了，九点钟还没做完作业，我无法理解这么长时间怎么安排的。夫人说她现在没有办法，需要我给小宝建立好习惯。</p>
+<p>动手后。我问儿子：为什么非得动手打你或者来情绪动真格的时候才会行动？他说：我不知道。</p>
+<p>他现在控制情绪恢复很快，虽然眼睛含了泪，但不会像以前那样不说话。</p>
+<p>我再问：你是不是喜欢被别人逼着做事情？他回答：有时候喜欢，有时候不喜欢。</p>
+<p>我觉得他可能还处于恐惧中，身体后倾，就不再追问。</p>
+<p>再后来，我问儿子准备好做作业了吗？他说准备好了。我按照流程，先和他一起了解有哪些作业，有多少项目，做完一个项目就问他是否需要休息五分钟。就这样，我们很快完成了作业。儿子认真做事的时候，还是特别专注的。但是，为何非要我动手才能让他行动呢？应该有更好的方法吧？头大。</p>
+<h2 id="2024-09-10">2024-09-10</h2>
+<p>随着游戏《黑神话·悟空》的大热，我发现还没有完整地读完《西游记》，近期拿着Kindle准备读完它。目前进度80%左右，感觉孙悟空从最初的单纯、鲁莽、冲动，渐渐变得人情世故、考虑事情全面、很多时候还能给唐三藏做思想工作，着实是改变不小，而我印象中的孙悟空却只停留在齐天大圣的形象中。</p>
+<h2 id="2024-09-09">2024-09-09</h2>
+<p>刚准备给夫人发一段文字，让她知道我有体会到她的育儿不易，也想让她不要亲自上手辅导孩子们的学习，能够花钱让辅导机构去教授的，就尽可能让专业机构去教授，父母应把教育重心放在孩子们的思想品德习惯等方面的培养上。不过，最后还是删掉了，她倾尽半生都是围绕孩子在过日子，说了就是否定她。删掉。</p>
+<p>除了前天我陪儿子睡觉没尿床之外，儿子连续四五天尿床。我应该知道原因。根本原因是还没习惯半夜自己起床去洗手间上厕所。一个月前，夫人还在给半夜醒来的小宝用尿壶接尿呢，几年来都是如此，这次搬家才一个多月，儿子是不敢也不想半夜去洗手间尿尿，所以宁愿尿湿床铺后换好干净衣物和爸爸妈妈一起睡。</p>
+<p>他是聪明人，察言观色厉害，看人下菜，却让他的妈妈疲惫不堪。他也算是一个讲道理的人，只不过必须要把道理讲透，还有就是给他一定的时间，让他理解和明白。接下来几天，我打算陪儿子睡觉。带着他半夜醒来去洗手间上厕所，既是帮他练习胆量，也是在培养他的生活习惯。</p>
+<h2 id="2024-09-07">2024-09-07</h2>
+<p>儿子总是说自己有钱，想要买自己想要的东西。大多数情况下是让妈妈给他买了想要的玩具，没有用自己的现金。今天给我打电话说想要买一个玩具枪，一百多块钱吧。我说没问题，你自己的钱，你自己做主。结果跑到商场去发现钱没带够，我让夫人不要借钱给他，让他回家拿钱再买，然后让他走完购买的整个流程。</p>
+<h2 id="2024-09-05">2024-09-05</h2>
+<p>昨晚在家里陪着小宝学习还是有一些成就感的。他需要助推，不能放在那里不管。我首先把他带出了玩耍的环境，在一个相对安静的环境中告诉他接下来需要做的3个作业项目，做这几个项目有些什么样的规则，然后让他参与决策，中途休息10分钟去玩玩具还是继续完成作业中下一个环节。完成作业的效率高多了。</p>
+<h2 id="2024-08-30">2024-08-30</h2>
+<p>昨天早上突然悟到了串珠的奥义：不可生气动怒，更不能动手，否则珠串会散落。</p>
+<h2 id="2024-08-21">2024-08-21</h2>
+<p>那些没有生活体验把自己关在一个人的房间里写出长篇作品的人是怎么做到的？通过网络看世界收集素材吗？</p>
+<h2 id="2024-08-20">2024-08-20</h2>
+<p>任何方案、会议、决策必须以书面文档的形式提交，要全面、具体、翔实的记录，包括且不限于人物、时间、地点、背景、备注、相关资料等。口头沟通是极为不靠谱的重要的信息，一定要以书面的形式呈现。</p>
+<h2 id="2024-08-19">2024-08-19</h2>
+<p>新房子的隔音效果差了，毕竟是位于小区南门，往来汽车和行人的声音很明显，需要关窗睡觉。楼下不知道几楼的住户身体不太好，半夜三更咳嗽不停，早上六点多开始继续咳嗽，入住以来除了喝酒喝醉之外，没有哪一晚是一次睡到天亮呢。</p>
+<h2 id="2024-08-01">2024-08-01</h2>
+<p>女同事找我，说自己的电脑总是自动关机，今天已经2次了。我一波操作过后告诉她，如果后面电脑出现问题，立即找我。下午找我了，说电脑关机了。我按电源按钮，没有用。后面看了下主机电源插线，发现是松动的。原来是她每天动脚的动作一点一点地把插头搞松了……我……</p>
+<h2 id="2024-07-27">2024-07-27</h2>
+<p>儿子有一个阶段多次说要换一个妈妈，夫人就当着儿子的面说让我给他找个后妈。我对儿子说：我才不要给他找一个后妈呢，如果那样的话，我们要和妈妈分掉一半的钱，一半的房子，你的玩具和衣服也需要分一半走。如果找到一个后妈， 那个后妈又得继续分一半走。儿子听后立马说那是之前的想法，现在没有了。</p>
+
+                </div>
+
+            </article>
+
+
+            
+                
+	<div class="mod-post__foot">
+	 文章标签: 
+     
+        <a href="/tag/sui-bi/">随笔</a>
+     
+     </br>
+	</div>
+
+                    
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/love/">爱情婚姻是什么</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/fromwhere/">你是哪里人</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

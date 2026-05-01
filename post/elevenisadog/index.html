@@ -1,0 +1,1433 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>大名狗十一 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="2023年8月6日，从潮爷朋友圈看到他捡到了三只小狗，看样子应该是串串土狗，目前正在征集领养对象。考虑到现在的家庭情况，应该是可以养狗的，于是跑到河西让潮爷抓一只给我带回家。 带小狗回家前，去了一趟宠物医院，准备给它做一个全面检查，并且把细小和犬瘟的疫苗安排上。不过，宠物医院说小奶狗太小了，还喂养半个月到二十天的样子再带过去更合适。并且叮嘱不要带它出家门，以免感染病毒。 为什么叫它“狗十一” 在带它回家的路上，我就考虑了给它取名的问题。脑海里有这么几个名字：小伍、小六、十一。 我到家给大家介绍的时候说它的名字叫小伍，夫人觉得不太好，不如叫小小；SEVEN提议叫它十一，我觉得这不就是我之前想过的名字吗？挺好！ 经过讨论，家人一致同意给它取名为十一，大名为狗十一。 我翻译了一下为什么它叫狗十一：据潮爷说它是一条土狗，十和一组合在一起正好就是一个土字。狗十一也就是土狗的意思。 后来问起夫人为什么认同给狗子取名叫十一的时候，她说两个孩子的英文名加起来是十，狗子后来的，所以叫十一。">
+<link rel="canonical" href="https://tam.haywoo.com/post/elevenisadog/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"大名狗十一","url":"https://tam.haywoo.com/post/elevenisadog/","description":"2023年8月6日，从潮爷朋友圈看到他捡到了三只小狗，看样子应该是串串土狗，目前正在征集领养对象。考虑到现在的家庭情况，应该是可以养狗的，于是跑到河西让潮爷抓一只给我带回家。 带小狗回家前，去了一趟宠物医院，准备给它做一个全面检查，并且把细小和犬瘟的疫苗安排上。不过，宠物医院说小奶狗太小了，还喂养半个月到二十天的样子再带过去更合适。并且叮嘱不要带它出家门，以免感染病毒。 为什么叫它“狗十一” 在带它回家的路上，我就考虑了给它取名的问题。脑海里有这么几个名字：小伍、小六、十一。 我到家给大家介绍的时候说它的名字叫小伍，夫人觉得不太好，不如叫小小；SEVEN提议叫它十一，我觉得这不就是我之前想过的名字吗？挺好！ 经过讨论，家人一致同意给它取名为十一，大名为狗十一。 我翻译了一下为什么它叫狗十一：据潮爷说它是一条土狗，十和一组合在一起正好就是一个土字。狗十一也就是土狗的意思。 后来问起夫人为什么认同给狗子取名叫十一的时候，她说两个孩子的英文名加起来是十，狗子后来的，所以叫十一。","datePublished":"2023-08-07T10:55:24+08:00","dateModified":"2026-05-01T20:12:17+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/elevenisadog/","name":"大名狗十一","position":2}]}</script>
+<meta property="og:title" content="大名狗十一">
+<meta property="og:description" content="2023年8月6日，从潮爷朋友圈看到他捡到了三只小狗，看样子应该是串串土狗，目前正在征集领养对象。考虑到现在的家庭情况，应该是可以养狗的，于是跑到河西让潮爷抓一只给我带回家。 带小狗回家前，去了一趟宠物医院，准备给它做一个全面检查，并且把细小和犬瘟的疫苗安排上。不过，宠物医院说小奶狗太小了，还喂养半个月到二十天的样子再带过去更合适。并且叮嘱不要带它出家门，以免感染病毒。 为什么叫它“狗十一” 在带它回家的路上，我就考虑了给它取名的问题。脑海里有这么几个名字：小伍、小六、十一。 我到家给大家介绍的时候说它的名字叫小伍，夫人觉得不太好，不如叫小小；SEVEN提议叫它十一，我觉得这不就是我之前想过的名字吗？挺好！ 经过讨论，家人一致同意给它取名为十一，大名为狗十一。 我翻译了一下为什么它叫狗十一：据潮爷说它是一条土狗，十和一组合在一起正好就是一个土字。狗十一也就是土狗的意思。 后来问起夫人为什么认同给狗子取名叫十一的时候，她说两个孩子的英文名加起来是十，狗子后来的，所以叫十一。">
+<meta property="og:url" content="https://tam.haywoo.com/post/elevenisadog/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/elevenisadog/">
+<meta name="twitter:title" content="大名狗十一">
+<meta name="twitter:description" content="2023年8月6日，从潮爷朋友圈看到他捡到了三只小狗，看样子应该是串串土狗，目前正在征集领养对象。考虑到现在的家庭情况，应该是可以养狗的，于是跑到河西让潮爷抓一只给我带回家。 带小狗回家前，去了一趟宠物医院，准备给它做一个全面检查，并且把细小和犬瘟的疫苗安排上。不过，宠物医院说小奶狗太小了，还喂养半个月到二十天的样子再带过去更合适。并且叮嘱不要带它出家门，以免感染病毒。 为什么叫它“狗十一” 在带它回家的路上，我就考虑了给它取名的问题。脑海里有这么几个名字：小伍、小六、十一。 我到家给大家介绍的时候说它的名字叫小伍，夫人觉得不太好，不如叫小小；SEVEN提议叫它十一，我觉得这不就是我之前想过的名字吗？挺好！ 经过讨论，家人一致同意给它取名为十一，大名为狗十一。 我翻译了一下为什么它叫狗十一：据潮爷说它是一条土狗，十和一组合在一起正好就是一个土字。狗十一也就是土狗的意思。 后来问起夫人为什么认同给狗子取名叫十一的时候，她说两个孩子的英文名加起来是十，狗子后来的，所以叫十一。">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        大名狗十一
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2023-08-07">
+                        2023-08-07
+                    </time> • 11 分钟阅读 •
+                        
+                            <a href="/tag/chong-wu/">
+                                宠物
+                            </a>
+                            
+                                    
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <p>2023年8月6日，从潮爷朋友圈看到他捡到了三只小狗，看样子应该是串串土狗，目前正在征集领养对象。考虑到现在的家庭情况，应该是可以养狗的，于是跑到河西让潮爷抓一只给我带回家。</p>
+<p>带小狗回家前，去了一趟宠物医院，准备给它做一个全面检查，并且把细小和犬瘟的疫苗安排上。不过，宠物医院说小奶狗太小了，还喂养半个月到二十天的样子再带过去更合适。并且叮嘱不要带它出家门，以免感染病毒。</p>
+<h2 id="heading">为什么叫它“狗十一”</h2>
+<p>在带它回家的路上，我就考虑了给它取名的问题。脑海里有这么几个名字：小伍、小六、十一。</p>
+<p>我到家给大家介绍的时候说它的名字叫小伍，夫人觉得不太好，不如叫小小；SEVEN提议叫它十一，我觉得这不就是我之前想过的名字吗？挺好！</p>
+<p>经过讨论，家人一致同意给它取名为十一，大名为狗十一。</p>
+<p>我翻译了一下为什么它叫狗十一：据潮爷说它是一条土狗，十和一组合在一起正好就是一个土字。狗十一也就是土狗的意思。</p>
+<p>后来问起夫人为什么认同给狗子取名叫十一的时候，她说两个孩子的英文名加起来是十，狗子后来的，所以叫十一。</p>
+<!-- more -->
+<h2 id="heading-1">前两个月的喂养记录</h2>
+<p>宠物医院推算小奶狗可能只有十五六天大，暂且将它的出生日期定位2023年7月20日。</p>
+<p>将喂养情况按日分时进行记录，主要是记录投喂及排便情况，以便了解十一的成长状态。<del>第一责任人是SEVEN，我是第二责任人。</del>（由于 SEVEN 开学读书，我成了第一责任人。最后，夫人成了第一责任人了。）</p>
+<p><strong>信息量较大，已设置折叠。</strong></p>
+<details>
+<summary>关于喂养的记录，可点击展开/折叠</summary>
+<h3 id="heading-2">第一个月</h3>
+<p>参考小红书和其他网站上的资料，准备在8月20日前按照以下方法进行喂养。<strong>总的原则是贱养，不让它吃撑。</strong></p>
+<ul>
+<li>喂养食物：牛奶粉+羊奶粉</li>
+<li>喂养频次：每4小时左右一次（每次20-40毫升）</li>
+<li>喂养工具：奶瓶+奶嘴</li>
+</ul>
+<p><strong>一些注意事项</strong>：</p>
+<ul>
+<li>绝对不要把狗崽子带到户外去，避免感染病菌；</li>
+<li>宁愿小狗不吃饱都不要让它吃太多，容易引起肠胃炎，进而可能引发细小感染；</li>
+<li>喂奶时，奶嘴不要开太大，让小狗趴着，托起它的头，避免呛奶；</li>
+</ul>
+<h4 id="3">第3周</h4>
+<p>刚带回家，生怕它活不了。喂养的时候特别小心，差不多是3小时投喂一次，少吃多餐。</p>
+<table>
+<thead>
+<tr>
+<th align="center">DAY</th>
+<th align="center">日期</th>
+<th align="center">喂食</th>
+<th align="right">每小时量</th>
+<th align="center">大便</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">18</td>
+<td align="center">08-06</td>
+<td align="center">3次</td>
+<td align="right">2.5ml</td>
+<td align="center">1次</td>
+</tr>
+<tr>
+<td align="center">19</td>
+<td align="center">08-07</td>
+<td align="center">6次</td>
+<td align="right">4.7ml</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">20</td>
+<td align="center">08-08</td>
+<td align="center">7次</td>
+<td align="right">7.5ml</td>
+<td align="center">1次</td>
+</tr>
+<tr>
+<td align="center">21</td>
+<td align="center">08-09</td>
+<td align="center">7次</td>
+<td align="right">9.6ml</td>
+<td align="center">1次</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4">第4周</h4>
+<p>喂养食物全部为牛奶粉，每天每隔4小时左右喂奶一次，从每次喂奶30ml逐渐提升至每次喂奶60ml左右。</p>
+<table>
+<thead>
+<tr>
+<th align="center">DAY</th>
+<th align="center">日期</th>
+<th align="center">喂食</th>
+<th align="right">每小时量</th>
+<th align="center">大便</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">22</td>
+<td align="center">08-10</td>
+<td align="center">7次</td>
+<td align="right">7.7ml</td>
+<td align="center">1次</td>
+</tr>
+<tr>
+<td align="center">23</td>
+<td align="center">08-11</td>
+<td align="center">6次</td>
+<td align="right">9.5ml</td>
+<td align="center">1次</td>
+</tr>
+<tr>
+<td align="center">24</td>
+<td align="center">08-12</td>
+<td align="center">7次</td>
+<td align="right">9.42ml</td>
+<td align="center">1次</td>
+</tr>
+<tr>
+<td align="center">25</td>
+<td align="center">08-13</td>
+<td align="center">8次</td>
+<td align="right">10.6ml</td>
+<td align="center">1次</td>
+</tr>
+<tr>
+<td align="center">26</td>
+<td align="center">08-14</td>
+<td align="center">6次</td>
+<td align="right">11.36ml</td>
+<td align="center">1次</td>
+</tr>
+<tr>
+<td align="center">27</td>
+<td align="center">08-15</td>
+<td align="center">7次</td>
+<td align="right">10.77ml</td>
+<td align="center">1次</td>
+</tr>
+<tr>
+<td align="center">28</td>
+<td align="center">08-16</td>
+<td align="center">5次</td>
+<td align="right">9.61ml</td>
+<td align="center">2次</td>
+</tr>
+</tbody>
+</table>
+<h3 id="heading-3">第二个月</h3>
+<p>狗十一安全度过了在我看来最危险的周期，没有检测到细小或犬瘟，接下来开始逐渐喂养狗粮咯。</p>
+<ul>
+<li>喂养食物：奶粉、狗粮</li>
+<li>喂养频次：每4小时左右一次</li>
+<li>喂养工具：小碗</li>
+</ul>
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li>不把狗子带到户外去；</li>
+<li>单次喂食量不要多；</li>
+<li>从喝奶粉过渡到吃狗粮；</li>
+<li>给它打疫苗；</li>
+</ul>
+<h4 id="5">第5周</h4>
+<p>狗子每天喂养次数减少了，单次喂养量增加到70-80ml左右</p>
+<table>
+<thead>
+<tr>
+<th align="center">DAY</th>
+<th align="center">日期</th>
+<th align="center">喂食</th>
+<th align="right">每小时量</th>
+<th align="center">大便</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">29</td>
+<td align="center">08-17</td>
+<td align="center">4次</td>
+<td align="right">12.97ml</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">30</td>
+<td align="center">08-18</td>
+<td align="center">5次</td>
+<td align="right">11.32ml</td>
+<td align="center">1次</td>
+</tr>
+<tr>
+<td align="center">31</td>
+<td align="center">08-19</td>
+<td align="center">6次</td>
+<td align="right">17.67ml</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">32</td>
+<td align="center">08-20</td>
+<td align="center">4次</td>
+<td align="right"></td>
+<td align="center">1次</td>
+</tr>
+<tr>
+<td align="center">33</td>
+<td align="center">08-21</td>
+<td align="center">5次</td>
+<td align="right"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">34</td>
+<td align="center">08-22</td>
+<td align="center">5次</td>
+<td align="right"></td>
+<td align="center">2次</td>
+</tr>
+<tr>
+<td align="center">35</td>
+<td align="center">08-23</td>
+<td align="center">6次</td>
+<td align="right">14.44ml</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="6">第6周</h4>
+<p>每天喂食从全奶粉改为奶粉+狗粮，大约3/4奶粉+1/4狗粮<br />
+表内的奶量与狗粮量均为每次喂食平均量</p>
+<table>
+<thead>
+<tr>
+<th align="center">DAY</th>
+<th align="center">日期</th>
+<th align="center">喂食</th>
+<th align="right">奶量</th>
+<th align="center">狗粮</th>
+<th align="center">大便</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">36</td>
+<td align="center">08-24</td>
+<td align="center">5次</td>
+<td align="right">60ml</td>
+<td align="center">8粒</td>
+<td align="center">2次</td>
+</tr>
+<tr>
+<td align="center">37</td>
+<td align="center">08-25</td>
+<td align="center">5次</td>
+<td align="right">60ml</td>
+<td align="center">8粒</td>
+<td align="center">1次</td>
+</tr>
+<tr>
+<td align="center">38</td>
+<td align="center">08-26</td>
+<td align="center">5次</td>
+<td align="right">70ml</td>
+<td align="center">8粒</td>
+<td align="center">1次</td>
+</tr>
+<tr>
+<td align="center">39</td>
+<td align="center">08-27</td>
+<td align="center">5次</td>
+<td align="right">80ml</td>
+<td align="center">9粒</td>
+<td align="center">2次</td>
+</tr>
+<tr>
+<td align="center">40</td>
+<td align="center">08-28</td>
+<td align="center">5次</td>
+<td align="right"></td>
+<td align="center">9粒</td>
+<td align="center">2次<br>拉稀20%</td>
+</tr>
+<tr>
+<td align="center">41</td>
+<td align="center">08-29</td>
+<td align="center">6次</td>
+<td align="right"></td>
+<td align="center">6粒</td>
+<td align="center">3次<br>拉稀<br>有虫</td>
+</tr>
+<tr>
+<td align="center">42</td>
+<td align="center">08-30</td>
+<td align="center">6次</td>
+<td align="right">75ml</td>
+<td align="center"></td>
+<td align="center">2次<br>拉稀<br>有虫</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>08-29，我将小朋友没有喝完的牛奶伴着泡软的狗粮给十一吃了，早上它有些拉稀50%比例。</li>
+</ul>
+<h4 id="7">第7周</h4>
+<p>逐渐断奶，每天喂奶1/2+狗粮逐渐调整为固态食物+水</p>
+<table>
+<thead>
+<tr>
+<th align="center">DAY</th>
+<th align="center">日期</th>
+<th align="center">喂食</th>
+<th align="right">每小时量</th>
+<th align="center">大便</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">43</td>
+<td align="center">08-31</td>
+<td align="center">6次</td>
+<td align="right"></td>
+<td align="center">1次</td>
+</tr>
+<tr>
+<td align="center">44</td>
+<td align="center">09-01</td>
+<td align="center">X次</td>
+<td align="right">90ml</td>
+<td align="center">3次<br>拉稀</td>
+</tr>
+<tr>
+<td align="center">45</td>
+<td align="center">09-02</td>
+<td align="center">5次</td>
+<td align="right">85ml</td>
+<td align="center">2次<br>拉稀</td>
+</tr>
+<tr>
+<td align="center">46</td>
+<td align="center">09-03</td>
+<td align="center">6次</td>
+<td align="right">80ml</td>
+<td align="center">3次<br>拉稀</td>
+</tr>
+<tr>
+<td align="center">47</td>
+<td align="center">09-04</td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">48</td>
+<td align="center">09-05</td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">49</td>
+<td align="center">09-06</td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="8">第8周</h4>
+<p>每天喂养食物为狗粮，不再添加奶粉</p>
+<table>
+<thead>
+<tr>
+<th align="center">DAY</th>
+<th align="center">日期</th>
+<th align="center">喂食</th>
+<th align="right">每小时量</th>
+<th align="center">大便</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">50</td>
+<td align="center">09-07</td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">51</td>
+<td align="center">09-08</td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">52</td>
+<td align="center">09-09</td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">53</td>
+<td align="center">09-10</td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">54</td>
+<td align="center">09-11</td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">55</td>
+<td align="center">09-12</td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">56</td>
+<td align="center">09-13</td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="heading-4">每日分时喂养记录</h3>
+<p>由于狗十一已经快2个月大，后续不再将每日分时喂养记录在此。</p>
+<table>
+<thead>
+<tr>
+<th align="center">日期</th>
+<th align="center">时间</th>
+<th>喂食</th>
+<th>排便</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">08-06</td>
+<td align="center">19:00</td>
+<td>牛奶20ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">20:00</td>
+<td></td>
+<td>黄色糊状</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">23:00</td>
+<td>不喝</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">08-07</td>
+<td align="center">02:40</td>
+<td>牛奶25ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">06:00</td>
+<td>牛奶10ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">09:55</td>
+<td>牛奶20ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">13:05</td>
+<td>牛奶25ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">16:55</td>
+<td>牛奶20ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">20:36</td>
+<td>牛奶20ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">08-08</td>
+<td align="center">03:25</td>
+<td>牛奶25ml<br>水10ml</td>
+<td>4块小黄屎</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">05:10</td>
+<td>牛奶25ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">09:18</td>
+<td>牛奶25ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">12:48</td>
+<td>牛奶25ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">16:08</td>
+<td>牛奶40ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">17:55</td>
+<td>牛奶10ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">23:45</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">08-09</td>
+<td align="center">03:40</td>
+<td>牛奶40ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">06:30</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">11:05</td>
+<td>羊奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">16:43</td>
+<td>牛奶40ml</td>
+<td>黄、黑屎块</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">17:05</td>
+<td>羊奶20ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">19:49</td>
+<td>羊奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">22:30</td>
+<td>牛奶40ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">08-10</td>
+<td align="center">03:40</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">06:30</td>
+<td>牛奶20ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">10:00</td>
+<td>羊奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">13:30</td>
+<td>羊奶40ml</td>
+<td>3块</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">17:30</td>
+<td>羊奶20ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">19:21</td>
+<td>羊奶20ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">21:30</td>
+<td>牛奶40ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">08-11</td>
+<td align="center">05:20</td>
+<td>牛奶40ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">08:30</td>
+<td>牛奶40ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">11:00</td>
+<td>牛奶20ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">13:51</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">17:37</td>
+<td>羊奶20ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">21:50</td>
+<td>牛奶40ml</td>
+<td>4厘米</td>
+</tr>
+<tr>
+<td align="center">08-12</td>
+<td align="center">01:40</td>
+<td>牛奶35ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">05:40</td>
+<td>牛奶40ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">07:50</td>
+<td>牛奶40ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">12:00</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">16:50</td>
+<td>牛奶40ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">19:55</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">23:00</td>
+<td>牛奶30ml</td>
+<td>2块黄色</td>
+</tr>
+<tr>
+<td align="center">08-13</td>
+<td align="center">03:00</td>
+<td>牛奶40ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">06:00</td>
+<td>牛奶45ml</td>
+<td>2块黄色</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">08:30</td>
+<td>牛奶40ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">11:46</td>
+<td>牛奶20ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">16:41</td>
+<td>牛奶40ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">18:30</td>
+<td>牛奶20ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">20:41</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">23:41</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">08-14</td>
+<td align="center">04:20</td>
+<td>牛奶60ml</td>
+<td>4厘米</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">07:30</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">11:41</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">15:00</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">19:41</td>
+<td>牛奶40ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">22:40</td>
+<td>牛奶60ml<br>用盘子</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">08-15</td>
+<td align="center">02:20</td>
+<td>牛奶50ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">06:50</td>
+<td>牛奶40ml</td>
+<td>3厘米</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">10:05</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">13:15</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">15:35</td>
+<td>牛奶50ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">17:30</td>
+<td>牛奶30ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">20:30</td>
+<td>牛奶50ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">08-16</td>
+<td align="center">04:30</td>
+<td>牛奶40ml</td>
+<td>4厘米</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">07:30</td>
+<td>牛奶45ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">11:45</td>
+<td>牛奶50ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">14:25</td>
+<td>牛奶50ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">20:00</td>
+<td>牛奶60ml</td>
+<td>6厘米</td>
+</tr>
+<tr>
+<td align="center">08-17</td>
+<td align="center">06:00</td>
+<td>牛奶60ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">13:30</td>
+<td>牛奶60ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">17:30</td>
+<td>牛奶60ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">19:50</td>
+<td>牛奶60ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">08-18</td>
+<td align="center">00:30</td>
+<td>牛奶60ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">06:00</td>
+<td>牛奶60ml</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">15:00</td>
+<td>牛奶60ml</td>
+<td>5厘米</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">18:00</td>
+<td>牛奶60ml</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="heading-5">成长记录</h2>
+<ul>
+<li>2023-08-12，开始找鞋磨牙齿，想睡到菜篮外面的地板上，会安静地找个地板睡觉。</li>
+<li>2023-08-13，考虑到它已经能够翻越菜篮，给它换了一个60x120cm的围栏。</li>
+<li>2023-08-14，开始习惯使用盘子喝牛奶。</li>
+<li>2023-08-16，还不知道自己的名字，叫了没反应。</li>
+<li>2023-08-19，知道爬出围栏在尿垫上尿尿。</li>
+<li>2023-08-21，知道从围栏外回到围栏里面等待喂食。</li>
+<li>2023-08-29，下午拉出了白色线虫，晚上给它喂了半颗内服驱虫药<strong>米普罗</strong>。</li>
+<li>2023-09-01，便便有些稀泥巴，但是已经没有线虫了。</li>
+<li>2023-09-07，开始教它进食前不激动</li>
+<li>2023-09-09，学会了坐下、过来的指令动作</li>
+<li>2023-09-16，学会了在让它进食之前不动</li>
+<li>2023-10-04，发现十一的两眼之间有一条竖立的黑色斑点，嘴巴附近也有蛮多黑色斑点，估计是苏牧串串</li>
+<li>2023-10-11，开始训练系上牵引绳前进</li>
+<li>2023-10-12，学会了趴着</li>
+<li>2023-10-20，学会了把抛向一旁的萝卜玩具捡回来</li>
+<li>2023-10-24，出现叫不动的情况，躲避在椅子下。把它拖出来，按压住，吓出了屎。</li>
+<li>2023-11-05，首次在白天户外遛狗，办理了<strong>宠物免疫证</strong></li>
+<li>2023-11-06，首次在晚上户外遛狗</li>
+<li>2023-11-09，第一次学会了从一楼爬楼梯到五楼</li>
+<li>2024-05-25，悄咪咪地从五楼下到了一楼，喊都喊不回，在二楼接到它，狠狠地教训了它</li>
+</ul>
+<h2 id="heading-6">保健记录</h2>
+<h3 id="heading-7">检测记录</h3>
+<ul>
+<li>2023-09-01，犬瘟热检测正常</li>
+<li>2023-09-04，细小检测正常</li>
+<li>2023-09-17，眼部、口腔、耳道、鼻部、皮毛检测正常</li>
+<li>2023-10-20，测量体重：5KG</li>
+<li>2024-04-23，测量体重：10.7KG</li>
+</ul>
+<h2 id="heading-8">驱虫记录</h2>
+<h3 id="13">体内驱虫（1次/3个月）</h3>
+<ul>
+<li>2023-08-29，内服驱虫药<strong>米普罗</strong>半颗</li>
+<li>2023-10-20，内服驱虫药<strong>米普罗</strong>半颗</li>
+<li>2024-01-29，非班太尔片1片</li>
+<li>2024-05-08，非班太尔片1片</li>
+</ul>
+<h3 id="1">体外驱虫（1次/月）</h3>
+<ul>
+<li>2023-09-20，爱沃克0.4ml</li>
+<li>2023-10-25，非泼罗尼滴剂0.67ml</li>
+<li>2023-11-20，非泼罗尼滴剂0.67ml</li>
+<li>2023-12-21，非泼罗尼滴剂0.67ml</li>
+<li>2024-01-20，爱沃克2.5ml</li>
+<li>2024-02-24，爱沃克2.5ml</li>
+<li>2024-04-14，拜宠爽2.5ml</li>
+<li>2024-05-13，拜宠爽2.5ml</li>
+</ul>
+<h2 id="heading-9">疫苗记录</h2>
+<ul>
+<li>2023-09-17，注册犬八联第一针（瑞辉卫佳捌）</li>
+<li>2023-10-08，注册犬八联第二针（瑞辉卫佳捌）</li>
+<li>2023-10-29，注册犬八联第三针（瑞辉卫佳捌）</li>
+<li>2023-11-05，注射狂犬疫苗（英特威锐必威）</li>
+<li>2024-11-05，需要注射狂犬疫苗</li>
+</ul>
+<h2 id="heading-10">健康情况</h2>
+<ul>
+<li>2024-05-17，07:00，狗笼内有黄绿色呕吐物</li>
+<li>2024-05-19，07:00，狗笼外有清水样呕吐物，带少量泡沫（狗笼内备有食物，没吃）</li>
+</ul>
+<hr />
+<p>最后更新：<code>2024 年 05 月 28 日</code></p>
+
+                </div>
+
+            </article>
+
+
+            
+                
+	<div class="mod-post__foot">
+	 文章标签: 
+     
+        <a href="/tag/chong-wu/">宠物</a>
+     
+     </br>
+	</div>
+
+                    
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/hearth-2023/">漫长的咳嗽</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/buyhouse/">买房的问题</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

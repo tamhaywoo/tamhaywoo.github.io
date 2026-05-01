@@ -1,0 +1,522 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>2009年随笔合集 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="2009-02-02 我已经有很久没有回家看望自己的父母，非常想念她们。所以公司刚宣布放假，我就立马飞奔汽车站，买好了返乡的车票。由于锦涛哥这几年带领团队精诚合作，城市及乡村的道路建设也随之飞速接轨，可以看到主干马路的各村口交叉部分都是水泥硬化进村，以前可都是些黄泥或者水洼。正因如此，返乡的旅程不再如以前那般辛苦，只需转乘三两趟车就到家了。要是以前，那可是至少要转五趟车，而且还买不到车票，只能在拥挤的车上站六小时。 正如公司一位领导曾经说过的，大部分人一回家就会说：“妈妈，我回来了。”看来我也是那群人之一，因为我也是这么做的。 家里的黄狗居然没有冲我狂吠，而且还晃动着尾巴对我撒娇，看来狗真的通人性，时隔两年多仍然记得我是自家人。不过它还是没有放弃老习惯，仍然是使用左前腿与我握腿，要是哪天它首先伸出右腿的话，我一定要奖励它更多。 和妈妈一起迎接我的还有刚满四个月的小侄女，这个非常认生的小家伙居然愿意让我抱着并且不哭不闹。这一点让妈妈还有哥哥嫂嫂都闹不明白，我想要么是我看起来非常面善，小朋友不怕我，要么就是小家伙知道我给她带了小礼物。哈哈&amp;hellip;谁知道呢。 爸爸正在村口的一户人家做活，说要争取在过年前帮他们将地砖弄好，要让别人过个舒服年。他只是抬起头来笑着打了个招呼，并没有特别的表示。老爸就是这样，他在孩子的面前永远是一副理性坚强的样子，但他却和妈妈一样，是一个非常疼孩子的人。记得两年前我回长沙的时候，妈妈为了避免自己不舍得我的离开会哭泣，叫爸爸去送我，结果我刚上车，爸爸就赶紧扭过头去擦拭眼泪。 哥哥的变化挺大，成熟了很多。做事情的时候不再鲁莽行事，毕竟他已为人父，懂得仔细地思考问题。但身材却一点没变，仍然是两年前的那个大肚腩，体重比我超出二十公斤。要是哥俩再交手，估计我只能选择三十六计之走为上，因为我和他不是一个重量级的。当然，不会有这样的机会。咱俩虽然常年不通电话，但见面后并不觉得有什么隔阂。兄弟嘛，就是这样，不管多久不见面不通话，依然不改血浓于水的兄弟情义。 这是第一次见嫂子，所以没有传统记忆做对比。不过听妈妈说，嫂子为了能够让我们这一家子有个大团圆，早在一个月前就抱着宝宝回到娘家，前段时间刚回来。不过她的这番美意并没有实现，因为我是一个人回家的。不过，这已经是很难得的，我们一家子可是足足有三年多没聚到一起了。 刚回家两天的样子，姑姑打电话说奶奶快不行了，希望我们过去看看，万一她真的去世了，也不会留下什么遗憾。奶奶和爷爷以及他的那家子与我家在二十多年前就有一些误会，这场误会导致爷爷奶奶从来就没有照顾过我和哥哥，他们还阻止同村的长辈照顾我们。在农村里，没有人照顾小孩，大人就无法安心耕作，像我老爸这种在外地工作的人更不能安心做事。正因为这样，爸妈决定将我托付给亲戚照顾，所以我现在偶尔还会想起桂林、云南、永州等地的一些记忆痕迹。不过，我那时候不超过两岁，又能记得一些什么呢？记忆最深刻的要数刚回到爸妈身边的那个时候，我居然不认识爸爸妈妈，管他们叫哥哥姐姐。我不知道爸妈当时的那种心情，我想其中应该会包含一丝丝的酸楚吧。 尽管如此，我们还是决定乘坐六小时的汽车去看看她老人家。毕竟人之将死，我们也就不要再去理会那些恼人的误会了吧。这叫“搁置争议” 情况似乎很糟糕，姑姑眼睛通红，满手都是碘酒的颜色。因为她是一位医生，她将奶奶接到她所在的医院宿舍，照顾起来更方便，什么氧气等大型护理器械都能够搞定。进屋后，看到了躺在床上的奶奶，她已经不能说话，不过尚有意识。当听到我们声音的时候，她一只手伸向天空，头往后仰，我们所有人都已为她就要殁了，还好没事。 2009-05-22 一个员工轻轻地走进办公室，小声地对我说：“海宇哥，我想辞职！” 我并没有太在意，在经过简短的询问之后，我大致同意了她的请求。我对辞职这种事情向来抱有一种态度：只要员工有合适的地方去，比我这里更好，能够学到更多东西，得到更多工资和福利等待遇，我一般会同意离职。 接下来的几个小时后发生的事情让我很难受，也让我自我反省没有关注一线员工在思考什么问题。 那是快要下班的时间，大概在三点半到四点钟左右，另一个员工也是极其轻巧地步入办公室，以更小的声音对我说：“海宇哥，我要辞职！”… … 今天早上，接到一条短信：“海宇哥，我有件事情和你说，我们发短信说咯，不敢和你打电话说”。我一看，心里咯噔一下，我知道这可能会意味着什么，于是发过去四个字：“你要辞职？”果不其然，正是！ 除这三个员工之外，还有一位员工需要调职，这是比较靠前的一件事情，但毕竟还是要走的。这三四个员工辞职、调职等事情堆积在一起，肯定是有什么问题存在。如果不是，也不会在刚刚提升工资奖金方案一两个月之后集中爆发。 今天好好休息，调整思绪。明天逐个聊聊，看问题出在哪里。">
+<link rel="canonical" href="https://tam.haywoo.com/post/log-2009/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"2009年随笔合集","url":"https://tam.haywoo.com/post/log-2009/","description":"2009-02-02 我已经有很久没有回家看望自己的父母，非常想念她们。所以公司刚宣布放假，我就立马飞奔汽车站，买好了返乡的车票。由于锦涛哥这几年带领团队精诚合作，城市及乡村的道路建设也随之飞速接轨，可以看到主干马路的各村口交叉部分都是水泥硬化进村，以前可都是些黄泥或者水洼。正因如此，返乡的旅程不再如以前那般辛苦，只需转乘三两趟车就到家了。要是以前，那可是至少要转五趟车，而且还买不到车票，只能在拥挤的车上站六小时。 正如公司一位领导曾经说过的，大部分人一回家就会说：“妈妈，我回来了。”看来我也是那群人之一，因为我也是这么做的。 家里的黄狗居然没有冲我狂吠，而且还晃动着尾巴对我撒娇，看来狗真的通人性，时隔两年多仍然记得我是自家人。不过它还是没有放弃老习惯，仍然是使用左前腿与我握腿，要是哪天它首先伸出右腿的话，我一定要奖励它更多。 和妈妈一起迎接我的还有刚满四个月的小侄女，这个非常认生的小家伙居然愿意让我抱着并且不哭不闹。这一点让妈妈还有哥哥嫂嫂都闹不明白，我想要么是我看起来非常面善，小朋友不怕我，要么就是小家伙知道我给她带了小礼物。哈哈\u0026hellip;谁知道呢。 爸爸正在村口的一户人家做活，说要争取在过年前帮他们将地砖弄好，要让别人过个舒服年。他只是抬起头来笑着打了个招呼，并没有特别的表示。老爸就是这样，他在孩子的面前永远是一副理性坚强的样子，但他却和妈妈一样，是一个非常疼孩子的人。记得两年前我回长沙的时候，妈妈为了避免自己不舍得我的离开会哭泣，叫爸爸去送我，结果我刚上车，爸爸就赶紧扭过头去擦拭眼泪。 哥哥的变化挺大，成熟了很多。做事情的时候不再鲁莽行事，毕竟他已为人父，懂得仔细地思考问题。但身材却一点没变，仍然是两年前的那个大肚腩，体重比我超出二十公斤。要是哥俩再交手，估计我只能选择三十六计之走为上，因为我和他不是一个重量级的。当然，不会有这样的机会。咱俩虽然常年不通电话，但见面后并不觉得有什么隔阂。兄弟嘛，就是这样，不管多久不见面不通话，依然不改血浓于水的兄弟情义。 这是第一次见嫂子，所以没有传统记忆做对比。不过听妈妈说，嫂子为了能够让我们这一家子有个大团圆，早在一个月前就抱着宝宝回到娘家，前段时间刚回来。不过她的这番美意并没有实现，因为我是一个人回家的。不过，这已经是很难得的，我们一家子可是足足有三年多没聚到一起了。 刚回家两天的样子，姑姑打电话说奶奶快不行了，希望我们过去看看，万一她真的去世了，也不会留下什么遗憾。奶奶和爷爷以及他的那家子与我家在二十多年前就有一些误会，这场误会导致爷爷奶奶从来就没有照顾过我和哥哥，他们还阻止同村的长辈照顾我们。在农村里，没有人照顾小孩，大人就无法安心耕作，像我老爸这种在外地工作的人更不能安心做事。正因为这样，爸妈决定将我托付给亲戚照顾，所以我现在偶尔还会想起桂林、云南、永州等地的一些记忆痕迹。不过，我那时候不超过两岁，又能记得一些什么呢？记忆最深刻的要数刚回到爸妈身边的那个时候，我居然不认识爸爸妈妈，管他们叫哥哥姐姐。我不知道爸妈当时的那种心情，我想其中应该会包含一丝丝的酸楚吧。 尽管如此，我们还是决定乘坐六小时的汽车去看看她老人家。毕竟人之将死，我们也就不要再去理会那些恼人的误会了吧。这叫“搁置争议” 情况似乎很糟糕，姑姑眼睛通红，满手都是碘酒的颜色。因为她是一位医生，她将奶奶接到她所在的医院宿舍，照顾起来更方便，什么氧气等大型护理器械都能够搞定。进屋后，看到了躺在床上的奶奶，她已经不能说话，不过尚有意识。当听到我们声音的时候，她一只手伸向天空，头往后仰，我们所有人都已为她就要殁了，还好没事。 2009-05-22 一个员工轻轻地走进办公室，小声地对我说：“海宇哥，我想辞职！” 我并没有太在意，在经过简短的询问之后，我大致同意了她的请求。我对辞职这种事情向来抱有一种态度：只要员工有合适的地方去，比我这里更好，能够学到更多东西，得到更多工资和福利等待遇，我一般会同意离职。 接下来的几个小时后发生的事情让我很难受，也让我自我反省没有关注一线员工在思考什么问题。 那是快要下班的时间，大概在三点半到四点钟左右，另一个员工也是极其轻巧地步入办公室，以更小的声音对我说：“海宇哥，我要辞职！”… … 今天早上，接到一条短信：“海宇哥，我有件事情和你说，我们发短信说咯，不敢和你打电话说”。我一看，心里咯噔一下，我知道这可能会意味着什么，于是发过去四个字：“你要辞职？”果不其然，正是！ 除这三个员工之外，还有一位员工需要调职，这是比较靠前的一件事情，但毕竟还是要走的。这三四个员工辞职、调职等事情堆积在一起，肯定是有什么问题存在。如果不是，也不会在刚刚提升工资奖金方案一两个月之后集中爆发。 今天好好休息，调整思绪。明天逐个聊聊，看问题出在哪里。","datePublished":"2009-10-01T00:46:24+08:00","dateModified":"2009-10-01T00:46:24+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/log-2009/","name":"2009年随笔合集","position":2}]}</script>
+<meta property="og:title" content="2009年随笔合集">
+<meta property="og:description" content="2009-02-02 我已经有很久没有回家看望自己的父母，非常想念她们。所以公司刚宣布放假，我就立马飞奔汽车站，买好了返乡的车票。由于锦涛哥这几年带领团队精诚合作，城市及乡村的道路建设也随之飞速接轨，可以看到主干马路的各村口交叉部分都是水泥硬化进村，以前可都是些黄泥或者水洼。正因如此，返乡的旅程不再如以前那般辛苦，只需转乘三两趟车就到家了。要是以前，那可是至少要转五趟车，而且还买不到车票，只能在拥挤的车上站六小时。 正如公司一位领导曾经说过的，大部分人一回家就会说：“妈妈，我回来了。”看来我也是那群人之一，因为我也是这么做的。 家里的黄狗居然没有冲我狂吠，而且还晃动着尾巴对我撒娇，看来狗真的通人性，时隔两年多仍然记得我是自家人。不过它还是没有放弃老习惯，仍然是使用左前腿与我握腿，要是哪天它首先伸出右腿的话，我一定要奖励它更多。 和妈妈一起迎接我的还有刚满四个月的小侄女，这个非常认生的小家伙居然愿意让我抱着并且不哭不闹。这一点让妈妈还有哥哥嫂嫂都闹不明白，我想要么是我看起来非常面善，小朋友不怕我，要么就是小家伙知道我给她带了小礼物。哈哈&amp;hellip;谁知道呢。 爸爸正在村口的一户人家做活，说要争取在过年前帮他们将地砖弄好，要让别人过个舒服年。他只是抬起头来笑着打了个招呼，并没有特别的表示。老爸就是这样，他在孩子的面前永远是一副理性坚强的样子，但他却和妈妈一样，是一个非常疼孩子的人。记得两年前我回长沙的时候，妈妈为了避免自己不舍得我的离开会哭泣，叫爸爸去送我，结果我刚上车，爸爸就赶紧扭过头去擦拭眼泪。 哥哥的变化挺大，成熟了很多。做事情的时候不再鲁莽行事，毕竟他已为人父，懂得仔细地思考问题。但身材却一点没变，仍然是两年前的那个大肚腩，体重比我超出二十公斤。要是哥俩再交手，估计我只能选择三十六计之走为上，因为我和他不是一个重量级的。当然，不会有这样的机会。咱俩虽然常年不通电话，但见面后并不觉得有什么隔阂。兄弟嘛，就是这样，不管多久不见面不通话，依然不改血浓于水的兄弟情义。 这是第一次见嫂子，所以没有传统记忆做对比。不过听妈妈说，嫂子为了能够让我们这一家子有个大团圆，早在一个月前就抱着宝宝回到娘家，前段时间刚回来。不过她的这番美意并没有实现，因为我是一个人回家的。不过，这已经是很难得的，我们一家子可是足足有三年多没聚到一起了。 刚回家两天的样子，姑姑打电话说奶奶快不行了，希望我们过去看看，万一她真的去世了，也不会留下什么遗憾。奶奶和爷爷以及他的那家子与我家在二十多年前就有一些误会，这场误会导致爷爷奶奶从来就没有照顾过我和哥哥，他们还阻止同村的长辈照顾我们。在农村里，没有人照顾小孩，大人就无法安心耕作，像我老爸这种在外地工作的人更不能安心做事。正因为这样，爸妈决定将我托付给亲戚照顾，所以我现在偶尔还会想起桂林、云南、永州等地的一些记忆痕迹。不过，我那时候不超过两岁，又能记得一些什么呢？记忆最深刻的要数刚回到爸妈身边的那个时候，我居然不认识爸爸妈妈，管他们叫哥哥姐姐。我不知道爸妈当时的那种心情，我想其中应该会包含一丝丝的酸楚吧。 尽管如此，我们还是决定乘坐六小时的汽车去看看她老人家。毕竟人之将死，我们也就不要再去理会那些恼人的误会了吧。这叫“搁置争议” 情况似乎很糟糕，姑姑眼睛通红，满手都是碘酒的颜色。因为她是一位医生，她将奶奶接到她所在的医院宿舍，照顾起来更方便，什么氧气等大型护理器械都能够搞定。进屋后，看到了躺在床上的奶奶，她已经不能说话，不过尚有意识。当听到我们声音的时候，她一只手伸向天空，头往后仰，我们所有人都已为她就要殁了，还好没事。 2009-05-22 一个员工轻轻地走进办公室，小声地对我说：“海宇哥，我想辞职！” 我并没有太在意，在经过简短的询问之后，我大致同意了她的请求。我对辞职这种事情向来抱有一种态度：只要员工有合适的地方去，比我这里更好，能够学到更多东西，得到更多工资和福利等待遇，我一般会同意离职。 接下来的几个小时后发生的事情让我很难受，也让我自我反省没有关注一线员工在思考什么问题。 那是快要下班的时间，大概在三点半到四点钟左右，另一个员工也是极其轻巧地步入办公室，以更小的声音对我说：“海宇哥，我要辞职！”… … 今天早上，接到一条短信：“海宇哥，我有件事情和你说，我们发短信说咯，不敢和你打电话说”。我一看，心里咯噔一下，我知道这可能会意味着什么，于是发过去四个字：“你要辞职？”果不其然，正是！ 除这三个员工之外，还有一位员工需要调职，这是比较靠前的一件事情，但毕竟还是要走的。这三四个员工辞职、调职等事情堆积在一起，肯定是有什么问题存在。如果不是，也不会在刚刚提升工资奖金方案一两个月之后集中爆发。 今天好好休息，调整思绪。明天逐个聊聊，看问题出在哪里。">
+<meta property="og:url" content="https://tam.haywoo.com/post/log-2009/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/log-2009/">
+<meta name="twitter:title" content="2009年随笔合集">
+<meta name="twitter:description" content="2009-02-02 我已经有很久没有回家看望自己的父母，非常想念她们。所以公司刚宣布放假，我就立马飞奔汽车站，买好了返乡的车票。由于锦涛哥这几年带领团队精诚合作，城市及乡村的道路建设也随之飞速接轨，可以看到主干马路的各村口交叉部分都是水泥硬化进村，以前可都是些黄泥或者水洼。正因如此，返乡的旅程不再如以前那般辛苦，只需转乘三两趟车就到家了。要是以前，那可是至少要转五趟车，而且还买不到车票，只能在拥挤的车上站六小时。 正如公司一位领导曾经说过的，大部分人一回家就会说：“妈妈，我回来了。”看来我也是那群人之一，因为我也是这么做的。 家里的黄狗居然没有冲我狂吠，而且还晃动着尾巴对我撒娇，看来狗真的通人性，时隔两年多仍然记得我是自家人。不过它还是没有放弃老习惯，仍然是使用左前腿与我握腿，要是哪天它首先伸出右腿的话，我一定要奖励它更多。 和妈妈一起迎接我的还有刚满四个月的小侄女，这个非常认生的小家伙居然愿意让我抱着并且不哭不闹。这一点让妈妈还有哥哥嫂嫂都闹不明白，我想要么是我看起来非常面善，小朋友不怕我，要么就是小家伙知道我给她带了小礼物。哈哈&amp;hellip;谁知道呢。 爸爸正在村口的一户人家做活，说要争取在过年前帮他们将地砖弄好，要让别人过个舒服年。他只是抬起头来笑着打了个招呼，并没有特别的表示。老爸就是这样，他在孩子的面前永远是一副理性坚强的样子，但他却和妈妈一样，是一个非常疼孩子的人。记得两年前我回长沙的时候，妈妈为了避免自己不舍得我的离开会哭泣，叫爸爸去送我，结果我刚上车，爸爸就赶紧扭过头去擦拭眼泪。 哥哥的变化挺大，成熟了很多。做事情的时候不再鲁莽行事，毕竟他已为人父，懂得仔细地思考问题。但身材却一点没变，仍然是两年前的那个大肚腩，体重比我超出二十公斤。要是哥俩再交手，估计我只能选择三十六计之走为上，因为我和他不是一个重量级的。当然，不会有这样的机会。咱俩虽然常年不通电话，但见面后并不觉得有什么隔阂。兄弟嘛，就是这样，不管多久不见面不通话，依然不改血浓于水的兄弟情义。 这是第一次见嫂子，所以没有传统记忆做对比。不过听妈妈说，嫂子为了能够让我们这一家子有个大团圆，早在一个月前就抱着宝宝回到娘家，前段时间刚回来。不过她的这番美意并没有实现，因为我是一个人回家的。不过，这已经是很难得的，我们一家子可是足足有三年多没聚到一起了。 刚回家两天的样子，姑姑打电话说奶奶快不行了，希望我们过去看看，万一她真的去世了，也不会留下什么遗憾。奶奶和爷爷以及他的那家子与我家在二十多年前就有一些误会，这场误会导致爷爷奶奶从来就没有照顾过我和哥哥，他们还阻止同村的长辈照顾我们。在农村里，没有人照顾小孩，大人就无法安心耕作，像我老爸这种在外地工作的人更不能安心做事。正因为这样，爸妈决定将我托付给亲戚照顾，所以我现在偶尔还会想起桂林、云南、永州等地的一些记忆痕迹。不过，我那时候不超过两岁，又能记得一些什么呢？记忆最深刻的要数刚回到爸妈身边的那个时候，我居然不认识爸爸妈妈，管他们叫哥哥姐姐。我不知道爸妈当时的那种心情，我想其中应该会包含一丝丝的酸楚吧。 尽管如此，我们还是决定乘坐六小时的汽车去看看她老人家。毕竟人之将死，我们也就不要再去理会那些恼人的误会了吧。这叫“搁置争议” 情况似乎很糟糕，姑姑眼睛通红，满手都是碘酒的颜色。因为她是一位医生，她将奶奶接到她所在的医院宿舍，照顾起来更方便，什么氧气等大型护理器械都能够搞定。进屋后，看到了躺在床上的奶奶，她已经不能说话，不过尚有意识。当听到我们声音的时候，她一只手伸向天空，头往后仰，我们所有人都已为她就要殁了，还好没事。 2009-05-22 一个员工轻轻地走进办公室，小声地对我说：“海宇哥，我想辞职！” 我并没有太在意，在经过简短的询问之后，我大致同意了她的请求。我对辞职这种事情向来抱有一种态度：只要员工有合适的地方去，比我这里更好，能够学到更多东西，得到更多工资和福利等待遇，我一般会同意离职。 接下来的几个小时后发生的事情让我很难受，也让我自我反省没有关注一线员工在思考什么问题。 那是快要下班的时间，大概在三点半到四点钟左右，另一个员工也是极其轻巧地步入办公室，以更小的声音对我说：“海宇哥，我要辞职！”… … 今天早上，接到一条短信：“海宇哥，我有件事情和你说，我们发短信说咯，不敢和你打电话说”。我一看，心里咯噔一下，我知道这可能会意味着什么，于是发过去四个字：“你要辞职？”果不其然，正是！ 除这三个员工之外，还有一位员工需要调职，这是比较靠前的一件事情，但毕竟还是要走的。这三四个员工辞职、调职等事情堆积在一起，肯定是有什么问题存在。如果不是，也不会在刚刚提升工资奖金方案一两个月之后集中爆发。 今天好好休息，调整思绪。明天逐个聊聊，看问题出在哪里。">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        2009年随笔合集
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2009-10-01">
+                        2009-10-01
+                    </time> • 5 分钟阅读 •
+                        
+                            <a href="/tag/sui-bi/">
+                                随笔
+                            </a>
+                            
+                                    
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <h2 id="2009-02-02">2009-02-02</h2>
+<p>我已经有很久没有回家看望自己的父母，非常想念她们。所以公司刚宣布放假，我就立马飞奔汽车站，买好了返乡的车票。由于锦涛哥这几年带领团队精诚合作，城市及乡村的道路建设也随之飞速接轨，可以看到主干马路的各村口交叉部分都是水泥硬化进村，以前可都是些黄泥或者水洼。正因如此，返乡的旅程不再如以前那般辛苦，只需转乘三两趟车就到家了。要是以前，那可是至少要转五趟车，而且还买不到车票，只能在拥挤的车上站六小时。</p>
+<p>正如公司一位领导曾经说过的，大部分人一回家就会说：“妈妈，我回来了。”看来我也是那群人之一，因为我也是这么做的。</p>
+<p>家里的黄狗居然没有冲我狂吠，而且还晃动着尾巴对我撒娇，看来狗真的通人性，时隔两年多仍然记得我是自家人。不过它还是没有放弃老习惯，仍然是使用左前腿与我握腿，要是哪天它首先伸出右腿的话，我一定要奖励它更多。</p>
+<p>和妈妈一起迎接我的还有刚满四个月的小侄女，这个非常认生的小家伙居然愿意让我抱着并且不哭不闹。这一点让妈妈还有哥哥嫂嫂都闹不明白，我想要么是我看起来非常面善，小朋友不怕我，要么就是小家伙知道我给她带了小礼物。哈哈&hellip;谁知道呢。</p>
+<p>爸爸正在村口的一户人家做活，说要争取在过年前帮他们将地砖弄好，要让别人过个舒服年。他只是抬起头来笑着打了个招呼，并没有特别的表示。老爸就是这样，他在孩子的面前永远是一副理性坚强的样子，但他却和妈妈一样，是一个非常疼孩子的人。记得两年前我回长沙的时候，妈妈为了避免自己不舍得我的离开会哭泣，叫爸爸去送我，结果我刚上车，爸爸就赶紧扭过头去擦拭眼泪。</p>
+<p>哥哥的变化挺大，成熟了很多。做事情的时候不再鲁莽行事，毕竟他已为人父，懂得仔细地思考问题。但身材却一点没变，仍然是两年前的那个大肚腩，体重比我超出二十公斤。要是哥俩再交手，估计我只能选择三十六计之走为上，因为我和他不是一个重量级的。当然，不会有这样的机会。咱俩虽然常年不通电话，但见面后并不觉得有什么隔阂。兄弟嘛，就是这样，不管多久不见面不通话，依然不改血浓于水的兄弟情义。</p>
+<p>这是第一次见嫂子，所以没有传统记忆做对比。不过听妈妈说，嫂子为了能够让我们这一家子有个大团圆，早在一个月前就抱着宝宝回到娘家，前段时间刚回来。不过她的这番美意并没有实现，因为我是一个人回家的。不过，这已经是很难得的，我们一家子可是足足有三年多没聚到一起了。</p>
+<p>刚回家两天的样子，姑姑打电话说奶奶快不行了，希望我们过去看看，万一她真的去世了，也不会留下什么遗憾。奶奶和爷爷以及他的那家子与我家在二十多年前就有一些误会，这场误会导致爷爷奶奶从来就没有照顾过我和哥哥，他们还阻止同村的长辈照顾我们。在农村里，没有人照顾小孩，大人就无法安心耕作，像我老爸这种在外地工作的人更不能安心做事。正因为这样，爸妈决定将我托付给亲戚照顾，所以我现在偶尔还会想起桂林、云南、永州等地的一些记忆痕迹。不过，我那时候不超过两岁，又能记得一些什么呢？记忆最深刻的要数刚回到爸妈身边的那个时候，我居然不认识爸爸妈妈，管他们叫哥哥姐姐。我不知道爸妈当时的那种心情，我想其中应该会包含一丝丝的酸楚吧。</p>
+<p>尽管如此，我们还是决定乘坐六小时的汽车去看看她老人家。毕竟人之将死，我们也就不要再去理会那些恼人的误会了吧。这叫“搁置争议”</p>
+<p>情况似乎很糟糕，姑姑眼睛通红，满手都是碘酒的颜色。因为她是一位医生，她将奶奶接到她所在的医院宿舍，照顾起来更方便，什么氧气等大型护理器械都能够搞定。进屋后，看到了躺在床上的奶奶，她已经不能说话，不过尚有意识。当听到我们声音的时候，她一只手伸向天空，头往后仰，我们所有人都已为她就要殁了，还好没事。</p>
+<h2 id="2009-05-22">2009-05-22</h2>
+<p>一个员工轻轻地走进办公室，小声地对我说：“海宇哥，我想辞职！”</p>
+<p>我并没有太在意，在经过简短的询问之后，我大致同意了她的请求。我对辞职这种事情向来抱有一种态度：<strong>只要员工有合适的地方去，比我这里更好，能够学到更多东西，得到更多工资和福利等待遇，我一般会同意离职。</strong></p>
+<p>接下来的几个小时后发生的事情让我很难受，也让我自我反省没有关注一线员工在思考什么问题。</p>
+<p>那是快要下班的时间，大概在三点半到四点钟左右，另一个员工也是极其轻巧地步入办公室，以更小的声音对我说：“海宇哥，我要辞职！”… …</p>
+<p>今天早上，接到一条短信：“海宇哥，我有件事情和你说，我们发短信说咯，不敢和你打电话说”。我一看，心里咯噔一下，我知道这可能会意味着什么，于是发过去四个字：“你要辞职？”果不其然，正是！</p>
+<p>除这三个员工之外，还有一位员工需要调职，这是比较靠前的一件事情，但毕竟还是要走的。这三四个员工辞职、调职等事情堆积在一起，肯定是有什么问题存在。如果不是，也不会在刚刚提升工资奖金方案一两个月之后集中爆发。</p>
+<p>今天好好休息，调整思绪。明天逐个聊聊，看问题出在哪里。</p>
+<!-- more -->
+<h2 id="2009-06-06">2009-06-06</h2>
+<p>“成功之道.中国行”是由中国人像摄影学会婚纱摄影专业委员会主办，各相关媒体和支持厂商联合协办，中国10大杰出婚纱摄影企业长沙艾特婚纱摄影有限公司承办。全国婚纱摄影杰出企业现场经验交流会议活动届时也将在长沙碧桂园.威尼斯度假酒店召开。</p>
+<p>大家都知道我就是在长沙艾特工作，这次的会议我负责贵宾的接待工作，会连续几天驻扎在会场。预祝本次会议圆满成功！一切顺利！</p>
+<h2 id="2009-06-11">2009-06-11</h2>
+<p>自6月7日开始，我们接待了近千人的各地企业团队，今天，这些参加会议的企业团队陆续离开长沙，返回自己的公司。</p>
+<p>成功之道·中国行长沙艾特站圆满闭幕。</p>
+<h2 id="2009-06-13">2009-06-13</h2>
+<p>一年一度的高考让所有人都为之让道，有免费的送考车，貌似有很多好人；也有等价的高考酒店房，似乎有很多商机。关于高考期间治理噪音污染的问题，我觉得有点亡羊补牢的感觉。高考考生并非只有高考那几天才会复习，也并非那几天才会休息。如果是希望营造好的环境让高考生复习，那高考生似乎在平地里学习的时间太少了点，未必真的像我们当年一样，平时不读书，考试前一星期进行恶补么？这是不对的。另外，如果真的想高考生一个好的休息环境，能不能在平时（每一天）就对噪音污染进行整治呢？这样不是更好吗？</p>
+<p>2000年左右，与我同龄的人在高考时，似乎没有这么高的呼声，也没有这么多人在呼吁高考环境，更没有如此高科技的作弊手段，充其量是扭脖子和扔纸团，现在的考场就像碟中谍。</p>
+<p>还有另外一个事情，许多国家有一些奇怪的风俗——比如前一阵子看到的“扔馅饼比赛”“西红柿大战”“枕头大战”等等&hellip; &hellip;在我看来，这是一种自我毁灭的行为。这是在浪费地球资源，对不起脚下的土地，在呼吁节约资源的同时进行浪费的行为太可耻了。</p>
+<h2 id="2009-06-30">2009-06-30</h2>
+<p>本来是晚上七点多起飞的飞机，由于上海虹桥机场的空中限量管制，推迟到了20:15才上飞机，22:00到达上海。</p>
+<p>早上才看到新闻，也门刚掉了一架飞机，有心理压力。不过一切平安，哈哈。</p>
+<h2 id="2009-07-26">2009-07-26</h2>
+<p>从长沙转战岳阳艾特婚纱摄影。</p>
+<p>朋友们，我去岳阳工作咯，以后可以来岳阳艾特婚纱捧捧场哦，谢啦！</p>
+<h2 id="2009-09-28">2009-09-28</h2>
+<p>感谢BOSS！让我可以用上这玩意儿（佳能50D）！配置是18-200的标配头另外配了一个1.4的定焦标头。</p>
+<h2 id="2009-10-25">2009-10-25</h2>
+<p>2009年10月25日，风和日丽，要你爱我！</p>
+<p>浏阳永安石段鞭炮齐鸣，彩旗飘飘，红旗招展，锣鼓喧天啊&hellip;&hellip;偶那九九四兄弟中的老三修成正果，与同村青梅竹马的蓉蓉结为夫妇，真是金童玉女啊！祝早生贵子！白头偕老！</p>
+<h2 id="2009-11-18">2009-11-18</h2>
+<p>今日更新资料为已婚状态。</p>
+<p>1999-2002，我们相知相识；<br />
+2002-2009，感谢七年来有你的陪伴;<br />
+今天终于注册为合法夫妻；祝愿我们就这样幸福地走下去，一直到老&hellip; &hellip;<br />
+择日把酒言欢与朋友共庆贺！</p>
+<h2 id="2009-12-29">2009-12-29</h2>
+<p>小弟今日在夫人老家办酒，庆贺自己结婚。由于是属于娘家酒，没有邀请朋友们赴宴，不过我们准备明年在长沙正式举行婚宴，到时候一定邀请各位朋友，还请大家赏光！</p>
+
+                </div>
+
+            </article>
+
+
+            
+                
+	<div class="mod-post__foot">
+	 文章标签: 
+     
+        <a href="/tag/sui-bi/">随笔</a>
+     
+     </br>
+	</div>
+
+                    
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/log-2010/">2010年随笔合集</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/log-2008/">2008年随笔合集</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

@@ -1,0 +1,547 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>2018年随笔合集 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="2018-03-04 只对自己负责时，成功的全部就是自我成长；对团队负责时，成功的全部就变成了帮助他人成长。 2018-03-09 商业不是依靠你的一己之力，而是依靠你们的群策群力，你要尽最大努力去征求他人的建议和想法，获取他人的帮助。 商业归根结底是一项团队运动，必须依靠团队的力量。 2018-03-27 若有人愿意为你的商品或服务付费，说明你创造了价值。收益是对价值创造的一种肯定，有了利润，整个价值创造链才能继续满足更多人的需求。 倘若东西卖不出去，只能说明你做的事情对别人没有意义，是一种资源浪费，应该停止，并让资源投入到价值创造中去。 因此市场中的每一次消费都是一次投票，决定着资源要如何配置。没有了货币的参与，那么商业中的资源分配机制就会被打破，我们也就无法判断自己做的事情是否真正有意义。 2018-04-04 工作中对伙伴的用心程度可以通过其他人的评价来测评，如果有人说你对谁很用心，而你很感动并且眼眶湿润想哭，那我可以肯定你真的是用心了的。">
+<link rel="canonical" href="https://tam.haywoo.com/post/log-2018/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"2018年随笔合集","url":"https://tam.haywoo.com/post/log-2018/","description":"2018-03-04 只对自己负责时，成功的全部就是自我成长；对团队负责时，成功的全部就变成了帮助他人成长。 2018-03-09 商业不是依靠你的一己之力，而是依靠你们的群策群力，你要尽最大努力去征求他人的建议和想法，获取他人的帮助。 商业归根结底是一项团队运动，必须依靠团队的力量。 2018-03-27 若有人愿意为你的商品或服务付费，说明你创造了价值。收益是对价值创造的一种肯定，有了利润，整个价值创造链才能继续满足更多人的需求。 倘若东西卖不出去，只能说明你做的事情对别人没有意义，是一种资源浪费，应该停止，并让资源投入到价值创造中去。 因此市场中的每一次消费都是一次投票，决定着资源要如何配置。没有了货币的参与，那么商业中的资源分配机制就会被打破，我们也就无法判断自己做的事情是否真正有意义。 2018-04-04 工作中对伙伴的用心程度可以通过其他人的评价来测评，如果有人说你对谁很用心，而你很感动并且眼眶湿润想哭，那我可以肯定你真的是用心了的。","datePublished":"2018-10-11T16:44:05+08:00","dateModified":"2018-10-11T16:44:05+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/log-2018/","name":"2018年随笔合集","position":2}]}</script>
+<meta property="og:title" content="2018年随笔合集">
+<meta property="og:description" content="2018-03-04 只对自己负责时，成功的全部就是自我成长；对团队负责时，成功的全部就变成了帮助他人成长。 2018-03-09 商业不是依靠你的一己之力，而是依靠你们的群策群力，你要尽最大努力去征求他人的建议和想法，获取他人的帮助。 商业归根结底是一项团队运动，必须依靠团队的力量。 2018-03-27 若有人愿意为你的商品或服务付费，说明你创造了价值。收益是对价值创造的一种肯定，有了利润，整个价值创造链才能继续满足更多人的需求。 倘若东西卖不出去，只能说明你做的事情对别人没有意义，是一种资源浪费，应该停止，并让资源投入到价值创造中去。 因此市场中的每一次消费都是一次投票，决定着资源要如何配置。没有了货币的参与，那么商业中的资源分配机制就会被打破，我们也就无法判断自己做的事情是否真正有意义。 2018-04-04 工作中对伙伴的用心程度可以通过其他人的评价来测评，如果有人说你对谁很用心，而你很感动并且眼眶湿润想哭，那我可以肯定你真的是用心了的。">
+<meta property="og:url" content="https://tam.haywoo.com/post/log-2018/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/log-2018/">
+<meta name="twitter:title" content="2018年随笔合集">
+<meta name="twitter:description" content="2018-03-04 只对自己负责时，成功的全部就是自我成长；对团队负责时，成功的全部就变成了帮助他人成长。 2018-03-09 商业不是依靠你的一己之力，而是依靠你们的群策群力，你要尽最大努力去征求他人的建议和想法，获取他人的帮助。 商业归根结底是一项团队运动，必须依靠团队的力量。 2018-03-27 若有人愿意为你的商品或服务付费，说明你创造了价值。收益是对价值创造的一种肯定，有了利润，整个价值创造链才能继续满足更多人的需求。 倘若东西卖不出去，只能说明你做的事情对别人没有意义，是一种资源浪费，应该停止，并让资源投入到价值创造中去。 因此市场中的每一次消费都是一次投票，决定着资源要如何配置。没有了货币的参与，那么商业中的资源分配机制就会被打破，我们也就无法判断自己做的事情是否真正有意义。 2018-04-04 工作中对伙伴的用心程度可以通过其他人的评价来测评，如果有人说你对谁很用心，而你很感动并且眼眶湿润想哭，那我可以肯定你真的是用心了的。">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        2018年随笔合集
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2018-10-11">
+                        2018-10-11
+                    </time> • 4 分钟阅读 •
+                        
+                            <a href="/tag/sui-bi/">
+                                随笔
+                            </a>
+                            
+                                    
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <h2 id="2018-03-04">2018-03-04</h2>
+<p>只对自己负责时，成功的全部就是自我成长；对团队负责时，成功的全部就变成了帮助他人成长。</p>
+<h2 id="2018-03-09">2018-03-09</h2>
+<p>商业不是依靠你的一己之力，而是依靠你们的群策群力，你要尽最大努力去征求他人的建议和想法，获取他人的帮助。</p>
+<p><strong>商业归根结底是一项团队运动，必须依靠团队的力量。</strong></p>
+<h2 id="2018-03-27">2018-03-27</h2>
+<p>若有人愿意为你的商品或服务付费，说明你创造了价值。收益是对价值创造的一种肯定，有了利润，整个价值创造链才能继续满足更多人的需求。</p>
+<p>倘若东西卖不出去，只能说明你做的事情对别人没有意义，是一种资源浪费，应该停止，并让资源投入到价值创造中去。</p>
+<p>因此市场中的每一次消费都是一次投票，决定着资源要如何配置。没有了货币的参与，那么商业中的资源分配机制就会被打破，我们也就无法判断自己做的事情是否真正有意义。</p>
+<h2 id="2018-04-04">2018-04-04</h2>
+<p>工作中对伙伴的用心程度可以通过其他人的评价来测评，如果有人说你对谁很用心，而你很感动并且眼眶湿润想哭，那我可以肯定你真的是用心了的。</p>
+<!-- more -->
+<h2 id="2018-04-30">2018-04-30</h2>
+<p>为客户业绩增长再多承担一些，再深入一些。为团队伙伴成长再要求多一点，再耐心一点。</p>
+<h2 id="2018-06-25">2018-06-25</h2>
+<p>什么才是你的源动力？<br />
+还未实现的梦想。</p>
+<h2 id="2018-07-29">2018-07-29</h2>
+<p>SEVEN说：老爸，为什么快过生日的时候，你突然对我这么好？</p>
+<p>我很惊讶：你说的好，是指什么？</p>
+<p>她告诉我：就是不需要我要求你，你就给我安排好了我想要的。</p>
+<p>嗯，看来我关注她的时间确实比以前少了。要反省。</p>
+<h2 id="2018-08-13">2018-08-13</h2>
+<p>让生活变得幸福的秘诀在于两个字：感恩（也可以理解成知足）</p>
+<h2 id="2018-08-31">2018-08-31</h2>
+<p>分享知识的价值在于能够令人行动，并促进成果。如能在此基础上扶持出知识的传承者，更佳。</p>
+<h2 id="2018-09-01">2018-09-01</h2>
+<p>夜读《清醒》，突然领悟了多年前黄钰茗老师在艾特婚纱培训高管时，在课间常常提及的“地狱”。</p>
+<p>他提及的所谓“天堂”和“地狱”并非死后的世界，而是两种心境。</p>
+<p>以不清醒的状态生活和工作时，境遇如同“地狱”。如果能够点亮清醒之光，同样的境遇却犹如“天堂”。</p>
+<h2 id="2018-09-04">2018-09-04</h2>
+<p>遭遇鲁莽的对手，谨慎的指挥官也会不知所措；偶然的分神可能在不经意间给人带来灵感；为了达到量化的目标，人们反而会制定有悖常理的激励措施；唱反调的人貌似偏离团队和谐，其实独具慧眼；当我们对在线问卷视而不见时，反而找到了灵魂伴侣。</p>
+<p>如果我们只受秩序驱使，错过的是更广阔的天地。</p>
+<h2 id="2018-09-06">2018-09-06</h2>
+<p>如果有团队协同作战、有战略规划的思维、善于数据分析总结、有稳定的心态、愿意每天投入75%的时间精力，社交媒体广告投放的事情并没有想象中那么复杂。</p>
+<p>如果团队具备产品开发能力，那么还可以通过研发工具来提高工作效率和工作精度。</p>
+<h2 id="2018-09-10">2018-09-10</h2>
+<p>如果在团队成员出现问题时，没有给予不留情面的“指正”及“全力协同支持”，那就是假借“给予成长机会与自我生长“的名义抛弃了本应由团队领袖承担的责任。</p>
+<h2 id="2018-09-11">2018-09-11</h2>
+<p>良好的沟通，有一个必要条件：就是在沟通前期不要立刻进行主观意识的回应，先充分的倾听，理解对方所表达的信息，然后再谦逊地提供不带情绪的解决方案。</p>
+<h2 id="2018-09-13">2018-09-13</h2>
+<p>和团队成员探讨分享推广运营技巧的时候，只有那些“相信”并“亲身体验”的伙伴才有收获。而那些觉得“迟疑”、“看看再说”、“试试看”的人往往只入了门便退了出去，并且“没有什么感觉”，甚至“不再相信”。</p>
+<p><strong>就算已经很厉害了，还是应该要：保持谦卑、保持好奇和创新、不怕失败、全力去做。</strong></p>
+<h2 id="2018-09-17">2018-09-17</h2>
+<p>问题本身就是问题。</p>
+<p>把问题放一边，想想真正要解决的是什么？</p>
+<h2 id="2018-09-17-1">2018-09-17</h2>
+<p>谁能够让用户愿意付出大量的时间参与其中，谁就掌握了直接与用户对话的先机。</p>
+<h2 id="2018-09-29">2018-09-29</h2>
+<p>正向竞争观：</p>
+<p>我可以全力以赴去追求我想要的胜利，但绝不会因为要赢而去伤害别人，也不会因为对胜利的渴望而恐惧失败。</p>
+<p>我拼尽全力，我更享受这个我拼尽全力的过程。</p>
+<h2 id="2018-10-09">2018-10-09</h2>
+<p>把工作中的事情梳理出操作标准，然后推行之，比一个个手把手地从头教起更有效果和效率。</p>
+<h2 id="2018-10-10">2018-10-10</h2>
+<p>宵夜后，团队感悟共识：</p>
+<p><strong>团队成员之间非常有必要多做坦诚的沟通，甚至要针对对方的舒适区进行刺激，激发出被他潜藏在深处的性情。只要方向一致，可以是不同方法和观点。</strong></p>
+<p>如此以来，行事坦荡荡，无畏猜忌。</p>
+<h2 id="2018-11-03">2018-11-03</h2>
+<p>就解决问题而言，意愿度比方法更重要。有了意愿度，自然会想到各种办法，创造可能性。</p>
+<h2 id="2018-12-02">2018-12-02</h2>
+<p><strong>企业管理不能只是立规矩，也不能立了规矩却没有奖惩，而最有效的管理是激发意愿度，让意愿度驱动行为。</strong></p>
+<p>今天在企业管理之外的日常生活中，对10后进行了激发意愿度的实践，效果是很不错的。</p>
+<p>感谢莎莎老师的法布施。</p>
+<h2 id="2018-12-11">2018-12-11</h2>
+<p>把你的问题，当成我的问题来解决。<br />
+把你的事业，当成我的事业来奋斗。<br />
+把你变成我，法门自开。</p>
+<h2 id="2018-12-24">2018-12-24</h2>
+<p>每一个时代的人都有其特定的生活方式和政治诉求，这是由于人性的自我所决定的。</p>
+<p>如果前几个年代的人把自己的诉求强加在后几个年代的人身上，自然是不会被理解和被接受。</p>
+<h2 id="2018-12-25">2018-12-25</h2>
+<p>市面上自己写（不是别人代笔）的自传体书籍可以概括为两种：一种是生前出版的，另一种是死后出版的。</p>
+<p>后面那种对自我剖析更透彻、更真实，因为他已经不在人世，不在乎别人如何评价。</p>
+
+                </div>
+
+            </article>
+
+
+            
+                
+	<div class="mod-post__foot">
+	 文章标签: 
+     
+        <a href="/tag/sui-bi/">随笔</a>
+     
+     </br>
+	</div>
+
+                    
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/zhisun/">要懂得止损</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/log-2017/">2017年随笔合集</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

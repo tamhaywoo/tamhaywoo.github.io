@@ -1,0 +1,1023 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>在长沙买二手房 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="当前在长沙市二环外有一套 85m² 的多层住宅，在长沙与湘潭交界处有一套 128m² 的闲置高层住宅，考虑到稍大的那一套无法当前使用，所以准备再买一套住宅改善孩子们的居住体验。 关于购房资格 一直以来，长沙地区户口最多只能在长沙购买两套住宅。 2022 年 6 月底，湖南省委、省政府印发《关于优化生育政策促进人口长期均衡发展的实施方案》，并下发通知，要求各市州、县市区委，各市州、县市区人民政府，省直机关各单位结合实际认真组织实施。 2022 年 8 月初，长沙市委、市政府出台了《关于优化生育政策促进人口长期均衡发展的工作方案》，文件中提及“对依法生育两个及以上子女的本地户籍家庭，增加 1 套购房指标，满足多孩家庭改善性住房需求。”了解这个消息之后，我就一直在等待这份工作方案的文件的落地。 2022 年 12 月 30 日，长沙市住房和城乡建设局、长沙市卫生健康委员会、长沙市公安局联合发文《依法生育两个及以上子女的本地户籍家庭购买商品住宅实施细则》，算是 2022 年 8 月初发布工作方案的具体落实。 于是，现在的我多了一套购房指标，不需要“卖一套房腾指标”就能够买第三套房。">
+<link rel="canonical" href="https://tam.haywoo.com/post/house/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"在长沙买二手房","url":"https://tam.haywoo.com/post/house/","description":"当前在长沙市二环外有一套 85m² 的多层住宅，在长沙与湘潭交界处有一套 128m² 的闲置高层住宅，考虑到稍大的那一套无法当前使用，所以准备再买一套住宅改善孩子们的居住体验。 关于购房资格 一直以来，长沙地区户口最多只能在长沙购买两套住宅。 2022 年 6 月底，湖南省委、省政府印发《关于优化生育政策促进人口长期均衡发展的实施方案》，并下发通知，要求各市州、县市区委，各市州、县市区人民政府，省直机关各单位结合实际认真组织实施。 2022 年 8 月初，长沙市委、市政府出台了《关于优化生育政策促进人口长期均衡发展的工作方案》，文件中提及“对依法生育两个及以上子女的本地户籍家庭，增加 1 套购房指标，满足多孩家庭改善性住房需求。”了解这个消息之后，我就一直在等待这份工作方案的文件的落地。 2022 年 12 月 30 日，长沙市住房和城乡建设局、长沙市卫生健康委员会、长沙市公安局联合发文《依法生育两个及以上子女的本地户籍家庭购买商品住宅实施细则》，算是 2022 年 8 月初发布工作方案的具体落实。 于是，现在的我多了一套购房指标，不需要“卖一套房腾指标”就能够买第三套房。","datePublished":"2023-02-22T13:26:46+08:00","dateModified":"2026-05-01T20:12:23+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/house/","name":"在长沙买二手房","position":2}]}</script>
+<meta property="og:title" content="在长沙买二手房">
+<meta property="og:description" content="当前在长沙市二环外有一套 85m² 的多层住宅，在长沙与湘潭交界处有一套 128m² 的闲置高层住宅，考虑到稍大的那一套无法当前使用，所以准备再买一套住宅改善孩子们的居住体验。 关于购房资格 一直以来，长沙地区户口最多只能在长沙购买两套住宅。 2022 年 6 月底，湖南省委、省政府印发《关于优化生育政策促进人口长期均衡发展的实施方案》，并下发通知，要求各市州、县市区委，各市州、县市区人民政府，省直机关各单位结合实际认真组织实施。 2022 年 8 月初，长沙市委、市政府出台了《关于优化生育政策促进人口长期均衡发展的工作方案》，文件中提及“对依法生育两个及以上子女的本地户籍家庭，增加 1 套购房指标，满足多孩家庭改善性住房需求。”了解这个消息之后，我就一直在等待这份工作方案的文件的落地。 2022 年 12 月 30 日，长沙市住房和城乡建设局、长沙市卫生健康委员会、长沙市公安局联合发文《依法生育两个及以上子女的本地户籍家庭购买商品住宅实施细则》，算是 2022 年 8 月初发布工作方案的具体落实。 于是，现在的我多了一套购房指标，不需要“卖一套房腾指标”就能够买第三套房。">
+<meta property="og:url" content="https://tam.haywoo.com/post/house/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/house/">
+<meta name="twitter:title" content="在长沙买二手房">
+<meta name="twitter:description" content="当前在长沙市二环外有一套 85m² 的多层住宅，在长沙与湘潭交界处有一套 128m² 的闲置高层住宅，考虑到稍大的那一套无法当前使用，所以准备再买一套住宅改善孩子们的居住体验。 关于购房资格 一直以来，长沙地区户口最多只能在长沙购买两套住宅。 2022 年 6 月底，湖南省委、省政府印发《关于优化生育政策促进人口长期均衡发展的实施方案》，并下发通知，要求各市州、县市区委，各市州、县市区人民政府，省直机关各单位结合实际认真组织实施。 2022 年 8 月初，长沙市委、市政府出台了《关于优化生育政策促进人口长期均衡发展的工作方案》，文件中提及“对依法生育两个及以上子女的本地户籍家庭，增加 1 套购房指标，满足多孩家庭改善性住房需求。”了解这个消息之后，我就一直在等待这份工作方案的文件的落地。 2022 年 12 月 30 日，长沙市住房和城乡建设局、长沙市卫生健康委员会、长沙市公安局联合发文《依法生育两个及以上子女的本地户籍家庭购买商品住宅实施细则》，算是 2022 年 8 月初发布工作方案的具体落实。 于是，现在的我多了一套购房指标，不需要“卖一套房腾指标”就能够买第三套房。">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        在长沙买二手房
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2023-02-22">
+                        2023-02-22
+                    </time> • 10 分钟阅读 •
+                        
+                            <a href="/tag/tou-zi/">
+                                投资
+                            </a>
+                             · 
+                                    
+                            <a href="/tag/fang-chan/">
+                                房产
+                            </a>
+                            
+                                    
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <p>当前在长沙市二环外有一套 85m² 的多层住宅，在长沙与湘潭交界处有一套 128m² 的闲置高层住宅，考虑到稍大的那一套无法当前使用，所以准备再买一套住宅改善孩子们的居住体验。</p>
+<h2 id="heading">关于购房资格</h2>
+<p>一直以来，长沙地区户口最多只能在长沙购买两套住宅。</p>
+<p>2022 年 6 月底，湖南省委、省政府印发<a href="https://www.hunan.gov.cn/hnszf/hnyw/zwdt/202206/t20220621_26267937.html">《关于优化生育政策促进人口长期均衡发展的实施方案》</a>，并下发通知，要求各市州、县市区委，各市州、县市区人民政府，省直机关各单位结合实际认真组织实施。</p>
+<p>2022 年 8 月初，长沙市委、市政府出台了<a href="http://www.tianxin.gov.cn/jdhy/hyshgq/2022n/fdcjr_140296/202208/t20220805_10720625.html">《关于优化生育政策促进人口长期均衡发展的工作方案》</a>，文件中提及“<strong>对依法生育两个及以上子女的本地户籍家庭，增加 1 套购房指标，满足多孩家庭改善性住房需求。</strong>”了解这个消息之后，我就一直在等待这份工作方案的文件的落地。</p>
+<p>2022 年 12 月 30 日，长沙市住房和城乡建设局、长沙市卫生健康委员会、长沙市公安局联合发文<a href="https://www.163.com/dy/article/HSDHRKVI05521EJ8.html">《依法生育两个及以上子女的本地户籍家庭购买商品住宅实施细则》</a>，算是 2022 年 8 月初发布工作方案的具体落实。</p>
+<p>于是，现在的我多了一套购房指标，不需要“<strong>卖一套房腾指标</strong>”就能够买第三套房。</p>
+<!-- more -->
+<h2 id="heading-1">为什么要买第三套房？</h2>
+<p>两个孩子渐渐长大，需要给他们独立的房间。第二套房可以让孩子们有单独房间，但由于该房子距离市区太远，且还没有装修，无法使用；而当前住宅只有两个卧室，无法满足这一需求。</p>
+<h2 id="heading-2">二手房还是新楼盘？</h2>
+<p>考虑到孩子们上学的便利性，优先选择当前居住的小区及周边的住宅（当前幼儿园在小区内、小学和初中就在小区围墙外）；新楼盘的价格比二手房价格高，且在当前房产和经济不景气的大环境下，为避免撞雷不买期房；</p>
+<h2 id="heading-3">电梯房还是楼梯房？</h2>
+<ul>
+<li>相对于高层电梯房，多层楼梯房的公摊面积小、物业管理费少、没有二次供水费，使用成本相对较低；</li>
+<li>在居住过程中遇到停电、停水、消防问题时，五六层的多层住宅更容易应对；</li>
+<li>若干年后，如果城区住宅需要改造，肯定优先考虑翻修重建户数不多的多层楼梯房；</li>
+<li>长沙市政府在近两年内推进多层楼梯房安装电梯的政策，且小区内已经有多栋住宅安装了电梯，物业费标准不变；</li>
+</ul>
+<h2 id="heading-4">需求关键词</h2>
+<p>结合当前的情况，我对购买第三套房的需求关键词是：<strong>本小区、非电梯房、光线充足、4个卧室（可3室+阁楼）、房子无故人、噪音小、方便停车（或者距离现在的住宅不远）</strong></p>
+<h2 id="heading-5">购买时间点</h2>
+<ul>
+<li>由于小宝2024年读小学，所以购房的时间点最迟不晚于2024年3月，预留装修的时间；</li>
+<li>要随时关注处于变化的中的政策文件，有的文件利好买房屋买卖，房屋价格会上涨。2023年年初，长沙房价就因为释放了二孩家庭可购买第三套房的政策而出现了上涨，后逐渐回落。所以要在政策文件出台前以相对较低价格买入。</li>
+</ul>
+<p>我另外整理了<a href="https://tam.haywoo.com/post/buyhouse/">关于买房要考虑的一些问题</a>以及<a href="https://tam.haywoo.com/post/house-tax/">对房产税的一些理解</a>，算是对上面内容的补充。<code>2023年9月7日更新</code></p>
+<hr />
+<h2 id="heading-6">收集信息进行综合评价</h2>
+<p>买房的需求是夫人提出来的，所以她在这件事情上投入了比我更多的精力，我把上面的这些对于买房的思考提供给她做决策参考，最后再共同确定。夫人陆陆续续看了六七套住宅，为了方便综合分析评价，我以夫人整理的基本信息为基础，制作了一份在线协作表格，当所有信息都罗列在同一个表格里面的时候，做决策就变得相对容易一点。</p>
+<h3 id="heading-7">基本信息</h3>
+<p>这里的基本信息就是根据我的需求关键词进行整理的，排除价格因素，就看这些。</p>
+<table>
+<thead>
+<tr>
+<th align="center">小区位置</th>
+<th align="right">F4</th>
+<th align="right">B7</th>
+<th align="right">F7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">房号</td>
+<td align="right">401</td>
+<td align="right">603</td>
+<td align="right">103</td>
+</tr>
+<tr>
+<td align="center">所在楼层</td>
+<td align="right">4</td>
+<td align="right">6</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="center">建筑面积</td>
+<td align="right">173.44</td>
+<td align="right">127.88</td>
+<td align="right">149.4</td>
+</tr>
+<tr>
+<td align="center">有无阁楼</td>
+<td align="right">无</td>
+<td align="right"><strong>有</strong></td>
+<td align="right">无</td>
+</tr>
+<tr>
+<td align="center">有无露台</td>
+<td align="right">无</td>
+<td align="right">无</td>
+<td align="right">无</td>
+</tr>
+<tr>
+<td align="center">卧室数量</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td align="center">卫生间</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="center">阳台数量</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="center">有无电梯</td>
+<td align="right">无</td>
+<td align="right">无</td>
+<td align="right">无</td>
+</tr>
+<tr>
+<td align="center">阳台朝向</td>
+<td align="right">向南</td>
+<td align="right">南+北</td>
+<td align="right">向南</td>
+</tr>
+<tr>
+<td align="center">阳台视野</td>
+<td align="right">&lt;100米</td>
+<td align="right">&gt;100米</td>
+<td align="right">&lt;100米</td>
+</tr>
+<tr>
+<td align="center">入户朝向</td>
+<td align="right">向北</td>
+<td align="right">向南</td>
+<td align="right">向西</td>
+</tr>
+<tr>
+<td align="center">是否边户</td>
+<td align="right">是</td>
+<td align="right">是</td>
+<td align="right">否</td>
+</tr>
+<tr>
+<td align="center">光照时长</td>
+<td align="right">全天</td>
+<td align="right">上午</td>
+<td align="right">上午</td>
+</tr>
+<tr>
+<td align="center">是否偏西</td>
+<td align="right">是</td>
+<td align="right">否</td>
+<td align="right">否</td>
+</tr>
+<tr>
+<td align="center">出租状态</td>
+<td align="right">无</td>
+<td align="right">无</td>
+<td align="right">无</td>
+</tr>
+<tr>
+<td align="center">有否故人</td>
+<td align="right">无</td>
+<td align="right">无</td>
+<td align="right">无</td>
+</tr>
+<tr>
+<td align="center">主要噪音</td>
+<td align="right">烟草局</td>
+<td align="right">木莲路</td>
+<td align="right">烟草局</td>
+</tr>
+<tr>
+<td align="center">安全隐患</td>
+<td align="right">-</td>
+<td align="right">-</td>
+<td align="right">小区角落</td>
+</tr>
+<tr>
+<td align="center">门前道路</td>
+<td align="right">辅道</td>
+<td align="right">无</td>
+<td align="right">辅道</td>
+</tr>
+<tr>
+<td align="center">附近车位</td>
+<td align="right">宽松</td>
+<td align="right">紧张</td>
+<td align="right">紧张</td>
+</tr>
+</tbody>
+</table>
+<h3 id="heading-8">产权情况</h3>
+<p>产权情况决定了住宅是否有债务风险，是否需要缴纳“个人所得税”，某些地方需要买家承担卖家的费用。另外，即便是不用卖家承担费用，也会因此让买家选择提高报价。</p>
+<table>
+<thead>
+<tr>
+<th align="center">小区位置</th>
+<th align="center">F4</th>
+<th align="center">B7</th>
+<th align="center">F7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">产权所有</td>
+<td align="center">非共有</td>
+<td align="center">非共有</td>
+<td align="center">非共有</td>
+</tr>
+<tr>
+<td align="center">抵押情况</td>
+<td align="center">无抵押</td>
+<td align="center">无抵押</td>
+<td align="center">无抵押</td>
+</tr>
+<tr>
+<td align="center">是否满五</td>
+<td align="center">满五</td>
+<td align="center">满五</td>
+<td align="center">满五</td>
+</tr>
+<tr>
+<td align="center">是否唯一</td>
+<td align="center">否</td>
+<td align="center"><strong>是</strong></td>
+<td align="center">否</td>
+</tr>
+</tbody>
+</table>
+<h3 id="heading-9">税费相关</h3>
+<p>税费相关主要是根据房屋面积、销售价格、产权情况等因素所产生的额外费用，一般是房价的 6%-10% 左右。</p>
+<table>
+<thead>
+<tr>
+<th align="center">小区位置</th>
+<th align="right">F4</th>
+<th align="right">B7</th>
+<th align="right">F7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">中介费用</td>
+<td align="right">2.0%</td>
+<td align="right">2.0%</td>
+<td align="right">2.0%</td>
+</tr>
+<tr>
+<td align="center">买方契税</td>
+<td align="right">4.0%</td>
+<td align="right">4.0%</td>
+<td align="right">4.0%</td>
+</tr>
+<tr>
+<td align="center">登记费</td>
+<td align="right">¥80</td>
+<td align="right">¥80</td>
+<td align="right">¥80</td>
+</tr>
+</tbody>
+</table>
+<h3 id="heading-10">资金相关</h3>
+<p>这个部分的信息是为了让自己了解需要准备多少首付款、需要支付多少税或手续费、需要承担多少的利息、综合下来的房屋均价是多少。</p>
+<h4 id="heading-11">首付及手续费相关资金</h4>
+<table>
+<thead>
+<tr>
+<th align="center">小区位置</th>
+<th align="right">F4</th>
+<th align="right">B7</th>
+<th align="right">F7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">首付比例</td>
+<td align="right">30%</td>
+<td align="right">30%</td>
+<td align="right">30%</td>
+</tr>
+<tr>
+<td align="center">首付金额</td>
+<td align="right">46.8万</td>
+<td align="right">43.18万</td>
+<td align="right">38.4万</td>
+</tr>
+<tr>
+<td align="center">增值税</td>
+<td align="right">¥0</td>
+<td align="right">¥0</td>
+<td align="right">¥0</td>
+</tr>
+<tr>
+<td align="center">手续费用</td>
+<td align="right">¥1,041</td>
+<td align="right">¥767</td>
+<td align="right">¥896</td>
+</tr>
+<tr>
+<td align="center">个人所得税</td>
+<td align="right">3.12万</td>
+<td align="right">0</td>
+<td align="right">2.56万</td>
+</tr>
+<tr>
+<td align="center">中介费用</td>
+<td align="right">3.12万</td>
+<td align="right">2.18万</td>
+<td align="right">2.56万</td>
+</tr>
+<tr>
+<td align="center">契税费用</td>
+<td align="right">6.24万</td>
+<td align="right">4.36万</td>
+<td align="right">5.12万</td>
+</tr>
+<tr>
+<td align="center">准备资金</td>
+<td align="right">59.39万</td>
+<td align="right">39.32万</td>
+<td align="right">48.73万</td>
+</tr>
+<tr>
+<td align="center">累计费用</td>
+<td align="right">168.59万</td>
+<td align="right">115.62万</td>
+<td align="right">138.33万</td>
+</tr>
+<tr>
+<td align="center">综合均价</td>
+<td align="right">¥9,720</td>
+<td align="right">¥9,041</td>
+<td align="right">¥9,259</td>
+</tr>
+</tbody>
+</table>
+<h4 id="heading-12">贷款及利息相关</h4>
+<table>
+<thead>
+<tr>
+<th align="center">小区位置</th>
+<th align="right">F4</th>
+<th align="right">B7</th>
+<th align="right">F7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">贷款金额</td>
+<td align="right">110万</td>
+<td align="right">63万</td>
+<td align="right">90万</td>
+</tr>
+<tr>
+<td align="center">贷款年限</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td align="center">预估利息</td>
+<td align="right">29.4万</td>
+<td align="right">12.7万</td>
+<td align="right">24万</td>
+</tr>
+<tr>
+<td align="center">本息合计</td>
+<td align="right">139.4万</td>
+<td align="right">75.7万</td>
+<td align="right">114万</td>
+</tr>
+</tbody>
+</table>
+<h4 id="heading-13">各类费用总价及均价</h4>
+<table>
+<thead>
+<tr>
+<th align="center">小区位置</th>
+<th align="right">F4</th>
+<th align="right">B7</th>
+<th align="right">F7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">累计费用</td>
+<td align="right">198.79万</td>
+<td align="right">125.93万</td>
+<td align="right">162.73万</td>
+</tr>
+<tr>
+<td align="center">综合均价</td>
+<td align="right">¥11,461</td>
+<td align="right">¥9,847</td>
+<td align="right">¥10,892</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="heading-14">二手房买卖交接手续</h2>
+<h3 id="heading-15">买方准备事项</h3>
+<ul>
+<li>确定拥有购房资格</li>
+<li>准备好购房资金（如需要贷款，则需要有贷款资格）</li>
+<li>夫妻双方身份证</li>
+<li>户口本</li>
+<li>婚姻证明（结婚证）</li>
+<li>收入证明（需要覆盖所有负债的21倍）</li>
+</ul>
+<h3 id="heading-16">卖方准备事项</h3>
+<ul>
+<li>将物业费结清并进行过户</li>
+<li>将水电费结清并进行过户</li>
+<li>将燃气费结清并进行过户</li>
+<li>结束租赁关系（如有）</li>
+<li>夫妻双方参与卖房协议的签字（如来不了，则需要到公证处公证，并提供公证书）</li>
+<li>结清贷款</li>
+<li>提供真实有效的房产证、土地证</li>
+<li>产权人身份证</li>
+<li>到派出所迁走户口</li>
+</ul>
+<h3 id="heading-17">双方交接流程</h3>
+<ul>
+<li>确定意向</li>
+<li>确定价格</li>
+<li>签合同、交定金</li>
+<li>贷款银行面签（夫妻双方授权银行查询征信）</li>
+<li>去银行预审贷款</li>
+<li>房东解除贷款抵押</li>
+<li>签订贷款合同</li>
+<li>去不动产中心网签备案（拿到网签备案合同）</li>
+<li>交首付、契税、过户、办房产证（拿到首付发票、契税发票）</li>
+<li>房产证抵押贷款（房贷下来后拿到以下资料）
+<ul>
+<li>备案登记</li>
+<li>不动产登记证明</li>
+<li>银行借款合同</li>
+<li>契税发票</li>
+<li>房产证</li>
+</ul>
+</li>
+<li>收房、验房</li>
+</ul>
+<hr />
+<h2 id="heading-18">买房进展情况</h2>
+<h3 id="heading-19">第一次接近成交后选择放弃</h3>
+<p>2023年3月5日抽空和中介一起看了一套同小区的房子，房主要价120万。中介说房主能接受118万，于是我就给中介出了一个方案。我能接受116万成交，但佣金只能接受1.5%；如果能低于这个价格成交，我还可以另外给他奖金。</p>
+<table>
+<thead>
+<tr>
+<th align="right">成交价</th>
+<th align="right">佣金</th>
+<th align="right">奖金红包</th>
+<th align="right">手续费</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">116万</td>
+<td align="right">1.5%</td>
+<td align="right">0</td>
+<td align="right">17400</td>
+</tr>
+<tr>
+<td align="right">115万</td>
+<td align="right">2%</td>
+<td align="right">2000</td>
+<td align="right">25000</td>
+</tr>
+<tr>
+<td align="right">113万</td>
+<td align="right">2%</td>
+<td align="right">5000</td>
+<td align="right">27600</td>
+</tr>
+<tr>
+<td align="right">112万</td>
+<td align="right">2%</td>
+<td align="right">10000</td>
+<td align="right">32400</td>
+</tr>
+</tbody>
+</table>
+<p><del>不知道后面情况如何，如果房主只能接受118万，那么这些设置了也没啥用。</del></p>
+<p>3月15日，房东已经接受按照115万元的报价进行交易（与我的预判一致，因为这是我给中介的方案中最符合三方利益最大化的价位。）</p>
+<p>当我们大家聚在象盒总部签订合同时，突然出现了几个之前不知道的问题：</p>
+<ul>
+<li>房产证上面的所有者名字是实际还房贷人员的前妻，实际还房贷人员要求交易时直接将资金转账到他的卡上，而不是房产证所有者（他前妻）的卡上，尽管其前妻也在现场承诺没有问题，但这种交易明显不符合受法律保护的条件；</li>
+<li>中介提出只有首付款进入资金监管账户，尾款不通过资金监管账户而直接转款到交易对方的银行卡上，在有交易风险的情况下，这样做很不安全。</li>
+</ul>
+<p>所以，当天晚上会面并没有促成交易。买房的事情暂时作罢。</p>
+<h2 id="heading-20">第二次买房顺利通关</h2>
+<h3 id="heading-21">看房</h3>
+<p>7月8日，夫人给我看了一套房的信息，我觉得还不错，只是还没有买的意思。</p>
+<p>7月14日，看第一套房的那个中介给夫人发了另外一套房的资料，正好是夫人发给我的那一套。经过了前一次买房的过程，我对买房已经没有太在意，一切随缘，比较佛系，我甚至都不想去看房子。</p>
+<p>夫人早几天就看过了房子，基本上没什么大问题，希望我能抽出时间也亲自去看一看，方便做决策。</p>
+<p>7月28日，我赶早下班去现场看了房子，相对于前面那套房子，这一套房子的主人看起来相亲相爱，而且教育子女上舍得开销。</p>
+<h3 id="heading-22">谈价</h3>
+<p>不过房东不愿意亲自谈价格，需要中介在其中传话，我也认可这种做法，这样做能够让买方和卖方都可以放开说价格和内心的想法，不用担忧是否需要顾及对方的面子而产生不必要的麻烦。房东报价110万，我这次报价108-109万左右，中介说帮忙从105万开始谈价，最后晚上的时候中介告诉我成交价为106.18万，这算是大大超出了我的预期。</p>
+<h3 id="heading-23">签约</h3>
+<p>7月29日，在贝壳线下签约中心与房东一起完成了签约，并支付了5万元定金以及2%的中介费和贷款金额1%的服务费。</p>
+<h3 id="heading-24">贷款</h3>
+<p>考虑到现在的利率为4%，算下来每年只要支出1.3万的利息，我选择贷款买房。招商银行APP上显示可贷款额度为74万30年，而我只需要贷款63万，想必应该可以批下来吧。</p>
+<p>7月30日（周日），将收入证明资料快递到了招商银行房贷部。</p>
+<p>7月31日，收到银行短信以及贝壳签约中心提醒，说是审批通过63万的额度。接下来进行网签报备和不动产登记转移预约，如果顺利的话，明天可以就可以到不动产登记中心办理转移登记手续了。</p>
+<h3 id="heading-25">过户</h3>
+<p>8月1日，与业主一起到不动产登记中心办理过户手续，缴纳首付款（除定金之外的部分）、缴纳契税。</p>
+<p>8月3日，不动产登记中心发来短信提醒我申请的“转移登记-一般买卖”已办理完毕，可以领证了。</p>
+<h3 id="heading-26">抵押</h3>
+<p>8月4日，贝壳权证专员开始办理房产抵押贷款。</p>
+<p>8月7日，贝壳权证专员完成招商银行的贷款抵押手续，并把不动产权证快递给我。（现在银行做抵押贷款不用押不动产权证）下午17:19:31，招商银行已完成放款630000元。</p>
+<h3 id="heading-27">交房</h3>
+<p>由于房东事先说了8月份要自驾游，大约月底才会回来，所以要月底才能协助办理交房手续。</p>
+<p>9月2日，交割物业费、电费、燃气费、水费、户籍迁出事项，收取房屋钥匙，验收房屋。</p>
+<h3 id="heading-28">账单</h3>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>项目</strong></th>
+<th align="right"><strong>金额</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">首付款</td>
+<td align="right">¥431,800</td>
+</tr>
+<tr>
+<td align="center">贷款额</td>
+<td align="right">¥630,000</td>
+</tr>
+<tr>
+<td align="center">中介费</td>
+<td align="right">¥21,236</td>
+</tr>
+<tr>
+<td align="center">契税</td>
+<td align="right">¥42,472</td>
+</tr>
+<tr>
+<td align="center">贷款佣金</td>
+<td align="right">¥6,300</td>
+</tr>
+<tr>
+<td align="center">贷款利息</td>
+<td align="right">¥127,050</td>
+</tr>
+<tr>
+<td align="center">公证费</td>
+<td align="right">¥350</td>
+</tr>
+<tr>
+<td align="center">工本费</td>
+<td align="right">¥80</td>
+</tr>
+<tr>
+<td align="center">合计</td>
+<td align="right">¥1,259,288</td>
+</tr>
+</tbody>
+</table>
+<p>强烈推荐使用贝壳的中介服务，各个流程环节特别负责任，让人省心和放心。这个2%的中介费花得值当。</p>
+<hr />
+<p>最后更新：<code>2023年9月7日</code></p>
+
+                </div>
+
+            </article>
+
+
+            
+                
+	<div class="mod-post__foot">
+	 文章标签: 
+     
+        <a href="/tag/tou-zi/">投资</a>, 
+     
+        <a href="/tag/fang-chan/">房产</a>
+     
+     </br>
+	</div>
+
+                    
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/log-2023/">2023年随笔合集</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/fund-rich-1020/">基金投资1020模型</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

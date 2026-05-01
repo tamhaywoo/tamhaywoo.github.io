@@ -1,0 +1,511 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>2001年的写生之旅 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="现在是2024年，此生目前为止唯一的一次集体写生之旅已经过去23年了，由于那是我第一次跨省旅行，所以印象比较深刻，依稀能在脑海中找到一些记忆的关键点。 2001年的秋天，太阳很大，穿着短袖依然会出很多汗，却比现在的秋天要凉快好几度。湖南省电影学校99届两个美术专业班（装潢设计、电影美术）的同学们开始了为期半个月左右的写生之旅，行程自长沙起至上海，再由上海至南京，再从南京到安徽的泾县、歙县，最后在黄山市搭乘火车回到了长沙。 为了节省开支，我买了一箱塑料袋装的方便面，似乎是白象牌的。">
+<link rel="canonical" href="https://tam.haywoo.com/post/xiesheng/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"2001年的写生之旅","url":"https://tam.haywoo.com/post/xiesheng/","description":"现在是2024年，此生目前为止唯一的一次集体写生之旅已经过去23年了，由于那是我第一次跨省旅行，所以印象比较深刻，依稀能在脑海中找到一些记忆的关键点。 2001年的秋天，太阳很大，穿着短袖依然会出很多汗，却比现在的秋天要凉快好几度。湖南省电影学校99届两个美术专业班（装潢设计、电影美术）的同学们开始了为期半个月左右的写生之旅，行程自长沙起至上海，再由上海至南京，再从南京到安徽的泾县、歙县，最后在黄山市搭乘火车回到了长沙。 为了节省开支，我买了一箱塑料袋装的方便面，似乎是白象牌的。","datePublished":"2024-04-23T14:33:39+08:00","dateModified":"2024-04-23T14:33:39+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/xiesheng/","name":"2001年的写生之旅","position":2}]}</script>
+<meta property="og:title" content="2001年的写生之旅">
+<meta property="og:description" content="现在是2024年，此生目前为止唯一的一次集体写生之旅已经过去23年了，由于那是我第一次跨省旅行，所以印象比较深刻，依稀能在脑海中找到一些记忆的关键点。 2001年的秋天，太阳很大，穿着短袖依然会出很多汗，却比现在的秋天要凉快好几度。湖南省电影学校99届两个美术专业班（装潢设计、电影美术）的同学们开始了为期半个月左右的写生之旅，行程自长沙起至上海，再由上海至南京，再从南京到安徽的泾县、歙县，最后在黄山市搭乘火车回到了长沙。 为了节省开支，我买了一箱塑料袋装的方便面，似乎是白象牌的。">
+<meta property="og:url" content="https://tam.haywoo.com/post/xiesheng/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/xiesheng/">
+<meta name="twitter:title" content="2001年的写生之旅">
+<meta name="twitter:description" content="现在是2024年，此生目前为止唯一的一次集体写生之旅已经过去23年了，由于那是我第一次跨省旅行，所以印象比较深刻，依稀能在脑海中找到一些记忆的关键点。 2001年的秋天，太阳很大，穿着短袖依然会出很多汗，却比现在的秋天要凉快好几度。湖南省电影学校99届两个美术专业班（装潢设计、电影美术）的同学们开始了为期半个月左右的写生之旅，行程自长沙起至上海，再由上海至南京，再从南京到安徽的泾县、歙县，最后在黄山市搭乘火车回到了长沙。 为了节省开支，我买了一箱塑料袋装的方便面，似乎是白象牌的。">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        2001年的写生之旅
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2024-04-23">
+                        2024-04-23
+                    </time> • 4 分钟阅读 •
+                        
+                            <a href="/tag/sui-bi/">
+                                随笔
+                            </a>
+                             · 
+                                    
+                            <a href="/tag/lv-xing/">
+                                旅行
+                            </a>
+                            
+                                    
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <p>现在是2024年，此生目前为止唯一的一次集体写生之旅已经过去23年了，由于那是我第一次跨省旅行，所以印象比较深刻，依稀能在脑海中找到一些记忆的关键点。</p>
+<p>2001年的秋天，太阳很大，穿着短袖依然会出很多汗，却比现在的秋天要凉快好几度。湖南省电影学校99届两个美术专业班（装潢设计、电影美术）的同学们开始了为期半个月左右的写生之旅，行程自长沙起至上海，再由上海至南京，再从南京到安徽的泾县、歙县，最后在黄山市搭乘火车回到了长沙。</p>
+<p>为了节省开支，我买了一箱塑料袋装的方便面，似乎是白象牌的。</p>
+<!-- more -->
+<h2 id="heading">上海</h2>
+<p>2001年，中国还没有高铁，从长沙坐火车到上海需要很长时间，似乎要在火车上吃三餐再睡上几觉才能到达。由于不是卧铺，我们轮流在绿皮火车的三联排座椅上躺下休息，那时候的时间似乎特别耐用，我们可以在车上做很多的事情。</p>
+<p>我们美术系的主任叫文术，他经常说“我们要痛苦，要从痛苦中创造艺术，要思考梵高的痛苦（梵高割掉了自己的一个耳朵，还给自己画了一张耳朵包裹起来的自画像。）……”鲁迅其实也是一个痛苦的人，写的文字让阅读的人毫不轻松，他的本意就是想唤醒更多的人。于是，鲁迅纪念馆是一定要去的，那个馆里面有什么？我忘记了，但在鲁迅纪念馆，我们全班同学拍了一张合影，那是人数最齐的合影。</p>
+<p>上海博物馆是我参观的第一个大型博物馆，里面有很多没见过的展品，具体是什么，我也是彻底地忘记了。</p>
+<p>上海南京路步行街和外滩是晚上去的，我们是真正的逛街，没有购物。人们一眼就能看出我们是游客，因为我们大多数人的胸前挂着一台装了胶卷的海鸥牌相机。</p>
+<p>那时候的长沙还没有什么高楼，我被上海随处可见的高楼大厦震撼到了，我以为那就是现代都市的样子。后来，我去了上海很多次，却无法将我对长沙的喜爱分去半点，上海太大了。</p>
+<h2 id="heading-1">南京</h2>
+<p>南京的早餐很便宜，两块钱吃得很好了。</p>
+<p>街道两旁最常见到的是法国梧桐树，叶子黄灿灿的，地上和树上都是黄色叶子的样子很漂亮，就是难得搞卫生。据说南京随处可见的法桐与蒋介石有关，因为宋美龄喜欢，于是他就在南京种满了法国梧桐树。还有另外一个说法，是关于孙中山先生的。法国梧桐树上的三球悬铃木与孙先生提倡的三民主义相吻合，于是时任南京政府的负责人就在南京大量地种植法国梧桐树。</p>
+<p>亲眼见到的南京长江大桥确实壮观，和想象中的样子无异，并且具有很强的时代特征。绘画作品中出现的总统府看起来和德国议会大厦一样高，可走到跟前，却觉得总统府低矮得很。</p>
+<p>前往中山陵的路上，树特别高大，挡住了太阳的灼热，体感甚是凉快。到中山陵脚下，就开始了暴晒模式，汗水止不住地流。台阶特别多，外国人也不少。</p>
+<h2 id="heading-2">黄山</h2>
+<p>我们班的带队老师是徐丹丹徐老师，她的先生张应中老师（1935-2016）也与我们一同随行写生。张老师是一个独立画家，在群众艺术馆工作，这次与他一同写生，让我近距离了解他的绘画理念和采风特点。</p>
+<p>黄山距离我们写生采风驻点大约2小时左右的路程，考虑到安全问题，黄山不在我们的采风写生行程内。不过，既然来到了黄山附近，只要有机会还是要去看看的。正好两位老师邀请我和王班长一同前往黄山，想都没想，我就答应了下来。</p>
+<p>那会儿，大家都在拿我和班长开玩笑。班长叫王汀兰，益阳市赫山区人。隔壁班的曾海波喜欢班长，总是时不时来班上找她，来回几次之后，班长私下请我假装是她的男朋友，帮她挡一挡。我觉得没什么问题，就答应了。从那以后，我是班长男朋友的事情就传开了。我应该也是有一些当真了，不过自始至终，我们都没有牵手过。这次与班长一起出行，又给了同学们更多的玩笑材料。</p>
+<p>由于时间有限，加上张老师年纪大了不方便步行登山，我们下午到达黄山脚下，在街上的民宿住了一晚。大清早，我们搭乘旅游中巴绕着盘山路向上前进。我是一个很容易晕车的人，闻不得柴油和汽油的味道，在车上，我很担心呕吐出丑。这一次，我的担忧纯属多余。我和班长坐在同一排的座位上，汽车在弯弯曲曲的山路上转弯时，班长的肩膀随着惯性靠向我，或者我的肩膀靠向了她。每一次不经意的碰触，让我有一种奇怪的感觉，我的心完全不在晕车上，似乎不晕车了。</p>
+<p>黄山最具特色的风景有三样：云海、奇松、怪石。其中，黄山的云海是令我印象最深的。至于奇松和怪石，我在上饶的三清山和张家界的森林公园可以与之相比。当我见到云海的那一刻，我瞬间理解了旧金山的金门大桥为什么会成为自杀胜地。金门大桥下常常雾气缭绕，与黄山云海呈现的景象类似，让人感到放松和解脱。</p>
+<p>此行唯一令我遗憾的是没有见到迎客松。从那以后，我再也没有去过黄山，所以至今还没有亲眼见到它。</p>
+<h2 id="heading-3">查济村</h2>
+<p>我和同学们在查济村住了至少一个星期以上，这是我们写生采风旅程中最重要的一个目的地。缺少它，那就是观光旅游，而不是写生采风。</p>
+<p>天刚刚放亮，同学们就陆陆续续地散布在查济村的各个角落。我们在小河边、石头桥旁、树下、老屋檐下三三两两席地而坐，旁边放着一个洗笔用的小水桶，里面放着大小不一的画笔。除了老师之外，没有人给自己带了画架。</p>
+<p>老师并没有固定我们的写生方式，有画速写的、有画水粉画的、有画水彩画的、还有画油画的。我们用各自的方法，从不同的角度在画面上呈现那个由石板路、小水沟、徽派建筑构成的小村落。尽管如此，我们的作品依然不能将整个查济村的景致表现出来。</p>
+<p>我不是画家，纯属画渣，除了绘画之外，我只记得从我脚边一梭而过的小蛇、那几颗触手可及的毛栗、还有那个戴着墨镜却止不住笑的原住民“傻子”。</p>
+<p>那个时候，我对色彩的认识是：红色就是红色、黄色就是黄色，我尽量使用颜料中已有的颜色，很少把看到的颜色在调色板上调和出来，然后用画笔描绘到水粉纸上。我没有意识到我所看到的世界是由绿色的叶子、米黄色的白墙、橙色的日光、淡蓝色的水汽……更多的颜色组合而成，后来我想明白了，除了对色彩缺少正确的认知之外，我当时的做法也许是在考虑节省颜料，希望可以减少一些绘画材料的开支。</p>
+<p>后来，我在查济村画的两幅作品被学校选中收藏，并且颁发了收藏证书。在我的画面里呈现的，是一个巷子和巷口走过的人，还有查济村最具标志性的石板路和小溪。</p>
+<p>写生结束离开查济村之后，我还剩下了好几包方便面没有吃完，我是实在不想吃泡面了。在这次写生之后，我闻到方便面的味道就有禁食的感觉。</p>
+<p>最后编辑：<code>2024年4月23日</code></p>
+
+                </div>
+
+            </article>
+
+
+            
+                
+	<div class="mod-post__foot">
+	 文章标签: 
+     
+        <a href="/tag/sui-bi/">随笔</a>, 
+     
+        <a href="/tag/lv-xing/">旅行</a>
+     
+     </br>
+	</div>
+
+                    
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/haipa/">一些后怕的事</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/drinkwithdad/">陪父亲喝酒</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

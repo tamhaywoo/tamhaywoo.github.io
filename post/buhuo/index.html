@@ -1,0 +1,552 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>四十略不惑 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="孔子《论语·为政》：“吾十有五而志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲，不逾矩。” 这个“不惑”，不同的人理解不一样。如果从孔子本人的立场来思考，就需要从他的作品中找到相关信息进行梳理。 孔子《论语·子罕》：“知者不惑，仁者不忧，勇者不惧。” 这一段的意思是：“有智慧的人不迷惑，具有仁德的人不忧虑，勇敢的人不畏惧。” 把这个“知者不惑”与“四十而不惑”放到一起，就能知道孔子想表达的意思是他40岁的时候是一个有智慧的人。 我今年四十岁，如果按照孔子的标准，应该是“不惑”之人，一个有智慧的人。然而，我自知并不智慧，甚至还很愚钝。只是经过四十年的生命体验，对一些事情略知一二而已。">
+<link rel="canonical" href="https://tam.haywoo.com/post/buhuo/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"四十略不惑","url":"https://tam.haywoo.com/post/buhuo/","description":"孔子《论语·为政》：“吾十有五而志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲，不逾矩。” 这个“不惑”，不同的人理解不一样。如果从孔子本人的立场来思考，就需要从他的作品中找到相关信息进行梳理。 孔子《论语·子罕》：“知者不惑，仁者不忧，勇者不惧。” 这一段的意思是：“有智慧的人不迷惑，具有仁德的人不忧虑，勇敢的人不畏惧。” 把这个“知者不惑”与“四十而不惑”放到一起，就能知道孔子想表达的意思是他40岁的时候是一个有智慧的人。 我今年四十岁，如果按照孔子的标准，应该是“不惑”之人，一个有智慧的人。然而，我自知并不智慧，甚至还很愚钝。只是经过四十年的生命体验，对一些事情略知一二而已。","datePublished":"2024-03-26T22:32:05+08:00","dateModified":"2026-05-01T20:04:20+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/buhuo/","name":"四十略不惑","position":2}]}</script>
+<meta property="og:title" content="四十略不惑">
+<meta property="og:description" content="孔子《论语·为政》：“吾十有五而志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲，不逾矩。” 这个“不惑”，不同的人理解不一样。如果从孔子本人的立场来思考，就需要从他的作品中找到相关信息进行梳理。 孔子《论语·子罕》：“知者不惑，仁者不忧，勇者不惧。” 这一段的意思是：“有智慧的人不迷惑，具有仁德的人不忧虑，勇敢的人不畏惧。” 把这个“知者不惑”与“四十而不惑”放到一起，就能知道孔子想表达的意思是他40岁的时候是一个有智慧的人。 我今年四十岁，如果按照孔子的标准，应该是“不惑”之人，一个有智慧的人。然而，我自知并不智慧，甚至还很愚钝。只是经过四十年的生命体验，对一些事情略知一二而已。">
+<meta property="og:url" content="https://tam.haywoo.com/post/buhuo/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/buhuo/">
+<meta name="twitter:title" content="四十略不惑">
+<meta name="twitter:description" content="孔子《论语·为政》：“吾十有五而志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲，不逾矩。” 这个“不惑”，不同的人理解不一样。如果从孔子本人的立场来思考，就需要从他的作品中找到相关信息进行梳理。 孔子《论语·子罕》：“知者不惑，仁者不忧，勇者不惧。” 这一段的意思是：“有智慧的人不迷惑，具有仁德的人不忧虑，勇敢的人不畏惧。” 把这个“知者不惑”与“四十而不惑”放到一起，就能知道孔子想表达的意思是他40岁的时候是一个有智慧的人。 我今年四十岁，如果按照孔子的标准，应该是“不惑”之人，一个有智慧的人。然而，我自知并不智慧，甚至还很愚钝。只是经过四十年的生命体验，对一些事情略知一二而已。">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        四十略不惑
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2024-03-26">
+                        2024-03-26
+                    </time> • 8 分钟阅读 •
+                        
+                            <a href="/tag/sui-bi/">
+                                随笔
+                            </a>
+                            
+                                    
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <blockquote>
+<p>孔子《论语·为政》：“吾十有五而志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲，不逾矩。”</p>
+</blockquote>
+<p>这个“不惑”，不同的人理解不一样。如果从孔子本人的立场来思考，就需要从他的作品中找到相关信息进行梳理。</p>
+<blockquote>
+<p>孔子《论语·子罕》：“知者不惑，仁者不忧，勇者不惧。”</p>
+</blockquote>
+<p>这一段的意思是：“有智慧的人不迷惑，具有仁德的人不忧虑，勇敢的人不畏惧。”</p>
+<p>把这个“知者不惑”与“四十而不惑”放到一起，就能知道孔子想表达的意思是他40岁的时候是一个有智慧的人。</p>
+<p>我今年四十岁，如果按照孔子的标准，应该是“不惑”之人，一个有智慧的人。然而，我自知并不智慧，甚至还很愚钝。只是经过四十年的生命体验，对一些事情略知一二而已。</p>
+<!-- more -->
+<p><strong>以下是我的一些体悟</strong>：</p>
+<hr />
+<h2 id="heading">有意识地觉察自己的情绪</h2>
+<p>我成长于一个有情绪的教育环境里，母亲是一个有要求的人，她会不断要求你做到她的标准；父亲言语不多，但有些时候也会动手，直到他认为祖先对他的教育方式不认同的时候才收手。父亲最后几次打人似乎有点玄乎，有一次教育哥哥的时候用手打人，结果手受伤了；还有一次用脚踢人，结果脚也受伤了。从那以后，他就说，可能是你们的祖宗不让我打。那就算了吧……</p>
+<p>父母曾经呈现的情绪和教育方式，我也有的。三十几年来，我一直习惯情绪地表达，而非表达情绪。</p>
+<p>/</p>
+<p>2024年的一个夜晚，我在公司加班后回到居住的小区。迎面走来三个人，最前面的女生似乎头上斜着缠了一个白色的布条，紧随她身后的应该是她的父亲，再后面跟着的人应该是她的母亲。她的父亲大声呵斥着什么，我没有听明白，也没有停留、继续向前走着。忽然听到女生在大声尖叫，特别的刺耳，也让人感到害怕，似乎承受着什么暴力一样。女孩的母亲没有多说什么，只是静静地跟在女孩父亲的身后，可能是准备随时制止危险行为的发生。</p>
+<p>到家后，我对女儿说：在你小的时候爸爸曾大声地训斥你、打过你，应该让你感到害怕了，对于我的行为，我向你道歉。以后应该不会再有打你的行为了。女儿不以为然，不知道是不是仍然对我保持着警惕。</p>
+<p>/</p>
+<p>刚开车的那两年，我看不惯路上的一切：别人开车快的时候，我说人家赶着去投胎；别人开车慢，我说人家应该下车散步；别人借道加塞的时候，我猛踩油门往前挤；别人黄灯的时候停车等待，我也忍不住嘟哝几句……</p>
+<p>坐在副驾驶的夫人总是在我来情绪的时候提醒我，要保持好的心态，安全第一。这种不断地叮嘱在一定程度上让我留意到自己的情绪变化，实时调整情绪。而真正让我在开车的时候保持良好心态，是在买入了途昂 X 之后，我倒是怕别人开车莽撞伤到我的车，能让就让。尽管有理的时候可以让对方支付维修费用，但我不想新车受损或出现需要维修的情况，所以我没必要抢道或应激开车。</p>
+<p>/</p>
+<p>我知道有情绪的状态对于解决问题没有什么帮助，对我的健康也没有帮助，保持平和的状态更有利于清晰地思考和沟通。</p>
+<ul>
+<li>情绪稳定的父母能够让孩子自如表达，不用在乎父母的情绪而被迫营业，自然也不会将情绪波动的状态学了过去。</li>
+<li>情绪稳定的管理者更能激发团队成员贡献不同的想法，可以减少恭维或表面服从的问题，也能避免一言堂导致的方向错误。</li>
+</ul>
+<p>时至今日，我依然还不能做到完全的情绪稳定与平和，但我会有意识地觉察自己的情绪，提醒自己快速调整状态，保持平和。</p>
+<h2 id="heading-1">喜欢美好事物而无须独占</h2>
+<p>我喜欢一切美好的事物：高山流水、花草树木、云彩星空等大自然的美；陶、瓷、绘画、雕塑、建筑、设计等艺术提炼的美；还有那些自信、青春、气质、天然的美丽女子……</p>
+<p>喜欢大自然和艺术没有任何压力，喜欢美丽女子也没有什么压力，这是因为我知道喜欢的分寸，喜欢不是据为己有。</p>
+<p>如果有“据为己有”的独占之心，那就是动了“贪欲”。“据为己有”实际上就是想要所谓的“归属权”或“独占权”，艺术品的归属权直接可以通过谈判和支付金钱就可以实现，而美丽女子则不是单独使用金钱就可以“据为己有”的，就算美丽女子看在金钱的面子上愿意让人接近，还需要超级多的时间和精力投入“用真心换真情”，就算如此，也不代表她会“独爱你一人”。若我同时拥有“财富、独宠、青春、健康、性爱”并与美丽女子共享，兴许可以获得红颜芳心。</p>
+<p>我自知家庭责任之所在，且无“财富、独宠、青春、健康、性爱”的优势，遇上美丽女子时毫无“独占”之贪欲，更不可能期待从中产生所谓的“爱情”。</p>
+<p>所以，当我遇见美好事物的时候，欣赏、赞美以及体验当下拥有的感觉足矣。</p>
+<h2 id="heading-2">失败和复盘是成功的过程</h2>
+<p>我一度特别惧怕失败，对于一件事情的成功或者失败特别在意。究其原因，是我小时候非常在意父母和老师的评价，希望自己在父母和老师的面前，是一个好孩子或是一个好学生。所以，如果我已经保持了某种优势，我就害怕失去这种优势而不会向着更好的方向前进；如果我评估某件事情可能做不成，就会选择放弃或者绕道而行。</p>
+<p>/</p>
+<p>这种情况直到30多岁与朋友一起创业之后才有一些改观，阿里文化中的“苛求过程、释怀结果”足以表达现在的我在面对“失败”时的态度。为什么呢？正因为我太在意结果，导致我选择逃避；如果对于任何的结果都接受，但在过程中极致地去做到更好，这个过程是能够成长很多能力的。不管所谓好结果还是不好的结果，都只是一个呈现而已，真正成长人能力的不是结果，而是经历的过程。</p>
+<p>还有一句话叫做“尽人事，听天命”。貌似很多人都会将这一观点视为消极，放弃的意思。其实这句话和前面那句“苛求过程、释怀结果”有相通之处，重要的不是“听天命”，而是“尽人事”。“尽人事”就是去做我们可以控制的事，将事情做到极致，尽我们的洪荒之力；“听天命”的意思是将人事尽了，至于结果如何，就不必患得患失，接受一切因我们“尽人事”所带来的结果。</p>
+<p>/</p>
+<p>我反思自己在面对“失败”的心态变化源自于内部和外部两种维度的力量：</p>
+<p>内部的力量：通过20多年的工作，已经积累了一些让家人过得还行的资本，不会因为失败几次就爬不起来，不用担心失败给家人带来风险。</p>
+<p>外部的启示：埃隆·马斯克为“失败”的火箭发射鼓掌，在不断地“失败”之后终于成功回收了火箭，将火箭发射成本降低至行业最低水平，进而在火箭发射市场上取得了领先地位。另外，还有其他社会上极致苛求过程、释怀结果的案例。</p>
+<p>从本质上来看，我已经可以承受一定程度的失败，也参与过不同的失败投资项目，每次失败之后都能够让我从当中有所收获，并且能让我更接近我想要去的那个方向。</p>
+<h2 id="heading-3">健康和平安比什么都重要</h2>
+<p>有这么几件事情，让我对于生命、健康和平安的理解发生了变化。</p>
+<p>2001年9月11日，美国世界贸易组织大厦被飞机撞倒的时候，我算是个十足的愤青，对于那么多逝去的生命拍手称快，现在回想起来深感惭愧。</p>
+<p>2008年5月12日，四川省的汶川县发生了8级大地震，我和夫人在吃饭的时候不能坐在电视机面前，因为电视里面播出的画面让我们哽咽难受。</p>
+<p>2014年3月8日，马来西亚MH370次航班莫名消失，我虽没有看到坠机的悲惨画面，但对于这种不知死活、不知所在何处的情况深感不安。</p>
+<p>2019年8月13日，突发脑溢血在ICU抢救了8天依然无意识的岳父，等到了从外地赶来看望他的三弟。没过多久，我和他的另一个女婿坐在岳父的床前，亲眼见他紧闭双眼、张大嘴巴用力吸入他在人间的最后一口气，接着无意识地从躺下的姿态抬起了头，然后长长地吐出最后一口气，再也没有了呼吸。</p>
+<p>2024年4月5日，夫人的小舅妈因心梗而突然离世。我和夫人4月2日还在她的家里做客，吃了她亲手做的饭菜。谁知道那竟然是见她的最后一面呢？早知道是这样，我那天就应该多吃一点饭菜。</p>
+<p>岳父的去世，是我第一次面对死亡。从那以后，我给自己买了人寿保险，总额度覆盖了当时还没有还款完毕的房贷金额；还给家人买了意外保险和医疗保险。下意识地减少了在工作上的时间投入，把更多的时间用来陪伴家人。大约1年之后，我继续增加了在工作上的时间投入，因为时间的陪伴不足以给家人保障。我尽可能地平衡获取更多的收入与给家人的陪伴。</p>
+<p>而<strong>家人的健康和平安</strong>是我生日或佛前许愿的首要心愿，至今未曾改变。</p>
+<p>在生死面前，什么都是小事。</p>
+<h2 id="heading-4">事物的本质比现象更重要</h2>
+<p>我不再轻易地追随主流新闻、热点舆论，不再因为发表意见的人的身份和地位而无脑相信，哪怕是身边人转发的内容，不因对方的地位或权威而盲目轻信，不在意的事情穿耳过，在意的事情亲自查验确认。</p>
+<p>小时候判断好人、坏人、好事、坏事特别直接，就是简单的非黑即白。现在看人或看事，不会因为某一个点、某一件事情或某一个场景去轻易定性并贴上绝对化的标签。我会思考一个人做某件事情是基于什么样的场景、什么样的出发点，一个事情发生的背后有怎样的影响因素，从正反和尽可能多的维度去思考。</p>
+<p>老板狠狠地指出一个人的成长点，逼着他付出特别多的时间精力去工作，站在员工的角度来看，是老板在剥削他，也许老板真的是真么想，希望员工把事情做好，顺便赚点钱。这样的老板是坏人吗？</p>
+<p>同样还是说老板和员工的事情，公司老板不管事，也不会指出员工需要成长的地方，员工每天做的事情没有什么新的思考和成长，然后经过两三年之后，公司倒闭了，员工的能力比刚进公司的时候稍微好一点。这样的老板是个好人吗？</p>
+<p>如果说老板和员工可能天生存在一定的阶级对立和剥削的关系，那么可以尝试把这里面的那个老板角色换成主管，再想想是不是一回事？</p>
+<p>那么，我是一个好人吗？我是一个坏人吗？我觉得我既不是好人，也不是坏人，我只是一个人而已。</p>
+<h2 id="heading-5">为自己而活的人生更精彩</h2>
+<p><em>父母一生扎根于农村</em>，虽改革开放时期在云南、广西两地搞了一些基建相关的工作，但往后的时间就没有外出务工了。</p>
+<p>父母深知农村的生活太过艰辛，一心希望我和哥哥兄弟二人能够走出农村，去大城市生活。我自然知道农村的生活怎样，毕竟天天看到父母“日未出而出、日已落方归”的工作状态，所以在选择“继续读3年高中去考大学”还是“补习绘画去考艺校”的时候，我选择了考艺校，最终来到了省会长沙。</p>
+<p>那时，我立志18岁以后不再需要父母的资助，24岁立业（<em>未明确所立之业是什么业</em>）。在工作和生活中遇到困难的时候，我的力量来源就是父母的期待，他们期待我走出农村，立足城市。</p>
+<p>/</p>
+<p>谈恋爱之后，我总想早点结婚。每次提及结婚的事情时，女友总是不语或认为未到时机。为了能够让当时的女友也是现在的夫人对我有信心，我决定在长沙买房，定居长沙。</p>
+<p>于是，在谈恋爱3年之后，我向同事借钱，把付款前会发到手的工资也计算在内，与她一起凑了67833元首付款，买下了人生中的第一套房。</p>
+<p>接下来的三年时间，我不敢有其他想法，只想稳定一点，将所买房和装修时借的钱早日还清。终于，在24岁的时候，我还清了房贷，拿到了抵押在银行里面的房产证。</p>
+<p>再往后的时间里，我过得比较消极，我觉得自己过得很紧张，一直都没有松下来过。我的内心总是问自己：如果只有我一个人过日子，是不是就不需要这么努力了？</p>
+<p>这个时候的我，应该是为自己的小家而活。</p>
+<p>/</p>
+<p>我接受当下的自己，并感恩当下所拥有的一切：父母健在、儿女双全、夫妻和睦、家人健康平安、居有定所、行有私车、衣食无忧……尽管当前的生活没有什么可担忧的地方，但我还不能放松，因为孩子的教育、父母的健康、夫妻的养老都需要开销，我还没有完全准备好。</p>
+<p>现在，我不认为我为家人而活，因为让家人过得更好是我自己期待和想要的，我所做的一切是为了满足我自己的需求。</p>
+<p>从被迫接受到主动接受，我的思维转变来自于夫人，那是关于我对父母情感需要的一次对话。我想让夫人和孩子们随我一同回我的家乡看望父母，夫人对我说：你回家看望父母，那是你基于你对父母的爱和父母对你的爱，这是你自己的需要。如果你想回家看望父母，你可以决定自己去或不去，不要因为我和孩子们不去而影响你自己的决定。</p>
+<p><strong>现在的我为自己而活</strong>。</p>
+<hr />
+<p>最后更新：2025 年 11 月 28 日</p>
+
+                </div>
+
+            </article>
+
+
+            
+                
+	<div class="mod-post__foot">
+	 文章标签: 
+     
+        <a href="/tag/sui-bi/">随笔</a>
+     
+     </br>
+	</div>
+
+                    
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/drinkwithdad/">陪父亲喝酒</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/hearth-2023/">漫长的咳嗽</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

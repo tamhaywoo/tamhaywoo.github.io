@@ -1,0 +1,636 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>2023年基金投资情况 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="2023年投资目标 综合净值：1.10 收益率：+20% 最近几年综合净值 年度 基金综合净值 年收益率 累计收益率 2020年 1.060725 6.07% 6.07% 2021年 1.005328 -5.54% 0.53% 2022年 0.910165 -9.52% -8.98% 2023年 0.812464 -9.77% -18.75% 在统计年收益率的时候，我发现腾讯理财通计算出来的收益率与我的数据相差特别大，究其原因是因为腾讯理财通采用了资金加权算法MWRR计算收益率，特此备注。 2023年各月净值 月份 基金综合净值 收益率 累计收益率 1月 0.974328 6.42% -2.57% 2月 0.958720 -1.56% -4.13% 3月 0.961207 0.25% -3.88% 4月 0.944352 -1.69% -5.56% 5月 0.897155 -4.72% -10.28% 6月 0.908189 1.10% -9.18% 7月 0.909097 0.09% -9.09% 8月 0.871503 -3.76% -12.85% 9月 0.856593 -1.49% -14.34% 10月 0.838235 -1.84% -16.18% 11月 0.833649 -0.46% -16.64% 12月 0.812464 -2.12% -18.75%">
+<link rel="canonical" href="https://tam.haywoo.com/post/fund-2023/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"2023年基金投资情况","url":"https://tam.haywoo.com/post/fund-2023/","description":"2023年投资目标 综合净值：1.10 收益率：+20% 最近几年综合净值 年度 基金综合净值 年收益率 累计收益率 2020年 1.060725 6.07% 6.07% 2021年 1.005328 -5.54% 0.53% 2022年 0.910165 -9.52% -8.98% 2023年 0.812464 -9.77% -18.75% 在统计年收益率的时候，我发现腾讯理财通计算出来的收益率与我的数据相差特别大，究其原因是因为腾讯理财通采用了资金加权算法MWRR计算收益率，特此备注。 2023年各月净值 月份 基金综合净值 收益率 累计收益率 1月 0.974328 6.42% -2.57% 2月 0.958720 -1.56% -4.13% 3月 0.961207 0.25% -3.88% 4月 0.944352 -1.69% -5.56% 5月 0.897155 -4.72% -10.28% 6月 0.908189 1.10% -9.18% 7月 0.909097 0.09% -9.09% 8月 0.871503 -3.76% -12.85% 9月 0.856593 -1.49% -14.34% 10月 0.838235 -1.84% -16.18% 11月 0.833649 -0.46% -16.64% 12月 0.812464 -2.12% -18.75%","datePublished":"2023-01-05T20:45:50+08:00","dateModified":"2023-01-05T20:45:50+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/fund-2023/","name":"2023年基金投资情况","position":2}]}</script>
+<meta property="og:title" content="2023年基金投资情况">
+<meta property="og:description" content="2023年投资目标 综合净值：1.10 收益率：+20% 最近几年综合净值 年度 基金综合净值 年收益率 累计收益率 2020年 1.060725 6.07% 6.07% 2021年 1.005328 -5.54% 0.53% 2022年 0.910165 -9.52% -8.98% 2023年 0.812464 -9.77% -18.75% 在统计年收益率的时候，我发现腾讯理财通计算出来的收益率与我的数据相差特别大，究其原因是因为腾讯理财通采用了资金加权算法MWRR计算收益率，特此备注。 2023年各月净值 月份 基金综合净值 收益率 累计收益率 1月 0.974328 6.42% -2.57% 2月 0.958720 -1.56% -4.13% 3月 0.961207 0.25% -3.88% 4月 0.944352 -1.69% -5.56% 5月 0.897155 -4.72% -10.28% 6月 0.908189 1.10% -9.18% 7月 0.909097 0.09% -9.09% 8月 0.871503 -3.76% -12.85% 9月 0.856593 -1.49% -14.34% 10月 0.838235 -1.84% -16.18% 11月 0.833649 -0.46% -16.64% 12月 0.812464 -2.12% -18.75%">
+<meta property="og:url" content="https://tam.haywoo.com/post/fund-2023/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/fund-2023/">
+<meta name="twitter:title" content="2023年基金投资情况">
+<meta name="twitter:description" content="2023年投资目标 综合净值：1.10 收益率：+20% 最近几年综合净值 年度 基金综合净值 年收益率 累计收益率 2020年 1.060725 6.07% 6.07% 2021年 1.005328 -5.54% 0.53% 2022年 0.910165 -9.52% -8.98% 2023年 0.812464 -9.77% -18.75% 在统计年收益率的时候，我发现腾讯理财通计算出来的收益率与我的数据相差特别大，究其原因是因为腾讯理财通采用了资金加权算法MWRR计算收益率，特此备注。 2023年各月净值 月份 基金综合净值 收益率 累计收益率 1月 0.974328 6.42% -2.57% 2月 0.958720 -1.56% -4.13% 3月 0.961207 0.25% -3.88% 4月 0.944352 -1.69% -5.56% 5月 0.897155 -4.72% -10.28% 6月 0.908189 1.10% -9.18% 7月 0.909097 0.09% -9.09% 8月 0.871503 -3.76% -12.85% 9月 0.856593 -1.49% -14.34% 10月 0.838235 -1.84% -16.18% 11月 0.833649 -0.46% -16.64% 12月 0.812464 -2.12% -18.75%">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        2023年基金投资情况
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2023-01-05">
+                        2023-01-05
+                    </time> • 4 分钟阅读 •
+                        
+                            <a href="/tag/tou-zi/">
+                                投资
+                            </a>
+                            
+                                    
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <h2 id="2023">2023年投资目标</h2>
+<ul>
+<li><strong>综合净值：1.10</strong></li>
+<li><strong>收益率：+20%</strong></li>
+</ul>
+<h2 id="heading">最近几年综合净值</h2>
+<table>
+<thead>
+<tr>
+<th align="center">年度</th>
+<th align="right">基金综合净值</th>
+<th align="right">年收益率</th>
+<th align="right">累计收益率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">2020年</td>
+<td align="right">1.060725</td>
+<td align="right">6.07%</td>
+<td align="right">6.07%</td>
+</tr>
+<tr>
+<td align="center">2021年</td>
+<td align="right">1.005328</td>
+<td align="right">-5.54%</td>
+<td align="right">0.53%</td>
+</tr>
+<tr>
+<td align="center">2022年</td>
+<td align="right">0.910165</td>
+<td align="right">-9.52%</td>
+<td align="right">-8.98%</td>
+</tr>
+<tr>
+<td align="center">2023年</td>
+<td align="right">0.812464</td>
+<td align="right">-9.77%</td>
+<td align="right">-18.75%</td>
+</tr>
+</tbody>
+</table>
+<p>在统计年收益率的时候，我发现腾讯理财通计算出来的收益率与我的数据相差特别大，究其原因是因为腾讯理财通采用了资金加权算法MWRR计算收益率，特此备注。</p>
+<h2 id="2023-1">2023年各月净值</h2>
+<table>
+<thead>
+<tr>
+<th align="center">月份</th>
+<th align="right">基金综合净值</th>
+<th align="right">收益率</th>
+<th align="right">累计收益率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1月</td>
+<td align="right">0.974328</td>
+<td align="right">6.42%</td>
+<td align="right">-2.57%</td>
+</tr>
+<tr>
+<td align="center">2月</td>
+<td align="right">0.958720</td>
+<td align="right">-1.56%</td>
+<td align="right">-4.13%</td>
+</tr>
+<tr>
+<td align="center">3月</td>
+<td align="right">0.961207</td>
+<td align="right">0.25%</td>
+<td align="right">-3.88%</td>
+</tr>
+<tr>
+<td align="center">4月</td>
+<td align="right">0.944352</td>
+<td align="right">-1.69%</td>
+<td align="right">-5.56%</td>
+</tr>
+<tr>
+<td align="center">5月</td>
+<td align="right">0.897155</td>
+<td align="right">-4.72%</td>
+<td align="right">-10.28%</td>
+</tr>
+<tr>
+<td align="center">6月</td>
+<td align="right">0.908189</td>
+<td align="right">1.10%</td>
+<td align="right">-9.18%</td>
+</tr>
+<tr>
+<td align="center">7月</td>
+<td align="right">0.909097</td>
+<td align="right">0.09%</td>
+<td align="right">-9.09%</td>
+</tr>
+<tr>
+<td align="center">8月</td>
+<td align="right">0.871503</td>
+<td align="right">-3.76%</td>
+<td align="right">-12.85%</td>
+</tr>
+<tr>
+<td align="center">9月</td>
+<td align="right">0.856593</td>
+<td align="right">-1.49%</td>
+<td align="right">-14.34%</td>
+</tr>
+<tr>
+<td align="center">10月</td>
+<td align="right">0.838235</td>
+<td align="right">-1.84%</td>
+<td align="right">-16.18%</td>
+</tr>
+<tr>
+<td align="center">11月</td>
+<td align="right">0.833649</td>
+<td align="right">-0.46%</td>
+<td align="right">-16.64%</td>
+</tr>
+<tr>
+<td align="center">12月</td>
+<td align="right">0.812464</td>
+<td align="right">-2.12%</td>
+<td align="right">-18.75%</td>
+</tr>
+</tbody>
+</table>
+<!-- more -->
+<h2 id="heading-1">操作原则</h2>
+<ul>
+<li>不满仓操作，极限八成资金；</li>
+<li>不追高入场，只买低位筹码；</li>
+<li>不割肉离场，保持长期主义。</li>
+</ul>
+<h2 id="heading-2">持仓比例</h2>
+<p>根据<a href="https://tam.haywoo.com/post/fund-2022/"> <strong>2022年基金投资总结及优化的思考</strong> </a>，2023年在基金投资项目上不再额外追加资金，所有操作都必须在当前持仓的资金范畴内进行。意味着2023年年初的基金将在满仓状态下进行操作，首先要做的是在基金获利的前提下降低持仓比例，以便符合自己的基金操作核心原则。手中有粮，心中不慌。</p>
+<ul>
+<li>2023年4月17日更新：当前持仓率已经优化至 85.72%</li>
+<li>2023年4月22日更新：由于已经提取了一部分资金，当前持仓比例按100%计算，重启持仓占比的优化之路。</li>
+<li>2023年10月1日更新：由于新增流动资金，当前持仓率为80%左右</li>
+</ul>
+<h2 id="1020">1020模型</h2>
+<p>在上述核心原则的基础上，按照 <a href="https://tam.haywoo.com/post/fund-rich-1020/">基金投资1020模型</a> 进行操作。</p>
+<p><del>简单讲，就是以收益率正负 10% 为基数进行操作，如果大环境不好，再将触发条件从收益率 10% 调整为 5% - 10% 之间也可以，只是买入和卖出基数对应调整 X2 就行，但是买入和卖出操作的手续费成本也会相应增加。</del></p>
+<ul>
+<li>2023年4月17日更新：由于基金初始的收益率很低，本规则不适用当前现状。实际的操作逻辑为：<strong>在基金持仓率 &lt;80% 之前，只要持有的基金不亏损即可卖出，以便增加灵活调用的资金。</strong></li>
+</ul>
+<h2 id="heading-3">操作细节</h2>
+<p>在这样的行情下保持满仓状态，没什么操作空间。</p>
+<p><del>以前每天晚上会把当天的基金净值变化情况进行复盘，甚至会查看基金变化较大的时候是因为其持仓的哪些股票引起的。只是在2022年这种一路向下的行情下，为了让自己心情好一点，我不再每天看数据，更不可能每天晚上复盘一遍，可以说是已经在破罐子破摔了。</del></p>
+<p><del>2023年要坚持每天晚上记录基金净值变化数据，及时规划次日操作思路，避免在交易时间节点期间激情、不理性操作。每天根据所有持有基金的持仓收益率情况进行手动排序，能够清晰了解到基金的阶段变化情况，到底如何操作，心中自然更有底气。</del></p>
+<ul>
+<li>2023年4月17日更新：由于找到了获取基金净值的Python代码，不需要每天手动记录数据，只要点几个按钮就可以了。</li>
+<li>2023年8月2日更新：当前大环境下，没有一个基金持仓收益率&gt;0，且持仓比例100%，所以压根就不用看，因为不需要买卖交易操作嘛。</li>
+</ul>
+<p>卖得最精彩的是“易方达新兴成长混合”和“汇添富中证主要消费ETF联接A”。“易方达新兴成长混合”在4月7日全部清空之后就开始下跌，当时考虑的就是人工智能炒作太火了，我觉得应该退出了；卖出“汇添富中证主要消费ETF联接A”是获得了正向收益的，卖出理由是考虑消费类的基金有一定的周期性，节假日过后一般会下跌。</p>
+<p>没把握好卖点的是“南方中证500信息联接C”和“万家行业优选”。卖出“南方中证500信息联接C”的操作让我少获利 12%，而卖出“万家行业优选”的操作让我少获利约 5% 。这两个基金都是基于人工智能和计算机概念火了起来，由于当时考虑卖出基金去买房，所以只要有正收益的都卖出了。</p>
+<p>至于卖出“广发多因子混合”的操作，纯属降低持仓率。</p>
+<p>回顾 <a href="https://tamhaywoo.github.io/post/fund-2022/">2022年基金投资小结</a> 中关于问题2的后续处理方式，与当前实际情况不同，原计划是保留收益率最好的3支基金并陆续加仓、其他6支基金不再补仓。实际操作刚好相反，还是没有按照规则操作。</p>
+<p><del>由于购房计划，所持基金全部清仓……</del><code>暂时搁置</code>，后采取按揭贷款的方式购房，没有变卖基金。</p>
+<hr />
+<p>最后更新：<code>2023年12月31日</code></p>
+
+                </div>
+
+            </article>
+
+
+            
+                
+	<div class="mod-post__foot">
+	 文章标签: 
+     
+        <a href="/tag/tou-zi/">投资</a>
+     
+     </br>
+	</div>
+
+                    
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/fund-rich-1020/">基金投资1020模型</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/fund-2022/">2022年基金投资情况</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

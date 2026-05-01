@@ -1,0 +1,582 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="我会忘记一切，包括我自己。">
+<link rel="canonical" href="https://tam.haywoo.com/page/3/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"百川随笔","url":"https://tam.haywoo.com","description":"我会忘记一切，包括我自己。","potentialAction":{"@type":"SearchAction","query-input":"required name=search_term_string","target":"https://tam.haywoo.com/search?q={search_term_string}"}}</script>
+<meta property="og:title" content="百川随笔">
+<meta property="og:description" content="我会忘记一切，包括我自己。">
+<meta property="og:url" content="https://tam.haywoo.com/page/3/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/page/3/">
+<meta name="twitter:title" content="百川随笔">
+<meta name="twitter:description" content="我会忘记一切，包括我自己。">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+        
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "百川随笔",
+      "description": "我会忘记一切，包括我自己。",
+      "keywords": "",
+      "url": "https://tam.haywoo.com"
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "2017年随笔合集",
+      "description": "2017-01-29 2017年看完的第一本书：朕知道了 · 雍正 田文镜无条件地实施雍正主持的全国范围内的改革，在河南得罪了河南的富户与天下的读书人以及雍正的嫡系，在山东得罪了一千四百九十七名山东籍举人、监生、秀才、贡生等士绅。 在雍正面前，雍正永远在正确的一面，而田文镜的生前死后，却永远为雍正背起苛政、铁腕、酷吏的骂名。 2017-02-24 如果想知道...",
+      "keywords": "随笔",
+      "url": "/post/log-2017/",
+      
+      "published": "2017-10-06T16:41:41+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "让员工重新信任公司",
+      "description": "从2016年7月份开始，我和黄志峰、任伟煌、任杏之、罗武等其他艾特数码的核心老员工一起以“艾上影像”的品牌名称在长沙向韶村工区经营数码摄影相关产品的生产业务，直到2017年1月份，我因参与BOSS提出的股份制改革之事未达成共识而自愿退出，前后经历大约7个月的时间。 数码影像产品的生产工作不好做。公司需要提前垫付费用采购生产原料；采购量也是个问题，采购少了没有...",
+      "keywords": "经营",
+      "url": "/post/trust2016/",
+      
+      "published": "2017-01-07T09:55:39+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "2016年随笔合集",
+      "description": "2016-02-07 细细回想她说的那句话：“当鞭炮想起的时候，你抱紧我可好？”竟然睡意全无。 2016-02-08 于幸福而言，快乐是一件唾手可得的小事。修平常心，成平和态。无大喜，亦无大悲。 无畏世俗念，做最真实的自己。 2016-02-23 没有雨伞的人，不必着急奔跑，可以安安静静地赏雨。 2016-03-18 两三年前的一个晚上，和车队的同事喝酒，晕...",
+      "keywords": "随笔",
+      "url": "/post/log-2016/",
+      
+      "published": "2016-10-05T16:40:12+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "2015年随笔合集",
+      "description": "2015-03-27 不多言，自意会。分享快乐、分享知识。 ——与吴长服在798的舞台上席地而坐，两人面前各有二两白酒…… 2015-03-29 所谓幼稚，就是既憋不住尿，又憋不住话与情绪；所谓不够成熟，就是只能憋得住尿，却憋不住话与情绪；所谓成熟，就是既憋得住尿，又憋得住话与情绪；所谓衰老，就是憋得住话与情绪，却憋不住尿了。 2015-04-19 也许……...",
+      "keywords": "随笔",
+      "url": "/post/log-2015/",
+      
+      "published": "2015-05-14T16:37:24+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "2014年随笔合集",
+      "description": "2014-02-02 许昌的胖东来生活广场在春节期间居然休假，从年三十到初五都不上班，作为一个处于销售旺季的综合卖场来说，很不容易。更不容易的是胖东来对顾客的真正关注，今天没进去参观都能感受得到！ 2014-03-05 我相信努力的价值，奋斗的意义，相信天助自助者，相信坚持即便给不了结果，也一定会有精彩的过程。把时间腾出来做真正有意义的事情，做真正会改变自身...",
+      "keywords": "随笔",
+      "url": "/post/log-2014/",
+      
+      "published": "2014-10-01T16:33:48+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "2013年随笔合集",
+      "description": "2013-01-02 我又多了一个技能——监控设备安装调试！ 现在在办公室就可以看到全店各处的动态，嘿嘿…大家安全了！免得大家被小偷欺负还找不着北！ 2013-02-26 云飞，再见！ 2013-04-19 通过身边的事例能了解未曾体会的感受，让我在以后做决定时考虑他人更多一点——不鲁莽、不急躁、多沟通、多理解。 2013-05-07 既然老天暴雨倾盆&amp;he...",
+      "keywords": "随笔",
+      "url": "/post/log-2013/",
+      
+      "published": "2013-10-10T16:49:13+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "2012年随笔合集",
+      "description": "2012-12-16 八年前的同事韦书圣今日大喜，算是多年相恋修成正果的类型。而众多宾客之中，难以发现八年前的那拨同事，不免有些伤感。通讯日益发达的当今，远距离的亲昵缺少面对面的实意！ 2012-12-20 前往珠海，进行为期3天的学习《李太林KSF绩效管理》。 2012-09-13 我读不懂果果的动作是什么含义，不知道她想要什么，准备去做什么，我以为她是无...",
+      "keywords": "随笔",
+      "url": "/post/log-2012/",
+      
+      "published": "2012-08-01T16:45:30+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "2011年随笔合集",
+      "description": "2011-11-10 湖南艺术职业学院其实是由湖南省艺术学校和湖南省电影学校合并而成，但湖南省艺术学校和湖南省电影学校也各自有很漫长的成长历程。湖南省艺术学校最初成立于1951年，当时也是叫湖南省艺术学校，后来在1953年的时候改为湘剧小演员训练班，在1957年时改为湖南省戏曲学校，1959年为湖南艺术学院，1961年为湖南省戏曲艺术学校，1964年为湖南省...",
+      "keywords": "随笔",
+      "url": "/post/log-2011/",
+      
+      "published": "2011-11-02T18:18:40+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "2010年随笔合集",
+      "description": "2010-12-31 这一年，从海宇到刺猬，从岳阳到长沙，从店面到网络，从被围观到隐匿… …诸多复杂和简单的问题，就像这张图一样。 QQ空间关闭了，域名停掉了；微博不发了，签名不写了；GPRS不要了，139邮箱够用了；婚宴办了，八年来终于可以陪爸爸过生日了；驾校报了，手机号码换了，岗位又要换了；股票亏了，要赚奶粉钱了。 永别了！公元2010年！因为，2011...",
+      "keywords": "随笔",
+      "url": "/post/log-2010/",
+      
+      "published": "2010-10-14T17:40:57+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "2009年随笔合集",
+      "description": "2009-02-02 我已经有很久没有回家看望自己的父母，非常想念她们。所以公司刚宣布放假，我就立马飞奔汽车站，买好了返乡的车票。由于锦涛哥这几年带领团队精诚合作，城市及乡村的道路建设也随之飞速接轨，可以看到主干马路的各村口交叉部分都是水泥硬化进村，以前可都是些黄泥或者水洼。正因如此，返乡的旅程不再如以前那般辛苦，只需转乘三两趟车就到家了。要是以前，那可是至...",
+      "keywords": "随笔",
+      "url": "/post/log-2009/",
+      
+      "published": "2009-10-01T00:46:24+08:00",
+      "author": ""
+    }
+    
+  ]
+}
+</script>
+
+            <script>
+                (function () {
+                    const getSystemTheme = () => {
+                        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            return 'dark';
+                        }
+                        return 'light';
+                    };
+
+                    const configDefault = 'light';
+                    const savedTheme = localStorage.getItem('theme');
+                    const theme = savedTheme || configDefault || getSystemTheme();
+
+                    if (theme === 'dark') {
+                        document.body.classList.add('dark-theme');
+                    }
+
+                    if (!savedTheme) {
+                        localStorage.setItem('theme', theme);
+                    }
+                })();
+            </script>
+            <div class="wrapper">
+                <div class="main">
+                    <div class="mod-index__logo">
+                        <a href="/">
+                            
+                                
+                                    <img class="mod-index__logo" alt="avatar" src="/images/theme/me.jpg">
+                                    
+                        </a>
+                    </div>
+
+                    <div class="container">
+                        <div class="intro">
+                            <h1 class="nickname">
+                                百川随笔
+                            </h1>
+                            <div class="description">
+                                <p>我会忘记一切，包括我自己。</p>
+
+                            </div>
+
+                            <div class="zuobiao">
+                                <i class="ico_map"></i>
+                                中国 · 长沙
+                                    <span style="margin-left: 30px">
+                                        <!-- Sun (Light Mode) -->
+                                        <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun"
+                                            aria-label="Switch to dark mode">
+                                            <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24"
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"
+                                                    fill="currentColor"></path>
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z"
+                                                    fill="currentColor"></path>
+                                            </svg>
+                                        </button>
+                                        <!-- Moon (Dark Mode) -->
+                                        <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon"
+                                            aria-label="Switch to light mode">
+                                            <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24"
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z"
+                                                    fill="currentColor"></path>
+                                            </svg>
+                                        </button>
+                                    </span>
+                            </div><br />
+
+
+                            <div>
+                                <p>" 他想，我的人生之路确实古怪曲折。少年时，我只知神明和献祭。青年时，我只知苦修、思考和禅定；我渴求梵天，崇拜永恒的阿特曼。壮年时，我追随忏悔者生活在林中，漠视肉体，忍受酷暑严寒和饥饿。之后我又奇迹般地与佛陀和他至高的法义相遇，关乎圆一世界的真理如血液般在我体内奔涌，但我又不得不告别佛陀及其伟大学说。 "</p>
+                                <p style="margin-left: 8rem;font-size: 8pt;">—— 《悉达多》
+                                </p>
+                            </div><br />
+
+
+                            <div class="menu links">
+                                
+                                    
+                                            <a class="menu-item" href="/">
+                                                首页
+                                            </a>
+                                            
+                                     · 
+                                            <a class="menu-item" href="/post">
+                                                博客
+                                            </a>
+                                            
+                                     · 
+                                            <a class="menu-item" href="/memos">
+                                                闪念
+                                            </a>
+                                            
+                                     · 
+                                            <a class="menu-item" href="/archives">
+                                                归档
+                                            </a>
+                                            
+                                     · 
+                                            <a class="menu-item" href="/tags">
+                                                标签
+                                            </a>
+                                            
+                                     · 
+                                            <a class="menu-item" href="/links">
+                                                友链
+                                            </a>
+                                            
+                                     · 
+                                            <a class="menu-item" href="/post/about">
+                                                关于
+                                            </a>
+                                            
+                            </div>
+
+                            <div class="social-container">
+                                
+                                    
+                                            
+                                    
+                                            
+                                    
+                                            
+                                    
+                                            
+                                    
+                                            
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <footer id="footer" class="index_footer">
+                        
+                    </footer>
+
+                </div>
+
+            </div>
+
+            
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

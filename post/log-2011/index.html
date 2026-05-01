@@ -1,0 +1,533 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>2011年随笔合集 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="2011-11-10 湖南艺术职业学院其实是由湖南省艺术学校和湖南省电影学校合并而成，但湖南省艺术学校和湖南省电影学校也各自有很漫长的成长历程。湖南省艺术学校最初成立于1951年，当时也是叫湖南省艺术学校，后来在1953年的时候改为湘剧小演员训练班，在1957年时改为湖南省戏曲学校，1959年为湖南艺术学院，1961年为湖南省戏曲艺术学校，1964年为湖南省戏剧学校，1976年复名为湖南省艺术学校。 湖南省电影学校最初成立于1979年，当时叫湖南省电影技工学校，1985年改为湖南省电影职工中等专业学校，1994年正式命名为湖南省电影学校。我入校时，母校叫湖南省电影学校。毕业那年，湖南省电影学校和湖南省艺术学校合并，升格为现在的湖南艺术职业学院。 转眼间已经毕业12年了，时间过得真快啊。湖南艺术职业学院建校60周年庆典活动将于11月18日举行，上午8:30在左家垅校区（原湖南省艺术学校）和望城坡校区（原湖南省电影学校）由各系分别举行校友联谊活动。下午14:30在贺龙体育馆（长沙天心区劳动西路339号）隆重举行校庆庆典大会暨《母校·摇篮》（暂定名）大型文艺演出活动。届时，张也、甘萍、吴军、瞿颖、雷佳、王丽达、周浩等一大批著名校友将登台演出。我们热忱期盼海内外校友、各级领导、各界人士热情支持和参与校庆活动，共襄盛典，同谱华章！ 2011-10-13 岁月如刀，刀刀催人老，转眼间朝云兄就30岁了。再过几年，我也30了。我们是1999年因为求学而认识的，因为XX原因和爱兵、磊一起结拜兄弟，朝云兄最早成家，最早为人父。现在，我们四人都已经成家了，也只有二哥爱兵还未为人父。30而立，修身、齐家、安天下！铭记！">
+<link rel="canonical" href="https://tam.haywoo.com/post/log-2011/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"2011年随笔合集","url":"https://tam.haywoo.com/post/log-2011/","description":"2011-11-10 湖南艺术职业学院其实是由湖南省艺术学校和湖南省电影学校合并而成，但湖南省艺术学校和湖南省电影学校也各自有很漫长的成长历程。湖南省艺术学校最初成立于1951年，当时也是叫湖南省艺术学校，后来在1953年的时候改为湘剧小演员训练班，在1957年时改为湖南省戏曲学校，1959年为湖南艺术学院，1961年为湖南省戏曲艺术学校，1964年为湖南省戏剧学校，1976年复名为湖南省艺术学校。 湖南省电影学校最初成立于1979年，当时叫湖南省电影技工学校，1985年改为湖南省电影职工中等专业学校，1994年正式命名为湖南省电影学校。我入校时，母校叫湖南省电影学校。毕业那年，湖南省电影学校和湖南省艺术学校合并，升格为现在的湖南艺术职业学院。 转眼间已经毕业12年了，时间过得真快啊。湖南艺术职业学院建校60周年庆典活动将于11月18日举行，上午8:30在左家垅校区（原湖南省艺术学校）和望城坡校区（原湖南省电影学校）由各系分别举行校友联谊活动。下午14:30在贺龙体育馆（长沙天心区劳动西路339号）隆重举行校庆庆典大会暨《母校·摇篮》（暂定名）大型文艺演出活动。届时，张也、甘萍、吴军、瞿颖、雷佳、王丽达、周浩等一大批著名校友将登台演出。我们热忱期盼海内外校友、各级领导、各界人士热情支持和参与校庆活动，共襄盛典，同谱华章！ 2011-10-13 岁月如刀，刀刀催人老，转眼间朝云兄就30岁了。再过几年，我也30了。我们是1999年因为求学而认识的，因为XX原因和爱兵、磊一起结拜兄弟，朝云兄最早成家，最早为人父。现在，我们四人都已经成家了，也只有二哥爱兵还未为人父。30而立，修身、齐家、安天下！铭记！","datePublished":"2011-11-02T18:18:40+08:00","dateModified":"2011-11-02T18:18:40+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/log-2011/","name":"2011年随笔合集","position":2}]}</script>
+<meta property="og:title" content="2011年随笔合集">
+<meta property="og:description" content="2011-11-10 湖南艺术职业学院其实是由湖南省艺术学校和湖南省电影学校合并而成，但湖南省艺术学校和湖南省电影学校也各自有很漫长的成长历程。湖南省艺术学校最初成立于1951年，当时也是叫湖南省艺术学校，后来在1953年的时候改为湘剧小演员训练班，在1957年时改为湖南省戏曲学校，1959年为湖南艺术学院，1961年为湖南省戏曲艺术学校，1964年为湖南省戏剧学校，1976年复名为湖南省艺术学校。 湖南省电影学校最初成立于1979年，当时叫湖南省电影技工学校，1985年改为湖南省电影职工中等专业学校，1994年正式命名为湖南省电影学校。我入校时，母校叫湖南省电影学校。毕业那年，湖南省电影学校和湖南省艺术学校合并，升格为现在的湖南艺术职业学院。 转眼间已经毕业12年了，时间过得真快啊。湖南艺术职业学院建校60周年庆典活动将于11月18日举行，上午8:30在左家垅校区（原湖南省艺术学校）和望城坡校区（原湖南省电影学校）由各系分别举行校友联谊活动。下午14:30在贺龙体育馆（长沙天心区劳动西路339号）隆重举行校庆庆典大会暨《母校·摇篮》（暂定名）大型文艺演出活动。届时，张也、甘萍、吴军、瞿颖、雷佳、王丽达、周浩等一大批著名校友将登台演出。我们热忱期盼海内外校友、各级领导、各界人士热情支持和参与校庆活动，共襄盛典，同谱华章！ 2011-10-13 岁月如刀，刀刀催人老，转眼间朝云兄就30岁了。再过几年，我也30了。我们是1999年因为求学而认识的，因为XX原因和爱兵、磊一起结拜兄弟，朝云兄最早成家，最早为人父。现在，我们四人都已经成家了，也只有二哥爱兵还未为人父。30而立，修身、齐家、安天下！铭记！">
+<meta property="og:url" content="https://tam.haywoo.com/post/log-2011/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/log-2011/">
+<meta name="twitter:title" content="2011年随笔合集">
+<meta name="twitter:description" content="2011-11-10 湖南艺术职业学院其实是由湖南省艺术学校和湖南省电影学校合并而成，但湖南省艺术学校和湖南省电影学校也各自有很漫长的成长历程。湖南省艺术学校最初成立于1951年，当时也是叫湖南省艺术学校，后来在1953年的时候改为湘剧小演员训练班，在1957年时改为湖南省戏曲学校，1959年为湖南艺术学院，1961年为湖南省戏曲艺术学校，1964年为湖南省戏剧学校，1976年复名为湖南省艺术学校。 湖南省电影学校最初成立于1979年，当时叫湖南省电影技工学校，1985年改为湖南省电影职工中等专业学校，1994年正式命名为湖南省电影学校。我入校时，母校叫湖南省电影学校。毕业那年，湖南省电影学校和湖南省艺术学校合并，升格为现在的湖南艺术职业学院。 转眼间已经毕业12年了，时间过得真快啊。湖南艺术职业学院建校60周年庆典活动将于11月18日举行，上午8:30在左家垅校区（原湖南省艺术学校）和望城坡校区（原湖南省电影学校）由各系分别举行校友联谊活动。下午14:30在贺龙体育馆（长沙天心区劳动西路339号）隆重举行校庆庆典大会暨《母校·摇篮》（暂定名）大型文艺演出活动。届时，张也、甘萍、吴军、瞿颖、雷佳、王丽达、周浩等一大批著名校友将登台演出。我们热忱期盼海内外校友、各级领导、各界人士热情支持和参与校庆活动，共襄盛典，同谱华章！ 2011-10-13 岁月如刀，刀刀催人老，转眼间朝云兄就30岁了。再过几年，我也30了。我们是1999年因为求学而认识的，因为XX原因和爱兵、磊一起结拜兄弟，朝云兄最早成家，最早为人父。现在，我们四人都已经成家了，也只有二哥爱兵还未为人父。30而立，修身、齐家、安天下！铭记！">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        2011年随笔合集
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2011-11-02">
+                        2011-11-02
+                    </time> • 7 分钟阅读 •
+                        
+                            <a href="/tag/sui-bi/">
+                                随笔
+                            </a>
+                            
+                                    
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <h2 id="2011-11-10">2011-11-10</h2>
+<p>湖南艺术职业学院其实是由湖南省艺术学校和湖南省电影学校合并而成，但湖南省艺术学校和湖南省电影学校也各自有很漫长的成长历程。湖南省艺术学校最初成立于1951年，当时也是叫湖南省艺术学校，后来在1953年的时候改为湘剧小演员训练班，在1957年时改为湖南省戏曲学校，1959年为湖南艺术学院，1961年为湖南省戏曲艺术学校，1964年为湖南省戏剧学校，1976年复名为湖南省艺术学校。</p>
+<p>湖南省电影学校最初成立于1979年，当时叫湖南省电影技工学校，1985年改为湖南省电影职工中等专业学校，1994年正式命名为湖南省电影学校。我入校时，母校叫湖南省电影学校。毕业那年，湖南省电影学校和湖南省艺术学校合并，升格为现在的湖南艺术职业学院。</p>
+<p>转眼间已经毕业12年了，时间过得真快啊。湖南艺术职业学院建校60周年庆典活动将于11月18日举行，上午8:30在左家垅校区（原湖南省艺术学校）和望城坡校区（原湖南省电影学校）由各系分别举行校友联谊活动。下午14:30在贺龙体育馆（长沙天心区劳动西路339号）隆重举行校庆庆典大会暨《母校·摇篮》（暂定名）大型文艺演出活动。届时，张也、甘萍、吴军、瞿颖、雷佳、王丽达、周浩等一大批著名校友将登台演出。我们热忱期盼海内外校友、各级领导、各界人士热情支持和参与校庆活动，共襄盛典，同谱华章！</p>
+<h2 id="2011-10-13">2011-10-13</h2>
+<p>岁月如刀，刀刀催人老，转眼间朝云兄就30岁了。再过几年，我也30了。我们是1999年因为求学而认识的，因为XX原因和爱兵、磊一起结拜兄弟，朝云兄最早成家，最早为人父。现在，我们四人都已经成家了，也只有二哥爱兵还未为人父。30而立，修身、齐家、安天下！铭记！</p>
+<!-- more -->
+<h2 id="2011-10-06">2011-10-06</h2>
+<p>第一时间了解到乔布斯去世的消息，是早上8点多在芒果RADIO听到的。当时并不相信，于是打开微博，才发现整个页面全部都是有关乔布斯的信息。对于他的离世，我感到非常惋惜。苹果的产品虽然不便宜，但其设计理念是我推崇的，拥有苹果全系列产品也是我的目标。这不仅仅是有关标新立异的观念，更多地是苹果的产品可以提高我们的工作效率，极大地减少使用电脑玩游戏或做杂事的时间。</p>
+<p>奔迈是智能手机的始祖，同样配置的机器，使用奔迈系统就是要快速一些；而黑莓让我们将事情做得更细，发短信和电子邮件最方便，商务沟通首选；安卓让我们将娱乐和网络无障碍，沟通尽量通过电话进行，就是电池太不给力；苹果系列还没用过，以后会用的… …</p>
+<h2 id="2011-10-04">2011-10-04</h2>
+<h3 id="mb525miuidefy-rom">MB525搭配MIUI的DEFY ROM非常好用</h3>
+<p>从MIUI刚刚放出支持DEFY的ROM开始，我就追随着它，每周五等候更新包的发布。在不断地刷机过程中，能够看到MIUI的ROM在不断地进步，但有的功能却在走回头路。关于移动通话的用户，节电和信号永远是最关注的关键词，连持续性和网络性能都没法保障的ROM绝对是有问题的。经过N多次折腾之后，就目前为止，最好的ROM应该是MIUI稳定版2.3.5a。这个ROM的信号不好，所以需要安装一个基带切换软件，可以提升网络通话性能。至于system的app，是可以精简一些的。</p>
+<p>建议删除的有：</p>
+<ul>
+<li>AppShare.apk 你没必要为这个浪费流量吧；</li>
+<li>Calculator.apk（计算器）如果没有安装替代计算器，就不要删除，我用Arity代替这个的；</li>
+<li>CloudService.apk 如果你不想MIUI时不时地推送信息到它的云服务器，那就删掉吧；</li>
+<li>Email.apk 如果你只用GMAIL，这个就可以删除了；</li>
+<li>LatinIME.apk 如果你安装了其它输入法，比如QQ的或者MOTO的，那你就删掉这个吧；</li>
+<li>Stk.apk 如果你不用SIM卡的那些菜单，就可以删掉这个；</li>
+<li>SuperMarket.apk 这个是MIUI自己整的一个程序聚合平台，可以无视；</li>
+<li>Talk.apk 有几个人和你一起用Google Talk进行交流？如果没有或很少，那就清理掉吧；</li>
+<li>TtsService.apk 我们不是那啥，用不上这个；</li>
+<li>Updater.apk 检查系统ROM更新的，如果你是通过PC下载到手机安装的，这个也不要了；</li>
+<li>VoiceDialer.apk 语音拨号功能，它听不懂中文，你说要不要删除呢</li>
+</ul>
+<p>除了精简上面这些程序外，尽量少安装一些平时用不上的程序，桌面上也少安装一些插件，少开WIFI，如果这样使用的话，两天的电力持续是没有一点问题的。</p>
+<h2 id="2011-10-02">2011-10-02</h2>
+<p>辞职，是一种决定；<br />
+辞职，是一种坚持。</p>
+<p>前些日子看文静在兰州、上海等地云游的照片，感到一种亲切，貌似是帮我完成心中愿望似的。每个人都有自己的理想和爱好，但生活却让人们只知道工作，而工作却因这个社会而变味，变味的工作让人们成了围墙里的囚徒。于是，那些同事们就做出了决定，坚持她们自己的理想；</p>
+<p>于是，她们辞职了… …</p>
+<h2 id="2011-09-25">2011-09-25</h2>
+<p>人在世界上，都是独一无二的个体，每个人的思想都不一样。我们在接受各种教育之后会变得拘束，这里面有家庭教育、学校教育、社会教育等等，正是因为这些，导致人们的思想忽左忽右，会感到某些事情可能做错了，某些事情想做却不敢做。于是，内心痛苦了，内心纠结了。放下那些约束和禁锢的思想吧，大胆去尝试，每一次尝试都是对思想的历练。</p>
+<p>人生只有不断去尝试才会精彩！</p>
+<h2 id="2011-08-15">2011-08-15</h2>
+<p>前段时间工作有点不顺利，总感觉有些人或问题无法沟通，想着无法解决的问题就头痛，只好放弃。而事实上，员工没做好，一定是主管没带好，团队协作要比单兵作战带劲得多。问题得不到解决，是因为没有找到关键点，只要关键点一抓住，什么都是水到渠成，什么都是浮云。</p>
+<p>经过深入沟通，直接了当地畅谈，每个人都找到了自己的定位，一切都很顺利。一个非公司的朋友，在酒席间对我说出了她的见解：放手让别人去发挥，要给予充分的信任，要肯定大家的工作，否则她们也会和你一样饱受挫折感。</p>
+<p>现在，一切都挺好！全新思维，全力以赴！阿彬，向你学习！</p>
+<h2 id="2011-04-24">2011-04-24</h2>
+<p>发帖自摩托罗拉手机论坛itfunz的MB525 2.2.2 ROM 阿拉伯3.4.3.20固件使得手机不断重启，建议不要使用这个ROM。</p>
+<p>另外，本ROM可以ROOT。</p>
+<h2 id="2011-04-05">2011-04-05</h2>
+<h4 id="heading">有规律地生活未必是件好事</h4>
+<p>决定写这些文字之前，我痛失了心爱的自行车。为了避免更多人遭遇到这种情况，我觉得需要分析这个问题，究其原因，还是“规律”两个字惹的祸。也许很多人都会说，丢车就丢车吧，和规律有什么关系呢？这不是扯蛋吧？没错，还真是TM的扯蛋了。</p>
+<p>为什么会是“规律”？</p>
+<p>想必大家都同意顺应“自然规律”，并且通过掌握自然规律来规避大自然带来的风险吧？没错，当你熟悉自然的运动规律之后，你就能够提前或者预防。同理，当你掌握一个人的规律之后，你就能够在他的规律运动过程中设立一些突发事件。如果那个人是你，你就有麻烦了。</p>
+<p>在电视或者电影作品中，我们无数次地看到，各种特战队员在精心计算对手的哨岗换防时间，换防人数；也无数次地看到在刺杀某人的时候，对此人的规律性调查，以便在期间穿插一些能够得手的机会；还无数次地在现实生活中看到或者体会到小偷在掌握一个人或一个群体的运动时间规律之后，轻易地实施偷窃而不让人发觉。</p>
+<h2 id="2011-03-31">2011-03-31</h2>
+<p>记得开始迷恋数码产品应该是从2003-2004年期间购买的第一台掌上电脑开始的，它叫Palm Tungsten E，内置Palm OS。那时候没有云计算，行程日志需要与电脑同步（OUTLOOK及PALM DESKTOP）。从那时候开始，我觉得Palm OS系统是最快速的，甚至比iOS以及Windows都好用，比Windows Mobile OS更是没话说。不过，真正让我震撼的还是Palm Treo 600，那是我的第一台全键盘智能手机，搭配“巨硬输入法”之后的输入速度是你没法想象的，从那以后我再也看不上非全键盘的机器。</p>
+<p>在PALM被HP收购之前，我使用过TREO 600和TREO 680，它的全键盘以及中文支持让我很满意，只是屏幕太落后了。怀着对WEB OS的梦想，我又用了PALM PIXI PLUS。只是，它的中文支持让我很失望，居然没有官方的中文输入法。再这样下去，中国区的市场份额岌岌可危。所以，希望开发好用的官方中文支持，这很重要。</p>
+<h2 id="2011-03-28">2011-03-28</h2>
+<p>商业人像摄影行业里面有一个奇怪的现象，大家都喜欢请一些培训公司到店辅导。这些培训公司要么是做企业文化，这是内功修炼；要么就是重在做秀场，这是刀光剑影的战场；或者是一些纯专业性的辅导，比如挑样部、接单部、数码部、摄影部、造型部、礼服部等各个专业的技术提升。</p>
+<p>做秀场的公司大多都受到浮夸风的影响，在做企业宣传的时候往往夸大其词。有的甚至会说2天内接单2000多单，实际营收900多万。很多老板非常相信这种短信，因为大家都相信成功学，都相信这个行业总是会有一个又一个的奇迹出现；他们相信这2000多单是可以完成的，他们相信按照48小时计算，每小时可以成交41.7个单，每天的进客量可以有1000多人，成交率100%，平均订单价可以达到4500元，按照这个进度计算，公司每年的收入可以达到16.4亿元。</p>
+<p>这些数字是不是很有诱惑力？是的！太有诱惑力了！那么你会相信吗？</p>
+<h2 id="2011-02-22">2011-02-22</h2>
+<p>一直想要一台安卓（Android）系统的机器，人称机器人。而复式一直都在向我推荐DEFY，说是性价比非常好，但我其实更喜欢MOTO PRO。因为PRO有物理全键盘，呵呵，不折不扣的全键盘控，玩黑莓久了自然改不了这个习惯。</p>
+<p>Defy是我的第一个安卓机器人，在不断的折腾过程中，已经刷机了N次，现在的Moto Defy Rom已经更新至Android 2.2.2版，用起来还挺稳定的，一次充电的最长的使用时间是3天15小时。</p>
+<p>以前使用Palm机器的时候，我也有用过PALM PIXI PLUS的GPS自动标绘骑行路线。感觉有些误差，但误差不大。这次使用MOTO DEFY的GPS功能自动标绘路线时，还是有些位移，使用的软件是“My Tracks”，实际绘图是有很大差异的，不知道导出KML文件到谷歌地球里面去是不是仍然会有大的误差。</p>
+
+                </div>
+
+            </article>
+
+
+            
+                
+	<div class="mod-post__foot">
+	 文章标签: 
+     
+        <a href="/tag/sui-bi/">随笔</a>
+     
+     </br>
+	</div>
+
+                    
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/log-2012/">2012年随笔合集</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/log-2010/">2010年随笔合集</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

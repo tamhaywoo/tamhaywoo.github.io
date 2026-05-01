@@ -1,0 +1,523 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>2006年随笔合集 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="2006-01-09 2005年过得比以前任何一年都要快许多，发生的事情也挺多的，庆幸的是很多事情都在慢慢的往好的方向发展。 只是我还没有去见拜见她的父母，而她也没去我家。不过，这并不能造成什么坏的影响。 今年在公司里做琐碎事情比较多，但没有给自己的部门带来什么盈利，也未曾看到明显的部门成绩，这是我最惭愧的。所以每次见到那几位老总都觉得自己很不好意思，无颜相见似的&amp;hellip; &amp;hellip; 做得最多的琐碎事莫过于去外展点做蜂王[^蜂王]，公司的外展活动我基本上都得出去帮忙，所以跟大学生在一起的机会也就多了很多。也常常被这些还未进入社会单纯的他们所感染，发觉每个人都是那么热情洋溢，即便是有困难也能够相互帮助以完成预定的任务。精神难能可贵，有时候也会让我振奋不已。 另外，第一次听到一些公司的销售经理说我的作品很受顾客欢迎，这是我最高兴的事情了。所以每次他们点名要我帮忙做活动用的新样品时，总会带着那份幸福及压力去认真做好。 在婚纱摄影设计方面的改变主要是摒弃了以往以构图为重点的思想，将精力放在提升原照片的色彩及氛围上，同时将所要设计的框类产品的本身色彩考虑了进去，而构图则次之&amp;hellip; &amp;hellip; 摄影方面还是没有进步，一直使用松下FX5这款傻瓜数码机，一般是拍些记录生活的片子，不过也有一些还不错的照片就用做素材了。这个照片还是要坚持拍的&amp;hellip; &amp;hellip; 下半年明显的感觉到身体不如从前，所以每个星期都会去打打羽毛球，未曾进步，但手臂倒是粗了不少。体重也在望期望的目标上升&amp;hellip; &amp;hellip; 忽然被很多东西给堵塞住了，想说但理不清头绪，罢了，不说了。认真踏实的做人做事吧&amp;hellip; [^蜂王]: 蜂王就是最基层的促销人员的队长之类的&amp;hellip; &amp;hellip;">
+<link rel="canonical" href="https://tam.haywoo.com/post/log-2006/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"2006年随笔合集","url":"https://tam.haywoo.com/post/log-2006/","description":"2006-01-09 2005年过得比以前任何一年都要快许多，发生的事情也挺多的，庆幸的是很多事情都在慢慢的往好的方向发展。 只是我还没有去见拜见她的父母，而她也没去我家。不过，这并不能造成什么坏的影响。 今年在公司里做琐碎事情比较多，但没有给自己的部门带来什么盈利，也未曾看到明显的部门成绩，这是我最惭愧的。所以每次见到那几位老总都觉得自己很不好意思，无颜相见似的\u0026hellip; \u0026hellip; 做得最多的琐碎事莫过于去外展点做蜂王[^蜂王]，公司的外展活动我基本上都得出去帮忙，所以跟大学生在一起的机会也就多了很多。也常常被这些还未进入社会单纯的他们所感染，发觉每个人都是那么热情洋溢，即便是有困难也能够相互帮助以完成预定的任务。精神难能可贵，有时候也会让我振奋不已。 另外，第一次听到一些公司的销售经理说我的作品很受顾客欢迎，这是我最高兴的事情了。所以每次他们点名要我帮忙做活动用的新样品时，总会带着那份幸福及压力去认真做好。 在婚纱摄影设计方面的改变主要是摒弃了以往以构图为重点的思想，将精力放在提升原照片的色彩及氛围上，同时将所要设计的框类产品的本身色彩考虑了进去，而构图则次之\u0026hellip; \u0026hellip; 摄影方面还是没有进步，一直使用松下FX5这款傻瓜数码机，一般是拍些记录生活的片子，不过也有一些还不错的照片就用做素材了。这个照片还是要坚持拍的\u0026hellip; \u0026hellip; 下半年明显的感觉到身体不如从前，所以每个星期都会去打打羽毛球，未曾进步，但手臂倒是粗了不少。体重也在望期望的目标上升\u0026hellip; \u0026hellip; 忽然被很多东西给堵塞住了，想说但理不清头绪，罢了，不说了。认真踏实的做人做事吧\u0026hellip; [^蜂王]: 蜂王就是最基层的促销人员的队长之类的\u0026hellip; \u0026hellip;","datePublished":"2006-01-09T01:38:33+08:00","dateModified":"2006-01-09T01:38:33+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/log-2006/","name":"2006年随笔合集","position":2}]}</script>
+<meta property="og:title" content="2006年随笔合集">
+<meta property="og:description" content="2006-01-09 2005年过得比以前任何一年都要快许多，发生的事情也挺多的，庆幸的是很多事情都在慢慢的往好的方向发展。 只是我还没有去见拜见她的父母，而她也没去我家。不过，这并不能造成什么坏的影响。 今年在公司里做琐碎事情比较多，但没有给自己的部门带来什么盈利，也未曾看到明显的部门成绩，这是我最惭愧的。所以每次见到那几位老总都觉得自己很不好意思，无颜相见似的&amp;hellip; &amp;hellip; 做得最多的琐碎事莫过于去外展点做蜂王[^蜂王]，公司的外展活动我基本上都得出去帮忙，所以跟大学生在一起的机会也就多了很多。也常常被这些还未进入社会单纯的他们所感染，发觉每个人都是那么热情洋溢，即便是有困难也能够相互帮助以完成预定的任务。精神难能可贵，有时候也会让我振奋不已。 另外，第一次听到一些公司的销售经理说我的作品很受顾客欢迎，这是我最高兴的事情了。所以每次他们点名要我帮忙做活动用的新样品时，总会带着那份幸福及压力去认真做好。 在婚纱摄影设计方面的改变主要是摒弃了以往以构图为重点的思想，将精力放在提升原照片的色彩及氛围上，同时将所要设计的框类产品的本身色彩考虑了进去，而构图则次之&amp;hellip; &amp;hellip; 摄影方面还是没有进步，一直使用松下FX5这款傻瓜数码机，一般是拍些记录生活的片子，不过也有一些还不错的照片就用做素材了。这个照片还是要坚持拍的&amp;hellip; &amp;hellip; 下半年明显的感觉到身体不如从前，所以每个星期都会去打打羽毛球，未曾进步，但手臂倒是粗了不少。体重也在望期望的目标上升&amp;hellip; &amp;hellip; 忽然被很多东西给堵塞住了，想说但理不清头绪，罢了，不说了。认真踏实的做人做事吧&amp;hellip; [^蜂王]: 蜂王就是最基层的促销人员的队长之类的&amp;hellip; &amp;hellip;">
+<meta property="og:url" content="https://tam.haywoo.com/post/log-2006/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/log-2006/">
+<meta name="twitter:title" content="2006年随笔合集">
+<meta name="twitter:description" content="2006-01-09 2005年过得比以前任何一年都要快许多，发生的事情也挺多的，庆幸的是很多事情都在慢慢的往好的方向发展。 只是我还没有去见拜见她的父母，而她也没去我家。不过，这并不能造成什么坏的影响。 今年在公司里做琐碎事情比较多，但没有给自己的部门带来什么盈利，也未曾看到明显的部门成绩，这是我最惭愧的。所以每次见到那几位老总都觉得自己很不好意思，无颜相见似的&amp;hellip; &amp;hellip; 做得最多的琐碎事莫过于去外展点做蜂王[^蜂王]，公司的外展活动我基本上都得出去帮忙，所以跟大学生在一起的机会也就多了很多。也常常被这些还未进入社会单纯的他们所感染，发觉每个人都是那么热情洋溢，即便是有困难也能够相互帮助以完成预定的任务。精神难能可贵，有时候也会让我振奋不已。 另外，第一次听到一些公司的销售经理说我的作品很受顾客欢迎，这是我最高兴的事情了。所以每次他们点名要我帮忙做活动用的新样品时，总会带着那份幸福及压力去认真做好。 在婚纱摄影设计方面的改变主要是摒弃了以往以构图为重点的思想，将精力放在提升原照片的色彩及氛围上，同时将所要设计的框类产品的本身色彩考虑了进去，而构图则次之&amp;hellip; &amp;hellip; 摄影方面还是没有进步，一直使用松下FX5这款傻瓜数码机，一般是拍些记录生活的片子，不过也有一些还不错的照片就用做素材了。这个照片还是要坚持拍的&amp;hellip; &amp;hellip; 下半年明显的感觉到身体不如从前，所以每个星期都会去打打羽毛球，未曾进步，但手臂倒是粗了不少。体重也在望期望的目标上升&amp;hellip; &amp;hellip; 忽然被很多东西给堵塞住了，想说但理不清头绪，罢了，不说了。认真踏实的做人做事吧&amp;hellip; [^蜂王]: 蜂王就是最基层的促销人员的队长之类的&amp;hellip; &amp;hellip;">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        2006年随笔合集
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2006-01-09">
+                        2006-01-09
+                    </time> • 5 分钟阅读 •
+                        
+                            <a href="/tag/sui-bi/">
+                                随笔
+                            </a>
+                            
+                                    
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <h2 id="2006-01-09">2006-01-09</h2>
+<p>2005年过得比以前任何一年都要快许多，发生的事情也挺多的，庆幸的是很多事情都在慢慢的往好的方向发展。</p>
+<p>只是我还没有去见拜见她的父母，而她也没去我家。不过，这并不能造成什么坏的影响。</p>
+<p>今年在公司里做琐碎事情比较多，但没有给自己的部门带来什么盈利，也未曾看到明显的部门成绩，这是我最惭愧的。所以每次见到那几位老总都觉得自己很不好意思，无颜相见似的&hellip; &hellip;</p>
+<p>做得最多的琐碎事莫过于去外展点做蜂王[^蜂王]，公司的外展活动我基本上都得出去帮忙，所以跟大学生在一起的机会也就多了很多。也常常被这些还未进入社会单纯的他们所感染，发觉每个人都是那么热情洋溢，即便是有困难也能够相互帮助以完成预定的任务。精神难能可贵，有时候也会让我振奋不已。</p>
+<p>另外，第一次听到一些公司的销售经理说我的作品很受顾客欢迎，这是我最高兴的事情了。所以每次他们点名要我帮忙做活动用的新样品时，总会带着那份幸福及压力去认真做好。</p>
+<p>在婚纱摄影设计方面的改变主要是摒弃了以往以构图为重点的思想，将精力放在提升原照片的色彩及氛围上，同时将所要设计的框类产品的本身色彩考虑了进去，而构图则次之&hellip; &hellip;</p>
+<p>摄影方面还是没有进步，一直使用松下FX5这款傻瓜数码机，一般是拍些记录生活的片子，不过也有一些还不错的照片就用做素材了。这个照片还是要坚持拍的&hellip; &hellip;</p>
+<p>下半年明显的感觉到身体不如从前，所以每个星期都会去打打羽毛球，未曾进步，但手臂倒是粗了不少。体重也在望期望的目标上升&hellip; &hellip;</p>
+<p>忽然被很多东西给堵塞住了，想说但理不清头绪，罢了，不说了。认真踏实的做人做事吧&hellip;</p>
+<p>[^蜂王]: 蜂王就是最基层的促销人员的队长之类的&hellip; &hellip;</p>
+<!-- more -->
+<h2 id="2006-04-17">2006-04-17</h2>
+<p>在新天宾馆参加了亚刚和丽华的婚礼喜筵，看到了新郎被主持人整得趴在地上求婚(_ _)新郎二话没说立刻照办，可想而知他们的爱情多么甜蜜啊！</p>
+<p>后来在喝酒的时候，有些人把餐桌上的各种油汤倒在酒杯里，给新郎敬酒时让新郎喝掉。唉&hellip;害得人家不能喝完而糗了。</p>
+<p>话说在前头，要是哪小子在我结婚时这样子整我，我跟他没完&hellip; &hellip;</p>
+<h2 id="2006-04-17-1">2006-04-17</h2>
+<p>下午收到久违的柠檬丽都寄来的一封信，看完信件的内容之后心中百感交集啊&hellip; &hellip;尤其是看到里面居然有一张签署日期为2005年9月20日的交房通知更是让我的血液流动速度加快，那个气啊&hellip; &hellip;真的叫不是个滋味。其他的不必多说了，说了也没意义&hellip; &hellip;</p>
+<p>不过还是要表扬下他们还记得提醒业主去收房，至少他们还记得需要我们收房后才会有钱进帐。但是，如果柠檬丽都卖出去的那些问题房子不整改好的话，相信没有几个人会收房，这一点是可以肯定的。</p>
+<h2 id="2006-05-16">2006-05-16</h2>
+<p>近两三个月可能是要够我忙的了。因为房子的设计图已经出稿，资金也筹备到位，就要开始装修我的新房了，现在只是在等我的装修委托人将剩余的具体图纸以及将他的施工队搞定。</p>
+<p>在这里得感谢前期帮我设计的刘静、朝云哥以及汤哥，同时也必须要感谢给予我资金援助的几位大哥<a href="%E7%94%B1%E4%BA%8E%E6%B2%A1%E6%9C%89%E7%BB%8F%E8%BF%87%E4%BB%96%E4%BB%AC%E7%9A%84%E5%90%8C%E6%84%8F%EF%BC%8C%E4%B8%8D%E6%95%A2%E5%B0%86%E5%A7%93%E5%90%8D%E5%86%99%E4%B8%8A%EF%BC%8C%E4%B8%8D%E8%A6%81%E8%A7%81%E6%80%AA%E5%95%8A">^几位大哥</a>还有一位姐姐，谢谢你们的帮助。没有你们的信任与帮助，我将一事无成&hellip; &hellip;</p>
+<h2 id="2006-05-20">2006-05-20</h2>
+<p>我向来都不奉行啃骨头，因为了解失败的痛苦才不去碰失败的钉子，所以我自小以来都是知难而退。这可以说是一种优点，因为这样的生活比较平稳；但同时也是一种缺点，因为在回避困难的同时就会失去了许多学习解决问题的机会，那么在之后遇到相同的问题时，又得掉头&hellip; &hellip;</p>
+<p>很庆幸自己能认识到这个问题，更庆幸自己在最近这一阵子遇到困难时并没有逃避，而是慢慢的解决问题。特此记录&hellip; &hellip;</p>
+<h2 id="2006-06-03">2006-06-03</h2>
+<p>其实很多人会对自己喜欢的事物会有所期望，期望它能够发展到自己想象中的地步，就如想要实现自己的愿望一般。但实际上却很少能够令自己称心如意，就因为这种不确定性和未知性，我们会在某一天有所期望，也会在某一天有所淡忘。</p>
+<p>花费很多心思和时间去做的事情并不一定会让自己心身愉悦，就算一直坚持也总会有一天感觉到那是一种无形的压力和束缚。某一天的心血来潮也会被遇到的问题所冷却，如今的一切都已经冷却了，轻松也随之而来，希望这份轻松不是空虚的表面现象，但愿吧！</p>
+<h2 id="2006-08-26">2006-08-26</h2>
+<p>明天搬家[^搬家]，后天休息。<br />
+[^搬家]: 入住新房</p>
+<h2 id="2006-10-03">2006-10-03</h2>
+<p>其实很多人会对自己喜欢的事物会有所期望，期望它能够发展到自己想象中的地步，就如想要实现自己的愿望一般。但实际上却很少能够令自己称心如意，就因为这种不确定性和未知性，我们会在某一天有所期望，也会在某一天有所淡忘。</p>
+<p>花费很多心思和时间去做的事情并不一定会让自己心身愉悦，就算一直坚持也总会有一天感觉到那是一种无形的压力和束缚。</p>
+<p>某一天的心血来潮也会被遇到的问题所冷却，如今的一切都已经冷却了，轻松也随之而来，希望这份轻松不是空虚的表面现象，但愿吧！</p>
+<h2 id="2006-10-15">2006-10-15</h2>
+<p>很多事情有两种选择，以种选择会让你向上，另一种选择会让你往下。但这两者或许是有联系的，因为经历很多之后也许又会相交，只是多绕了几圈而已。这是乐观的想法，因为我不想对一切失去希望。</p>
+<p>四年前的选择让我拥有了自己的另一半以及温暖的家，也让自己的审美以及专业技能得到了提升，人生观也发生了变化。但却让我困在现在的这个节骨眼上，我感到非常的恐惧，但也在那惊惶的思绪中保留着希望以及奋斗的位置。</p>
+<p>现在我又将面临着选择&hellip; &hellip;</p>
+<h2 id="2006-11-01">2006-11-01</h2>
+<p>这几天一直都没有更新网站，感觉非常轻松，倒是难为了那些失落而归的朋友们。我想有些朋友不仅仅是因为这个原因而失落（或者应该把失落换成失望一词），确切的说应该是您的失望我的失落。因为很多原因，梦想中的计划并没有实现，电子杂志方面也已经悄然的停滞，因为没有好好的规划，也因为没有好好的沟通，这些问题都应该记住，避免再次发生！</p>
+<p>公司的工作方面似乎有了很大的变化，我也期望在公司的这次变化中发生变化。我现在最恐惧的就是止步不前，所以在一阵躁动之后又沉下心来静静地等待着，也在等待中筹备着&hellip; &hellip;希望一切如我所愿！</p>
+<p>从明天开始就要开展为期一个月左右的培训工作了，对于这个这不是我的本职工作的项目，我倒是投入了十二分的热情在里面。因为这也算是一种变化，也是良性的，值得自己去尝试。</p>
+<p>要充满希望的对待每一天，保持良好的心态&hellip; &hellip;</p>
+<h2 id="2006-11-25">2006-11-25</h2>
+<p>昨天在公交车上发生了一件事情，让人很不愉快，也让我再次感受到现在的人冷漠的心，而这一切都是由一个没有盖好的车顶通风窗而引起的。</p>
+<p>昨晚的长沙依旧是大雨连连，温度也降到了十度以下。晚上十点的时候，人们都已经早早地回到了温暖的家，享受着那暖手的热茶，而我却才下班。一挤上车就发现公交车内站满了人，唯独有一块地盘是空着的，只是那里湿漉漉的，那个地方的上方是一个没有关好的车顶通风窗口，并不时地倾泻着从上帝那里泼下来的洗脚水。我想，这个车窗应该很容易关掉吧，于是伸手上前，希望能了解这个乱糟糟的事情。可是，三秒钟以后发生的事情让我很尴尬，因为这个车窗盖没有想象中的那么灵活，我就像个长臂猿一样的吊在了那里，但车顶的通风窗依旧纹丝不动，人群中传来阵阵的笑声，我想我已经成为了笑料&hellip; &hellip;呵呵&hellip;能带来一点快乐的气氛还不错！</p>
+<p>但我想如果几个小伙子一起来关闭它应该是没有问题的，于是我向人群申援，希望能给有人和我一起把这个盖子关掉，以便车厢内不那么拥挤，让人们多一处容脚之地。可结果让我很懊恼，因为没有一个男士愿意到雨中来和我一起把车窗关掉，只有一个女孩子挤到了我的跟前，说要和我一起关掉车窗&hellip; &hellip;</p>
+<p>我忽然感觉所有的人都站在没有车顶的车箱内，任由上帝肆意地向他们身上泼撒赃物，他们只是木然地站在那里，一直站着&hellip; &hellip;赃物带来的疾病在人群中一个接连一个的传染着，没有人愿意帮助身边的人，直到他们自己变成那个祈求别人帮助的那个人。</p>
+<p>希望这一切能够早日结束，我只想让那些人觉醒&hellip; &hellip;</p>
+
+                </div>
+
+            </article>
+
+
+            
+                
+	<div class="mod-post__foot">
+	 文章标签: 
+     
+        <a href="/tag/sui-bi/">随笔</a>
+     
+     </br>
+	</div>
+
+                    
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/log-2007/">2007年随笔合集</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/log-2005/">2005年随笔合集</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

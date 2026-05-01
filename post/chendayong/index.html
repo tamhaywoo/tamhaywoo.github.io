@@ -1,0 +1,509 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>陈先生的摄影企业经营分享 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="在摄影行业摸爬滚打快20年了，见证了很多大大小小的摄影企业被新一代的年轻人抛弃、此起彼伏地淹没在时间里。 以前大家把拍证件照的地方叫做“照相馆”，把拍婚纱照的地方叫“影楼”。后来，批量化、标准化拍摄婚纱照的地方叫“影楼”，而满足顾客个性需求、有自己独特摄影风格的地方被称之为“工作室”。如今街头上已经很难看到立等可取的“照相馆”，却多了很多主打各类不同摄影风格的“工作室”。 这个行业特别有意思，&amp;hellip;">
+<link rel="canonical" href="https://tam.haywoo.com/post/chendayong/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"陈先生的摄影企业经营分享","url":"https://tam.haywoo.com/post/chendayong/","description":"在摄影行业摸爬滚打快20年了，见证了很多大大小小的摄影企业被新一代的年轻人抛弃、此起彼伏地淹没在时间里。 以前大家把拍证件照的地方叫做“照相馆”，把拍婚纱照的地方叫“影楼”。后来，批量化、标准化拍摄婚纱照的地方叫“影楼”，而满足顾客个性需求、有自己独特摄影风格的地方被称之为“工作室”。如今街头上已经很难看到立等可取的“照相馆”，却多了很多主打各类不同摄影风格的“工作室”。 这个行业特别有意思，\u0026hellip;","datePublished":"2021-12-21T17:51:51+08:00","dateModified":"2021-12-21T17:51:51+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/chendayong/","name":"陈先生的摄影企业经营分享","position":2}]}</script>
+<meta property="og:title" content="陈先生的摄影企业经营分享">
+<meta property="og:description" content="在摄影行业摸爬滚打快20年了，见证了很多大大小小的摄影企业被新一代的年轻人抛弃、此起彼伏地淹没在时间里。 以前大家把拍证件照的地方叫做“照相馆”，把拍婚纱照的地方叫“影楼”。后来，批量化、标准化拍摄婚纱照的地方叫“影楼”，而满足顾客个性需求、有自己独特摄影风格的地方被称之为“工作室”。如今街头上已经很难看到立等可取的“照相馆”，却多了很多主打各类不同摄影风格的“工作室”。 这个行业特别有意思，&amp;hellip;">
+<meta property="og:url" content="https://tam.haywoo.com/post/chendayong/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/chendayong/">
+<meta name="twitter:title" content="陈先生的摄影企业经营分享">
+<meta name="twitter:description" content="在摄影行业摸爬滚打快20年了，见证了很多大大小小的摄影企业被新一代的年轻人抛弃、此起彼伏地淹没在时间里。 以前大家把拍证件照的地方叫做“照相馆”，把拍婚纱照的地方叫“影楼”。后来，批量化、标准化拍摄婚纱照的地方叫“影楼”，而满足顾客个性需求、有自己独特摄影风格的地方被称之为“工作室”。如今街头上已经很难看到立等可取的“照相馆”，却多了很多主打各类不同摄影风格的“工作室”。 这个行业特别有意思，&amp;hellip;">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        陈先生的摄影企业经营分享
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2021-12-21">
+                        2021-12-21
+                    </time> • 3 分钟阅读 •
+                        
+                            <a href="/tag/jing-ying/">
+                                经营
+                            </a>
+                            
+                                    
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <p>在摄影行业摸爬滚打快20年了，见证了很多大大小小的摄影企业被新一代的年轻人抛弃、此起彼伏地淹没在时间里。</p>
+<p>以前大家把拍证件照的地方叫做“照相馆”，把拍婚纱照的地方叫“影楼”。后来，批量化、标准化拍摄婚纱照的地方叫“影楼”，而满足顾客个性需求、有自己独特摄影风格的地方被称之为“工作室”。如今街头上已经很难看到立等可取的“照相馆”，却多了很多主打各类不同摄影风格的“工作室”。</p>
+<p>这个行业特别有意思，进入门槛不高，只要会化妆、会拍照、会修图，极端一点，一个人也能够把工作室给干起来。工作室的创始人一般是在影楼工作过一段时间的摄影师，从摄影助理成长为摄影师之后，如果摄影能力很强，要么升级为影楼的摄影总监，要么自己离开影楼创立摄影工作室。</p>
+<p>工作室的特点就是运营人员不多、经营成本小、定制化拍摄，只要用心服务并满足顾客期望的拍摄效果，就不用担心客源的问题。对服务和拍摄效果满意的客户会帮忙推荐其他意向客户，规模就是这样一点点做大的。</p>
+<p>做大之后的形态有很多种，比较典型的有单体中型店、单体大店、大店+同城卫星店的组合、多城单体大店、多城单体中小店……</p>
+<p>经营模式的不同决定了经营利润的不同，大部分的摄影店能做到15%就很开心了，亏本经营的情况也挺多的，而更多的则是半死不活的情况，想关店都关不了。在这种大环境下，却有一些店能够做到30%的经营利润，而且还过得很轻松，着实让人羡慕。</p>
+<p>前些天很有幸与经营利润在30%以上的摄影工作室老板一起喝茶，他讲到经营工作室的一些思路和小细节让我印象很深刻。</p>
+<p>对于工作室的经营模式，他非常清晰和理智。</p>
+<ul>
+<li>只服务8000元以上均价的客户群体；</li>
+<li>摄影风格主要偏向“森系”和“婚礼纪实”；</li>
+<li>单日单店服务客户封顶15对，绝不临时加塞拍摄量；</li>
+<li>根据摄影师的服务档期进行售卖；</li>
+<li>坚持以客户体验和产品品质至上；</li>
+<li>跨城市扩张的时候，只选择一线城市发展。</li>
+</ul>
+<p>以下是陈先生的部分分享内容</p>
+<p>日常行政管理制度，也就十几条吧，太多了没人记得住；如果某些制度条款已经没有人会触碰到，那就删掉，要不然就越来越臃肿了；如果有一些新的问题出现后需要约束，那就新增进去。如果有人初次违反管理制度，不会留有宽容度，第一次就必须照章处理掉，以免当事人以后还想着有第二次机会能够逃脱制度的约束，可能也会让当事人误会管理者在做执行的过程中可以随意而为。</p>
+<p>摄影师初次从公司领取数码相机的时候，公司会把相机附带第三方的检测报告；当摄影师离职的时候，也需要摄影师把相机拿到检测机构进行检测，并把检测报告与相机一并归还给公司。如果检测报告显示相机设备有人为损坏的地方，那就需要评估赔偿金额。</p>
+<p>涉及到一整天的公司大型团建活动不会安排所有人参加，会分成两批，这样就不会影响公司经营；婚博会也一样，不调动所有人去婚博会现场，店内也可以正常接待客户。</p>
+<p><strong>关于客户服务体验感，不只做服务客户过程中的要求，管理动作必须要前置</strong>。</p>
+<ul>
+<li>写错客户名字，罚款500元：如果叫错客户的名字，会给客户带来不尊重不重视的不良感受，而且可能会导致流程线上的其他环节出错，所以要从源头解决问题。</li>
+<li>员工必须要有打招呼的习惯，为了避免员工说自己没看见有人进门，那就在门上安装感应器，只要有人进店就会有提醒，不能有找借口的机会。</li>
+<li>虽然接送客户往返公司与拍摄地的司机不是公司编制内员工，但司机需要接受公司服务标准的约束。司机是否提供了真诚的服务、车况是否达标？摄影师在车上有没有吸烟和吃槟榔？摄影团队与外包合作方的司机团队相互监督，相互之间形成约束。</li>
+<li>由于服务的客户消费均价在8000元以上，为了体现专业度和良好的品质，在公司工作的过程中，不可以在任何空间吸烟和吃槟郎，违反一次罚款200元；</li>
+<li>有些客户就是想要拍摄夕阳，但天气原因我们无法确保做到，所以只好从销售端解决客户需求，告诉客户不能确保一定就能够拍到夕阳，正视因天气问题无法保证的事实。</li>
+</ul>
+<p><strong>关于技术团队管理方面，设专人负责技术提升，另设专人负责行政管理</strong>。</p>
+<ul>
+<li>只要能力够，不需要非得等一年才能晋级为摄影师或化妆师，也不需要非得按照先来后到进行排队晋级，一切看努力和能力。</li>
+<li>新晋摄影师1个月只拍4对客户，只要有1对客户不满意就需要回炉再造。所有摄影师的档期由客户选购，由市场决定。如果1个月内服务不足10对客户，则需要停拍，重新学习摄影、服务等……摄影师如果想离职，需提前3个月提出离职申请，因为一般会卖档期不会超过三个月。（记得还在艾特工作的时候，我曾建议公司将影场开放，把公司内所有摄影师和化妆师组成多个摄影工作室，并把他们的作品放网上进行展示，由客户自行挑选自己喜欢的风格来决定摄影团队的工作档期……然而，被无视。）</li>
+<li>关于设计师的成长，一个新员工需要学习2个月才可以正式独立处理客户的照片。入职第一个月先去摄影部、化妆部、礼服部、门市部工作，了解摄影师的思想、影场及外景地的特点，了解服装搭配的缘由，了解化妆的特点，了解客户的需求……第二个月才会在设计部由导师一对一培训处理客户照片。</li>
+</ul>
+<hr />
+<p>陈先生之所以能做到30%以上的经营利润，最重要的两件事情是：<strong>重视客户的体验感；重视核心竞争力的建设</strong>。</p>
+
+                </div>
+
+            </article>
+
+
+            
+                
+	<div class="mod-post__foot">
+	 文章标签: 
+     
+        <a href="/tag/jing-ying/">经营</a>
+     
+     </br>
+	</div>
+
+                    
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/remeberme/">一整天都泡在爱的怀抱里</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/log-2021/">2021年随笔合集</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>
