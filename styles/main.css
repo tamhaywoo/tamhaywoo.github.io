@@ -82,6 +82,12 @@ em {
   font-weight: 600;
 }
 
+del {
+  text-decoration: line-through;
+  color: #707070;
+  text-decoration-thickness: 3px;
+}
+
 blockquote {
   color: #707070;
   padding: 0 10px;
@@ -332,7 +338,7 @@ figure { margin: 1.5em 0; }
 }
 
 .mod-post__meta  { margin-bottom: 40px; }
-.mod-post__foot  { margin-top: 60px; }
+.mod-post__foot  { margin-top: 20px; }
 .mod-post__poster { margin-top: 10px; }
 
 .mod-post__entry {
@@ -354,11 +360,14 @@ figure { margin: 1.5em 0; }
 .mod-post__entry h4 { font-size: 15px; margin: 8px 0; font-weight: 600; }
 .mod-post__entry a {
   color: #EC5858;
-  font-weight: 500;
+  font-weight: bold;
+}
+.mod-post__entry a:visited {
+  font-weight: bold;
 }
 .mod-post__entry blockquote a {
   color: #707070;
-  font-weight: 400;
+  font-weight: bold;
 }
 .mod-post__entry blockquote a:hover {
   color: var(--accent-color);
@@ -370,6 +379,30 @@ figure { margin: 1.5em 0; }
   word-wrap: break-word;
   font-size: 14px;
   color: #404040;
+}
+
+/* 针对包含 checkbox 的列表项移除圆点 */
+.wzulli ul li input[type="checkbox"],
+.wzulli ol li input[type="checkbox"] {
+  margin-left: -1.5em;
+  margin-right: 4px;
+}
+
+/* 使用 :not() 选择器确保普通列表保持圆点 */
+.wzulli ul:not(:has(input[type="checkbox"])) li,
+.wzulli ol:not(:has(input[type="checkbox"])) li {
+  list-style: disc;
+}
+
+/* 针对包含 checkbox 的列表项 */
+.wzulli ul:has(input[type="checkbox"]) li,
+.wzulli ol:has(input[type="checkbox"]) li {
+  list-style: none;
+}
+
+.wzulli ul:has(input[type="checkbox"]),
+.wzulli ol:has(input[type="checkbox"]) {
+  list-style: none;
 }
 
 .post-item {
