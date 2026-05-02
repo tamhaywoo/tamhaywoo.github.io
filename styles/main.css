@@ -88,6 +88,36 @@ del {
   text-decoration-thickness: 3px;
 }
 
+.skills-life {
+  margin: 15px 0;
+}
+.skills-life__item {
+  margin-bottom: 12px;
+}
+.skills-life__label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+.skills-life__name {
+  font-weight: 500;
+}
+.skills-life__percent {
+  color: var(--text-muted);
+}
+.skills-life__bar {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.skills-life__progress {
+  height: 100%;
+  background: var(--accent-color);
+  border-radius: 3px;
+}
+
 blockquote {
   color: #707070;
   padding: 0 10px;
@@ -341,6 +371,28 @@ figure { margin: 1.5em 0; }
 .mod-post__foot  { margin-top: 20px; }
 .mod-post__poster { margin-top: 10px; }
 
+.post-tags {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px dashed var(--border-color);
+}
+.post-tags-label {
+  margin-right: 5px;
+  color: var(--text-muted);
+}
+.post-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  margin: 5px 5px 5px 0;
+  font-size: 13px;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
+}
+.post-tag:hover {
+  color: var(--accent-color);
+}
+
 .mod-post__entry {
   text-align: justify;
 }
@@ -361,6 +413,9 @@ figure { margin: 1.5em 0; }
 .mod-post__entry a {
   color: #EC5858;
   font-weight: bold;
+}
+.mod-post__entry a:hover {
+  color: #66DE93;
 }
 .mod-post__entry a:visited {
   font-weight: bold;
@@ -990,6 +1045,9 @@ body.dark-theme {
 .dark-theme .mod-post__entry p { color: var(--dark-text); }
 .dark-theme .mod-post__entry img { opacity: 0.7; }
 .dark-theme .mod-post__entry a { color: #EC5858; }
+.dark-theme .mod-post__entry a:hover { color: #66DE93; }
+.dark-theme .post-tag { background: rgba(255, 255, 255, 0.05); }
+.dark-theme .post-tags { border-top-color: var(--dark-border); }
 
 .dark-theme pre { background: #282a30; }
 .dark-theme em { color: inherit; }
@@ -997,6 +1055,7 @@ body.dark-theme {
 .dark-theme ul li { color: #9a9da5; }
 .dark-theme blockquote { color: #9898a0; border-left-color: var(--accent-color); }
 .dark-theme hr { border-top-color: var(--dark-border); }
+.dark-theme .skills-life__bar { background: rgba(255, 255, 255, 0.1); }
 .dark-theme .mod-post__entry table th,
 .dark-theme .mod-post__entry table td {
   border-color: var(--dark-border);
