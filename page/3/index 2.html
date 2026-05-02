@@ -1,0 +1,582 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.1.1">
+    <title>百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    <script>
+    // declaraction of document.ready() function.
+    (function () {
+        var ie = !!(window.attachEvent && !window.opera);
+        var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
+        var fn = [];
+        var run = function () {
+            for (var i = 0; i < fn.length; i++) fn[i]();
+        };
+        var d = document;
+        d.ready = function (f) {
+            if (!ie && !wk && d.addEventListener)
+                return d.addEventListener('DOMContentLoaded', f, false);
+            if (fn.push(f) > 1) return;
+            if (ie)
+                (function () {
+                    try {
+                        d.documentElement.doScroll('left');
+                        run();
+                    } catch (err) {
+                        setTimeout(arguments.callee, 0);
+                    }
+                })();
+            else if (wk)
+                var t = setInterval(function () {
+                    if (/^(loaded|complete)$/.test(d.readyState))
+                        clearInterval(t), run();
+                }, 0);
+        };
+    })();
+
+
+    document.ready(
+        function () {
+            var _Blog = window._Blog || {};
+
+            const getSystemTheme = () => {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            };
+
+            const configDefault = 'light';
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme');
+            const initialTheme = currentTheme || configDefault || getSystemTheme();
+            const isDark = initialTheme === 'dark';
+
+            const updateButtons = (dark) => {
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (dark) {
+                    if (sunBtn) sunBtn.style.display = 'none';
+                    if (moonBtn) moonBtn.style.display = 'inline-block';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'none';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'inline-block';
+                } else {
+                    if (sunBtn) sunBtn.style.display = 'inline-block';
+                    if (moonBtn) moonBtn.style.display = 'none';
+                    if (mobileSunBtn) mobileSunBtn.style.display = 'inline-block';
+                    if (mobileMoonBtn) mobileMoonBtn.style.display = 'none';
+                }
+            };
+
+            const updateThemeColor = (dark) => {
+                const themeColor = dark ? '#292a2d' : '#ffffff';
+                const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+                if (metaTags.length > 0) {
+                    // 保留第一个，移除其他的，避免重复
+                    for (let i = 1; i < metaTags.length; i++) {
+                        metaTags[i].remove();
+                    }
+                    metaTags[0].setAttribute('content', themeColor);
+                    metaTags[0].removeAttribute('media');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = themeColor;
+                    document.head.appendChild(meta);
+                }
+            };
+
+            const applyTheme = (dark) => {
+                const body = document.getElementsByTagName('body')[0];
+                if (dark) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+                updateButtons(dark);
+                updateThemeColor(dark);
+            };
+
+            // Initial application
+            applyTheme(isDark);
+            if (!currentTheme) {
+                window.localStorage && window.localStorage.setItem('theme', initialTheme);
+            }
+
+            _Blog.toggleTheme = function () {
+                const toggleFunc = (e) => {
+                    // Prevent bubbling if needed, though buttons are distinct now
+                    if (e) e.stopPropagation();
+
+                    const body = document.getElementsByTagName('body')[0];
+                    const isCurrentlyDark = body.classList.contains('dark-theme');
+
+                    if (isCurrentlyDark) {
+                        body.classList.remove('dark-theme');
+                        updateButtons(false);
+                        window.localStorage && window.localStorage.setItem('theme', 'light');
+                    } else {
+                        body.classList.add('dark-theme');
+                        updateButtons(true);
+                        window.localStorage && window.localStorage.setItem('theme', 'dark');
+                    }
+                };
+
+                const sunBtn = document.getElementById("theme-toggle-sun");
+                const moonBtn = document.getElementById("theme-toggle-moon");
+                const mobileSunBtn = document.getElementById("mobile-theme-toggle-sun");
+                const mobileMoonBtn = document.getElementById("mobile-theme-toggle-moon");
+
+                if (sunBtn) sunBtn.addEventListener('click', toggleFunc);
+                if (moonBtn) moonBtn.addEventListener('click', toggleFunc);
+                if (mobileSunBtn) mobileSunBtn.addEventListener('click', toggleFunc);
+                if (mobileMoonBtn) mobileMoonBtn.addEventListener('click', toggleFunc);
+            };
+            _Blog.toggleTheme();
+
+            if (window.matchMedia && !configDefault) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    applyTheme(e.matches);
+                    window.localStorage && window.localStorage.setItem('theme', newTheme);
+                });
+            }
+        }
+    );
+</script>
+
+<script>
+    // Reading Progress Component
+    document.addEventListener('DOMContentLoaded', () => {
+        const progressValue = document.querySelector('.reading-value');
+        const progressCircle = document.querySelector('.progress-ring__circle');
+        const container = document.querySelector('.reading-progress-container');
+
+        // Exit if elements don't exist (e.g., not on a post page)
+        if (!progressValue || !progressCircle || !container) {
+            return;
+        }
+
+        // SVG Circle setup
+        const radius = progressCircle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+
+        progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            progressValue.textContent = `${Math.round(safePercent)}%`;
+            const offset = circumference - (safePercent / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+
+        function onScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (scrollHeight <= 0) {
+                setProgress(0);
+                return;
+            }
+
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            setProgress(scrollPercent);
+
+            // Show/Hide logic: Show if scrolled more than 100px
+            if (scrollTop > 100) {
+                container.classList.add('show');
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Initialize
+        onScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', onScroll);
+    });
+</script>
+
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="我会忘记一切，包括我自己。">
+<link rel="canonical" href="https://tam.haywoo.com/page/3/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"百川随笔","url":"https://tam.haywoo.com","description":"我会忘记一切，包括我自己。","potentialAction":{"@type":"SearchAction","query-input":"required name=search_term_string","target":"https://tam.haywoo.com/search?q={search_term_string}"}}</script>
+<meta property="og:title" content="百川随笔">
+<meta property="og:description" content="我会忘记一切，包括我自己。">
+<meta property="og:url" content="https://tam.haywoo.com/page/3/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/page/3/">
+<meta name="twitter:title" content="百川随笔">
+<meta name="twitter:description" content="我会忘记一切，包括我自己。">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+        
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "百川随笔",
+      "description": "我会忘记一切，包括我自己。",
+      "keywords": "",
+      "url": "https://tam.haywoo.com"
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "黑苹果配置文件EFI",
+      "description": "一些经过自己验证的可以用于日常工作的黑苹果配置文件，可以在GitHub上下载。 配置 A： 项目 备注信息 主板 ASUS EX-H310M-V3 CPU Intel i5 8400 内存 GLOWAY 2666Mhz 16G X 2 显卡 AMD Radeon R9 380 4GB 引导工具 Clover 机型设置 Macmini8,1 系统版本 macO...",
+      "keywords": "黑苹果, EFI",
+      "url": "/post/hackintosh-efi/",
+      
+      "published": "2022-12-12T09:36:39+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "2022年随笔合集",
+      "description": "2022-01-03 利他的力量无穷闪耀，让很多的决定不再犹豫，从此内心有光！ 2022-02-01 一个有意义的目标必须能让我们提升自己。这就意味着我们必须离开舒适区。 如果你明确知道一个目标应该怎么实现，那说明这个目标还是太简单了。 2022-03-25 一大早，想起要给同一天过生日的馨凤买鲜花，倒是她给我买的蛋糕先送到，应该是她比我先行动。我没留意看她...",
+      "keywords": "随笔",
+      "url": "/post/log-2022/",
+      
+      "published": "2022-10-06T17:27:05+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "一整天都泡在爱的怀抱里",
+      "description": " 昨天一整天都沉浸在爱的世界里，感受别人对我的关爱，幸福感满满。 昨天是公元2022年3月25日，农历壬寅年（虎）二月廿三。不管是公历还是农历，都是我的生日。（每隔19年，公历生日和农历生日会重合在同一天。） 我没有安排休息，到公司，才想起我的助手刘馨凤与我是同一天过生日，赶紧给她定一束鲜花，留的是她的电话号码。 她接了个电话，然后去楼下拿快递。进公司的时候...",
+      "keywords": "随笔, 自白, 生日",
+      "url": "/post/remeberme/",
+      
+      "published": "2022-03-26T15:18:14+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "陈先生的摄影企业经营分享",
+      "description": "在摄影行业摸爬滚打快20年了，见证了很多大大小小的摄影企业被新一代的年轻人抛弃、此起彼伏地淹没在时间里。 以前大家把拍证件照的地方叫做“照相馆”，把拍婚纱照的地方叫“影楼”。后来，批量化、标准化拍摄婚纱照的地方叫“影楼”，而满足顾客个性需求、有自己独特摄影风格的地方被称之为“工作室”。如今街头上已经很难看到立等可取的“照相馆”，却多了很多主打各类不同摄影风格...",
+      "keywords": "经营",
+      "url": "/post/chendayong/",
+      
+      "published": "2021-12-21T17:51:51+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "2021年随笔合集",
+      "description": "2021-01-05 会后到家已是十点多了，夫人在辅导SEVEN的学习；岳母在陪THREE讲照片上的记忆；我把杯子装上朝日啤酒，坐在电炉前看一段不曾了解的历史。 2021-02-23 时间很少，生命有限。感谢愿意付出时间在一起的人。 2021-03-07 成就感，可以是源于一次次的目标突破，也可以是源于解决问题的能力得到提升。 2021-03-27 什么是领...",
+      "keywords": "随笔",
+      "url": "/post/log-2021/",
+      
+      "published": "2021-10-01T17:26:04+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "凌晨2点还不睡觉的崽",
+      "description": "瑞小宝凭借着萌萌的神态和自如的表达让我欣喜，却在某些时候让我犯难。其中最难面对的，是他晚上睡觉时没有时间概念，就算行为上已经看得到哈欠连连，却能精神饱满，找着各种理由与我们进行互动。 当小宝在凌晨2点仍然保持着4小时前刚爬上床的那种活力，当我想通过满足他观看挖机的视频以及尝试让他乏味犯困自然睡着的策略失败，当我数次间歇性处于入睡的状态却被他吵醒，我就怒火中烧...",
+      "keywords": "睡眠, 瑞小宝",
+      "url": "/post/three-2/",
+      
+      "published": "2021-05-02T11:16:12+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "从无欲无求到有所追求",
+      "description": " 无欲无求之人的幸福指数都比较高，知足常乐。 各类宗教大师追求信仰的大义名分，对个人物质需求放得很低，清心寡欲甚至没有家庭的牵绊。这种人其实内心非常强大，抛家弃子可不是任何人能够做到的。 这样的大义名分，又何尝不是一种自私。 对于需要承担家庭责任的人来说，若内心没有什么物质追求，可不是一件好事。 如果没有让家人过得更好的念头，不追求物质的东西，更好的车、更好...",
+      "keywords": "随笔, 自白",
+      "url": "/post/zhuiqiu/",
+      
+      "published": "2020-10-11T16:48:18+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "2020年随笔合集",
+      "description": "2020-10-05 一个真正成熟的管理者看谁都顺眼，承认并且接受真正的多样性。 看顺眼并不代表认同，不代表认为对方就是完全正确的，并不代表“换成是我，也会这么做”。他可能一辈子都不会那么做，但是他知道这是站在对方的角度后，对方的选择，对方的价值观，对方的逻辑。 一个人同时保有两种相反的观念，还能正常行事，这是第一流智慧的标志。 2020-10-19 记得老...",
+      "keywords": "随笔",
+      "url": "/post/log-2020/",
+      
+      "published": "2020-10-01T17:24:54+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "见过死亡，照进现实",
+      "description": "昨天下午六点半左右，BOSS WU见我收拾东西准备下班，就询问：＂怎么这么急着下班，家里有什么事吗？＂。 ＂是的，今天我要赶时间开车去一趟张家界。明天是岳父的忌日，我去他坟前给他多烧些纸钱。然后下午返回长沙。＂说完，我就拎着包离开了办公室。 岳父的老家在张家界市慈利县杉木桥镇。他算是落叶归根了，在老家的房子去世，安葬在自家的地里。 只是，56岁的他一定还没有...",
+      "keywords": "随笔, 死亡",
+      "url": "/post/dieornow/",
+      
+      "published": "2020-09-02T09:03:24+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "2019年随笔合集",
+      "description": "2019-05-16 人们常说：“时间就是生命”。换句话说：“愿意花时间去做的事情，是不是可以理解为在用生命践行呢？愿意花时间和你在一起的人，是不是可以理解为愿意用生命陪伴你呢？” 嗯，感觉生命值在下降的时候，就开始思考这些了。 2019-05-29 对于团队的成长来说，做事的方法很重要。更重要的是让团队认识到＂为什么而做？＂ 解开心门，认识自己。心门不开，...",
+      "keywords": "随笔",
+      "url": "/post/log-2019/",
+      
+      "published": "2019-10-01T16:46:56+08:00",
+      "author": ""
+    }
+    
+  ]
+}
+</script>
+
+            <script>
+                (function () {
+                    const getSystemTheme = () => {
+                        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            return 'dark';
+                        }
+                        return 'light';
+                    };
+
+                    const configDefault = 'light';
+                    const savedTheme = localStorage.getItem('theme');
+                    const theme = savedTheme || configDefault || getSystemTheme();
+
+                    if (theme === 'dark') {
+                        document.body.classList.add('dark-theme');
+                    }
+
+                    if (!savedTheme) {
+                        localStorage.setItem('theme', theme);
+                    }
+                })();
+            </script>
+            <div class="wrapper">
+                <div class="main">
+                    <div class="mod-index__logo">
+                        <a href="/">
+                            
+                                
+                                    <img class="mod-index__logo" alt="avatar" src="/images/theme/me.jpg">
+                                    
+                        </a>
+                    </div>
+
+                    <div class="container">
+                        <div class="intro">
+                            <h1 class="nickname">
+                                百川随笔
+                            </h1>
+                            <div class="description">
+                                <p>我会忘记一切，包括我自己。</p>
+
+                            </div>
+
+                            <div class="zuobiao">
+                                <i class="ico_map"></i>
+                                长沙
+                                    <span style="margin-left: 30px">
+                                        <!-- Sun (Light Mode) -->
+                                        <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun"
+                                            aria-label="Switch to dark mode">
+                                            <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24"
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"
+                                                    fill="currentColor"></path>
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z"
+                                                    fill="currentColor"></path>
+                                            </svg>
+                                        </button>
+                                        <!-- Moon (Dark Mode) -->
+                                        <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon"
+                                            aria-label="Switch to light mode">
+                                            <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24"
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z"
+                                                    fill="currentColor"></path>
+                                            </svg>
+                                        </button>
+                                    </span>
+                            </div><br />
+
+
+                            <div class="intro-quote">
+                                <p>" 他想，我的人生之路确实古怪曲折。少年时，我只知神明和献祭。青年时，我只知苦修、思考和禅定；我渴求梵天，崇拜永恒的阿特曼。壮年时，我追随忏悔者生活在林中，漠视肉体，忍受酷暑严寒和饥饿。之后我又奇迹般地与佛陀和他至高的法义相遇，关乎圆一世界的真理如血液般在我体内奔涌，但我又不得不告别佛陀及其伟大学说。 "</p>
+                                <p style="margin-left: 8rem;font-size: 8pt;">—— 《悉达多》
+                                </p>
+                            </div><br />
+
+
+                            <div class="menu links">
+                                
+                                    
+                                            <a class="menu-item" href="/">
+                                                首页
+                                            </a>
+                                            
+                                     · 
+                                            <a class="menu-item" href="/post">
+                                                博客
+                                            </a>
+                                            
+                                     · 
+                                            <a class="menu-item" href="/memos">
+                                                闪念
+                                            </a>
+                                            
+                                     · 
+                                            <a class="menu-item" href="/archives">
+                                                归档
+                                            </a>
+                                            
+                                     · 
+                                            <a class="menu-item" href="/tags">
+                                                标签
+                                            </a>
+                                            
+                                     · 
+                                            <a class="menu-item" href="/links">
+                                                友链
+                                            </a>
+                                            
+                                     · 
+                                            <a class="menu-item" href="/post/about">
+                                                关于
+                                            </a>
+                                            
+                            </div>
+
+                            <div class="social-container">
+                                
+                                    
+                                            
+                                    
+                                            
+                                    
+                                            
+                                    
+                                            
+                                    
+                                            
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <footer id="footer" class="index_footer">
+                        
+                    </footer>
+
+                </div>
+
+            </div>
+
+            
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>
