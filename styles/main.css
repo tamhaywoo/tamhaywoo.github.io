@@ -137,7 +137,25 @@ blockquote {
 .mod-post__entry table td {
   padding: 8px 10px;
   border: 1px solid var(--border-color);
-  text-align: left;
+}
+
+.mod-post__entry table th[style*="text-align: right"],
+.mod-post__entry table td[style*="text-align: right"],
+.mod-post__entry table th[style*="text-align:right"],
+.mod-post__entry table td[style*="text-align:right"],
+.mod-post__entry table th.right,
+.mod-post__entry table td.right,
+.mod-post__entry table th:nth-child(1):last-child {
+  text-align: right;
+}
+
+.mod-post__entry table th[style*="text-align: center"],
+.mod-post__entry table td[style*="text-align: center"],
+.mod-post__entry table th[style*="text-align:center"],
+.mod-post__entry table td[style*="text-align:center"],
+.mod-post__entry table th.center,
+.mod-post__entry table td.center {
+  text-align: center;
 }
 
 .mod-post__entry table th {
