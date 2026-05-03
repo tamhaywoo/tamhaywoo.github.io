@@ -46,6 +46,31 @@
 
     
 <script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Theme toggle buttons
+        var sunBtn = document.getElementById('theme-toggle-sun');
+        var moonBtn = document.getElementById('theme-toggle-moon');
+        
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark-theme');
+            if (isDark) {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        if (sunBtn) {
+            sunBtn.addEventListener('click', toggleTheme);
+        }
+        if (moonBtn) {
+            moonBtn.addEventListener('click', toggleTheme);
+        }
+    });
+
     // Fetch random quote from API (override default text)
     document.addEventListener('DOMContentLoaded', function() {
         const quoteContainer = document.getElementById('quote-container');
@@ -86,7 +111,7 @@
     </script>
 <meta name="description" content="曾经历过一些可能一念之间就是生死两茫茫的事情，有些事情在当时也许并不觉得害怕，只是经历过后再次回想起来的时候，就会觉得自己还是很幸运的。">
 <link rel="canonical" href="https://tam.haywoo.com/post/haipa/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"一些后怕的事","url":"https://tam.haywoo.com/post/haipa/","description":"曾经历过一些可能一念之间就是生死两茫茫的事情，有些事情在当时也许并不觉得害怕，只是经历过后再次回想起来的时候，就会觉得自己还是很幸运的。","datePublished":"2024-05-04T15:55:07+08:00","dateModified":"2026-05-02T09:38:25+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"一些后怕的事","url":"https://tam.haywoo.com/post/haipa/","description":"曾经历过一些可能一念之间就是生死两茫茫的事情，有些事情在当时也许并不觉得害怕，只是经历过后再次回想起来的时候，就会觉得自己还是很幸运的。","datePublished":"2024-05-04T15:55:07+08:00","dateModified":"2026-05-03T09:08:17+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/haipa/","name":"一些后怕的事","position":2}]}</script>
 <meta property="og:title" content="一些后怕的事">
 <meta property="og:description" content="曾经历过一些可能一念之间就是生死两茫茫的事情，有些事情在当时也许并不觉得害怕，只是经历过后再次回想起来的时候，就会觉得自己还是很幸运的。">
@@ -215,7 +240,7 @@
 <p>我觉得应该是车子动力不足了，于是让车上的人下车，看看是不是因为载重大及马力小的原因导致的动力缺失。大家下车后，我把车掉了个头，然后往修水县城开去。在距离修理厂不到一百米的地方，汽车再也开不动了，修理厂的师傅走过来帮忙，和我一起把车推到修理车间。检查后发现原来是水箱被碎石搞坏了，导致离合器过热罢工。</p>
 <p>能够从渺无人烟的地方把损坏的MG3平安开到城镇的修理厂，我觉得自己还是蛮幸运的。</p>
 <hr />
-<p>最后更新：<code>2024 年 5 月 10 日</code></p>
+<p>最后更新：2024 年 5 月 10 日</p>
 
                 </div>
 

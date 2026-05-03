@@ -46,6 +46,31 @@
 
     
 <script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Theme toggle buttons
+        var sunBtn = document.getElementById('theme-toggle-sun');
+        var moonBtn = document.getElementById('theme-toggle-moon');
+        
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark-theme');
+            if (isDark) {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        if (sunBtn) {
+            sunBtn.addEventListener('click', toggleTheme);
+        }
+        if (moonBtn) {
+            moonBtn.addEventListener('click', toggleTheme);
+        }
+    });
+
     // Fetch random quote from API (override default text)
     document.addEventListener('DOMContentLoaded', function() {
         const quoteContainer = document.getElementById('quote-container');
@@ -86,7 +111,7 @@
     </script>
 <meta name="description" content="打麻将这个事情，最初是在夫人老家慈利上桌的，那时候我是真的不会（现在也不专），语言不通的亲戚们硬拉着我在一起凑脚。张家界打麻将的规则就是常德麻将的规则，有红中可以抵任何牌，还可以抓四个鸟，变动的空间非常大，一不小心就放炮了。好在亲戚们打得不大，我没出什么钱，两三百块钱就能了事。 正儿八经使钱打麻将，是从2021年2月份开始的。第二次则是2021年6月，从那之后，每个月都会安排打麻将的场次，到现在也是如此，从无间断。我算了一下打麻将的频次，2021年差不多是10天安排了一次，2022年是4.5天一次，2023年是5.2天一次，2024年目前是8天一次。">
 <link rel="canonical" href="https://tam.haywoo.com/post/majiang/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"打麻将的这些年","url":"https://tam.haywoo.com/post/majiang/","description":"打麻将这个事情，最初是在夫人老家慈利上桌的，那时候我是真的不会（现在也不专），语言不通的亲戚们硬拉着我在一起凑脚。张家界打麻将的规则就是常德麻将的规则，有红中可以抵任何牌，还可以抓四个鸟，变动的空间非常大，一不小心就放炮了。好在亲戚们打得不大，我没出什么钱，两三百块钱就能了事。 正儿八经使钱打麻将，是从2021年2月份开始的。第二次则是2021年6月，从那之后，每个月都会安排打麻将的场次，到现在也是如此，从无间断。我算了一下打麻将的频次，2021年差不多是10天安排了一次，2022年是4.5天一次，2023年是5.2天一次，2024年目前是8天一次。","datePublished":"2024-05-15T23:17:34+08:00","dateModified":"2026-05-02T10:09:00+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"打麻将的这些年","url":"https://tam.haywoo.com/post/majiang/","description":"打麻将这个事情，最初是在夫人老家慈利上桌的，那时候我是真的不会（现在也不专），语言不通的亲戚们硬拉着我在一起凑脚。张家界打麻将的规则就是常德麻将的规则，有红中可以抵任何牌，还可以抓四个鸟，变动的空间非常大，一不小心就放炮了。好在亲戚们打得不大，我没出什么钱，两三百块钱就能了事。 正儿八经使钱打麻将，是从2021年2月份开始的。第二次则是2021年6月，从那之后，每个月都会安排打麻将的场次，到现在也是如此，从无间断。我算了一下打麻将的频次，2021年差不多是10天安排了一次，2022年是4.5天一次，2023年是5.2天一次，2024年目前是8天一次。","datePublished":"2024-05-15T23:17:34+08:00","dateModified":"2026-05-03T09:08:23+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/majiang/","name":"打麻将的这些年","position":2}]}</script>
 <meta property="og:title" content="打麻将的这些年">
 <meta property="og:description" content="打麻将这个事情，最初是在夫人老家慈利上桌的，那时候我是真的不会（现在也不专），语言不通的亲戚们硬拉着我在一起凑脚。张家界打麻将的规则就是常德麻将的规则，有红中可以抵任何牌，还可以抓四个鸟，变动的空间非常大，一不小心就放炮了。好在亲戚们打得不大，我没出什么钱，两三百块钱就能了事。 正儿八经使钱打麻将，是从2021年2月份开始的。第二次则是2021年6月，从那之后，每个月都会安排打麻将的场次，到现在也是如此，从无间断。我算了一下打麻将的频次，2021年差不多是10天安排了一次，2022年是4.5天一次，2023年是5.2天一次，2024年目前是8天一次。">
@@ -403,7 +428,7 @@
 <p>要说没有金钱的激励，就是打着好玩，我估计现在也不想上桌，似乎缺少了一些即时反馈。</p>
 <p>我知道为什么我打麻将大概率会输钱了。别人上桌的时候，就是奔着要赢钱去的。而我若只是想着好玩、不输，那么在目标感和努力程度上就会差了很大一截。另外，平时没有在打麻将方面花时间研究。如此这般，不就是要容易输钱一些么？</p>
 <hr />
-<p>最后更新：<code>2025 年 3 月 24 日</code></p>
+<p>最后更新：2025 年 3 月 24 日</p>
 
                 </div>
 

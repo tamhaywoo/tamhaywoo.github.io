@@ -46,6 +46,31 @@
 
     
 <script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Theme toggle buttons
+        var sunBtn = document.getElementById('theme-toggle-sun');
+        var moonBtn = document.getElementById('theme-toggle-moon');
+        
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark-theme');
+            if (isDark) {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        if (sunBtn) {
+            sunBtn.addEventListener('click', toggleTheme);
+        }
+        if (moonBtn) {
+            moonBtn.addEventListener('click', toggleTheme);
+        }
+    });
+
     // Fetch random quote from API (override default text)
     document.addEventListener('DOMContentLoaded', function() {
         const quoteContainer = document.getElementById('quote-container');
@@ -86,7 +111,7 @@
     </script>
 <meta name="description" content="借钱 前东家的老板一大早就找我借钱，说是急用做周转，半个月内就还给我。我下意识地想起，去年他也找我借钱给他救急，我刷了5张信用卡凑了几万块钱借给他，不计利息的那种，到目前为止还没有着落。 我知道他现在的境遇，每年各种节日前后都会有人到处找他，现在正好是端午节前，应该是有人要他还钱了。 盘了下自己有多少可以动用的资金，发现把银行卡里和微信钱包里的钱加起来都不够。最后只好如实相告，我帮不了&amp;hellip;">
 <link rel="canonical" href="https://tam.haywoo.com/post/zhisun/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"要懂得止损","url":"https://tam.haywoo.com/post/zhisun/","description":"借钱 前东家的老板一大早就找我借钱，说是急用做周转，半个月内就还给我。我下意识地想起，去年他也找我借钱给他救急，我刷了5张信用卡凑了几万块钱借给他，不计利息的那种，到目前为止还没有着落。 我知道他现在的境遇，每年各种节日前后都会有人到处找他，现在正好是端午节前，应该是有人要他还钱了。 盘了下自己有多少可以动用的资金，发现把银行卡里和微信钱包里的钱加起来都不够。最后只好如实相告，我帮不了\u0026hellip;","datePublished":"2019-06-13T18:29:49+08:00","dateModified":"2026-05-02T09:44:46+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"要懂得止损","url":"https://tam.haywoo.com/post/zhisun/","description":"借钱 前东家的老板一大早就找我借钱，说是急用做周转，半个月内就还给我。我下意识地想起，去年他也找我借钱给他救急，我刷了5张信用卡凑了几万块钱借给他，不计利息的那种，到目前为止还没有着落。 我知道他现在的境遇，每年各种节日前后都会有人到处找他，现在正好是端午节前，应该是有人要他还钱了。 盘了下自己有多少可以动用的资金，发现把银行卡里和微信钱包里的钱加起来都不够。最后只好如实相告，我帮不了\u0026hellip;","datePublished":"2019-06-13T18:29:49+08:00","dateModified":"2026-05-03T09:11:10+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/zhisun/","name":"要懂得止损","position":2}]}</script>
 <meta property="og:title" content="要懂得止损">
 <meta property="og:description" content="借钱 前东家的老板一大早就找我借钱，说是急用做周转，半个月内就还给我。我下意识地想起，去年他也找我借钱给他救急，我刷了5张信用卡凑了几万块钱借给他，不计利息的那种，到目前为止还没有着落。 我知道他现在的境遇，每年各种节日前后都会有人到处找他，现在正好是端午节前，应该是有人要他还钱了。 盘了下自己有多少可以动用的资金，发现把银行卡里和微信钱包里的钱加起来都不够。最后只好如实相告，我帮不了&amp;hellip;">
@@ -209,7 +234,7 @@
 <hr />
 <p>再往后一年多的时间，我免除了这两位的债务，合在一起大约是四五万的资金吧。</p>
 <hr />
-<p>最后更新：<code>2024年4月7日</code></p>
+<p>最后更新：2024年4月7日</p>
 
                 </div>
 

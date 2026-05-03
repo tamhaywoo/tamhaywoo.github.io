@@ -46,6 +46,31 @@
 
     
 <script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Theme toggle buttons
+        var sunBtn = document.getElementById('theme-toggle-sun');
+        var moonBtn = document.getElementById('theme-toggle-moon');
+        
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark-theme');
+            if (isDark) {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        if (sunBtn) {
+            sunBtn.addEventListener('click', toggleTheme);
+        }
+        if (moonBtn) {
+            moonBtn.addEventListener('click', toggleTheme);
+        }
+    });
+
     // Fetch random quote from API (override default text)
     document.addEventListener('DOMContentLoaded', function() {
         const quoteContainer = document.getElementById('quote-container');
@@ -86,7 +111,7 @@
     </script>
 <meta name="description" content="我第一次去北京是2014年8月，之后的2个月又去了2趟，那时候去北京是为了学习教练技术的课程。 今年7月，时隔9年，我和夫人带着大小宝以及岳母一起在北京游玩。这次北京游的主要起因，是夫人之前曾提出在大宝小学毕业考试之后参观北大清华，另外一个原因是岳母快要过60岁生日了，请她去北京旅游算是给她一个小小的生日礼物。（后记：参观清华北大对于孩子的成长帮助非常有限。另，不能进入北大清华校园内。） 安排&amp;hellip;">
 <link rel="canonical" href="https://tam.haywoo.com/post/beijing/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"暑期暴走北京城","url":"https://tam.haywoo.com/post/beijing/","description":"我第一次去北京是2014年8月，之后的2个月又去了2趟，那时候去北京是为了学习教练技术的课程。 今年7月，时隔9年，我和夫人带着大小宝以及岳母一起在北京游玩。这次北京游的主要起因，是夫人之前曾提出在大宝小学毕业考试之后参观北大清华，另外一个原因是岳母快要过60岁生日了，请她去北京旅游算是给她一个小小的生日礼物。（后记：参观清华北大对于孩子的成长帮助非常有限。另，不能进入北大清华校园内。） 安排\u0026hellip;","datePublished":"2023-07-07T18:22:13+08:00","dateModified":"2026-05-02T09:40:31+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"暑期暴走北京城","url":"https://tam.haywoo.com/post/beijing/","description":"我第一次去北京是2014年8月，之后的2个月又去了2趟，那时候去北京是为了学习教练技术的课程。 今年7月，时隔9年，我和夫人带着大小宝以及岳母一起在北京游玩。这次北京游的主要起因，是夫人之前曾提出在大宝小学毕业考试之后参观北大清华，另外一个原因是岳母快要过60岁生日了，请她去北京旅游算是给她一个小小的生日礼物。（后记：参观清华北大对于孩子的成长帮助非常有限。另，不能进入北大清华校园内。） 安排\u0026hellip;","datePublished":"2023-07-07T18:22:13+08:00","dateModified":"2026-05-03T09:09:31+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/beijing/","name":"暑期暴走北京城","position":2}]}</script>
 <meta property="og:title" content="暑期暴走北京城">
 <meta property="og:description" content="我第一次去北京是2014年8月，之后的2个月又去了2趟，那时候去北京是为了学习教练技术的课程。 今年7月，时隔9年，我和夫人带着大小宝以及岳母一起在北京游玩。这次北京游的主要起因，是夫人之前曾提出在大宝小学毕业考试之后参观北大清华，另外一个原因是岳母快要过60岁生日了，请她去北京旅游算是给她一个小小的生日礼物。（后记：参观清华北大对于孩子的成长帮助非常有限。另，不能进入北大清华校园内。） 安排&amp;hellip;">
@@ -318,7 +343,7 @@
 </tbody>
 </table>
 <hr />
-<p>最后更新：<code>2025 年 4 月 13 日</code></p>
+<p>最后更新：2025 年 4 月 13 日</p>
 
                 </div>
 

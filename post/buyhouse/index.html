@@ -46,6 +46,31 @@
 
     
 <script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Theme toggle buttons
+        var sunBtn = document.getElementById('theme-toggle-sun');
+        var moonBtn = document.getElementById('theme-toggle-moon');
+        
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark-theme');
+            if (isDark) {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        if (sunBtn) {
+            sunBtn.addEventListener('click', toggleTheme);
+        }
+        if (moonBtn) {
+            moonBtn.addEventListener('click', toggleTheme);
+        }
+    });
+
     // Fetch random quote from API (override default text)
     document.addEventListener('DOMContentLoaded', function() {
         const quoteContainer = document.getElementById('quote-container');
@@ -86,7 +111,7 @@
     </script>
 <meta name="description" content="自2002年参加工作到现在，陆续入手3套房，一路走来经历过特别困难的时候，但整体来看还算是比较平稳，反思自己当时的思考决策在大方向上没啥问题。现把对于买房有一些心得体会做下小结。 写这篇文章不是鼓励买房，只是记录买房时要考虑的问题。 关于买房，我的观点是：如果是大学本科文凭毕业，那就是21岁进入社会参加工作把？30岁之前不要买房。这9年时间里所积累的收入全部用来提升个人能力和积累创业资源，以及投入创业中，别用房子绑住了自己创业的勇气。 为什么要买房 给房东房租不如还房贷？有这种想法的人不适合买期房，因为你不知道什么时候才能真正交房，在这个等待过程中你既要交房租，又要还房贷，而且还需要准备装修资金。如果持有这种想法的人在买房时选择了期房且是借款筹资，而且房屋面积大、房屋单价高，那就意味着每月支出的费用要比平时多出三至四倍（交房租、还借款、还房贷、筹备装修款），风险特别大。 安全的做法是购买拎包入住的二手房，即便是还借款和还房贷，经济压力要小很多。">
 <link rel="canonical" href="https://tam.haywoo.com/post/buyhouse/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"买房的问题","url":"https://tam.haywoo.com/post/buyhouse/","description":"自2002年参加工作到现在，陆续入手3套房，一路走来经历过特别困难的时候，但整体来看还算是比较平稳，反思自己当时的思考决策在大方向上没啥问题。现把对于买房有一些心得体会做下小结。 写这篇文章不是鼓励买房，只是记录买房时要考虑的问题。 关于买房，我的观点是：如果是大学本科文凭毕业，那就是21岁进入社会参加工作把？30岁之前不要买房。这9年时间里所积累的收入全部用来提升个人能力和积累创业资源，以及投入创业中，别用房子绑住了自己创业的勇气。 为什么要买房 给房东房租不如还房贷？有这种想法的人不适合买期房，因为你不知道什么时候才能真正交房，在这个等待过程中你既要交房租，又要还房贷，而且还需要准备装修资金。如果持有这种想法的人在买房时选择了期房且是借款筹资，而且房屋面积大、房屋单价高，那就意味着每月支出的费用要比平时多出三至四倍（交房租、还借款、还房贷、筹备装修款），风险特别大。 安全的做法是购买拎包入住的二手房，即便是还借款和还房贷，经济压力要小很多。","datePublished":"2023-08-04T00:21:03+08:00","dateModified":"2026-05-02T09:40:09+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"买房的问题","url":"https://tam.haywoo.com/post/buyhouse/","description":"自2002年参加工作到现在，陆续入手3套房，一路走来经历过特别困难的时候，但整体来看还算是比较平稳，反思自己当时的思考决策在大方向上没啥问题。现把对于买房有一些心得体会做下小结。 写这篇文章不是鼓励买房，只是记录买房时要考虑的问题。 关于买房，我的观点是：如果是大学本科文凭毕业，那就是21岁进入社会参加工作把？30岁之前不要买房。这9年时间里所积累的收入全部用来提升个人能力和积累创业资源，以及投入创业中，别用房子绑住了自己创业的勇气。 为什么要买房 给房东房租不如还房贷？有这种想法的人不适合买期房，因为你不知道什么时候才能真正交房，在这个等待过程中你既要交房租，又要还房贷，而且还需要准备装修资金。如果持有这种想法的人在买房时选择了期房且是借款筹资，而且房屋面积大、房屋单价高，那就意味着每月支出的费用要比平时多出三至四倍（交房租、还借款、还房贷、筹备装修款），风险特别大。 安全的做法是购买拎包入住的二手房，即便是还借款和还房贷，经济压力要小很多。","datePublished":"2023-08-04T00:21:03+08:00","dateModified":"2026-05-03T09:09:25+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/buyhouse/","name":"买房的问题","position":2}]}</script>
 <meta property="og:title" content="买房的问题">
 <meta property="og:description" content="自2002年参加工作到现在，陆续入手3套房，一路走来经历过特别困难的时候，但整体来看还算是比较平稳，反思自己当时的思考决策在大方向上没啥问题。现把对于买房有一些心得体会做下小结。 写这篇文章不是鼓励买房，只是记录买房时要考虑的问题。 关于买房，我的观点是：如果是大学本科文凭毕业，那就是21岁进入社会参加工作把？30岁之前不要买房。这9年时间里所积累的收入全部用来提升个人能力和积累创业资源，以及投入创业中，别用房子绑住了自己创业的勇气。 为什么要买房 给房东房租不如还房贷？有这种想法的人不适合买期房，因为你不知道什么时候才能真正交房，在这个等待过程中你既要交房租，又要还房贷，而且还需要准备装修资金。如果持有这种想法的人在买房时选择了期房且是借款筹资，而且房屋面积大、房屋单价高，那就意味着每月支出的费用要比平时多出三至四倍（交房租、还借款、还房贷、筹备装修款），风险特别大。 安全的做法是购买拎包入住的二手房，即便是还借款和还房贷，经济压力要小很多。">
@@ -272,7 +297,7 @@
 <h3 id="heading-18">个人经济</h3>
 <p>如果当前有在经营事业或即将创业，但在住房上有刚性需求。尽管有全款购房的能力，我认为依然要选择贷款买房，保留一部分流动资金应对事业变化的风险。</p>
 <hr />
-<p>最后更新：<code>2023 年 09 月 03 日</code></p>
+<p>最后更新：2023 年 09 月 03 日</p>
 
                 </div>
 

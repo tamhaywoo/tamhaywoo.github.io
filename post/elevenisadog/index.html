@@ -46,6 +46,31 @@
 
     
 <script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Theme toggle buttons
+        var sunBtn = document.getElementById('theme-toggle-sun');
+        var moonBtn = document.getElementById('theme-toggle-moon');
+        
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark-theme');
+            if (isDark) {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        if (sunBtn) {
+            sunBtn.addEventListener('click', toggleTheme);
+        }
+        if (moonBtn) {
+            moonBtn.addEventListener('click', toggleTheme);
+        }
+    });
+
     // Fetch random quote from API (override default text)
     document.addEventListener('DOMContentLoaded', function() {
         const quoteContainer = document.getElementById('quote-container');
@@ -86,7 +111,7 @@
     </script>
 <meta name="description" content="2023年8月6日，从潮爷朋友圈看到他捡到了三只小狗，看样子应该是串串土狗，目前正在征集领养对象。考虑到现在的家庭情况，应该是可以养狗的，于是跑到河西让潮爷抓一只给我带回家。 带小狗回家前，去了一趟宠物医院，准备给它做一个全面检查，并且把细小和犬瘟的疫苗安排上。不过，宠物医院说小奶狗太小了，还喂养半个月到二十天的样子再带过去更合适。并且叮嘱不要带它出家门，以免感染病毒。 为什么叫它“狗十一” 在带它回家的路上，我就考虑了给它取名的问题。脑海里有这么几个名字：小伍、小六、十一。 我到家给大家介绍的时候说它的名字叫小伍，夫人觉得不太好，不如叫小小；SEVEN提议叫它十一，我觉得这不就是我之前想过的名字吗？挺好！ 经过讨论，家人一致同意给它取名为十一，大名为狗十一。 我翻译了一下为什么它叫狗十一：据潮爷说它是一条土狗，十和一组合在一起正好就是一个土字。狗十一也就是土狗的意思。 后来问起夫人为什么认同给狗子取名叫十一的时候，她说两个孩子的英文名加起来是十，狗子后来的，所以叫十一。">
 <link rel="canonical" href="https://tam.haywoo.com/post/elevenisadog/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"大名狗十一","url":"https://tam.haywoo.com/post/elevenisadog/","description":"2023年8月6日，从潮爷朋友圈看到他捡到了三只小狗，看样子应该是串串土狗，目前正在征集领养对象。考虑到现在的家庭情况，应该是可以养狗的，于是跑到河西让潮爷抓一只给我带回家。 带小狗回家前，去了一趟宠物医院，准备给它做一个全面检查，并且把细小和犬瘟的疫苗安排上。不过，宠物医院说小奶狗太小了，还喂养半个月到二十天的样子再带过去更合适。并且叮嘱不要带它出家门，以免感染病毒。 为什么叫它“狗十一” 在带它回家的路上，我就考虑了给它取名的问题。脑海里有这么几个名字：小伍、小六、十一。 我到家给大家介绍的时候说它的名字叫小伍，夫人觉得不太好，不如叫小小；SEVEN提议叫它十一，我觉得这不就是我之前想过的名字吗？挺好！ 经过讨论，家人一致同意给它取名为十一，大名为狗十一。 我翻译了一下为什么它叫狗十一：据潮爷说它是一条土狗，十和一组合在一起正好就是一个土字。狗十一也就是土狗的意思。 后来问起夫人为什么认同给狗子取名叫十一的时候，她说两个孩子的英文名加起来是十，狗子后来的，所以叫十一。","datePublished":"2023-08-07T10:55:24+08:00","dateModified":"2026-05-02T09:39:54+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"大名狗十一","url":"https://tam.haywoo.com/post/elevenisadog/","description":"2023年8月6日，从潮爷朋友圈看到他捡到了三只小狗，看样子应该是串串土狗，目前正在征集领养对象。考虑到现在的家庭情况，应该是可以养狗的，于是跑到河西让潮爷抓一只给我带回家。 带小狗回家前，去了一趟宠物医院，准备给它做一个全面检查，并且把细小和犬瘟的疫苗安排上。不过，宠物医院说小奶狗太小了，还喂养半个月到二十天的样子再带过去更合适。并且叮嘱不要带它出家门，以免感染病毒。 为什么叫它“狗十一” 在带它回家的路上，我就考虑了给它取名的问题。脑海里有这么几个名字：小伍、小六、十一。 我到家给大家介绍的时候说它的名字叫小伍，夫人觉得不太好，不如叫小小；SEVEN提议叫它十一，我觉得这不就是我之前想过的名字吗？挺好！ 经过讨论，家人一致同意给它取名为十一，大名为狗十一。 我翻译了一下为什么它叫狗十一：据潮爷说它是一条土狗，十和一组合在一起正好就是一个土字。狗十一也就是土狗的意思。 后来问起夫人为什么认同给狗子取名叫十一的时候，她说两个孩子的英文名加起来是十，狗子后来的，所以叫十一。","datePublished":"2023-08-07T10:55:24+08:00","dateModified":"2026-05-03T09:09:19+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/elevenisadog/","name":"大名狗十一","position":2}]}</script>
 <meta property="og:title" content="大名狗十一">
 <meta property="og:description" content="2023年8月6日，从潮爷朋友圈看到他捡到了三只小狗，看样子应该是串串土狗，目前正在征集领养对象。考虑到现在的家庭情况，应该是可以养狗的，于是跑到河西让潮爷抓一只给我带回家。 带小狗回家前，去了一趟宠物医院，准备给它做一个全面检查，并且把细小和犬瘟的疫苗安排上。不过，宠物医院说小奶狗太小了，还喂养半个月到二十天的样子再带过去更合适。并且叮嘱不要带它出家门，以免感染病毒。 为什么叫它“狗十一” 在带它回家的路上，我就考虑了给它取名的问题。脑海里有这么几个名字：小伍、小六、十一。 我到家给大家介绍的时候说它的名字叫小伍，夫人觉得不太好，不如叫小小；SEVEN提议叫它十一，我觉得这不就是我之前想过的名字吗？挺好！ 经过讨论，家人一致同意给它取名为十一，大名为狗十一。 我翻译了一下为什么它叫狗十一：据潮爷说它是一条土狗，十和一组合在一起正好就是一个土字。狗十一也就是土狗的意思。 后来问起夫人为什么认同给狗子取名叫十一的时候，她说两个孩子的英文名加起来是十，狗子后来的，所以叫十一。">
@@ -1145,7 +1170,7 @@
 <li>2024-05-19，07:00，狗笼外有清水样呕吐物，带少量泡沫（狗笼内备有食物，没吃）</li>
 </ul>
 <hr />
-<p>最后更新：<code>2024 年 05 月 28 日</code></p>
+<p>最后更新：2024 年 05 月 28 日</p>
 
                 </div>
 
