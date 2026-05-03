@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
     <meta name="generator" content="Gridea Pro 1.1.1">
-    <title>404 | 百川随笔</title>
+    <title>游记 | 百川随笔</title>
 
     
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
@@ -71,6 +71,28 @@
         }
     });
 
+    // Footnotes support for Markdown footnotes [^1]
+    document.addEventListener('DOMContentLoaded', function() {
+        var entry = document.querySelector('.mod-post__entry');
+        
+        if (!entry) return;
+
+        var content = entry.innerHTML;
+        
+        // Find all [^n] reference patterns in content
+        // Handle links: <a href="encoded-url">^1</a>
+        content = content.replace(/<a[^>]*>(\^?)(\d+)(\^?)<\/a>/g, function(m, pre, num, post) {
+            return '<sup class="footnote-ref" id="fnref-' + num + '"><a href="#fn-' + num + '">' + num + '</a></sup>';
+        });
+        
+        // Handle raw [^1] references  
+        content = content.replace(/\[\^(\d+)\]/g, function(m, num) {
+            return '<sup class="footnote-ref" id="fnref-' + num + '"><a href="#fn-' + num + '">' + num + '</a></sup>';
+        });
+        
+        entry.innerHTML = content;
+    });
+
     // Fetch random quote from API (override default text)
     document.addEventListener('DOMContentLoaded', function() {
         const quoteContainer = document.getElementById('quote-container');
@@ -110,16 +132,16 @@
         })();
     </script>
 <meta name="description" content="半世浮沉终逝水，只言片语尚思君。">
-<link rel="canonical" href="https://tam.haywoo.com/404.html">
+<link rel="canonical" href="https://tam.haywoo.com/category/travelogue/">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"百川随笔","url":"https://tam.haywoo.com","description":"半世浮沉终逝水，只言片语尚思君。","potentialAction":{"@type":"SearchAction","query-input":"required name=search_term_string","target":"https://tam.haywoo.com/search?q={search_term_string}"}}</script>
 <meta property="og:title" content="百川随笔">
 <meta property="og:description" content="半世浮沉终逝水，只言片语尚思君。">
-<meta property="og:url" content="https://tam.haywoo.com/404.html">
+<meta property="og:url" content="https://tam.haywoo.com/category/travelogue/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="百川随笔">
 <meta property="og:image" content="/images/avatar.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://tam.haywoo.com/404.html">
+<meta name="twitter:url" content="https://tam.haywoo.com/category/travelogue/">
 <meta name="twitter:title" content="百川随笔">
 <meta name="twitter:description" content="半世浮沉终逝水，只言片语尚思君。">
 <meta name="twitter:image" content="/images/avatar.png">
@@ -187,13 +209,50 @@
 </header>
 <!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
 
-<div class="error-page">
-    <div class="error-page-container">
-        <h1>404</h1>
-        <p>你来到了没有知识的荒原</p>
-        <a href="/" class="back-home">返回首页</a>
-    </div>
-</div>
+<section class="section-body">
+    <header class="section-header u-textAlignCenter">
+        <h2>游记</h2>
+    </header>
+<article class="mod-archive">
+
+	<div class="mod-archive__item"><div class="mod-archive__year"></div>
+
+</br>
+
+		<ul class="mod-archive__list">
+            
+			<li class="mod-archive__post">
+				<a class="mod-archive__post-title" href="/post/318/">国道318线路，去过了。</a>
+				<time class="mod-archive__post-date" datetime="2025-11-17">2025-11-17</time>
+      		</li>
+            
+			<li class="mod-archive__post">
+				<a class="mod-archive__post-title" href="/post/gotojapan/">首次日本之行</a>
+				<time class="mod-archive__post-date" datetime="2024-12-04">2024-12-04</time>
+      		</li>
+            
+			<li class="mod-archive__post">
+				<a class="mod-archive__post-title" href="/post/xiesheng/">2001年的写生之旅</a>
+				<time class="mod-archive__post-date" datetime="2024-04-23">2024-04-23</time>
+      		</li>
+            
+			<li class="mod-archive__post">
+				<a class="mod-archive__post-title" href="/post/beijing/">暑期暴走北京城</a>
+				<time class="mod-archive__post-date" datetime="2023-07-07">2023-07-07</time>
+      		</li>
+            
+				
+		</ul>
+
+		<div class="posts-nav">
+            
+            
+            
+		</div>
+
+	</div>
+</article>
+    </section>
 
 <footer id="footer" class="footer">
     <nav>

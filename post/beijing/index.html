@@ -71,6 +71,105 @@
         }
     });
 
+    // Footnotes support for Markdown footnotes [^1]
+    document.addEventListener('DOMContentLoaded', function() {
+        var entry = document.querySelector('.mod-post__entry');
+        var footnotesContainer = document.querySelector('#post-footnotes');
+        
+        if (!entry) return;
+
+        // Get the raw HTML content
+        var content = entry.innerHTML;
+        
+        // Find footnote definitions - standard format [^1]: definition
+        var footnoteDefs = {};
+        var defRegex = /\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|\n\s*\n|\n\s*<h2|\n\s*$|$)/gi;
+        
+        var match;
+        while ((match = defRegex.exec(content)) !== null) {
+            var fnName = match[1];
+            var fnContent = match[2].trim().replace(/<br\s*[\/]?>/gi, ' ').replace(/\s+/g, ' ');
+            if (fnContent) {
+                footnoteDefs[fnName] = fnContent;
+            }
+        }
+        
+        // If no definitions found, try to find definitions at the end of content
+        // Look for pattern: [^1]: content at end of article
+        if (Object.keys(footnoteDefs).length === 0) {
+            // Try to find definitions by looking for [^name]: followed by content near end
+            var lastPart = content.slice(-2000); // Get last 2000 chars
+            var endDefRegex = /\[\^([^\]]+)\]:\s*([\s\S]{1,200}?)(?=<\/p>|$)/gi;
+            while ((match = endDefRegex.exec(lastPart)) !== null) {
+                var fnName = match[1];
+                var fnContent = match[2].trim().replace(/<br\s*[\/]?>/gi, ' ').replace(/\s+/g, ' ');
+                if (fnContent && fnContent.length > 2) {
+                    footnoteDefs[fnName] = fnContent;
+                }
+            }
+        }
+        
+        // Replace raw [^1] references with sup tags
+        var footnoteRefRegex = /\[\^([^\]]+)\](?!\s*:)/g;
+        content = content.replace(footnoteRefRegex, function(match, fnName) {
+            if (footnoteDefs[fnName]) {
+                return '<sup class="footnote-ref" id="fnref-' + fnName + '"><a href="#fn-' + fnName + '">[' + fnName + ']</a></sup>';
+            }
+            return match;
+        });
+        
+        // Handle Gridea's special link format: <a href="encoded-url">^1</a>
+        content = content.replace(/<a[^>]*>(\^?\d+)<\/a>/g, function(match, fnNum) {
+            fnNum = fnNum.replace(/^\^/, '');
+            if (footnoteDefs[fnNum]) {
+                return '<sup class="footnote-ref" id="fnref-' + fnNum + '"><a href="#fn-' + fnNum + '">[' + fnNum + ']</a></sup>';
+            }
+            return match;
+        });
+        
+        // Also handle links where href is URL-encoded content
+        var encodedLinkRegex = /<a\s+href="([^"]+)"\s*>(\^?\d+)<\/a>/g;
+        content = content.replace(encodedLinkRegex, function(match, href, fnNum) {
+            fnNum = fnNum.replace(/^\^/, '');
+            if (footnoteDefs[fnNum]) {
+                return '<sup class="footnote-ref" id="fnref-' + fnNum + '"><a href="#fn-' + fnNum + '">[' + fnNum + ']</a></sup>';
+            }
+            return match;
+        });
+        
+        // Remove footnote definitions from content
+        content = content.replace(/\[\^([^\]]+)\]:\s*[\s\S]*?(?=<br\s*[\/]?>|\n\s*\n|<h2|$)/gi, '');
+        content = content.replace(/<p>\s*<\/p>/g, '');
+        content = content.replace(/<p>\s*<br\s*[\/]?>\s*<\/p>/g, '');
+        
+        entry.innerHTML = content;
+        
+        // Create the footnotes section
+        var fnKeys = Object.keys(footnoteDefs);
+        if (fnKeys.length > 0 && footnotesContainer) {
+            var footnotesSection = document.createElement('section');
+            footnotesSection.className = 'footnotes';
+            
+            var heading = document.createElement('h4');
+            heading.className = 'footnotes-title';
+            heading.textContent = '参考资料';
+            footnotesSection.appendChild(heading);
+            
+            var ol = document.createElement('ol');
+            ol.className = 'footnotes-list';
+            
+            fnKeys.forEach(function(fnName) {
+                var li = document.createElement('li');
+                li.id = 'fn-' + fnName;
+                li.innerHTML = '<span class="footnote-content">' + footnoteDefs[fnName] + '</span> <a href="#fnref-' + fnName + '" class="footnote-backref">↩</a>';
+                ol.appendChild(li);
+            });
+            
+            footnotesSection.appendChild(ol);
+            footnotesContainer.appendChild(footnotesSection);
+        }
+    });
+
     // Fetch random quote from API (override default text)
     document.addEventListener('DOMContentLoaded', function() {
         const quoteContainer = document.getElementById('quote-container');
@@ -344,6 +443,8 @@
 </table>
 
                 </div>
+
+                <div id="post-footnotes" class="post-footnotes"></div>
 
             </article>
 

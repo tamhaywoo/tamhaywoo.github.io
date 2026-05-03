@@ -88,6 +88,22 @@ del {
   text-decoration-thickness: 3px;
 }
 
+sup {
+  font-size: 0.75em;
+  vertical-align: super;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
+sup a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+sup a:hover {
+  color: var(--link-hover);
+}
+
 .skills-life {
   margin: 15px 0;
 }
@@ -1103,6 +1119,91 @@ body.dark-theme {
 .dark-theme ol li,
 .dark-theme ul li { color: #9a9da5; }
 .dark-theme blockquote { color: #9898a0; border-left-color: var(--accent-color); }
+.dark-theme sup { color: var(--dark-muted); }
+.dark-theme sup a { color: #66DE93; }
+.dark-theme sup a:hover { color: #EC5858; }
+
+.dark-theme .footnotes {
+  border-top-color: var(--dark-border);
+  color: var(--dark-muted);
+}
+
+.dark-theme .footnotes-title {
+  color: var(--dark-text);
+}
+
+.dark-theme .footnotes-sep {
+  border-top-color: var(--dark-border);
+}
+
+.dark-theme .footnote-ref {
+  color: #66DE93;
+}
+
+.dark-theme .footnote-ref:hover {
+  color: #EC5858;
+}
+
+.footnotes {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.footnotes-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  color: var(--text-color);
+}
+
+.post-footnotes {
+  margin-top: 30px;
+}
+
+.footnotes-sep {
+  margin: 30px 0 20px;
+  border: none;
+  border-top: 1px solid var(--border-color);
+}
+
+.footnotes-list {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.footnotes-list li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.footnotes-list li p {
+  margin: 0;
+  display: inline;
+}
+
+.footnote-ref {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footnote-ref:hover {
+  color: var(--link-hover);
+}
+
+.footnote-backref {
+  margin-left: 5px;
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+.footnote-backref:hover {
+  opacity: 1;
+}
+
 .dark-theme hr { border-top-color: var(--dark-border); }
 .dark-theme .skills-life__bar { background: rgba(255, 255, 255, 0.1); }
 .dark-theme .mod-post__entry table th,
