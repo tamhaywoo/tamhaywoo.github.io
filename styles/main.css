@@ -436,9 +436,9 @@ figure { margin: 1.5em 0; }
   border-radius: 5px;
 }
 .mod-post__entry h1 { font-size: 20px; margin: 20px 0; font-weight: 700; }
-.mod-post__entry h2 { font-size: 19px; margin: 16px 0; font-weight: 600; }
-.mod-post__entry h3 { font-size: 17px; margin: 12px 0; font-weight: 600; }
-.mod-post__entry h4 { font-size: 15px; margin: 8px 0; font-weight: 600; }
+.mod-post__entry h2 { font-size: 19px; margin: 19px 0; font-weight: 600; }
+.mod-post__entry h3 { font-size: 17px; margin: 17px 0; font-weight: 600; }
+.mod-post__entry h4 { font-size: 15px; margin: 15px 0; font-weight: 600; }
 .mod-post__entry a {
   color: #EC5858;
   font-weight: bold;
