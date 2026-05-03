@@ -435,8 +435,8 @@ figure { margin: 1.5em 0; }
   height: auto;
   border-radius: 5px;
 }
-.mod-post__entry h1 { font-size: 20px; margin: 20px 0; font-weight: 700; }
-.mod-post__entry h2 { font-size: 19px; margin: 19px 0; font-weight: 600; }
+.mod-post__entry h1 { font-size: 24px; margin: 24px 0; font-weight: 700; }
+.mod-post__entry h2 { font-size: 20px; margin: 20px 0; font-weight: 600; }
 .mod-post__entry h3 { font-size: 17px; margin: 17px 0; font-weight: 600; }
 .mod-post__entry h4 { font-size: 15px; margin: 15px 0; font-weight: 600; }
 .mod-post__entry a {
