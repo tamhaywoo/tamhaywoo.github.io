@@ -657,6 +657,14 @@ figure { margin: 1.5em 0; }
   vertical-align: middle;
   margin-right: 8px;
 }
+.friend-name {
+  font-weight: 500;
+  margin-right: 8px;
+}
+.friend-desc {
+  color: var(--text-muted);
+  font-size: 13px;
+}
 
 /* ==========================================================================
    Memos page (heatmap + cards + pagination)
