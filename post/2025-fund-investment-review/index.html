@@ -82,31 +82,62 @@
         var content = entry.innerHTML;
         
         // Find footnote definitions - standard format [^1]: definition
+        // Handle both markdown [^1]: and HTML encoded versions
         var footnoteDefs = {};
-        var defRegex = /\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|\n\s*\n|\n\s*<h2|\n\s*$|$)/gi;
         
-        var match;
-        while ((match = defRegex.exec(content)) !== null) {
-            var fnName = match[1];
-            var fnContent = match[2].trim().replace(/<br\s*[\/]?>/gi, ' ').replace(/\s+/g, ' ');
-            if (fnContent) {
-                footnoteDefs[fnName] = fnContent;
-            }
-        }
+        // Try various patterns to find footnote definitions
+        var patterns = [
+            /\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|\n\s*\n|\n\s*<h2|\n\s*$|$)/gi,
+            /<p>\[\^([^\]]+)\]:\s*([\s\S]*?)<\/p>/gi,
+            /<p>\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|$)/gi,
+            /\[\^([^\]]+)\]:\s*([\s\S]{1,300}?)(?=<\/p>|$)/gi
+        ];
         
-        // If no definitions found, try to find definitions at the end of content
-        // Look for pattern: [^1]: content at end of article
-        if (Object.keys(footnoteDefs).length === 0) {
-            // Try to find definitions by looking for [^name]: followed by content near end
-            var lastPart = content.slice(-2000); // Get last 2000 chars
-            var endDefRegex = /\[\^([^\]]+)\]:\s*([\s\S]{1,200}?)(?=<\/p>|$)/gi;
-            while ((match = endDefRegex.exec(lastPart)) !== null) {
+        patterns.forEach(function(defRegex) {
+            var match;
+            while ((match = defRegex.exec(content)) !== null) {
                 var fnName = match[1];
-                var fnContent = match[2].trim().replace(/<br\s*[\/]?>/gi, ' ').replace(/\s+/g, ' ');
+                var fnContent = match[2]
+                    .trim()
+                    .replace(/<br\s*[\/]?>/gi, ' ')
+                    .replace(/<[^>]+>/g, '')
+                    .replace(/&nbsp;/g, ' ')
+                    .replace(/\s+/g, ' ');
                 if (fnContent && fnContent.length > 2) {
                     footnoteDefs[fnName] = fnContent;
                 }
             }
+        });
+        
+        // If no definitions found, try to find definitions at the end of content
+        // by looking for footnote links that contain the definition content in href
+        if (Object.keys(footnoteDefs).length === 0) {
+            var footnoteLinks = content.match(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/g) || [];
+            footnoteLinks.forEach(function(link) {
+                var hrefMatch = link.match(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/);
+                if (hrefMatch) {
+                    try {
+                        var decodedHref = decodeURIComponent(hrefMatch[1]);
+                        var fnName = hrefMatch[2].replace(/^\^/, '');
+                        if (decodedHref && decodedHref.length > 2 && !decodedHref.match(/^https?:\/\//)) {
+                            footnoteDefs[fnName] = decodedHref;
+                        }
+                    } catch (e) {}
+                }
+            });
+        }
+        
+        // Also extract footnote definitions from the content before removing them
+        // This handles cases where definitions might be in a different format
+        if (Object.keys(footnoteDefs).length > 0) {
+            var definedFns = Object.keys(footnoteDefs);
+            var additionalDefs = content.match(/\[\^([^\]]+)\]:\s*([^\n<]+)/g) || [];
+            additionalDefs.forEach(function(def) {
+                var match = def.match(/\[\^([^\]]+)\]:\s*([^\n<]+)/);
+                if (match && !footnoteDefs[match[1]]) {
+                    footnoteDefs[match[1]] = match[2].trim();
+                }
+            });
         }
         
         // Replace raw [^1] references with sup tags
@@ -118,27 +149,23 @@
             return match;
         });
         
-        // Handle Gridea's special link format: <a href="encoded-url">^1</a>
-        content = content.replace(/<a[^>]*>(\^?\d+)<\/a>/g, function(match, fnNum) {
-            fnNum = fnNum.replace(/^\^/, '');
-            if (footnoteDefs[fnNum]) {
-                return '<sup class="footnote-ref" id="fnref-' + fnNum + '"><a href="#fn-' + fnNum + '">[' + fnNum + ']</a></sup>';
-            }
-            return match;
-        });
-        
-        // Also handle links where href is URL-encoded content
-        var encodedLinkRegex = /<a\s+href="([^"]+)"\s*>(\^?\d+)<\/a>/g;
-        content = content.replace(encodedLinkRegex, function(match, href, fnNum) {
-            fnNum = fnNum.replace(/^\^/, '');
-            if (footnoteDefs[fnNum]) {
-                return '<sup class="footnote-ref" id="fnref-' + fnNum + '"><a href="#fn-' + fnNum + '">[' + fnNum + ']</a></sup>';
-            }
+        // Handle Gridea's special link format: <a href="encoded-url">^1</a> or <a href="encoded-url">^亮哥</a>
+        // Also handle links where href is URL-encoded content (Gridea format)
+        content = content.replace(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/g, function(match, href, fnName) {
+            fnName = fnName.replace(/^\^/, '');
+            try {
+                var decodedHref = decodeURIComponent(href);
+                // Check if footnote definition exists OR if href contains footnote content (non-URL)
+                if (footnoteDefs[fnName] || (decodedHref && decodedHref.length > 3 && !decodedHref.match(/^https?:\/\//))) {
+                    return '<sup class="footnote-ref" id="fnref-' + fnName + '"><a href="#fn-' + fnName + '">[' + fnName + ']</a></sup>';
+                }
+            } catch (e) {}
             return match;
         });
         
         // Remove footnote definitions from content
         content = content.replace(/\[\^([^\]]+)\]:\s*[\s\S]*?(?=<br\s*[\/]?>|\n\s*\n|<h2|$)/gi, '');
+        content = content.replace(/<p>\[\^[^\]]+\]:\s*[\s\S]*?<\/p>/gi, '');
         content = content.replace(/<p>\s*<\/p>/g, '');
         content = content.replace(/<p>\s*<br\s*[\/]?>\s*<\/p>/g, '');
         

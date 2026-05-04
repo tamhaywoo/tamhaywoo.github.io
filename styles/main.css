@@ -1174,9 +1174,29 @@ body.dark-theme {
   margin: 0;
 }
 
+ol.footnotes-list {
+  counter-reset: footnote-counter;
+  list-style: none;
+  padding-left: 0;
+}
+
+ol.footnotes-list li {
+  counter-increment: footnote-counter;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 8px;
+}
+
+ol.footnotes-list li::before {
+  content: counter(footnote-counter) ".";
+  position: absolute;
+  left: 0;
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
 .footnotes-list li {
-  margin-bottom: 10px;
-  line-height: 1.6;
+  margin-bottom: 2px;
 }
 
 .footnotes-list li p {
@@ -1202,6 +1222,15 @@ body.dark-theme {
 
 .footnote-backref:hover {
   opacity: 1;
+}
+
+.footnote-content {
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.dark-theme .footnote-content {
+  color: var(--dark-text);
 }
 
 .dark-theme hr { border-top-color: var(--dark-border); }

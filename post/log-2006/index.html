@@ -82,31 +82,62 @@
         var content = entry.innerHTML;
         
         // Find footnote definitions - standard format [^1]: definition
+        // Handle both markdown [^1]: and HTML encoded versions
         var footnoteDefs = {};
-        var defRegex = /\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|\n\s*\n|\n\s*<h2|\n\s*$|$)/gi;
         
-        var match;
-        while ((match = defRegex.exec(content)) !== null) {
-            var fnName = match[1];
-            var fnContent = match[2].trim().replace(/<br\s*[\/]?>/gi, ' ').replace(/\s+/g, ' ');
-            if (fnContent) {
-                footnoteDefs[fnName] = fnContent;
-            }
-        }
+        // Try various patterns to find footnote definitions
+        var patterns = [
+            /\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|\n\s*\n|\n\s*<h2|\n\s*$|$)/gi,
+            /<p>\[\^([^\]]+)\]:\s*([\s\S]*?)<\/p>/gi,
+            /<p>\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|$)/gi,
+            /\[\^([^\]]+)\]:\s*([\s\S]{1,300}?)(?=<\/p>|$)/gi
+        ];
         
-        // If no definitions found, try to find definitions at the end of content
-        // Look for pattern: [^1]: content at end of article
-        if (Object.keys(footnoteDefs).length === 0) {
-            // Try to find definitions by looking for [^name]: followed by content near end
-            var lastPart = content.slice(-2000); // Get last 2000 chars
-            var endDefRegex = /\[\^([^\]]+)\]:\s*([\s\S]{1,200}?)(?=<\/p>|$)/gi;
-            while ((match = endDefRegex.exec(lastPart)) !== null) {
+        patterns.forEach(function(defRegex) {
+            var match;
+            while ((match = defRegex.exec(content)) !== null) {
                 var fnName = match[1];
-                var fnContent = match[2].trim().replace(/<br\s*[\/]?>/gi, ' ').replace(/\s+/g, ' ');
+                var fnContent = match[2]
+                    .trim()
+                    .replace(/<br\s*[\/]?>/gi, ' ')
+                    .replace(/<[^>]+>/g, '')
+                    .replace(/&nbsp;/g, ' ')
+                    .replace(/\s+/g, ' ');
                 if (fnContent && fnContent.length > 2) {
                     footnoteDefs[fnName] = fnContent;
                 }
             }
+        });
+        
+        // If no definitions found, try to find definitions at the end of content
+        // by looking for footnote links that contain the definition content in href
+        if (Object.keys(footnoteDefs).length === 0) {
+            var footnoteLinks = content.match(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/g) || [];
+            footnoteLinks.forEach(function(link) {
+                var hrefMatch = link.match(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/);
+                if (hrefMatch) {
+                    try {
+                        var decodedHref = decodeURIComponent(hrefMatch[1]);
+                        var fnName = hrefMatch[2].replace(/^\^/, '');
+                        if (decodedHref && decodedHref.length > 2 && !decodedHref.match(/^https?:\/\//)) {
+                            footnoteDefs[fnName] = decodedHref;
+                        }
+                    } catch (e) {}
+                }
+            });
+        }
+        
+        // Also extract footnote definitions from the content before removing them
+        // This handles cases where definitions might be in a different format
+        if (Object.keys(footnoteDefs).length > 0) {
+            var definedFns = Object.keys(footnoteDefs);
+            var additionalDefs = content.match(/\[\^([^\]]+)\]:\s*([^\n<]+)/g) || [];
+            additionalDefs.forEach(function(def) {
+                var match = def.match(/\[\^([^\]]+)\]:\s*([^\n<]+)/);
+                if (match && !footnoteDefs[match[1]]) {
+                    footnoteDefs[match[1]] = match[2].trim();
+                }
+            });
         }
         
         // Replace raw [^1] references with sup tags
@@ -118,27 +149,23 @@
             return match;
         });
         
-        // Handle Gridea's special link format: <a href="encoded-url">^1</a>
-        content = content.replace(/<a[^>]*>(\^?\d+)<\/a>/g, function(match, fnNum) {
-            fnNum = fnNum.replace(/^\^/, '');
-            if (footnoteDefs[fnNum]) {
-                return '<sup class="footnote-ref" id="fnref-' + fnNum + '"><a href="#fn-' + fnNum + '">[' + fnNum + ']</a></sup>';
-            }
-            return match;
-        });
-        
-        // Also handle links where href is URL-encoded content
-        var encodedLinkRegex = /<a\s+href="([^"]+)"\s*>(\^?\d+)<\/a>/g;
-        content = content.replace(encodedLinkRegex, function(match, href, fnNum) {
-            fnNum = fnNum.replace(/^\^/, '');
-            if (footnoteDefs[fnNum]) {
-                return '<sup class="footnote-ref" id="fnref-' + fnNum + '"><a href="#fn-' + fnNum + '">[' + fnNum + ']</a></sup>';
-            }
+        // Handle Gridea's special link format: <a href="encoded-url">^1</a> or <a href="encoded-url">^亮哥</a>
+        // Also handle links where href is URL-encoded content (Gridea format)
+        content = content.replace(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/g, function(match, href, fnName) {
+            fnName = fnName.replace(/^\^/, '');
+            try {
+                var decodedHref = decodeURIComponent(href);
+                // Check if footnote definition exists OR if href contains footnote content (non-URL)
+                if (footnoteDefs[fnName] || (decodedHref && decodedHref.length > 3 && !decodedHref.match(/^https?:\/\//))) {
+                    return '<sup class="footnote-ref" id="fnref-' + fnName + '"><a href="#fn-' + fnName + '">[' + fnName + ']</a></sup>';
+                }
+            } catch (e) {}
             return match;
         });
         
         // Remove footnote definitions from content
         content = content.replace(/\[\^([^\]]+)\]:\s*[\s\S]*?(?=<br\s*[\/]?>|\n\s*\n|<h2|$)/gi, '');
+        content = content.replace(/<p>\[\^[^\]]+\]:\s*[\s\S]*?<\/p>/gi, '');
         content = content.replace(/<p>\s*<\/p>/g, '');
         content = content.replace(/<p>\s*<br\s*[\/]?>\s*<\/p>/g, '');
         
@@ -210,7 +237,7 @@
     </script>
 <meta name="description" content="2006-01-09 2005年过得比以前任何一年都要快许多，发生的事情也挺多的，庆幸的是很多事情都在慢慢的往好的方向发展。 只是我还没有去见拜见她的父母，而她也没去我家。不过，这并不能造成什么坏的影响。 今年在公司里做琐碎事情比较多，但没有给自己的部门带来什么盈利，也未曾看到明显的部门成绩，这是我最惭愧的。所以每次见到那几位老总都觉得自己很不好意思，无颜相见似的&amp;hellip; &amp;hellip; 做得最多的琐碎事莫过于去外展点做蜂王[^1]，公司的外展活动我基本上都得出去帮忙，所以跟大学生在一起的机会也就多了很多。也常常被这些还未进入社会单纯的他们所感染，发觉每个人都是那么热情洋溢，即便是有困难也能够相互帮助以完成预定的任务。精神难能可贵，有时候也会让我振奋不已。 另外，第一次听到一些公司的销售经理说我的作品很受顾客欢迎，这是我最高兴的事情了。所以每次他们点名要我帮忙做活动用的新样品时，总会带着那份幸福及压力去认真做好。 在婚纱摄影设计方面的改变主要是摒弃了以往以构图为重点的思想，将精力放在提升原照片的色彩及氛围上，同时将所要设计的框类产品的本身色彩考虑了进去，而构图则次之&amp;hellip; &amp;hellip; 摄影方面还是没有进步，一直使用松下FX5这款傻瓜数码机，一般是拍些记录生活的片子，不过也有一些还不错的照片就用做素材了。这个照片还是要坚持拍的&amp;hellip; &amp;hellip; 下半年明显的感觉到身体不如从前，所以每个星期都会去打打羽毛球，未曾进步，但手臂倒是粗了不少。体重也在望期望的目标上升&amp;hellip; &amp;hellip; 忽然被很多东西给堵塞住了，想说但理不清头绪，罢了，不说了。认真踏实的做人做事吧&amp;hellip;">
 <link rel="canonical" href="https://tam.haywoo.com/post/log-2006/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"2006年随笔合集","url":"https://tam.haywoo.com/post/log-2006/","description":"2006-01-09 2005年过得比以前任何一年都要快许多，发生的事情也挺多的，庆幸的是很多事情都在慢慢的往好的方向发展。 只是我还没有去见拜见她的父母，而她也没去我家。不过，这并不能造成什么坏的影响。 今年在公司里做琐碎事情比较多，但没有给自己的部门带来什么盈利，也未曾看到明显的部门成绩，这是我最惭愧的。所以每次见到那几位老总都觉得自己很不好意思，无颜相见似的\u0026hellip; \u0026hellip; 做得最多的琐碎事莫过于去外展点做蜂王[^1]，公司的外展活动我基本上都得出去帮忙，所以跟大学生在一起的机会也就多了很多。也常常被这些还未进入社会单纯的他们所感染，发觉每个人都是那么热情洋溢，即便是有困难也能够相互帮助以完成预定的任务。精神难能可贵，有时候也会让我振奋不已。 另外，第一次听到一些公司的销售经理说我的作品很受顾客欢迎，这是我最高兴的事情了。所以每次他们点名要我帮忙做活动用的新样品时，总会带着那份幸福及压力去认真做好。 在婚纱摄影设计方面的改变主要是摒弃了以往以构图为重点的思想，将精力放在提升原照片的色彩及氛围上，同时将所要设计的框类产品的本身色彩考虑了进去，而构图则次之\u0026hellip; \u0026hellip; 摄影方面还是没有进步，一直使用松下FX5这款傻瓜数码机，一般是拍些记录生活的片子，不过也有一些还不错的照片就用做素材了。这个照片还是要坚持拍的\u0026hellip; \u0026hellip; 下半年明显的感觉到身体不如从前，所以每个星期都会去打打羽毛球，未曾进步，但手臂倒是粗了不少。体重也在望期望的目标上升\u0026hellip; \u0026hellip; 忽然被很多东西给堵塞住了，想说但理不清头绪，罢了，不说了。认真踏实的做人做事吧\u0026hellip;","datePublished":"2006-01-09T01:38:33+08:00","dateModified":"2026-05-03T12:09:05+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"2006年随笔合集","url":"https://tam.haywoo.com/post/log-2006/","description":"2006-01-09 2005年过得比以前任何一年都要快许多，发生的事情也挺多的，庆幸的是很多事情都在慢慢的往好的方向发展。 只是我还没有去见拜见她的父母，而她也没去我家。不过，这并不能造成什么坏的影响。 今年在公司里做琐碎事情比较多，但没有给自己的部门带来什么盈利，也未曾看到明显的部门成绩，这是我最惭愧的。所以每次见到那几位老总都觉得自己很不好意思，无颜相见似的\u0026hellip; \u0026hellip; 做得最多的琐碎事莫过于去外展点做蜂王[^1]，公司的外展活动我基本上都得出去帮忙，所以跟大学生在一起的机会也就多了很多。也常常被这些还未进入社会单纯的他们所感染，发觉每个人都是那么热情洋溢，即便是有困难也能够相互帮助以完成预定的任务。精神难能可贵，有时候也会让我振奋不已。 另外，第一次听到一些公司的销售经理说我的作品很受顾客欢迎，这是我最高兴的事情了。所以每次他们点名要我帮忙做活动用的新样品时，总会带着那份幸福及压力去认真做好。 在婚纱摄影设计方面的改变主要是摒弃了以往以构图为重点的思想，将精力放在提升原照片的色彩及氛围上，同时将所要设计的框类产品的本身色彩考虑了进去，而构图则次之\u0026hellip; \u0026hellip; 摄影方面还是没有进步，一直使用松下FX5这款傻瓜数码机，一般是拍些记录生活的片子，不过也有一些还不错的照片就用做素材了。这个照片还是要坚持拍的\u0026hellip; \u0026hellip; 下半年明显的感觉到身体不如从前，所以每个星期都会去打打羽毛球，未曾进步，但手臂倒是粗了不少。体重也在望期望的目标上升\u0026hellip; \u0026hellip; 忽然被很多东西给堵塞住了，想说但理不清头绪，罢了，不说了。认真踏实的做人做事吧\u0026hellip;","datePublished":"2006-01-09T01:38:33+08:00","dateModified":"2026-05-04T13:32:54+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/log-2006/","name":"2006年随笔合集","position":2}]}</script>
 <meta property="og:title" content="2006年随笔合集">
 <meta property="og:description" content="2006-01-09 2005年过得比以前任何一年都要快许多，发生的事情也挺多的，庆幸的是很多事情都在慢慢的往好的方向发展。 只是我还没有去见拜见她的父母，而她也没去我家。不过，这并不能造成什么坏的影响。 今年在公司里做琐碎事情比较多，但没有给自己的部门带来什么盈利，也未曾看到明显的部门成绩，这是我最惭愧的。所以每次见到那几位老总都觉得自己很不好意思，无颜相见似的&amp;hellip; &amp;hellip; 做得最多的琐碎事莫过于去外展点做蜂王[^1]，公司的外展活动我基本上都得出去帮忙，所以跟大学生在一起的机会也就多了很多。也常常被这些还未进入社会单纯的他们所感染，发觉每个人都是那么热情洋溢，即便是有困难也能够相互帮助以完成预定的任务。精神难能可贵，有时候也会让我振奋不已。 另外，第一次听到一些公司的销售经理说我的作品很受顾客欢迎，这是我最高兴的事情了。所以每次他们点名要我帮忙做活动用的新样品时，总会带着那份幸福及压力去认真做好。 在婚纱摄影设计方面的改变主要是摒弃了以往以构图为重点的思想，将精力放在提升原照片的色彩及氛围上，同时将所要设计的框类产品的本身色彩考虑了进去，而构图则次之&amp;hellip; &amp;hellip; 摄影方面还是没有进步，一直使用松下FX5这款傻瓜数码机，一般是拍些记录生活的片子，不过也有一些还不错的照片就用做素材了。这个照片还是要坚持拍的&amp;hellip; &amp;hellip; 下半年明显的感觉到身体不如从前，所以每个星期都会去打打羽毛球，未曾进步，但手臂倒是粗了不少。体重也在望期望的目标上升&amp;hellip; &amp;hellip; 忽然被很多东西给堵塞住了，想说但理不清头绪，罢了，不说了。认真踏实的做人做事吧&amp;hellip;">
@@ -314,7 +341,7 @@
 <p>2005年过得比以前任何一年都要快许多，发生的事情也挺多的，庆幸的是很多事情都在慢慢的往好的方向发展。</p>
 <p>只是我还没有去见拜见她的父母，而她也没去我家。不过，这并不能造成什么坏的影响。</p>
 <p>今年在公司里做琐碎事情比较多，但没有给自己的部门带来什么盈利，也未曾看到明显的部门成绩，这是我最惭愧的。所以每次见到那几位老总都觉得自己很不好意思，无颜相见似的&hellip; &hellip;</p>
-<p>做得最多的琐碎事莫过于去外展点做蜂王[^1]，公司的外展活动我基本上都得出去帮忙，所以跟大学生在一起的机会也就多了很多。也常常被这些还未进入社会单纯的他们所感染，发觉每个人都是那么热情洋溢，即便是有困难也能够相互帮助以完成预定的任务。精神难能可贵，有时候也会让我振奋不已。</p>
+<p>做得最多的琐碎事莫过于去外展点做蜂王<a href="%E5%9C%A8%E5%9C%B0%E6%8E%A8%E8%90%A5%E9%94%80%E6%B4%BB%E5%8A%A8%E5%BD%93%E4%B8%AD%EF%BC%8C%E9%9C%80%E8%A6%81%E5%AE%89%E6%8E%92%E5%B7%A5%E4%BD%9C%E4%BA%BA%E5%91%98%E4%BB%8E%E6%B4%BB%E5%8A%A8%E7%8E%B0%E5%9C%BA%E5%91%A8%E5%9B%B4%E5%8F%91%E4%BC%A0%E5%8D%95%E5%BC%95%E5%AF%BC%E5%AE%A2%E6%B5%81%E8%BF%9B%E5%85%A5%E7%8E%B0%E5%9C%BA%EF%BC%8C%E9%82%A3%E4%BA%9B%E5%B7%A5%E4%BD%9C%E4%BA%BA%E5%91%98%E5%83%8F%E5%B0%8F%E8%9C%9C%E8%9C%82%E9%87%87%E8%9C%9C%E4%B8%80%E6%A0%B7%EF%BC%8C%E6%89%80%E4%BB%A5%E7%A7%B0%E5%91%BC%E4%BB%96%E4%BB%AC%E4%B8%BA%E5%B0%8F%E8%9C%9C%E8%9C%82%EF%BC%8C%E8%80%8C%E4%BB%96%E4%BB%AC%E7%9A%84%E5%9B%A2%E9%98%9F%E8%B4%9F%E8%B4%A3%E4%BA%BA%E5%B0%B1%E7%A7%B0%E4%B9%8B%E4%B8%BA%E8%9C%82%E7%8E%8B%E3%80%82">^1</a>，公司的外展活动我基本上都得出去帮忙，所以跟大学生在一起的机会也就多了很多。也常常被这些还未进入社会单纯的他们所感染，发觉每个人都是那么热情洋溢，即便是有困难也能够相互帮助以完成预定的任务。精神难能可贵，有时候也会让我振奋不已。</p>
 <p>另外，第一次听到一些公司的销售经理说我的作品很受顾客欢迎，这是我最高兴的事情了。所以每次他们点名要我帮忙做活动用的新样品时，总会带着那份幸福及压力去认真做好。</p>
 <p>在婚纱摄影设计方面的改变主要是摒弃了以往以构图为重点的思想，将精力放在提升原照片的色彩及氛围上，同时将所要设计的框类产品的本身色彩考虑了进去，而构图则次之&hellip; &hellip;</p>
 <p>摄影方面还是没有进步，一直使用松下FX5这款傻瓜数码机，一般是拍些记录生活的片子，不过也有一些还不错的照片就用做素材了。这个照片还是要坚持拍的&hellip; &hellip;</p>
@@ -330,7 +357,7 @@
 <p>不过还是要表扬下他们还记得提醒业主去收房，至少他们还记得需要我们收房后才会有钱进帐。但是，如果柠檬丽都卖出去的那些问题房子不整改好的话，相信没有几个人会收房，这一点是可以肯定的。</p>
 <h2 id="2006-05-16">2006-05-16</h2>
 <p>近两三个月可能是要够我忙的了。因为房子的设计图已经出稿，资金也筹备到位，就要开始装修我的新房了，现在只是在等我的装修委托人将剩余的具体图纸以及将他的施工队搞定。</p>
-<p>在这里得感谢前期帮我设计的刘静、朝云哥以及汤哥，同时也必须要感谢给予我资金援助的几位大哥[^2]还有一位姐姐，谢谢你们的帮助。没有你们的信任与帮助，我将一事无成&hellip; &hellip;</p>
+<p>在这里得感谢前期帮我设计的刘静、朝云哥以及汤哥，同时也必须要感谢给予我资金援助的几位大哥还有一位姐姐，谢谢你们的帮助。没有你们的信任与帮助，我将一事无成&hellip; &hellip;</p>
 <h2 id="2006-05-20">2006-05-20</h2>
 <p>我向来都不奉行啃骨头，因为了解失败的痛苦才不去碰失败的钉子，所以我自小以来都是知难而退。这可以说是一种优点，因为这样的生活比较平稳；但同时也是一种缺点，因为在回避困难的同时就会失去了许多学习解决问题的机会，那么在之后遇到相同的问题时，又得掉头&hellip; &hellip;</p>
 <p>很庆幸自己能认识到这个问题，更庆幸自己在最近这一阵子遇到困难时并没有逃避，而是慢慢的解决问题。特此记录&hellip; &hellip;</p>
@@ -358,8 +385,6 @@
 <p>但我想如果几个小伙子一起来关闭它应该是没有问题的，于是我向人群申援，希望能给有人和我一起把这个盖子关掉，以便车厢内不那么拥挤，让人们多一处容脚之地。可结果让我很懊恼，因为没有一个男士愿意到雨中来和我一起把车窗关掉，只有一个女孩子挤到了我的跟前，说要和我一起关掉车窗&hellip; &hellip;</p>
 <p>我忽然感觉所有的人都站在没有车顶的车箱内，任由上帝肆意地向他们身上泼撒赃物，他们只是木然地站在那里，一直站着&hellip; &hellip;赃物带来的疾病在人群中一个接连一个的传染着，没有人愿意帮助身边的人，直到他们自己变成那个祈求别人帮助的那个人。</p>
 <p>希望这一切能够早日结束，我只想让那些人觉醒&hellip; &hellip;</p>
-<p>[^1]: 蜂王就是最基层的促销人员的队长之类的&hellip; &hellip;<br />
-[^2]: 由于没有经过他们的同意，不敢将姓名写上，不要见怪啊</p>
 
                 </div>
 
