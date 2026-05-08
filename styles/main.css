@@ -451,10 +451,10 @@ figure { margin: 1.5em 0; }
   height: auto;
   border-radius: 5px;
 }
-.mod-post__entry h1 { font-size: 24px; margin: 24px 0; font-weight: 700; }
-.mod-post__entry h2 { font-size: 20px; margin: 20px 0; font-weight: 600; }
-.mod-post__entry h3 { font-size: 17px; margin: 17px 0; font-weight: 600; }
-.mod-post__entry h4 { font-size: 15px; margin: 15px 0; font-weight: 600; }
+.mod-post__entry h1 { font-size: 24px; margin: 30px 0; font-weight: 700; }
+.mod-post__entry h2 { font-size: 20px; margin: 26px 0; font-weight: 600; }
+.mod-post__entry h3 { font-size: 17px; margin: 22px 0; font-weight: 600; }
+.mod-post__entry h4 { font-size: 15px; margin: 10px 0; font-weight: 600; }
 .mod-post__entry a {
   color: #EC5858;
   font-weight: bold;
@@ -495,11 +495,6 @@ figure { margin: 1.5em 0; }
 }
 
 /* 针对包含 checkbox 的列表项 */
-.wzulli ul:has(input[type="checkbox"]) li,
-.wzulli ol:has(input[type="checkbox"]) li {
-  list-style: none;
-}
-
 .wzulli ul:has(input[type="checkbox"]),
 .wzulli ol:has(input[type="checkbox"]) {
   list-style: none;
@@ -1344,8 +1339,8 @@ body.dark-theme .theme-toggle-moon { display: inline-block !important; color: #F
   .mod-post__entry h2,
   .mod-post__entry h3,
   .mod-post__entry h4 {
-    margin-top: 1.5em;
-    margin-bottom: 1em;
+    margin-top: 2.0em;
+    margin-bottom: 1.5em;
   }
   
   .mod-post__entry h1 { font-size: 22px; }
@@ -1462,7 +1457,7 @@ body.dark-theme .theme-toggle-moon { display: inline-block !important; color: #F
     text-align: justify;
   }
   .mod-post__entry p {
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
   }
   
   body {
