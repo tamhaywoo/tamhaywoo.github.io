@@ -362,22 +362,20 @@ figure { margin: 1.5em 0; }
   height: 6rem;
   width: 100%;
   text-align: center;
-  padding-top: 2em;
+  padding-top: 3em;
   font-size: 0.9rem;
-  margin-top: 5vh;
-  margin-bottom: 65px;
 }
 
 .index_footer {
-  height: 6rem;
+  height: 4rem;
   width: 100%;
   text-align: center;
-  padding-top: 2em;
+  padding-top: 3em;
   font-size: 9pt;
 }
 
 .Copyright {
-  margin-top: 1.25rem;
+  margin: 8px 0 8px;
   font-size: 9pt;
 }
 
@@ -1404,7 +1402,7 @@ body.dark-theme .theme-toggle-moon { display: inline-block !important; color: #F
   }
   
   .Copyright {
-    margin: 12px 0 8px;
+    margin: 8px 0 8px;
     font-size: 12px;
   }
   
@@ -1447,11 +1445,11 @@ body.dark-theme .theme-toggle-moon { display: inline-block !important; color: #F
 
 @media screen and (max-width: 479px) {
   .footer {
+    height: 6rem;
     width: 100%;
-    font-size: 12px;
     text-align: center;
-    padding-top: 2em;
-    margin-bottom: 45px;
+    padding-top: 3em;
+    font-size: .9rem;
   }
   .mod-post__entry {
     text-align: justify;
