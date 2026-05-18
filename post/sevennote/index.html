@@ -1,0 +1,653 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.2.0-beta.1">
+    <title>文大宝的小文字 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    
+<script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Theme toggle buttons
+        var sunBtn = document.getElementById('theme-toggle-sun');
+        var moonBtn = document.getElementById('theme-toggle-moon');
+        
+        function toggleTheme() {
+            var isDark = document.body.classList.contains('dark-theme');
+            if (isDark) {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        if (sunBtn) {
+            sunBtn.addEventListener('click', toggleTheme);
+        }
+        if (moonBtn) {
+            moonBtn.addEventListener('click', toggleTheme);
+        }
+    });
+
+    // Footnotes support for Markdown footnotes [^1]
+    document.addEventListener('DOMContentLoaded', function() {
+        var entry = document.querySelector('.mod-post__entry');
+        var footnotesContainer = document.querySelector('#post-footnotes');
+        
+        if (!entry) return;
+
+        // Get the raw HTML content
+        var content = entry.innerHTML;
+        
+        // Find footnote definitions - standard format [^1]: definition
+        // Handle both markdown [^1]: and HTML encoded versions
+        var footnoteDefs = {};
+        
+        // Try various patterns to find footnote definitions
+        var patterns = [
+            /\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|\n\s*\n|\n\s*<h2|\n\s*$|$)/gi,
+            /<p>\[\^([^\]]+)\]:\s*([\s\S]*?)<\/p>/gi,
+            /<p>\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|$)/gi,
+            /\[\^([^\]]+)\]:\s*([\s\S]{1,300}?)(?=<\/p>|$)/gi
+        ];
+        
+        patterns.forEach(function(defRegex) {
+            var match;
+            while ((match = defRegex.exec(content)) !== null) {
+                var fnName = match[1];
+                var fnContent = match[2]
+                    .trim()
+                    .replace(/<br\s*[\/]?>/gi, ' ')
+                    .replace(/<[^>]+>/g, '')
+                    .replace(/&nbsp;/g, ' ')
+                    .replace(/\s+/g, ' ');
+                if (fnContent && fnContent.length > 2) {
+                    footnoteDefs[fnName] = fnContent;
+                }
+            }
+        });
+        
+        // If no definitions found, try to find definitions at the end of content
+        // by looking for footnote links that contain the definition content in href
+        if (Object.keys(footnoteDefs).length === 0) {
+            var footnoteLinks = content.match(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/g) || [];
+            footnoteLinks.forEach(function(link) {
+                var hrefMatch = link.match(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/);
+                if (hrefMatch) {
+                    try {
+                        var decodedHref = decodeURIComponent(hrefMatch[1]);
+                        var fnName = hrefMatch[2].replace(/^\^/, '');
+                        if (decodedHref && decodedHref.length > 2 && !decodedHref.match(/^https?:\/\//)) {
+                            footnoteDefs[fnName] = decodedHref;
+                        }
+                    } catch (e) {}
+                }
+            });
+        }
+        
+        // Also extract footnote definitions from the content before removing them
+        // This handles cases where definitions might be in a different format
+        if (Object.keys(footnoteDefs).length > 0) {
+            var definedFns = Object.keys(footnoteDefs);
+            var additionalDefs = content.match(/\[\^([^\]]+)\]:\s*([^\n<]+)/g) || [];
+            additionalDefs.forEach(function(def) {
+                var match = def.match(/\[\^([^\]]+)\]:\s*([^\n<]+)/);
+                if (match && !footnoteDefs[match[1]]) {
+                    footnoteDefs[match[1]] = match[2].trim();
+                }
+            });
+        }
+        
+        // Replace raw [^1] references with sup tags
+        var footnoteRefRegex = /\[\^([^\]]+)\](?!\s*:)/g;
+        content = content.replace(footnoteRefRegex, function(match, fnName) {
+            if (footnoteDefs[fnName]) {
+                return '<sup class="footnote-ref" id="fnref-' + fnName + '"><a href="#fn-' + fnName + '">[' + fnName + ']</a></sup>';
+            }
+            return match;
+        });
+        
+        // Handle Gridea's special link format: <a href="encoded-url">^1</a> or <a href="encoded-url">^亮哥</a>
+        // Also handle links where href is URL-encoded content (Gridea format)
+        content = content.replace(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/g, function(match, href, fnName) {
+            fnName = fnName.replace(/^\^/, '');
+            try {
+                var decodedHref = decodeURIComponent(href);
+                // Check if footnote definition exists OR if href contains footnote content (non-URL)
+                if (footnoteDefs[fnName] || (decodedHref && decodedHref.length > 3 && !decodedHref.match(/^https?:\/\//))) {
+                    return '<sup class="footnote-ref" id="fnref-' + fnName + '"><a href="#fn-' + fnName + '">[' + fnName + ']</a></sup>';
+                }
+            } catch (e) {}
+            return match;
+        });
+        
+        // Remove footnote definitions from content
+        content = content.replace(/\[\^([^\]]+)\]:\s*[\s\S]*?(?=<br\s*[\/]?>|\n\s*\n|<h2|$)/gi, '');
+        content = content.replace(/<p>\[\^[^\]]+\]:\s*[\s\S]*?<\/p>/gi, '');
+        content = content.replace(/<p>\s*<\/p>/g, '');
+        content = content.replace(/<p>\s*<br\s*[\/]?>\s*<\/p>/g, '');
+        
+        entry.innerHTML = content;
+        
+        // Create the footnotes section
+        var fnKeys = Object.keys(footnoteDefs);
+        if (fnKeys.length > 0 && footnotesContainer) {
+            var footnotesSection = document.createElement('section');
+            footnotesSection.className = 'footnotes';
+            
+            var heading = document.createElement('h4');
+            heading.className = 'footnotes-title';
+            heading.textContent = '参考资料';
+            footnotesSection.appendChild(heading);
+            
+            var ol = document.createElement('ol');
+            ol.className = 'footnotes-list';
+            
+            fnKeys.forEach(function(fnName) {
+                var li = document.createElement('li');
+                li.id = 'fn-' + fnName;
+                li.innerHTML = '<span class="footnote-content">' + footnoteDefs[fnName] + '</span> <a href="#fnref-' + fnName + '" class="footnote-backref">↩</a>';
+                ol.appendChild(li);
+            });
+            
+            footnotesSection.appendChild(ol);
+            footnotesContainer.appendChild(footnotesSection);
+        }
+    });
+
+    // Fetch random quote from API (override default text)
+    document.addEventListener('DOMContentLoaded', function() {
+        const quoteContainer = document.getElementById('quote-container');
+        if (!quoteContainer) return;
+
+        fetch('https://v1.hitokoto.cn/?c=i&encode=json')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                const textEl = document.getElementById('quote-text');
+                const authorEl = document.getElementById('quote-author');
+                if (textEl && data.hitokoto) {
+                    textEl.textContent = data.hitokoto;
+                }
+                if (authorEl && data.from) {
+                    authorEl.textContent = '—— ' + data.from;
+                }
+            })
+            .catch(function(err) {
+                // Use default text if API fails
+            });
+    });
+</script>
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="瘦老虎 列位叔叔阿姨、哥哥姐姐，即将为您揭晓一只“瘦老虎”的事。 嘿嘿，正是我谭某人！ 田地到处有、山川好风景的衡阳是我的故乡；星城长沙是我的出生地和安居地。 从小胖得像鱼肚，长大瘦如野狗（编者注：也许是某人骂过你，你让老爸陪你一起顶。是吧？），但无病；夸张一点就是风一吹，就起飞；某人总说：“你呀，跑步跑不快；种地也不行，写作业也不行，批改作业更不行，连只狗都比你好。” 老师上自习&amp;hellip;">
+<link rel="canonical" href="https://tam.haywoo.com/post/sevennote/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"文大宝的小文字","url":"https://tam.haywoo.com/post/sevennote/","description":"瘦老虎 列位叔叔阿姨、哥哥姐姐，即将为您揭晓一只“瘦老虎”的事。 嘿嘿，正是我谭某人！ 田地到处有、山川好风景的衡阳是我的故乡；星城长沙是我的出生地和安居地。 从小胖得像鱼肚，长大瘦如野狗（编者注：也许是某人骂过你，你让老爸陪你一起顶。是吧？），但无病；夸张一点就是风一吹，就起飞；某人总说：“你呀，跑步跑不快；种地也不行，写作业也不行，批改作业更不行，连只狗都比你好。” 老师上自习\u0026hellip;","datePublished":"2026-05-18T08:59:00+08:00","dateModified":"2026-05-18T08:59:00+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/sevennote/","name":"文大宝的小文字","position":2}]}</script>
+<meta property="og:title" content="文大宝的小文字">
+<meta property="og:description" content="瘦老虎 列位叔叔阿姨、哥哥姐姐，即将为您揭晓一只“瘦老虎”的事。 嘿嘿，正是我谭某人！ 田地到处有、山川好风景的衡阳是我的故乡；星城长沙是我的出生地和安居地。 从小胖得像鱼肚，长大瘦如野狗（编者注：也许是某人骂过你，你让老爸陪你一起顶。是吧？），但无病；夸张一点就是风一吹，就起飞；某人总说：“你呀，跑步跑不快；种地也不行，写作业也不行，批改作业更不行，连只狗都比你好。” 老师上自习&amp;hellip;">
+<meta property="og:url" content="https://tam.haywoo.com/post/sevennote/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/sevennote/">
+<meta name="twitter:title" content="文大宝的小文字">
+<meta name="twitter:description" content="瘦老虎 列位叔叔阿姨、哥哥姐姐，即将为您揭晓一只“瘦老虎”的事。 嘿嘿，正是我谭某人！ 田地到处有、山川好风景的衡阳是我的故乡；星城长沙是我的出生地和安居地。 从小胖得像鱼肚，长大瘦如野狗（编者注：也许是某人骂过你，你让老爸陪你一起顶。是吧？），但无病；夸张一点就是风一吹，就起飞；某人总说：“你呀，跑步跑不快；种地也不行，写作业也不行，批改作业更不行，连只狗都比你好。” 老师上自习&amp;hellip;">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        文大宝的小文字
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2026-05-18">
+                        2026-05-18
+                    </time> • 13 分钟阅读 •
+                        
+                            
+                                <a href="/category/jottings/">随记</a>
+                                
+                            
+                        
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <h2 id="heading">瘦老虎</h2>
+<p>列位叔叔阿姨、哥哥姐姐，即将为您揭晓一只“瘦老虎”的事。</p>
+<p>嘿嘿，正是我谭某人！</p>
+<p>田地到处有、山川好风景的衡阳是我的故乡；星城长沙是我的出生地和安居地。</p>
+<p>从小胖得像鱼肚，长大瘦如野狗（编者注：也许是某人骂过你，你让老爸陪你一起顶。是吧？），但无病；夸张一点就是风一吹，就起飞；某人总说：“你呀，跑步跑不快；种地也不行，写作业也不行，批改作业更不行，连只狗都比你好。”</p>
+<p>老师上自习课，人总是到不齐，但有一次是例外的。老师说：“课前听谭淅文讲一段笑话，人一下子全到齐了。”说起我的名字啊，那就很有意思。当我一岁时，爸爸在书房看书，我也学着爸爸像模像样地拿起一本《中国古文卷》的书。爸爸见了就告诉我：“本来你是叫折文的，因为命中缺水，所以才把折变成了淅。”（编者注：据了解，你家老爷子没这么说过。你是想改名叫“喜玩”吗？）不过虽是这么说，但我才……不喜欢学习呢！我还是爱玩一些，应该叫淅玩才对呀！</p>
+<p>我在六岁时，去邻居家偷鸡蛋；八岁时去山上玩火，半夜三更才回家，被爸爸用棍子在美臀上留下了棍子的印子；九岁时，与蜜蜂作斗争。被咬得快成一个大球了。有三次我做了梁上君子，而印象最深刻的就是——偷鸡蛋。（编者注：为了完成作文，你也真够拼的。）</p>
+<p>一天，我路过邻居家，看见了又大又白的鸡蛋。口水如泥石流般爆发，衣服也未能幸免。（编者注：你特么黄鼠狼吧？）当饥饿战胜理智，偷字就爬上了心头。夜，深了。只留下夏虫在鸣叫。只听见“哗哗”两声，一个黑影跑到鸡舍门口，此人正是谭某文。（编者注：我还以为是周扒皮……）我摸到门口，眼观六路、耳听八方。“吱呀”一声，门打开了。“嗖……”的一声溜进了鸡舍，一进门就看到了又大又白的鸡蛋，我把全身上下能装的地方都装了，以飞一般的速度逃离了作案现场。</p>
+<p>班上大多数男生都是我的小弟，所以大多数时候我都挺闲的。抓人什么的都是他们替我做的。我想跟他们打个招呼，都被吓得狗尿屁流。唉，太厉害了也有坏处啊。（编者注：摆明了在YY……）</p>
+<p>这就是厉害又勇敢的谭某人。算不算“瘦老虎”？由你们来决定。</p>
+<p>&ndash;</p>
+<h2 id="heading-1">我的乐园</h2>
+<p>大海是海洋动物的乐园，天空是鸟儿的乐园，草地是昆虫的乐园。那我的乐园在哪里呢？</p>
+<p>我的乐园在清晨乡下的山上，小鸟在林间欢乐地跳着，昆虫在小草中歌唱着。山腰上成群结队的小花在山坡上热闹地盛开了。</p>
+<p>清晨带着露水的微风、天边的彩霞、归巢的鸟儿和欢乐的小虫子，它们绘成了一幅欢乐、可爱的画面。</p>
+<p>不必说碧绿的菜田、亮滑的石井、高壮的桂花树，也不必说知了在树叶间长鸣，弱小的蜜蜂在菜花中寻“宝”，苗条的麻雀从地上飞进了林中。单是小溪边上那一带的臭烂泥，就有无限可能。蜘蛛在泥巴里寻找“漏网之鱼”，扒开泥水，有时会找到小鱼苗呢。倘若用手去抓，它便会顽强地蹦跳着，直到跳入溪水之中。</p>
+<p>记得有一次捕鱼，我同张湘萌拿上网子、木棍还有米糊糊，雄赳赳地来到了溪边。先把米糊糊涂在网子上，再把网子系在棍子的两端，然后放入水中就可以了。第二天再来到放网子的地方，就发现鱼儿“上钩”了。</p>
+<p>若不想捕鱼，可以来看看晚霞。它颜色多样，粉色里镶黄色的光，红色里透着蓝色的光。晚风吹来，让心中的烦恼随风而去，使心中无比平静。或是在田野中奔跑，让快乐在心中燃烧。</p>
+<p>啊！乡下的乐园是独一无二的，是我们用来装满欢声笑语的罐子。</p>
+<hr />
+<h2 id="heading-2">我的两位同学</h2>
+<h3 id="heading-3">杨楚凡</h3>
+<p>下课铃响了，老师还没有走出教室，刚说下课，同学们就开始做自己的事情了。有的在打闹，有的在讨论老师留下的问题，还有，最热闹的是杨楚凡在那里唱歌呢！</p>
+<p>这时，杨楚凡对观众说：“下面是一首歌曲，请听。”只见他边唱边跳，一会儿扭动着身子，一会儿挥舞双手，还要大家跟着一起跳，一会儿又拱拱脑袋，最后闹腾累了，便一屁股坐在凳子上喘着大气。从抽屉里抽出几张卫生纸，沾上水贴在头上，说：“散了散了吧！今天不唱了！”他的朋友说：“再来一曲嘛！”“签名！签名！“</p>
+<p>在歌曲下，我们迎来了新的课程。</p>
+<h3 id="heading-4">黄品墨</h3>
+<p>星期一到了，意味着又要升国旗了。铃声一响，教室里马上安静了下来，只剩下窸窸窣窣的声音。有的还在系红领巾，有的在开小差，有的在东张西望，听见主持人说升国旗，奏国歌才停下来。</p>
+<p>只见，黄品墨双手一挥，国旗便迎风慢慢上升，黄品墨同学刚挥完，她又战得如同士兵一样了。右手一舞，大声说道：“全体同学敬礼！”随着国歌走向高潮，她站得越来越端正，同学们也都以她为榜样，学习她的严肃。</p>
+<p>国歌渐渐走入尾声，同学们都有序上楼了。</p>
+<hr />
+<h2 id="heading-5">我学会了骑自行车</h2>
+<p>爸爸问我：“这自行车坏了，扔了吧？”。<br />
+他在杂物间叫道。</p>
+<p>我一看，那不是我六岁时的自行车吗？它本来颜色亮艳，现在却已经锈迹斑斑。原来又大又圆的车轮，已经变得又小又瘪了。</p>
+<p>看着这辆自行车，让我陷入了小时候的回忆之中……</p>
+<p>那时，我常常看见别人骑着单车奔腾在大路上，心里就羡慕，所以每天都求着让妈妈买自行车。</p>
+<p>有一天，妈妈对我说：“自行车到货啦！”我激动地坐上车座，手抓住把手，一只脚踩在地上，另一只脚踩着车蹬。只要双脚都踩着车蹬，就掌握不了平衡，非要妈妈扶着才放心。</p>
+<p>骑了好一会儿，我不紧张了。但还是不让妈妈松手。我又一次爬上车座，慢慢地骑着。哈，原来也不怎么难嘛！！我回头看妈妈，正想告诉她我学会骑车了，却发现妈妈不见了，她正在不远处对我笑呢！我慌了。手一抖，脚一松，摔了个四脚朝天。妈妈边扶我，边说：“我不是故意的。从哪倒下就从哪站起来。”没多久，我就真的学会了。</p>
+<p>同时，我也知道了自信是最好的伙伴，只要有勇气，就一定会成功。</p>
+<hr />
+<h2 id="heading-6">云水之间</h2>
+<h3 id="1">1、山</h3>
+<p>看那！<br />
+山的四周有乳白色浓雾缭绕。<br />
+它可高兴了，把自己笑成了灿烂的金。</p>
+<p>它身穿冷绿色的衣服，衣服上还绣着桃红一样的花儿，那是漫山遍野的杜鹃花。</p>
+<p>让它看起来更加美丽。</p>
+<h3 id="2">2、水</h3>
+<p>在淡蓝色的云层之下，有一枯棕的大树横卧在山涧的小溪之中。树干里栖息着许多灰黑相间的小鱼苗。</p>
+<p>它们在水底快活地游着。</p>
+<p>水底散落着无数的鹅黄细沙，只要鱼儿突然掉头游走，它们便跳起了海草舞，水里的天空立刻从淡蓝色变成了黄蓝相间。</p>
+<h3 id="3">3、云</h3>
+<p>云层之下，海水之上。</p>
+<p>瞧，天空被雾气环绕着，橘红色的太阳也被调皮的云宝宝遮住了眼睛。</p>
+<p>那灰色的云宝宝最活跃，它们挤在一起就形成了白里透灰的乌云，让天空顿时耍起了孩子的脾气来。</p>
+<p>雨水突然洒满山间，雾气弥漫开来。</p>
+<hr />
+<h2 id="heading-7">牙刷的自述</h2>
+<p>大家好，我是牙刷，很荣幸在这儿演讲。</p>
+<p>我拥有我们“口腔清理族”最好看的身材，在“比美大赛”中荣获一等奖呢！在我的身上穿着绿油油的“花衣服”使我更帅气。我的脚被小主人紧紧地握着，让我充满了力量。</p>
+<p>我不但强壮，还有许多经历呢！</p>
+<p>接下来，我要隆重介绍我的一头白发，因为在我的功绩中，它可立了大功。</p>
+<p>有一天早晨，小主人把我从牙杯爷爷家提了出来，让我在水龙头奶奶下冲了个冷水澡，然后把我的“黄金搭档”——牙膏挤在我时髦的白发上，就让我们去工作了。</p>
+<p>小主人张开嘴巴的一瞬间，臭气便扑鼻而来。“啊！我才一天没有上班就这样啦？”我叫道。于是我开始奋力为牙齿兄弟洗澡、挠痒痒。</p>
+<p>正当我准备离开时，一个蛀虫从牙缝里钻出来说：“哈哈，你没发现我！”我一听，怒火中烧，使出了“降虫一百刷”，结果，那蛀虫身手敏捷，躲过了追杀。我火冒三丈高，于是使出了杀手锏——“如刷神掌”，蛀虫忙跪地求饶。蛀虫们便顺水找家去了。</p>
+<p>哈哈，别看我小，但用处很大哦！</p>
+<hr />
+<h2 id="heading-8">我家有个动物园</h2>
+<p>先讲我爸爸，他像一匹高大的＂马＂。早上，他总是很帅气地走出卧室和我打招呼。他工作时就会聚精会神的盯着电脑显示屏幕，当陪我玩时就调皮可爱。</p>
+<p>再讲我的妈妈，她像一只＂老虎＂。她生气时仿佛会冒出白气来，或是张牙舞爪的向我扑来。但是她也会耐心地给我讲一些道理。在做饭菜时，唱着她那自以为动听的歌曲，或是在那儿自言自语。</p>
+<p>再讲我那调皮可爱、人见人爱、花见花开的小老弟。他呀，像一只＂小老鼠＂。因为只要有吃的东西出炉，就会立马连蹦带跳的跑过去，尝个鲜。如果看见老爸提着什么东西回家就会趁你个不注意马上抢走，并且还不还给你。有时，他又像一条小狗，一双大眼睛水汪汪的看着你，在做了让人生气的事情时，装作无辜的样子说：“不是我要搞的”，真让人哭笑不得。他是我们＂动物园＂里最调皮的小家伙了。</p>
+<p>我喜欢这个无忧无虑、赏心悦目的＂动物园＂。</p>
+<hr />
+<h2 id="heading-9">我的心儿怦怦跳</h2>
+<p>那天，妈妈拿着一个桶子来找我说：“宝贝，你帮妈妈去找桶水，好吗？”我不假思索滴说：“保证完成任务！”</p>
+<p>我接过妈妈手中空空的桶子，信心满满地走向大门……</p>
+<p>可刚一出门，我就有点后悔了。我刚才是怎么想的？我是不是犯糊涂了呢？我不会碰到鬼吧？路上安静得可怕，路旁的树被风吹得像无头苍蝇似的，摇晃着身子却看不到头。我把头埋进大大的衣服里，在山路上匆匆地走着，放在口袋里的那只手不停地颤抖着，脚也有些发软，好像马上要倒下去似的。</p>
+<p>到了最可怕的地段了，树摇得像一只大怪兽，远远看去像在张牙舞爪，仿佛下一秒就会有一只野兽跑过来吃掉我。路也陡得像地上长满了刺，或许前方有一个大大的黑洞，就等着我掉进去。我感觉我的身后有一个身着白衣的女子晃悠悠地跟着我，只要我一回头，她就会把我的血吸光。</p>
+<p>终于看见了山上的那口井，我打完水“连滚带爬”地回了家。自从经历了那件事后，天王姥爷来请我，我也不去了！</p>
+<hr />
+<h2 id="heading-10">鱼鹰</h2>
+<p>清晨，高高的山峰如同一座高塔一般，若隐若现地耸立在河川的两旁。河水洁净得像一面明镜，静穆地躺在群山的怀抱之中。</p>
+<p>一条木筏慢悠悠的划了过来，上面摆放着一个如小树一般大的竹篓。头戴斗笠面容欢笑的渔夫吧嗒着烟袋，站在木筏的中央。有几只聪明的鱼鹰，神气的耸立在木筏的两头。</p>
+<p>那尖而钩的喙，那一层叠一层的羽毛，那黑白相间的脖子，太白嫌太单薄，太黑又说太沉重。</p>
+<p>它如同一位大师，在空中后空翻，完美落水，没有溅起一点水花。紧接着，它头一低，猛扎进水里。在阳光的照射下，能清楚的看见它在水里矫健的身姿，像剑鱼一般的速度游着。</p>
+<p>接着又是一只鱼鹰，似乎比它更大胆，直接扎如水中，还在调皮的游着。</p>
+<p>一只只鱼鹰跳入水中，动作让人来不及捕捉，简直目不暇接。</p>
+<p>它们用那双火眼金睛在水中寻找着鱼儿，忽然游向石头旁边，张嘴向鱼儿咬去。鱼鹰咬住了鱼就马上冲出水面，跳上渔船。</p>
+<p>渔夫一把抓住它的脖子，挤出了鱼，放进篓子里。</p>
+<p>渔夫们划船走了，山放佛笑了起来，天边的云也散了。</p>
+<hr />
+<h2 id="heading-11">雨</h2>
+<p>一阵哗啦哗啦声打破了一片宁静。那雨像黄豆般倾泻而下，屋外凹进去的地方都成了一个个小小的水塘。</p>
+<p>有一些雨滴不小心飘到了圆圆的脸蛋上，有一丝丝凉感，深入皮肤，让人不禁一颤。</p>
+<p>有些圆圆的水珠透明、亮晶晶，仿佛可以串成纯洁的项链。另外又一些又细又小的雨落进了水沟里，像飞进了游乐园一般，欢快地溅起晶莹剔透的水花，然后消失不见。</p>
+<p>雨落在树叶上，像一粒粒珠子在闪闪发光，在树叶上停留片刻之后，悄悄地滑向地面；</p>
+<p>雨落在大地上，像是许久未见的好朋友，热烈地投入了彼此的怀抱。大地好像很开心，雨儿也笑开了花儿。</p>
+<p>孩子们穿着准备已久的雨衣和雨鞋，打着花花绿绿的伞冲出家门，在积满雨水的小水坑里蹦来跳去，哗啦哗啦的雨声里增添了孩子们一阵一阵的嬉笑声。</p>
+<p>大人们也不禁高声赞美着：“好雨知时节，万物细无声！”，这场雨下得很及时，晾晒在外的衣服也收得很及时。</p>
+<p>老人们可不想被雨水淋湿，慌张地找地方躲雨。不一会儿，一小块地方站满了人。</p>
+<p>一场雨，虽然带来了慌张，但同时也不失快乐、赞美的氛围。</p>
+<hr />
+<h2 id="heading-12">萤火虫的绝笔信</h2>
+<p>破坏大自然的人类们：</p>
+<p>你们好！</p>
+<p>我是面临灭绝的萤火虫。</p>
+<p>我有两根又长又黑的触角，也长有几对短短的、细细的且毛绒绒的小脚，那是我爬行的工具。两对乌黑的翅膀更是助我畅行。</p>
+<p>我的一生未曾见过父母。</p>
+<p>我和姐妹们划开卵壳后，就要爬进小溪里找食物吃。那是一个危险之地，因为里边儿有致命的“杀手”，鱼、青蛙……都是我们的夙敌。然而，我们不得不进去，我们年幼时，主要是以螺类为食，只有那里才有我们的食物。</p>
+<p>我们蜕皮的阶段是痛苦的，而这痛苦的经历需重复多次。蜕皮后，我们爬出水面。打洞睡眠，等待着新生。</p>
+<p>然而，等我们爬出土后，才发现世界并不是想象中那么美好。</p>
+<p>人类乱排放的浓烟和垃圾，对我都有害。它们也是伤害我们的“杀手”。</p>
+<p>我们想喝口水似乎也不行了，因为人类把垃圾排到水里，使我们不得不远离这生命之泉。植物也被大量砍伐，地上以前满是树叶，而现在已经所剩无几了。</p>
+<p>我们脸上写满了失望，心头仿佛压着一块大石头一样，沉甸甸的，也不想飞上天空了。因为，那不是我想象中的家园。</p>
+<p>人类呀，今天是我们萤火虫即将灭绝。</p>
+<p>明天会是谁呢？</p>
+<hr />
+<h2 id="heading-13">放牛班的春天观后感</h2>
+<p>今天晚上，我看了一部电影，名叫《放牛班的春天》，可这个电影与放牛其实没有任何关系。</p>
+<p>主人公是一名新到学校的任课老师，他的名字叫马修。</p>
+<p>一开始，校长就看马修不顺眼。因为他并不认可马修教孩子们音乐，也不让他建立一个合唱队。还有，那里的学生都很调皮，一点儿也不听马修的话。</p>
+<p>马修和其他老师一点儿也不同，不同在于马修的教育方法是对的。因为他会耐心的和同学们讲讲话呀什么的。但是学校的规定却是：一旦学生犯了什么错，就要关禁闭，也就是把某个人关在一个乌黑乌黑的房间里，让人十分害怕。</p>
+<p>我觉得这样的方法来教育学生会让学生觉得自己没用，所以会反而让他们变得更加调皮的。</p>
+<p>然后，校长做得也不对，因为在教育上，老师或校长是不可以打人的。</p>
+<p>但是，我喜欢这部电影。</p>
+<p>你们喜欢吗？</p>
+<hr />
+<h2 id="heading-14">我去图书馆了</h2>
+<p>在去图书馆的路上，我经过了烈士公园。路旁的大树像一把把撑开的大雨伞，帮我们挡住了大雨。我坐在爸爸的车里，看见好多像珍珠一样的雨滴，洒在了汽车的挡风玻璃上。</p>
+<p>在去图书馆三楼的青少年阅读室门口，一个保安阿姨要求我们到一楼的儿童阅读室去。</p>
+<p>老爸说：“我们要找的《小鲤鱼跳龙门》和《小狗的小房子》这两本书在这里呢。”说完，就把手机拿给她看。</p>
+<p>手机上的图书编号显示确实是在这里，阿姨看过后，就让我们进去了，还帮我们一起找书！</p>
+<p>看完书之后，就去了一楼的乐之书店吃提拉米苏和金桔柠檬茶。在那里，我发现了一个神秘的小花园。有两个小朋友蹲在地上不知道在干什么。走过去一看，原来是在捉蜗牛。我和一个穿红色衣服的小女孩一起把小蜗牛放在了叶子上，而蹲在那里的小男孩却把大一点的蜗牛带走了。</p>
+<p>在回家的路上，我对爸爸说：“那只蜗牛会怎样？明天就是中秋节了，它能回到自己的家吗？”</p>
+<p>爸爸没有说话，但是我明白了，也许它只能自己过节了。</p>
+<hr />
+<h2 id="heading-15">换爪子</h2>
+<p>一个风和日丽的早晨，小公鸡一早就＂雄鸡一唱天下白＂。小公鸡唱完了歌儿，便去小河边捉虫儿去了。</p>
+<p>可是，大半天了他只能在地上啄呀啄呀，也有些腻了。</p>
+<p>他看见一条条小鱼儿在水里自由自在地游来游去，一只只可爱的小鸭子在水中戏耍，羡慕极了。一只小白鸭无精打采地靠在岸边，好像也过腻了水中的生活似的。</p>
+<p>小公鸡看见了呆呆的小白鸭，灵机一动说：＂小鸭弟弟，为什么无精打采？是不是过腻了在水中的生活，想上岸走走？＂</p>
+<p>小白鸭叹了口气：＂唉！多没劲啊！＂</p>
+<p>小公鸡一听，原来小鸭也有同感啊！急忙笑道：＂小鸭弟弟，我们换爪子吧！＂</p>
+<p>小白鸭想也没想就答应了，它们一同走向医院。</p>
+<p>走出医院后，爪子果然换了，结果饿了也不知道怎么吃东西了。</p>
+<p>它们又走到医院，要求换脑袋。</p>
+<p>医生说：＂这样不但疼，而且也危险啊！＂</p>
+<p>它们一听，恍然大悟。把爪子又换了回来。</p>
+<hr />
+<h2 id="heading-16">大熊猫与乐高迷</h2>
+<h3 id="1-1">1、大熊猫</h3>
+<p>大熊猫体型像熊又像猫，所以采取了这样一个名字。</p>
+<p>大熊猫是一种性格温顺、乖巧、可爱的动物，很讨人喜爱。大熊猫的眼睛上仿佛戴了一副墨镜，身体肥胖胖的像一个大皮球。在它们可爱的小脸蛋上长着一对整整齐齐的小耳朵，仿佛戴了一顶风雪帽，可爱极了！</p>
+<p>熊猫有六个又短又小又绒的小手指头，而且从熊猫外观看腹部是白色的，并不是白色的，而是淡棕色的，是不是很时髦？</p>
+<p>对于大熊猫来说，最好吃的便是竹子了！竹子也是有分类的，大熊猫吃的竹子就是尖竹，尖竹分布在四川等地区。</p>
+<p>熊猫喜欢在平坦的地面上玩耍、散步。样子好看极了！</p>
+<p>熊猫真是一种可爱的动物呀！</p>
+<h2 id="2-1">2、乐高迷</h2>
+<p>我的小表弟是个乐高迷，因为他所有的玩具都是乐高，所以才这么叫他。</p>
+<p>有一次呢，你们猜怎么着？</p>
+<p>他竟为了一套乐高哭得泪流满面。因为他很想买，结果我小姨（也就是小表弟的妈妈）不同意，因为她觉得太贵了。在网上买只要五十五元，现在买却要九百九十九元！最后经过小表弟苦苦央求，小姨要今天给他买。我爸实在看不下去了，就给他买了！大家觉得这是故意的呢？还是实在忍不住了呢？</p>
+<p>对了！还有一次。天还没有亮起来，小表弟就早早起了床，去玩乐高去了。过了一会儿，小表弟觉得太没有意思了，就把我给叫起来一起玩乐高。我把小表弟的话当耳边风，结果小表弟又补充一句：“要不然，把你的乐高给拆了！”我只好起床和他玩。</p>
+<p>我希望我的小表弟你什么时候才爱上学习啊！</p>
+<hr />
+<h2 id="heading-17">赞叶</h2>
+<p>李白在《古风·其五十九》中有诗云“碧荷生幽泉，朝日艳且鲜。秋花冒绿水，密叶罗青烟。”碧绿的荷花生于幽深清泉，在朝日映照下鲜艳夺目。一朵朵芙蓉从绿水中袅袅举起，茂密的圆叶笼罩着，宛如水面上的缕缕青烟。</p>
+<p>人们觉得花才是最美的，却不曾注意到叶子的聪明、美丽、有趣。而我更喜欢叶子。</p>
+<p>我喜欢叶子，因为它很聪明</p>
+<p>在寒冷的高山上，有一种名贵的植物，名叫雪莲。它的叶子很聪明，可以保护雪莲花。叶子上有一个法宝，像一把太阳伞，可以反射高山上强烈的紫外线，它的这个法宝就是叶子上的绒毛。</p>
+<p>生活在炎热地带的仙人掌也有很聪明的叶子，它的叶子是如同针一般的刺，可以保护自己身体中的水分，减少水分的流失。对仙人掌来说，那就是它的盾牌了。</p>
+<p>我喜欢叶子，因为它很美</p>
+<p>银杏的叶子形状像一把小扇子，扇走了夏天的烦恼、炎热。还有一些看起来像一对翅膀，仿佛可以飞上天空似的。</p>
+<p>网纹草的叶子不止一种颜色，真是流光溢彩啊！</p>
+<p>我喜欢叶子，因为它很有趣</p>
+<p>碰碰香的叶片上有气洞，可以发出苹果的芳香，如同在仙境一般。</p>
+<p>枫叶也好玩，因为它那五个角好像是一只小爪子，红彤彤的，风一吹，便羞红了脸。</p>
+<p>相较那些处处引人注目的美丽鲜花，叶子显得默默无闻，丝毫不在意是否被人看见。可它却承担了植物生长中非常重要的功能，让鲜花更美丽，让植物更茁壮。这也是我喜欢叶子的原因。</p>
+<hr />
+<h2 id="heading-18">破裂气球</h2>
+<p>教室里的讨论声和吵闹声，如有一根木棍悬在头上，使我忐忑不安，像有一只兔子在我的心头蹦跳，又像无数只小虫在蠕动。</p>
+<p>不愿听，也得听，不敢看，也得看。</p>
+<p>怎样形容我此刻的心情呢？</p>
+<p>紧张、担心、恐惧……越来越觉得自己心神不定，坐立不安，担心气球会在我耳边炸裂。</p>
+<p>我暗暗嘀咕着：“不是我，不是我。”可身上却已惊出一身冷汗，仿佛看见气球要在我耳边破裂似的。</p>
+<p>我捂住耳朵，不知道自己要干什么！</p>
+<p>破裂气球的矛头突然转向了我的同桌。</p>
+<p>如同一直胆小的老鼠一般，他不禁颤动了一下，面色苍白的像一块白布。脸上的颜色红一块、紫一块，像一团用过许久的棉花团。全身的汗毛仿佛被吹起来似的，一根根竖了起来。</p>
+<p>他马上拿出书包挡在头上，迅速躲到了桌子底下。捂住耳朵，双眼紧闭。</p>
+<hr />
+<h2 id="heading-19">香蕉</h2>
+<p>一天，我放学回家。厨房里，放了一个香蕉。</p>
+<p>但是……这是香蕉吗？</p>
+<p>也许是吧。也许不是。有可能是一个外星人，也有可能是芭蕉的同类物种，也许是一只特别的小船，也许是……</p>
+<p>不过，它从哪里来？</p>
+<p>也许是爷爷的朋友送的，也许是爸爸当礼物给的，也许是它自己来的，也许是妈妈从超市买来的。</p>
+<p>接下来……</p>
+<p>也许它会变成小狗，也许它会把它的朋友也带来，也许它是一个诱饵……也许它生气时会冒出火来。</p>
+<p>吃了它……</p>
+<p>也许能听到三千里之外的声音，也许会变成神童，也许会成为机器人，也许会变成巨人，也许会变成蚂蚁一样小。</p>
+<p>戳一戳，摇一摇，</p>
+<p>扔一扔，滚一滚……</p>
+<p>最后，我觉得……</p>
+<p>它就是一个普普通通，没有特殊功能的香蕉。</p>
+<p>“妈妈，我可以吃了这个香蕉吗？”</p>
+<p>“当然可以。”</p>
+<p>它便被我吧唧吧唧地吃掉了。</p>
+
+                </div>
+
+                <div id="post-footnotes" class="post-footnotes"></div>
+
+            </article>
+
+                        
+                        <div class="post-tags">
+                            <span class="post-tags-label">文章标签：</span>
+                            
+                                <a href="/tag/wen-da-bao/" class="post-tag">文大宝</a>
+                            
+                        </div>
+                        
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : 已经是第一篇文章了~
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/company_culture/">《组织的力量》创始人聊企业文化</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.2.0-beta.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

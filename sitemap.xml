@@ -2,9 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://tam.haywoo.com/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://tam.haywoo.com/post/sevennote/</loc>
+    <lastmod>2026-05-18T08:59:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/post/company_culture/</loc>
@@ -211,6 +217,12 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://tam.haywoo.com/post/fund-investment-2021/</loc>
+    <lastmod>2026-05-18T09:25:07+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://tam.haywoo.com/post/chendayong/</loc>
     <lastmod>2026-05-02T09:43:38+08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -223,8 +235,20 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://tam.haywoo.com/post/mannger/</loc>
+    <lastmod>2021-05-14T09:33:11+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://tam.haywoo.com/post/three-2/</loc>
     <lastmod>2026-05-02T11:35:58+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tam.haywoo.com/post/card/</loc>
+    <lastmod>2021-01-22T09:30:47+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -356,343 +380,349 @@
   </url>
   <url>
     <loc>https://tam.haywoo.com/post/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/memos/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tags/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/archives/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/sui-bi/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/jing-ying/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/lv-xing/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/chong-wu/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/tou-zi/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/fang-chan/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/jian-kang/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/qi-che/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/hei-ping-guo/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/shou-ji/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/dian-nao/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/yue-du-qi/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/bi-ji-ben/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/you-xi-ji/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/sheng-huo/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/kindle/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/shu-ji/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/zi-ti/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/jia-xin/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/xian-xue/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/mu-qin/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/318/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/zi-jia/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/zi-bai/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/excel/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/ri-ben/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/ai-qing/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/hun-yin/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/ji-guan/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/ma-jiang/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/qi-pai/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/shi-gu/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/xie-sheng/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/he-jiu/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/fu-qin/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/ke-sou/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/gou-shi-yi/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/bei-jing/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/shui/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/er-shou-fang/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/ji-jin/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/tu-ang-x/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/da-zhong-qi-che/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/efi/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/sheng-ri/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/si-wang/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/yuan-gong/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/xin-ren/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/shui-mian/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/rui-xiao-bao/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/li-cai/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/tag/guan-li/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://tam.haywoo.com/tag/wen-da-bao/</loc>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tam.haywoo.com/links/</loc>
-    <lastmod>2026-05-16T10:40:28+08:00</lastmod>
+    <lastmod>2026-05-18T09:42:20+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
