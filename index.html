@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-    <meta name="generator" content="Gridea Pro 1.2.0-beta.1">
+    <meta name="generator" content="Gridea Pro 1.2.1">
     <title>百川随笔</title>
 
     
@@ -267,6 +267,28 @@
     
     ,{
       "@type": "BlogPosting",
+      "title": "MacOS日常维护解决方案",
+      "description": "开启允许从任何来源下载APP sudo spctl --master-disable 开启或关闭SIP csrutil disable csrutil enable csrutil authenticated-root disable 解决MAC中文输入法的卡顿问题 kill -9 `pgrep SCIM` 删除启动项&amp;hellip; ...",
+      "keywords": "macOS, 黑苹果, 电脑, 维护",
+      "url": "/post/macos/",
+      
+      "published": "2026-05-28T10:21:12+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
+      "title": "Windows日常维护解决方案",
+      "description": "如何让 Windows 家庭版开启网络共享功能 管理员身份运行powershell 输入 Set-SmbClientConfiguration -RequireSecuritySignature $false 输入Y，回车确认 然后运行注册表regedit 在注册表HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Se&amp;...",
+      "keywords": "电脑, 维修",
+      "url": "/post/windows/",
+      
+      "published": "2026-05-28T10:17:50+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
       "title": "文大宝的小文字",
       "description": "瘦老虎 列位叔叔阿姨、哥哥姐姐，即将为您揭晓一只“瘦老虎”的事。 嘿嘿，正是我谭某人！ 田地到处有、山川好风景的衡阳是我的故乡；星城长沙是我的出生地和安居地。 从小胖得像鱼肚，长大瘦如野狗（编者注：也许是某人骂过你，你让老爸陪你一起顶。是吧？），但无病；夸张一点就是风一吹，就起飞；某人总说：“你呀，跑步跑不快；种地也不行，写作业也不行，批改作业更不行，连只狗...",
       "keywords": "文大宝",
@@ -312,7 +334,7 @@
     ,{
       "@type": "BlogPosting",
       "title": "我的Kindle使用体验",
-      "description": "最具性价比 Kindle 我用过基础版的 Kindle（第7代和第8代入门版），上手过 Kindle Voyage 和 Kindle X（咪咕版），正在使用的是 Kindle Paperwhite（第11代，KPW5）。 虽然很心水 Kindle Oasis 的设计感觉， 可考虑到价格及各种参数，我认为最具性价比的产品是2021年发布的Kindle Pape...",
+      "description": "最具性价比 Kindle 我用过基础版的 Kindle（第 7 代和第 8 代入门版），上手过 Kindle Voyage 和 Kindle X（咪咕版），正在使用的是 Kindle Paperwhite（第 11 代，KPW5）。 虽然很心水 Kindle Oasis 的设计感觉， 可考虑到价格及各种参数，我认为最具性价比的产品是 2021 年发布的 Ki...",
       "keywords": "Kindle, 书籍, 字体, 阅读器",
       "url": "/post/kindle/",
       
@@ -350,28 +372,6 @@
       "url": "/post/xianxie/",
       
       "published": "2025-11-29T16:52:52+08:00",
-      "author": ""
-    }
-    
-    ,{
-      "@type": "BlogPosting",
-      "title": "国道318线路，去过了。",
-      "description": "行程起源 2024年的时候，小龙老师经常提起要去318国道自驾走一趟。考虑到自驾318的行程起码要半个月的时间，实在是代价太大，就没有响应他。今年夏天，他又提起什么时候走一趟川藏线，照旧没有回应。那时，我刚去了一趟新疆伊犁。 2025年11月份，服哥说客户在丽江拍样片，我们要派人过去拍摄视频，客户想让他一起过去。于是他问我要不要一起过去，如果去的话，就可以顺...",
-      "keywords": "旅行, 318, 自驾",
-      "url": "/post/318/",
-      
-      "published": "2025-11-17T14:22:39+08:00",
-      "author": ""
-    }
-    
-    ,{
-      "@type": "BlogPosting",
-      "title": "你不必如此",
-      "description": "你不必如此。 我们过往的那些年，不论现在和未来会如何，那些共同经历的，始终存在，这是不可否认的。 如果记忆消褪，照片和视频会唤起那些记忆。 从18岁到40岁的这段时间，我们相互见证了彼此的年龄增长，我们和孩子们一起在成长。 三十几岁之前，我是一个特别在意别人评价的人，希望得到肯定。父母教诲和“增广贤文”让我对传统世俗观念深信不疑，想将自己修炼成千年以来人们认...",
-      "keywords": "自白",
-      "url": "/post/nbbrc/",
-      
-      "published": "2025-05-19T11:27:35+08:00",
       "author": ""
     }
     
@@ -551,7 +551,7 @@
 
             
 
-    <script>console.log("\n%c ✦ Gridea Pro v1.2.0-beta.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+    <script>console.log("\n%c ✦ Gridea Pro v1.2.1 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 
     </html>
