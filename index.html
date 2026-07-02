@@ -15,11 +15,26 @@
 
     
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1a1b1e" media="(prefers-color-scheme: dark)">
 
     
     <link rel="shortcut icon" href="/images/theme/favicon.ico">
 <link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <script>
+        (function () {
+            var configDefault = 'light';
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || configDefault;
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+            if (!savedTheme) {
+                localStorage.setItem('theme', theme);
+            }
+        })();
+    </script>
 
     
     <style>:root{--accent-color:#28df99;}</style>
@@ -53,11 +68,13 @@
         var moonBtn = document.getElementById('theme-toggle-moon');
         
         function toggleTheme() {
-            var isDark = document.body.classList.contains('dark-theme');
+            var isDark = document.documentElement.classList.contains('dark-theme');
             if (isDark) {
+                document.documentElement.classList.remove('dark-theme');
                 document.body.classList.remove('dark-theme');
                 localStorage.setItem('theme', 'light');
             } else {
+                document.documentElement.classList.add('dark-theme');
                 document.body.classList.add('dark-theme');
                 localStorage.setItem('theme', 'dark');
             }
@@ -267,6 +284,17 @@
     
     ,{
       "@type": "BlogPosting",
+      "title": "文大宝中考之后的思考",
+      "description": "再过几天，7月2日，文大宝的中考成绩就可以查询到。她自考试之后的不安心态，应该可以放下了。 尽管没有表现出明显的不安，从她多次找我聊民办高中的事情可以看出，她应该是有些焦虑的。可能没有考好。早几年前，我就说过：孩子们18岁之后要自我独立，不再提供金钱支持。或许她觉得自己即将面临进入社会吧。 这种焦虑，我不确定是否源自于她自己的认知。 根据过往三年的考试成绩，...",
+      "keywords": "教育, 文大宝",
+      "url": "/post/wendabaokaohou/",
+      
+      "published": "2026-07-01T15:18:13+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
       "title": "MacOS日常维护解决方案",
       "description": "开启允许从任何来源下载APP sudo spctl --master-disable 开启或关闭SIP csrutil disable csrutil enable csrutil authenticated-root disable 解决MAC中文输入法的卡顿问题 kill -9 `pgrep SCIM` 删除启动项&amp;hellip; ...",
       "keywords": "macOS, 黑苹果, 电脑, 维护",
@@ -364,17 +392,6 @@
       "author": ""
     }
     
-    ,{
-      "@type": "BlogPosting",
-      "title": "献血",
-      "description": "首次献血 献血这个事情，是从2001年开始的。如果没有记错的话，应该是跟唐朝云一起去的。 我骑自行车载着朝云回学校，经过长沙河西溁湾镇通程电器的时候，正好看见有一辆献血车停在门口。 不知道为啥，我突然跟朝云说：“我要去献血，你要不要一起？” 朝云随我一起上了献血车，但没有献血。这是我预料之中的事情。 他一向把照顾好自己放在第一位，不饿着自己，不做可能伤害自己...",
-      "keywords": "献血",
-      "url": "/post/xianxie/",
-      
-      "published": "2025-11-29T16:52:52+08:00",
-      "author": ""
-    }
-    
   ]
 }
 </script>
@@ -393,6 +410,7 @@
                     const theme = savedTheme || configDefault || getSystemTheme();
 
                     if (theme === 'dark') {
+                        document.documentElement.classList.add('dark-theme');
                         document.body.classList.add('dark-theme');
                     }
 

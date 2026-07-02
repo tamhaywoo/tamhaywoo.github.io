@@ -15,11 +15,26 @@
 
     
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1a1b1e" media="(prefers-color-scheme: dark)">
 
     
     <link rel="shortcut icon" href="/images/theme/favicon.ico">
 <link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <script>
+        (function () {
+            var configDefault = 'light';
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || configDefault;
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+            if (!savedTheme) {
+                localStorage.setItem('theme', theme);
+            }
+        })();
+    </script>
 
     
     <style>:root{--accent-color:#28df99;}</style>
@@ -53,11 +68,13 @@
         var moonBtn = document.getElementById('theme-toggle-moon');
         
         function toggleTheme() {
-            var isDark = document.body.classList.contains('dark-theme');
+            var isDark = document.documentElement.classList.contains('dark-theme');
             if (isDark) {
+                document.documentElement.classList.remove('dark-theme');
                 document.body.classList.remove('dark-theme');
                 localStorage.setItem('theme', 'light');
             } else {
+                document.documentElement.classList.add('dark-theme');
                 document.body.classList.add('dark-theme');
                 localStorage.setItem('theme', 'dark');
             }
@@ -267,6 +284,17 @@
     
     ,{
       "@type": "BlogPosting",
+      "title": "2020年随笔合集",
+      "description": "2020-10-05 一个真正成熟的管理者看谁都顺眼，承认并且接受真正的多样性。 看顺眼并不代表认同，不代表认为对方就是完全正确的，并不代表“换成是我，也会这么做”。他可能一辈子都不会那么做，但是他知道这是站在对方的角度后，对方的选择，对方的价值观，对方的逻辑。 一个人同时保有两种相反的观念，还能正常行事，这是第一流智慧的标志。 2020-10-19 记得老...",
+      "keywords": "随笔",
+      "url": "/post/log-2020/",
+      
+      "published": "2020-10-01T17:24:54+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
       "title": "见过死亡，照进现实",
       "description": "昨天下午六点半左右，BOSS WU见我收拾东西准备下班，就询问：＂怎么这么急着下班，家里有什么事吗？＂。 ＂是的，今天我要赶时间开车去一趟张家界。明天是岳父的忌日，我去他坟前给他多烧些纸钱。然后下午返回长沙。＂说完，我就拎着包离开了办公室。 岳父的老家在张家界市慈利县杉木桥镇。他算是落叶归根了，在老家的房子去世，安葬在自家的地里。 只是，56岁的他一定还没有...",
       "keywords": "随笔, 死亡",
@@ -364,17 +392,6 @@
       "author": ""
     }
     
-    ,{
-      "@type": "BlogPosting",
-      "title": "2013年随笔合集",
-      "description": "2013-01-02 我又多了一个技能——监控设备安装调试！ 现在在办公室就可以看到全店各处的动态，嘿嘿…大家安全了！免得大家被小偷欺负还找不着北！ 2013-02-26 云飞，再见！ 2013-04-19 通过身边的事例能了解未曾体会的感受，让我在以后做决定时考虑他人更多一点——不鲁莽、不急躁、多沟通、多理解。 2013-05-07 既然老天暴雨倾盆&amp;he...",
-      "keywords": "随笔",
-      "url": "/post/log-2013/",
-      
-      "published": "2013-10-10T16:49:13+08:00",
-      "author": ""
-    }
-    
   ]
 }
 </script>
@@ -393,6 +410,7 @@
                     const theme = savedTheme || configDefault || getSystemTheme();
 
                     if (theme === 'dark') {
+                        document.documentElement.classList.add('dark-theme');
                         document.body.classList.add('dark-theme');
                     }
 

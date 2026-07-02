@@ -15,11 +15,26 @@
 
     
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1a1b1e" media="(prefers-color-scheme: dark)">
 
     
     <link rel="shortcut icon" href="/images/theme/favicon.ico">
 <link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <script>
+        (function () {
+            var configDefault = 'light';
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || configDefault;
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+            if (!savedTheme) {
+                localStorage.setItem('theme', theme);
+            }
+        })();
+    </script>
 
     
     <style>:root{--accent-color:#28df99;}</style>
@@ -53,11 +68,13 @@
         var moonBtn = document.getElementById('theme-toggle-moon');
         
         function toggleTheme() {
-            var isDark = document.body.classList.contains('dark-theme');
+            var isDark = document.documentElement.classList.contains('dark-theme');
             if (isDark) {
+                document.documentElement.classList.remove('dark-theme');
                 document.body.classList.remove('dark-theme');
                 localStorage.setItem('theme', 'light');
             } else {
+                document.documentElement.classList.add('dark-theme');
                 document.body.classList.add('dark-theme');
                 localStorage.setItem('theme', 'dark');
             }
@@ -267,6 +284,7 @@
         const theme = savedTheme || configDefault || getSystemTheme();
 
         if (theme === 'dark') {
+            document.documentElement.classList.add('dark-theme');
             document.body.classList.add('dark-theme');
         }
 
@@ -320,6 +338,14 @@
 		<ul class="mod-archive__list">
             
             
+            
+			<li class="mod-archive__post ">
+                <a class="mod-archive__post-title" href="/post/house/">
+                
+                在长沙买二手房
+                </a>
+                <time class="mod-archive__post-date" datetime="2023-02-22">2023-02-22</time>
+            </li>
             
 			<li class="mod-archive__post ">
                 <a class="mod-archive__post-title" href="/post/fund-rich-1020/">
@@ -393,7 +419,7 @@
                 <time class="mod-archive__post-date" datetime="2021-12-21">2021-12-21</time>
             </li>
             
-			<li class="mod-archive__post ">
+			<li class="mod-archive__post hide">
                 <a class="mod-archive__post-title" href="/post/log-2021/">
                 
                 2021年随笔合集
@@ -431,14 +457,6 @@
                 从无欲无求到有所追求
                 </a>
                 <time class="mod-archive__post-date" datetime="2020-10-11">2020-10-11</time>
-            </li>
-            
-			<li class="mod-archive__post hide">
-                <a class="mod-archive__post-title" href="/post/log-2020/">
-                
-                2020年随笔合集
-                </a>
-                <time class="mod-archive__post-date" datetime="2020-10-01">2020-10-01</time>
             </li>
             
 				</ul>

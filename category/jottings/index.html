@@ -15,11 +15,26 @@
 
     
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1a1b1e" media="(prefers-color-scheme: dark)">
 
     
     <link rel="shortcut icon" href="/images/theme/favicon.ico">
 <link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <script>
+        (function () {
+            var configDefault = 'light';
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || configDefault;
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+            if (!savedTheme) {
+                localStorage.setItem('theme', theme);
+            }
+        })();
+    </script>
 
     
     <style>:root{--accent-color:#28df99;}</style>
@@ -53,11 +68,13 @@
         var moonBtn = document.getElementById('theme-toggle-moon');
         
         function toggleTheme() {
-            var isDark = document.body.classList.contains('dark-theme');
+            var isDark = document.documentElement.classList.contains('dark-theme');
             if (isDark) {
+                document.documentElement.classList.remove('dark-theme');
                 document.body.classList.remove('dark-theme');
                 localStorage.setItem('theme', 'light');
             } else {
+                document.documentElement.classList.add('dark-theme');
                 document.body.classList.add('dark-theme');
                 localStorage.setItem('theme', 'dark');
             }
@@ -267,6 +284,7 @@
         const theme = savedTheme || configDefault || getSystemTheme();
 
         if (theme === 'dark') {
+            document.documentElement.classList.add('dark-theme');
             document.body.classList.add('dark-theme');
         }
 
@@ -324,6 +342,11 @@
 </br>
 
 		<ul class="mod-archive__list">
+            
+			<li class="mod-archive__post">
+				<a class="mod-archive__post-title" href="/post/wendabaokaohou/">文大宝中考之后的思考</a>
+				<time class="mod-archive__post-date" datetime="2026-07-01">2026-07-01</time>
+      		</li>
             
 			<li class="mod-archive__post">
 				<a class="mod-archive__post-title" href="/post/sevennote/">文大宝的小文字</a>
@@ -393,11 +416,6 @@
 			<li class="mod-archive__post">
 				<a class="mod-archive__post-title" href="/post/log-2022/">2022年随笔合集</a>
 				<time class="mod-archive__post-date" datetime="2022-10-06">2022-10-06</time>
-      		</li>
-            
-			<li class="mod-archive__post">
-				<a class="mod-archive__post-title" href="/post/remeberme/">一整天都泡在爱的怀抱里</a>
-				<time class="mod-archive__post-date" datetime="2022-03-26">2022-03-26</time>
       		</li>
             
 				

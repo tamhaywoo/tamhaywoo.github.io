@@ -37,6 +37,7 @@ html {
   -webkit-text-size-adjust: 100%;
   font-family: "Noto Sans SC", "Microsoft Jhenghei", Lantinghei SC, "lanting", PingFang SC, Seguo UI, "Microsoft Yahei", Arial;
   min-height: 100%;
+  background-color: var(--bg-color);
 }
 
 html::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -47,6 +48,20 @@ html::-webkit-scrollbar-thumb {
   border-radius: 16px;
 }
 html::-webkit-scrollbar-thumb:hover { background-color: #a9a9b3; }
+
+html:has(body.dark-theme)::-webkit-scrollbar-thumb {
+  background-color: #5a5d68;
+}
+html:has(body.dark-theme)::-webkit-scrollbar-thumb:hover {
+  background-color: #6a6d78;
+}
+
+html.dark-theme::-webkit-scrollbar-thumb {
+  background-color: #5a5d68;
+}
+html.dark-theme::-webkit-scrollbar-thumb:hover {
+  background-color: #6a6d78;
+}
 
 body {
   margin: 0 auto;
@@ -1091,6 +1106,19 @@ figure { margin: 1.5em 0; }
    Dark mode
    ========================================================================== */
 
+html:has(body.dark-theme) {
+  background-color: var(--dark-bg);
+}
+
+html.dark-theme {
+  background-color: var(--dark-bg);
+}
+
+html.dark-theme body {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
 body.dark-theme {
   background-color: var(--dark-bg);
   color: var(--dark-text);
@@ -1287,6 +1315,53 @@ body.dark-theme .theme-toggle-moon { display: inline-block !important; color: #F
 .dark-theme .memo-body.collapsed::after {
   background: linear-gradient(transparent, rgba(26, 27, 30, 0.95));
 }
+
+/* ---- 暗模式补丁：修复遗漏的背景色/文字色 ---- */
+
+/* 热力图图例：与数据格保持一致的暗色系 */
+.dark-theme .heatmap-legend-cell[data-level="0"] { background: #161b22 !important; }
+.dark-theme .heatmap-legend-cell[data-level="1"] { background: #0e4429 !important; }
+.dark-theme .heatmap-legend-cell[data-level="2"] { background: #006d32 !important; }
+.dark-theme .heatmap-legend-cell[data-level="3"] { background: #28df99 !important; }
+.dark-theme .heatmap-legend-cell[data-level="4"] { background: #39d353 !important; }
+.dark-theme .heatmap-footer { color: var(--dark-muted); }
+
+/* 闪念分页信息 */
+.dark-theme .memo-page-info { color: var(--dark-muted); }
+.dark-theme .memos-empty { color: var(--dark-muted); }
+.dark-theme .memo-pagination a:hover { color: #28df99; }
+
+/* 阅读进度环背景圆 */
+.dark-theme .progress-ring__circle-bg { stroke: #3a3c42; }
+
+/* 404 页面返回按钮边框 */
+.dark-theme .error-page .back-home { border-color: var(--dark-text); color: var(--dark-text); }
+.dark-theme .error-page .back-home:hover { border-color: var(--accent-color); color: var(--accent-color); }
+
+/* 博客列表分页导航 */
+.dark-theme .posts-nav { color: var(--dark-text); }
+.dark-theme .posts-nav span,
+.dark-theme .posts-nav a { color: var(--dark-muted); }
+
+/* 归档时间颜色 */
+.dark-theme .mod-archive__time { color: var(--dark-muted); }
+.dark-theme .mod-archive__year { color: var(--dark-muted); }
+
+/* 社交链接图标 */
+.dark-theme .social-container a { color: #6a6d78; }
+.dark-theme .social-container a:hover { color: var(--accent-color); }
+
+/* Valine 评论元信息 & 分页 */
+.dark-theme #vcomments .vlist .vcard .vh .vmeta { color: var(--dark-muted) !important; }
+.dark-theme #vcomments .page-navigator li { color: var(--dark-text); }
+.dark-theme #vcomments .page-navigator a:hover,
+.dark-theme #vcomments .page-navigator .current a {
+  color: var(--dark-text);
+  border-bottom-color: var(--dark-text);
+}
+
+/* 标签云计数 */
+.dark-theme .tags-list a.size-10 span { color: var(--dark-muted); }
 
 /* ==========================================================================
    Responsive

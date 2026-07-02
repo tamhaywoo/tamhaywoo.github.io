@@ -15,11 +15,26 @@
 
     
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1a1b1e" media="(prefers-color-scheme: dark)">
 
     
     <link rel="shortcut icon" href="/images/theme/favicon.ico">
 <link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <script>
+        (function () {
+            var configDefault = 'light';
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || configDefault;
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+            if (!savedTheme) {
+                localStorage.setItem('theme', theme);
+            }
+        })();
+    </script>
 
     
     <style>:root{--accent-color:#28df99;}</style>
@@ -53,11 +68,13 @@
         var moonBtn = document.getElementById('theme-toggle-moon');
         
         function toggleTheme() {
-            var isDark = document.body.classList.contains('dark-theme');
+            var isDark = document.documentElement.classList.contains('dark-theme');
             if (isDark) {
+                document.documentElement.classList.remove('dark-theme');
                 document.body.classList.remove('dark-theme');
                 localStorage.setItem('theme', 'light');
             } else {
+                document.documentElement.classList.add('dark-theme');
                 document.body.classList.add('dark-theme');
                 localStorage.setItem('theme', 'dark');
             }
@@ -267,6 +284,17 @@
     
     ,{
       "@type": "BlogPosting",
+      "title": "2008年随笔合集",
+      "description": "2008-01-28 很多人和我一样喜欢冬天里洁白的雪，也希望有一个漫长雪季的冬天，这回上帝听见了这个愿望，并将它得以实现。一切都太突然了，没人会预料到这个雪季会持续大半个月，也没人会料到这场雪带来是持续冰冻。 一定要记住2008年的这次大雪 2008-06-07 以下是在和谐号D字头动车上忍受煎熬的时候用手机写的，看起来思维很散，不做整理了。 速度和准时是...",
+      "keywords": "随笔",
+      "url": "/post/log-2008/",
+      
+      "published": "2008-10-03T01:05:08+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
       "title": "2007年随笔合集",
       "description": "2007-02-25 农历初六的晚上，卢哥打电话告诉我：一个只有21岁的同事因为心脏有问题&amp;hellip;走了。 我怎么也不相信这件事情是真的，曾经在一起工作生活的那个小伙子平时不是挺好的吗？怎么突然就没了？ 曾经将死看得淡如水的我如今胆怯了，死亡也许对逝者来说并不可怕也并不悲伤，但死亡却给逝者的亲人和朋友带来无尽的伤痛。它让生者明白，必须要好好的珍惜现有的...",
       "keywords": "随笔",
@@ -327,6 +355,7 @@
                     const theme = savedTheme || configDefault || getSystemTheme();
 
                     if (theme === 'dark') {
+                        document.documentElement.classList.add('dark-theme');
                         document.body.classList.add('dark-theme');
                     }
 

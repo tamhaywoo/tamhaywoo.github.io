@@ -15,11 +15,26 @@
 
     
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1a1b1e" media="(prefers-color-scheme: dark)">
 
     
     <link rel="shortcut icon" href="/images/theme/favicon.ico">
 <link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <script>
+        (function () {
+            var configDefault = 'light';
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || configDefault;
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+            if (!savedTheme) {
+                localStorage.setItem('theme', theme);
+            }
+        })();
+    </script>
 
     
     <style>:root{--accent-color:#28df99;}</style>
@@ -53,11 +68,13 @@
         var moonBtn = document.getElementById('theme-toggle-moon');
         
         function toggleTheme() {
-            var isDark = document.body.classList.contains('dark-theme');
+            var isDark = document.documentElement.classList.contains('dark-theme');
             if (isDark) {
+                document.documentElement.classList.remove('dark-theme');
                 document.body.classList.remove('dark-theme');
                 localStorage.setItem('theme', 'light');
             } else {
+                document.documentElement.classList.add('dark-theme');
                 document.body.classList.add('dark-theme');
                 localStorage.setItem('theme', 'dark');
             }
@@ -267,6 +284,17 @@
     
     ,{
       "@type": "BlogPosting",
+      "title": "在长沙买二手房",
+      "description": "当前在长沙市二环外有一套 85m² 的多层住宅，在长沙与湘潭交界处有一套 128m² 的闲置高层住宅，考虑到稍大的那一套无法当前使用，所以准备再买一套住宅改善孩子们的居住体验。 关于购房资格 一直以来，长沙地区户口最多只能在长沙购买两套住宅。 2022 年 6 月底，湖南省委、省政府印发《关于优化生育政策促进人口长期均衡发展的实施方案》，并下发通知，要求各市...",
+      "keywords": "投资, 房产, 二手房",
+      "url": "/post/house/",
+      
+      "published": "2023-02-22T13:26:46+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
       "title": "基金投资1020模型",
       "description": "上涨10%，出货20%；下跌10%，补货20% 我在2023年基金投资操作规则中有写到： 以收益率正负 10% 为基数进行操作，如果大环境不好，再将触发条件从收益率 10% 调整为 5% - 10% 之间也可以，只是买入和卖出基数对应调整 X2 就行，但是买入和卖出操作的手续费成本也会相应增加。 这几天花了点时间用表格进行了重新测算，发现使用“1020”操作...",
       "keywords": "投资, 基金",
@@ -364,17 +392,6 @@
       "author": ""
     }
     
-    ,{
-      "@type": "BlogPosting",
-      "title": "2021年随笔合集",
-      "description": "2021-01-05 会后到家已是十点多了，夫人在辅导SEVEN的学习；岳母在陪THREE讲照片上的记忆；我把杯子装上朝日啤酒，坐在电炉前看一段不曾了解的历史。 2021-02-23 时间很少，生命有限。感谢愿意付出时间在一起的人。 2021-03-07 成就感，可以是源于一次次的目标突破，也可以是源于解决问题的能力得到提升。 2021-03-27 什么是领...",
-      "keywords": "随笔",
-      "url": "/post/log-2021/",
-      
-      "published": "2021-10-01T17:26:04+08:00",
-      "author": ""
-    }
-    
   ]
 }
 </script>
@@ -393,6 +410,7 @@
                     const theme = savedTheme || configDefault || getSystemTheme();
 
                     if (theme === 'dark') {
+                        document.documentElement.classList.add('dark-theme');
                         document.body.classList.add('dark-theme');
                     }
 

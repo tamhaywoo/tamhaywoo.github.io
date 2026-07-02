@@ -15,11 +15,26 @@
 
     
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1a1b1e" media="(prefers-color-scheme: dark)">
 
     
     <link rel="shortcut icon" href="/images/theme/favicon.ico">
 <link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <script>
+        (function () {
+            var configDefault = 'light';
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || configDefault;
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+            if (!savedTheme) {
+                localStorage.setItem('theme', theme);
+            }
+        })();
+    </script>
 
     
     <style>:root{--accent-color:#28df99;}</style>
@@ -53,11 +68,13 @@
         var moonBtn = document.getElementById('theme-toggle-moon');
         
         function toggleTheme() {
-            var isDark = document.body.classList.contains('dark-theme');
+            var isDark = document.documentElement.classList.contains('dark-theme');
             if (isDark) {
+                document.documentElement.classList.remove('dark-theme');
                 document.body.classList.remove('dark-theme');
                 localStorage.setItem('theme', 'light');
             } else {
+                document.documentElement.classList.add('dark-theme');
                 document.body.classList.add('dark-theme');
                 localStorage.setItem('theme', 'dark');
             }
@@ -267,6 +284,7 @@
         const theme = savedTheme || configDefault || getSystemTheme();
 
         if (theme === 'dark') {
+            document.documentElement.classList.add('dark-theme');
             document.body.classList.add('dark-theme');
         }
 
@@ -640,8 +658,8 @@
                         </li>
                     
                         <li>
-                            <a href="/tag/wen-da-bao/" rel="tag" class="size-10" title="1 个话题">
-                                # 文大宝 <span>(1)</span>
+                            <a href="/tag/wen-da-bao/" rel="tag" class="size-10" title="2 个话题">
+                                # 文大宝 <span>(2)</span>
                             </a>
                         </li>
                     
@@ -660,6 +678,12 @@
                         <li>
                             <a href="/tag/wei-hu/" rel="tag" class="size-10" title="1 个话题">
                                 # 维护 <span>(1)</span>
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="/tag/jiao-yu/" rel="tag" class="size-10" title="1 个话题">
+                                # 教育 <span>(1)</span>
                             </a>
                         </li>
                     

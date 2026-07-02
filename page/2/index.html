@@ -15,11 +15,26 @@
 
     
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1a1b1e" media="(prefers-color-scheme: dark)">
 
     
     <link rel="shortcut icon" href="/images/theme/favicon.ico">
 <link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <script>
+        (function () {
+            var configDefault = 'light';
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || configDefault;
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+            if (!savedTheme) {
+                localStorage.setItem('theme', theme);
+            }
+        })();
+    </script>
 
     
     <style>:root{--accent-color:#28df99;}</style>
@@ -53,11 +68,13 @@
         var moonBtn = document.getElementById('theme-toggle-moon');
         
         function toggleTheme() {
-            var isDark = document.body.classList.contains('dark-theme');
+            var isDark = document.documentElement.classList.contains('dark-theme');
             if (isDark) {
+                document.documentElement.classList.remove('dark-theme');
                 document.body.classList.remove('dark-theme');
                 localStorage.setItem('theme', 'light');
             } else {
+                document.documentElement.classList.add('dark-theme');
                 document.body.classList.add('dark-theme');
                 localStorage.setItem('theme', 'dark');
             }
@@ -267,6 +284,17 @@
     
     ,{
       "@type": "BlogPosting",
+      "title": "首次日本之行",
+      "description": "我总是和CF说，我想要去日本体验一次泡泡浴。我心里面在想的是：有没有可能，我会遇到类似于教学片中的美丽老师。 不过，这个念头也就只是想一想而已。在缺乏语言交流基础的情况下，去做泡泡浴很容易闹出笑话，并且容易给别人带来麻烦（导游说这是泡泡浴不接待外国人的主要原因），一不小心就被拉到局子里。 想去日本的念头，在心里面放了很久。 在长沙读书的那段时间，学校每个星期...",
+      "keywords": "旅行, 日本",
+      "url": "/post/gotojapan/",
+      
+      "published": "2024-12-04T17:50:08+08:00",
+      "author": ""
+    }
+    
+    ,{
+      "@type": "BlogPosting",
       "title": "爱情婚姻是什么",
       "description": "我对人类自古至今流传着关于爱情故事深信不疑，也对故事中的主角们深表钦佩。东方有“梁山伯与祝英台”、“牛郎与织女”，西方有“罗密欧与朱丽叶”、“维纳斯和阿都奈斯”，这些爱情故事往往都是以悲剧收尾，似乎只有求而不得的爱情才能让人记忆深刻，也从另一个角度表达了“平平淡淡才是真”，而这个“真”的意思是指符合真实情况、符合普罗大众的现实情况。 我对“什么是爱情”没有明...",
       "keywords": "爱情, 婚姻",
@@ -364,17 +392,6 @@
       "author": ""
     }
     
-    ,{
-      "@type": "BlogPosting",
-      "title": "大名狗十一",
-      "description": "2023年8月6日，从潮爷朋友圈看到他捡到了三只小狗，看样子应该是串串土狗，目前正在征集领养对象。考虑到现在的家庭情况，应该是可以养狗的，于是跑到河西让潮爷抓一只给我带回家。 带小狗回家前，去了一趟宠物医院，准备给它做一个全面检查，并且把细小和犬瘟的疫苗安排上。不过，宠物医院说小奶狗太小了，还喂养半个月到二十天的样子再带过去更合适。并且叮嘱不要带它出家门，以...",
-      "keywords": "宠物, 狗十一",
-      "url": "/post/elevenisadog/",
-      
-      "published": "2023-08-07T10:55:24+08:00",
-      "author": ""
-    }
-    
   ]
 }
 </script>
@@ -393,6 +410,7 @@
                     const theme = savedTheme || configDefault || getSystemTheme();
 
                     if (theme === 'dark') {
+                        document.documentElement.classList.add('dark-theme');
                         document.body.classList.add('dark-theme');
                     }
 
