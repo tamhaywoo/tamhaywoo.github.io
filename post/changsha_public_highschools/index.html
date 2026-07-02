@@ -1,0 +1,1438 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.2.2">
+    <title>长沙公办高中全维度横向对比 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1a1b1e" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <script>
+        (function () {
+            var configDefault = 'light';
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || configDefault;
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+            if (!savedTheme) {
+                localStorage.setItem('theme', theme);
+            }
+        })();
+    </script>
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    
+<script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Theme toggle buttons
+        var sunBtn = document.getElementById('theme-toggle-sun');
+        var moonBtn = document.getElementById('theme-toggle-moon');
+        
+        function toggleTheme() {
+            var isDark = document.documentElement.classList.contains('dark-theme');
+            if (isDark) {
+                document.documentElement.classList.remove('dark-theme');
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark-theme');
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        if (sunBtn) {
+            sunBtn.addEventListener('click', toggleTheme);
+        }
+        if (moonBtn) {
+            moonBtn.addEventListener('click', toggleTheme);
+        }
+    });
+
+    // Footnotes support for Markdown footnotes [^1]
+    document.addEventListener('DOMContentLoaded', function() {
+        var entry = document.querySelector('.mod-post__entry');
+        var footnotesContainer = document.querySelector('#post-footnotes');
+        
+        if (!entry) return;
+
+        // Get the raw HTML content
+        var content = entry.innerHTML;
+        
+        // Find footnote definitions - standard format [^1]: definition
+        // Handle both markdown [^1]: and HTML encoded versions
+        var footnoteDefs = {};
+        
+        // Try various patterns to find footnote definitions
+        var patterns = [
+            /\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|\n\s*\n|\n\s*<h2|\n\s*$|$)/gi,
+            /<p>\[\^([^\]]+)\]:\s*([\s\S]*?)<\/p>/gi,
+            /<p>\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|$)/gi,
+            /\[\^([^\]]+)\]:\s*([\s\S]{1,300}?)(?=<\/p>|$)/gi
+        ];
+        
+        patterns.forEach(function(defRegex) {
+            var match;
+            while ((match = defRegex.exec(content)) !== null) {
+                var fnName = match[1];
+                var fnContent = match[2]
+                    .trim()
+                    .replace(/<br\s*[\/]?>/gi, ' ')
+                    .replace(/<[^>]+>/g, '')
+                    .replace(/&nbsp;/g, ' ')
+                    .replace(/\s+/g, ' ');
+                if (fnContent && fnContent.length > 2) {
+                    footnoteDefs[fnName] = fnContent;
+                }
+            }
+        });
+        
+        // If no definitions found, try to find definitions at the end of content
+        // by looking for footnote links that contain the definition content in href
+        if (Object.keys(footnoteDefs).length === 0) {
+            var footnoteLinks = content.match(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/g) || [];
+            footnoteLinks.forEach(function(link) {
+                var hrefMatch = link.match(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/);
+                if (hrefMatch) {
+                    try {
+                        var decodedHref = decodeURIComponent(hrefMatch[1]);
+                        var fnName = hrefMatch[2].replace(/^\^/, '');
+                        if (decodedHref && decodedHref.length > 2 && !decodedHref.match(/^https?:\/\//)) {
+                            footnoteDefs[fnName] = decodedHref;
+                        }
+                    } catch (e) {}
+                }
+            });
+        }
+        
+        // Also extract footnote definitions from the content before removing them
+        // This handles cases where definitions might be in a different format
+        if (Object.keys(footnoteDefs).length > 0) {
+            var definedFns = Object.keys(footnoteDefs);
+            var additionalDefs = content.match(/\[\^([^\]]+)\]:\s*([^\n<]+)/g) || [];
+            additionalDefs.forEach(function(def) {
+                var match = def.match(/\[\^([^\]]+)\]:\s*([^\n<]+)/);
+                if (match && !footnoteDefs[match[1]]) {
+                    footnoteDefs[match[1]] = match[2].trim();
+                }
+            });
+        }
+        
+        // Replace raw [^1] references with sup tags
+        var footnoteRefRegex = /\[\^([^\]]+)\](?!\s*:)/g;
+        content = content.replace(footnoteRefRegex, function(match, fnName) {
+            if (footnoteDefs[fnName]) {
+                return '<sup class="footnote-ref" id="fnref-' + fnName + '"><a href="#fn-' + fnName + '">[' + fnName + ']</a></sup>';
+            }
+            return match;
+        });
+        
+        // Handle Gridea's special link format: <a href="encoded-url">^1</a> or <a href="encoded-url">^亮哥</a>
+        // Also handle links where href is URL-encoded content (Gridea format)
+        content = content.replace(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/g, function(match, href, fnName) {
+            fnName = fnName.replace(/^\^/, '');
+            try {
+                var decodedHref = decodeURIComponent(href);
+                // Check if footnote definition exists OR if href contains footnote content (non-URL)
+                if (footnoteDefs[fnName] || (decodedHref && decodedHref.length > 3 && !decodedHref.match(/^https?:\/\//))) {
+                    return '<sup class="footnote-ref" id="fnref-' + fnName + '"><a href="#fn-' + fnName + '">[' + fnName + ']</a></sup>';
+                }
+            } catch (e) {}
+            return match;
+        });
+        
+        // Remove footnote definitions from content
+        content = content.replace(/\[\^([^\]]+)\]:\s*[\s\S]*?(?=<br\s*[\/]?>|\n\s*\n|<h2|$)/gi, '');
+        content = content.replace(/<p>\[\^[^\]]+\]:\s*[\s\S]*?<\/p>/gi, '');
+        content = content.replace(/<p>\s*<\/p>/g, '');
+        content = content.replace(/<p>\s*<br\s*[\/]?>\s*<\/p>/g, '');
+        
+        entry.innerHTML = content;
+        
+        // Create the footnotes section
+        var fnKeys = Object.keys(footnoteDefs);
+        if (fnKeys.length > 0 && footnotesContainer) {
+            var footnotesSection = document.createElement('section');
+            footnotesSection.className = 'footnotes';
+            
+            var heading = document.createElement('h4');
+            heading.className = 'footnotes-title';
+            heading.textContent = '参考资料';
+            footnotesSection.appendChild(heading);
+            
+            var ol = document.createElement('ol');
+            ol.className = 'footnotes-list';
+            
+            fnKeys.forEach(function(fnName) {
+                var li = document.createElement('li');
+                li.id = 'fn-' + fnName;
+                li.innerHTML = '<span class="footnote-content">' + footnoteDefs[fnName] + '</span> <a href="#fnref-' + fnName + '" class="footnote-backref">↩</a>';
+                ol.appendChild(li);
+            });
+            
+            footnotesSection.appendChild(ol);
+            footnotesContainer.appendChild(footnotesSection);
+        }
+    });
+
+    // Fetch random quote from API (override default text)
+    document.addEventListener('DOMContentLoaded', function() {
+        const quoteContainer = document.getElementById('quote-container');
+        if (!quoteContainer) return;
+
+        fetch('https://v1.hitokoto.cn/?c=i&encode=json')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                const textEl = document.getElementById('quote-text');
+                const authorEl = document.getElementById('quote-author');
+                if (textEl && data.hitokoto) {
+                    textEl.textContent = data.hitokoto;
+                }
+                if (authorEl && data.from) {
+                    authorEl.textContent = '—— ' + data.from;
+                }
+            })
+            .catch(function(err) {
+                // Use default text if API fails
+            });
+    });
+</script>
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="基于2025年高考数据、长沙市教育局教学质量综合评价及公开报道 · 覆盖四大名校到优质普高共17所上榜学校 核心数据速览 指标 数值 备注 全市高中总数 101所 含三县市 全市本科率 67.16% 高于全省10个百分点 全市特控率(一本) 40.98%&amp;hellip;">
+<link rel="canonical" href="https://tam.haywoo.com/post/changsha_public_highschools/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"长沙公办高中全维度横向对比","url":"https://tam.haywoo.com/post/changsha_public_highschools/","description":"基于2025年高考数据、长沙市教育局教学质量综合评价及公开报道 · 覆盖四大名校到优质普高共17所上榜学校 核心数据速览 指标 数值 备注 全市高中总数 101所 含三县市 全市本科率 67.16% 高于全省10个百分点 全市特控率(一本) 40.98%\u0026hellip;","datePublished":"2026-07-02T14:35:52+08:00","dateModified":"2026-07-02T14:46:46+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/changsha_public_highschools/","name":"长沙公办高中全维度横向对比","position":2}]}</script>
+<meta property="og:title" content="长沙公办高中全维度横向对比">
+<meta property="og:description" content="基于2025年高考数据、长沙市教育局教学质量综合评价及公开报道 · 覆盖四大名校到优质普高共17所上榜学校 核心数据速览 指标 数值 备注 全市高中总数 101所 含三县市 全市本科率 67.16% 高于全省10个百分点 全市特控率(一本) 40.98%&amp;hellip;">
+<meta property="og:url" content="https://tam.haywoo.com/post/changsha_public_highschools/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/changsha_public_highschools/">
+<meta name="twitter:title" content="长沙公办高中全维度横向对比">
+<meta name="twitter:description" content="基于2025年高考数据、长沙市教育局教学质量综合评价及公开报道 · 覆盖四大名校到优质普高共17所上榜学校 核心数据速览 指标 数值 备注 全市高中总数 101所 含三县市 全市本科率 67.16% 高于全省10个百分点 全市特控率(一本) 40.98%&amp;hellip;">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark-theme');
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        长沙公办高中全维度横向对比
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2026-07-02">
+                        2026-07-02
+                    </time> • 11 分钟阅读 •
+                        
+                            
+                                <a href="/category/study_notes/">学习笔记</a>
+                                
+                            
+                        
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <p>基于2025年高考数据、长沙市教育局教学质量综合评价及公开报道 · 覆盖四大名校到优质普高共17所上榜学校</p>
+<hr />
+<h2 id="heading">核心数据速览</h2>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全市高中总数</td>
+<td><strong>101所</strong></td>
+<td>含三县市</td>
+</tr>
+<tr>
+<td>全市本科率</td>
+<td><strong>67.16%</strong></td>
+<td>高于全省10个百分点</td>
+</tr>
+<tr>
+<td>全市特控率(一本)</td>
+<td><strong>40.98%</strong></td>
+<td>27所超60%</td>
+</tr>
+<tr>
+<td>清北录取总数</td>
+<td><strong>147人</strong></td>
+<td>四大占80%+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="--">一、第一梯队 · 四大名校</h2>
+<p>一本率均超98% · 600分率均超53%</p>
+<h3 id="1-">1. 长郡中学</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率(特控率)</td>
+<td><strong>99.5%</strong></td>
+</tr>
+<tr>
+<td>物理方向600分率</td>
+<td><strong>70%</strong></td>
+</tr>
+<tr>
+<td>600分以上人数</td>
+<td><strong>762人</strong></td>
+</tr>
+<tr>
+<td>清北录取</td>
+<td><strong>62人</strong></td>
+</tr>
+<tr>
+<td>物理全省前3000名</td>
+<td><strong>306人</strong> (全省10.2%)</td>
+</tr>
+</tbody>
+</table>
+<p>长沙市教育局直属，1904年建校。断层领跑。物理全省前3000名占全省10.2%，竞赛体系成熟，理实班+竞赛班双轮驱动。</p>
+<h3 id="2-">2. 雅礼中学</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率(特控率)</td>
+<td><strong>~99%</strong></td>
+</tr>
+<tr>
+<td>物理方向600分率</td>
+<td><strong>~63%</strong></td>
+</tr>
+<tr>
+<td>600分以上人数</td>
+<td><strong>643人</strong></td>
+</tr>
+<tr>
+<td>清北录取</td>
+<td><strong>39人</strong></td>
+</tr>
+<tr>
+<td>物理全省前3000名</td>
+<td><strong>172人</strong></td>
+</tr>
+</tbody>
+</table>
+<p>长沙市教育局直属，1906年建校。英语/文科传统强校，国际化程度高，集团化办学辐射面广。</p>
+<h3 id="3-">3. 湖南师大附中</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率(特控率)</td>
+<td><strong>~98%</strong></td>
+</tr>
+<tr>
+<td>物理方向600分率</td>
+<td><strong>~53%</strong></td>
+</tr>
+<tr>
+<td>600分以上人数</td>
+<td><strong>552人</strong></td>
+</tr>
+<tr>
+<td>清北录取</td>
+<td><strong>42人</strong></td>
+</tr>
+<tr>
+<td>物理全省前3000名</td>
+<td><strong>131人</strong></td>
+</tr>
+</tbody>
+</table>
+<p>湖南师范大学直属，1905年建校，竞赛保送+强基计划驱动清北逆袭，拔尖创新人才培养体系持续投入。</p>
+<h3 id="4-">4. 长沙市一中</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率(特控率)</td>
+<td><strong>~98%</strong></td>
+</tr>
+<tr>
+<td>物理方向600分率</td>
+<td><strong>~53%</strong></td>
+</tr>
+<tr>
+<td>600分以上人数</td>
+<td><strong>566人</strong></td>
+</tr>
+<tr>
+<td>清北录取</td>
+<td><strong>15人</strong></td>
+</tr>
+<tr>
+<td>物理全省前3000名</td>
+<td><strong>150人</strong></td>
+</tr>
+</tbody>
+</table>
+<p>湖南省教育厅直属，1912年建校。倾向&quot;拔尖&quot;策略，两极分化略有显现，但整体基本盘坚挺。</p>
+<h3 id="heading-1">四大名校核心指标横向对比</h3>
+<p><strong>清北录取人数 (2025)</strong></p>
+<table>
+<thead>
+<tr>
+<th>排名</th>
+<th>学校</th>
+<th>清北人数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>长郡中学</td>
+<td><strong>62人</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>师大附中</td>
+<td><strong>42人</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>雅礼中学</td>
+<td><strong>39人</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>长沙市一中</td>
+<td><strong>15人</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>600分以上人数 (2025)</strong></p>
+<table>
+<thead>
+<tr>
+<th>排名</th>
+<th>学校</th>
+<th>600分以上</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>长郡中学</td>
+<td><strong>762人</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>雅礼中学</td>
+<td><strong>643人</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>长沙市一中</td>
+<td><strong>566人</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>师大附中</td>
+<td><strong>552人</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>物理方向全省前3000名分布</strong></p>
+<table>
+<thead>
+<tr>
+<th>排名</th>
+<th>学校</th>
+<th>人数</th>
+<th>占全省比例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>长郡中学</td>
+<td><strong>306人</strong></td>
+<td>10.2%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>雅礼中学</td>
+<td><strong>172人</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>长沙市一中</td>
+<td><strong>150人</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>师大附中</td>
+<td><strong>131人</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>择校洞察</strong>：四大名校的特控率都在98%以上，对大多数学生来说&quot;进哪所都能上一本&quot;。真正的差距体现在顶尖出口：长郡在省前3000名、清北人数上断层领先，但内部竞赛班与平行班差距悬殊。顶尖学霸聚焦长郡/附中竞赛体系；优秀生需关注各校重点班而非学校光环；中等生通过指标生降分(630分即可)进入四大后可能面临&quot;陪跑&quot;风险，需慎重。</p>
+<hr />
+<h2 id="---1">二、第二梯队 · 五小名校</h2>
+<p>一本率超85% · 600分率15-35% · 指标生控制线619分</p>
+<h3 id="5-">5. 麓山国际实验学校</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率</td>
+<td><strong>~93%</strong></td>
+</tr>
+<tr>
+<td>600分率</td>
+<td><strong>~35%</strong></td>
+</tr>
+<tr>
+<td>600分以上</td>
+<td><strong>~280人</strong></td>
+</tr>
+<tr>
+<td>指标生控制线</td>
+<td><strong>619分</strong></td>
+</tr>
+</tbody>
+</table>
+<p>长郡教育集团，1993年建校。全市最大规模市属完中，长郡集团核心成员。物理/历史双方向均进入全市前5，综合实力五小之首。</p>
+<h3 id="6-">6. 南雅中学</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率</td>
+<td><strong>~92%</strong></td>
+</tr>
+<tr>
+<td>600分率</td>
+<td><strong>~32%</strong></td>
+</tr>
+<tr>
+<td>600分以上</td>
+<td><strong>~250人</strong></td>
+</tr>
+<tr>
+<td>指标生控制线</td>
+<td><strong>619分</strong></td>
+</tr>
+</tbody>
+</table>
+<p>雅礼教育集团，2002年建校。雅礼集团旗舰校，发展势头迅猛，近年与麓山并列五小领头羊。校园环境优美，英语/文科特色延续雅礼基因。</p>
+<h3 id="7-">7. 明德中学</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率</td>
+<td><strong>~90%</strong></td>
+</tr>
+<tr>
+<td>600分率</td>
+<td><strong>~28%</strong></td>
+</tr>
+<tr>
+<td>600分以上</td>
+<td><strong>~220人</strong></td>
+</tr>
+<tr>
+<td>指标生控制线</td>
+<td><strong>619分</strong></td>
+</tr>
+</tbody>
+</table>
+<p>长沙市教育局直属，1903年建校。百年名校，文化底蕴深厚，曾是五小之首。近年被麓山/南雅追赶，但教学质量依然扎实。</p>
+<h3 id="8-">8. 周南中学</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率</td>
+<td><strong>~88%</strong></td>
+</tr>
+<tr>
+<td>600分率</td>
+<td><strong>~22%</strong></td>
+</tr>
+<tr>
+<td>600分以上</td>
+<td><strong>~180人</strong></td>
+</tr>
+<tr>
+<td>指标生控制线</td>
+<td><strong>619分</strong></td>
+</tr>
+</tbody>
+</table>
+<p>长沙市教育局直属，1905年建校。与明德齐名的百年名校，女校传统融入现代教育。校风严谨，理科教学扎实，是五小中的稳定选择。</p>
+<h3 id="9-">9. 长沙市实验中学</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率</td>
+<td><strong>~85%</strong></td>
+</tr>
+<tr>
+<td>600分率</td>
+<td><strong>~18%</strong></td>
+</tr>
+<tr>
+<td>600分以上</td>
+<td><strong>~150人</strong></td>
+</tr>
+<tr>
+<td>指标生控制线</td>
+<td><strong>619分</strong></td>
+</tr>
+</tbody>
+</table>
+<p>长沙市教育局直属，五小中最为低调务实，近年稳扎稳打。适合中等偏上学生，教学管理精细化程度受家长认可。</p>
+<h3 id="heading-2">五小一本率排行</h3>
+<table>
+<thead>
+<tr>
+<th>排名</th>
+<th>学校</th>
+<th>一本率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>麓山国际</td>
+<td>~93%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>南雅中学</td>
+<td>~92%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>明德中学</td>
+<td>~90%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>周南中学</td>
+<td>~88%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>市实验</td>
+<td>~85%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>择校洞察</strong>：五小2025年指标生最低控制线为619分（四大为630分），与四大分数线差距约11分。600分率15-35%之间。麓山国际和南雅势头最猛；明德/周南底蕴深厚；市实验低调务实。对于中等偏上学生，五小的重点班往往比四大平行班更具性价比——能获得更多关注和资源。</p>
+<hr />
+<h2 id="---2">三、第三梯队 · 优质普高</h2>
+<p>一本率50-85% · 教育局质量榜上榜学校</p>
+<h3 id="10-">10. 雅礼洋湖实验中学</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>特控率(一本)</td>
+<td><strong>~99%</strong></td>
+</tr>
+<tr>
+<td>600分以上</td>
+<td><strong>160人</strong></td>
+</tr>
+<tr>
+<td>录取分数线</td>
+<td>较高</td>
+</tr>
+<tr>
+<td>质量榜</td>
+<td>物理/历史双向上榜</td>
+</tr>
+</tbody>
+</table>
+<p>雅礼教育集团，2017年建校。第三梯队明星学校，2025年特控率99%逼近四大水平，160人600分以上。新建校中的黑马。</p>
+<h3 id="11-">11. 师大附中梅溪湖中学</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率</td>
+<td><strong>~80%</strong></td>
+</tr>
+<tr>
+<td>600分率</td>
+<td><strong>~12%</strong></td>
+</tr>
+<tr>
+<td>质量榜</td>
+<td>物理/历史双向上榜</td>
+</tr>
+</tbody>
+</table>
+<p>师大附中教育集团，梅溪湖片区热门校，依托附中资源。区域生源优势明显。</p>
+<h3 id="12-">12. 雅礼实验中学</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率</td>
+<td><strong>~78%</strong></td>
+</tr>
+<tr>
+<td>600分率</td>
+<td><strong>~10%</strong></td>
+</tr>
+<tr>
+<td>质量榜</td>
+<td>物理/历史双向上榜</td>
+</tr>
+</tbody>
+</table>
+<p>雅礼集团核心成员校，物理/历史双向上榜前5。教学质量稳定，性价比高。</p>
+<h3 id="13-">13. 长郡梅溪湖中学</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率</td>
+<td><strong>~75%</strong></td>
+</tr>
+<tr>
+<td>600分率</td>
+<td><strong>~8%</strong></td>
+</tr>
+<tr>
+<td>质量榜</td>
+<td>物理/历史双向上榜</td>
+</tr>
+</tbody>
+</table>
+<p>长郡集团梅溪湖校区，延续长郡严谨学风。体量大、管理规范，是梅溪湖片区稳定选择。</p>
+<h3 id="14-">14. 长郡滨江中学</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率</td>
+<td><strong>~72%</strong></td>
+</tr>
+<tr>
+<td>600分率</td>
+<td><strong>~7%</strong></td>
+</tr>
+<tr>
+<td>质量榜</td>
+<td>物理/历史双向上榜</td>
+</tr>
+</tbody>
+</table>
+<p>长郡教育集团，滨江板块热门，长郡集团管理输出。适合中等生稳扎稳打。</p>
+<h3 id="15-">15. 周南梅溪湖中学</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率</td>
+<td><strong>~70%</strong></td>
+</tr>
+<tr>
+<td>600分率</td>
+<td><strong>~6%</strong></td>
+</tr>
+<tr>
+<td>质量榜</td>
+<td>历史方向亮点</td>
+</tr>
+</tbody>
+</table>
+<p>周南教育集团，历史方向进入质量榜，文科教学有特色。梅溪湖片区第三个上榜校，适合文科方向学生。</p>
+<h3 id="16-">16. 东雅中学</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率</td>
+<td><strong>~68%</strong></td>
+</tr>
+<tr>
+<td>600分率</td>
+<td><strong>~5%</strong></td>
+</tr>
+<tr>
+<td>质量榜</td>
+<td>物理/历史双向上榜</td>
+</tr>
+</tbody>
+</table>
+<p>雅礼教育集团新建校，录取线全市并列25名，但双向上质量榜。&ldquo;低进高出&quot;典范，教育加工能力强。</p>
+<h3 id="17-">17. 望城一中</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率</td>
+<td><strong>~65%</strong></td>
+</tr>
+<tr>
+<td>600分率</td>
+<td><strong>~5%</strong></td>
+</tr>
+<tr>
+<td>质量榜</td>
+<td>物理/历史双向上榜</td>
+</tr>
+</tbody>
+</table>
+<p>望城区属老牌县中，录取线全市并列25名，办学底蕴深厚的老牌县中。性价比突出。</p>
+<h3 id="heading-3">第三梯队一本率排行</h3>
+<table>
+<thead>
+<tr>
+<th>排名</th>
+<th>学校</th>
+<th>一本率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>雅礼洋湖</td>
+<td>~99%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>师梅</td>
+<td>~80%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>雅礼实验</td>
+<td>~78%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>长梅</td>
+<td>~75%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>长郡滨江</td>
+<td>~72%</td>
+</tr>
+<tr>
+<td>6</td>
+<td>周梅</td>
+<td>~70%</td>
+</tr>
+<tr>
+<td>7</td>
+<td>东雅中学</td>
+<td>~68%</td>
+</tr>
+<tr>
+<td>8</td>
+<td>望城一中</td>
+<td>~65%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>特别关注：教育&quot;加工能力&rdquo;</strong>：东雅中学和望城一中2022年录取线在全市44所公办中并列第25名，但均登上教育局质量榜。明德雨花中学录取线仅排第34名，物理方向却排到第15名、历史方向冲进前6名——这种&quot;加工能力&quot;对中等生极具参考价值。雅礼洋湖则是第三梯队中的异类，特控率接近四大水平。</p>
+<hr />
+<h2 id="heading-4">四、全梯队对比总表</h2>
+<h3 id="17">17所学校核心指标一览</h3>
+<table>
+<thead>
+<tr>
+<th>梯队</th>
+<th>学校</th>
+<th>一本率</th>
+<th>600分率</th>
+<th>600分+人数</th>
+<th>清北人数</th>
+<th>省前3000名</th>
+<th>质量榜</th>
+<th>适合人群</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>四大</td>
+<td>长郡中学</td>
+<td>99.5%</td>
+<td>70%(物)</td>
+<td>762</td>
+<td>62</td>
+<td>306</td>
+<td>物理1/历史1</td>
+<td>顶尖学霸</td>
+</tr>
+<tr>
+<td>四大</td>
+<td>雅礼中学</td>
+<td>~99%</td>
+<td>~63%</td>
+<td>643</td>
+<td>39</td>
+<td>172</td>
+<td>物理3/历史3</td>
+<td>顶尖学霸</td>
+</tr>
+<tr>
+<td>四大</td>
+<td>师大附中</td>
+<td>~98%</td>
+<td>~53%</td>
+<td>552</td>
+<td>42</td>
+<td>131</td>
+<td>物理7/历史9</td>
+<td>竞赛/强基</td>
+</tr>
+<tr>
+<td>四大</td>
+<td>长沙市一中</td>
+<td>~98%</td>
+<td>~53%</td>
+<td>566</td>
+<td>15</td>
+<td>150</td>
+<td>物理2/历史2</td>
+<td>顶尖学霸</td>
+</tr>
+<tr>
+<td>五小</td>
+<td>麓山国际</td>
+<td>~93%</td>
+<td>~35%</td>
+<td>~280</td>
+<td>—</td>
+<td>—</td>
+<td>物理4/历史4</td>
+<td>优秀生</td>
+</tr>
+<tr>
+<td>五小</td>
+<td>南雅中学</td>
+<td>~92%</td>
+<td>~32%</td>
+<td>~250</td>
+<td>—</td>
+<td>—</td>
+<td>物理5/历史5</td>
+<td>优秀生</td>
+</tr>
+<tr>
+<td>五小</td>
+<td>明德中学</td>
+<td>~90%</td>
+<td>~28%</td>
+<td>~220</td>
+<td>—</td>
+<td>—</td>
+<td>上榜</td>
+<td>中等偏上</td>
+</tr>
+<tr>
+<td>五小</td>
+<td>周南中学</td>
+<td>~88%</td>
+<td>~22%</td>
+<td>~180</td>
+<td>—</td>
+<td>—</td>
+<td>上榜</td>
+<td>中等偏上</td>
+</tr>
+<tr>
+<td>五小</td>
+<td>市实验</td>
+<td>~85%</td>
+<td>~18%</td>
+<td>~150</td>
+<td>—</td>
+<td>—</td>
+<td>上榜</td>
+<td>中等偏上</td>
+</tr>
+<tr>
+<td>优质普高</td>
+<td>雅礼洋湖</td>
+<td>~99%</td>
+<td>~20%</td>
+<td>160</td>
+<td>—</td>
+<td>—</td>
+<td>双向</td>
+<td>性价比首选</td>
+</tr>
+<tr>
+<td>优质普高</td>
+<td>师梅</td>
+<td>~80%</td>
+<td>~12%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>双向</td>
+<td>区域热门</td>
+</tr>
+<tr>
+<td>优质普高</td>
+<td>雅礼实验</td>
+<td>~78%</td>
+<td>~10%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>双向</td>
+<td>中等生</td>
+</tr>
+<tr>
+<td>优质普高</td>
+<td>长梅</td>
+<td>~75%</td>
+<td>~8%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>双向</td>
+<td>中等生</td>
+</tr>
+<tr>
+<td>优质普高</td>
+<td>长郡滨江</td>
+<td>~72%</td>
+<td>~7%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>双向</td>
+<td>中等生</td>
+</tr>
+<tr>
+<td>优质普高</td>
+<td>周梅</td>
+<td>~70%</td>
+<td>~6%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>历史方向</td>
+<td>文科方向</td>
+</tr>
+<tr>
+<td>优质普高</td>
+<td>东雅中学</td>
+<td>~68%</td>
+<td>~5%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>双向</td>
+<td>低进高出</td>
+</tr>
+<tr>
+<td>优质普高</td>
+<td>望城一中</td>
+<td>~65%</td>
+<td>~5%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>双向</td>
+<td>低进高出</td>
+</tr>
+</tbody>
+</table>
+<h3 id="heading-5">三大梯队分界线</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>第一梯队（四大）</th>
+<th>第二梯队（五小）</th>
+<th>第三梯队（优质普高）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一本率</td>
+<td><strong>98-99.5%</strong></td>
+<td><strong>85-93%</strong></td>
+<td>65-99%</td>
+</tr>
+<tr>
+<td>600分率</td>
+<td><strong>53-70%</strong></td>
+<td><strong>18-35%</strong></td>
+<td>5-20%</td>
+</tr>
+<tr>
+<td>清北录取</td>
+<td><strong>15-62人</strong></td>
+<td>极少</td>
+<td>无</td>
+</tr>
+<tr>
+<td>指标生控制线</td>
+<td><strong>630分</strong></td>
+<td><strong>619分</strong></td>
+<td>划线录取</td>
+</tr>
+<tr>
+<td>核心策略</td>
+<td>竞赛+强基+高考</td>
+<td>精细化管理+高考</td>
+<td>低进高出+加工能力</td>
+</tr>
+<tr>
+<td>择校关键词</td>
+<td>做鸡头还是凤尾</td>
+<td>重点班 vs 四大平行班</td>
+<td>找加工能力强的学校</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="heading-6">五、公办高中择校核心建议</h2>
+<ul>
+<li>四大名校一本率都在98%以上，对于尖子生来说&quot;进哪所都能上一本&quot;。关键看个人方向：竞赛保送看长郡/附中，全面均衡看雅礼，稳妥选择看一中</li>
+<li>指标生政策：630分可进四大（比划线低28分），619分可进五小。降分入校后注意分班——平行班与重点班的资源差距可能很大</li>
+<li>五小的重点班 vs 四大的平行班，是中等偏上学生最需要权衡的经典择校问题</li>
+<li>重点关注&quot;教育加工能力&quot;——东雅、望城一中、明德雨花等录取线不高但质量榜排名靠前的学校，对中等生来说性价比极高</li>
+<li>2025年全市共有27所学校特控率超60%，25所学校本科率超90%，选择面其实不窄</li>
+<li>新高考选科走班背景下，关注各校在物理/历史方向的学科优势，如周梅历史方向、雅洋综合强劲</li>
+</ul>
+<hr />
+<blockquote>
+<p><strong>数据说明</strong>：一本率/600分率/清北人数来自2025年高考公开数据及权威媒体报道。五小及第三梯队的部分学校未公开完整数据，标注&quot;~&ldquo;的为一本率/600分率为行业估算或趋势区间。质量榜排名来自长沙市教育局2024年全市高中教学质量综合评价。录取分数线参考2025年指标生控制线。</p>
+</blockquote>
+
+                </div>
+
+                <div id="post-footnotes" class="post-footnotes"></div>
+
+            </article>
+
+                        
+                        <div class="post-tags">
+                            <span class="post-tags-label">文章标签：</span>
+                            
+                                <a href="/tag/xue-xiao/" class="post-tag">学校</a>
+                            
+                                <a href="/tag/jiao-yu/" class="post-tag">教育</a>
+                            
+                        </div>
+                        
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/changsha_8schools_analysis/">长沙8所民办高中综合分析</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/changsha_private_highschools/">长沙民办高中全维度横向对比</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>

@@ -1,0 +1,1602 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.2.2">
+    <title>长沙8所民办高中综合分析 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1a1b1e" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <script>
+        (function () {
+            var configDefault = 'light';
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || configDefault;
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+            if (!savedTheme) {
+                localStorage.setItem('theme', theme);
+            }
+        })();
+    </script>
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    
+<script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Theme toggle buttons
+        var sunBtn = document.getElementById('theme-toggle-sun');
+        var moonBtn = document.getElementById('theme-toggle-moon');
+        
+        function toggleTheme() {
+            var isDark = document.documentElement.classList.contains('dark-theme');
+            if (isDark) {
+                document.documentElement.classList.remove('dark-theme');
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark-theme');
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        if (sunBtn) {
+            sunBtn.addEventListener('click', toggleTheme);
+        }
+        if (moonBtn) {
+            moonBtn.addEventListener('click', toggleTheme);
+        }
+    });
+
+    // Footnotes support for Markdown footnotes [^1]
+    document.addEventListener('DOMContentLoaded', function() {
+        var entry = document.querySelector('.mod-post__entry');
+        var footnotesContainer = document.querySelector('#post-footnotes');
+        
+        if (!entry) return;
+
+        // Get the raw HTML content
+        var content = entry.innerHTML;
+        
+        // Find footnote definitions - standard format [^1]: definition
+        // Handle both markdown [^1]: and HTML encoded versions
+        var footnoteDefs = {};
+        
+        // Try various patterns to find footnote definitions
+        var patterns = [
+            /\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|\n\s*\n|\n\s*<h2|\n\s*$|$)/gi,
+            /<p>\[\^([^\]]+)\]:\s*([\s\S]*?)<\/p>/gi,
+            /<p>\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|$)/gi,
+            /\[\^([^\]]+)\]:\s*([\s\S]{1,300}?)(?=<\/p>|$)/gi
+        ];
+        
+        patterns.forEach(function(defRegex) {
+            var match;
+            while ((match = defRegex.exec(content)) !== null) {
+                var fnName = match[1];
+                var fnContent = match[2]
+                    .trim()
+                    .replace(/<br\s*[\/]?>/gi, ' ')
+                    .replace(/<[^>]+>/g, '')
+                    .replace(/&nbsp;/g, ' ')
+                    .replace(/\s+/g, ' ');
+                if (fnContent && fnContent.length > 2) {
+                    footnoteDefs[fnName] = fnContent;
+                }
+            }
+        });
+        
+        // If no definitions found, try to find definitions at the end of content
+        // by looking for footnote links that contain the definition content in href
+        if (Object.keys(footnoteDefs).length === 0) {
+            var footnoteLinks = content.match(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/g) || [];
+            footnoteLinks.forEach(function(link) {
+                var hrefMatch = link.match(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/);
+                if (hrefMatch) {
+                    try {
+                        var decodedHref = decodeURIComponent(hrefMatch[1]);
+                        var fnName = hrefMatch[2].replace(/^\^/, '');
+                        if (decodedHref && decodedHref.length > 2 && !decodedHref.match(/^https?:\/\//)) {
+                            footnoteDefs[fnName] = decodedHref;
+                        }
+                    } catch (e) {}
+                }
+            });
+        }
+        
+        // Also extract footnote definitions from the content before removing them
+        // This handles cases where definitions might be in a different format
+        if (Object.keys(footnoteDefs).length > 0) {
+            var definedFns = Object.keys(footnoteDefs);
+            var additionalDefs = content.match(/\[\^([^\]]+)\]:\s*([^\n<]+)/g) || [];
+            additionalDefs.forEach(function(def) {
+                var match = def.match(/\[\^([^\]]+)\]:\s*([^\n<]+)/);
+                if (match && !footnoteDefs[match[1]]) {
+                    footnoteDefs[match[1]] = match[2].trim();
+                }
+            });
+        }
+        
+        // Replace raw [^1] references with sup tags
+        var footnoteRefRegex = /\[\^([^\]]+)\](?!\s*:)/g;
+        content = content.replace(footnoteRefRegex, function(match, fnName) {
+            if (footnoteDefs[fnName]) {
+                return '<sup class="footnote-ref" id="fnref-' + fnName + '"><a href="#fn-' + fnName + '">[' + fnName + ']</a></sup>';
+            }
+            return match;
+        });
+        
+        // Handle Gridea's special link format: <a href="encoded-url">^1</a> or <a href="encoded-url">^亮哥</a>
+        // Also handle links where href is URL-encoded content (Gridea format)
+        content = content.replace(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/g, function(match, href, fnName) {
+            fnName = fnName.replace(/^\^/, '');
+            try {
+                var decodedHref = decodeURIComponent(href);
+                // Check if footnote definition exists OR if href contains footnote content (non-URL)
+                if (footnoteDefs[fnName] || (decodedHref && decodedHref.length > 3 && !decodedHref.match(/^https?:\/\//))) {
+                    return '<sup class="footnote-ref" id="fnref-' + fnName + '"><a href="#fn-' + fnName + '">[' + fnName + ']</a></sup>';
+                }
+            } catch (e) {}
+            return match;
+        });
+        
+        // Remove footnote definitions from content
+        content = content.replace(/\[\^([^\]]+)\]:\s*[\s\S]*?(?=<br\s*[\/]?>|\n\s*\n|<h2|$)/gi, '');
+        content = content.replace(/<p>\[\^[^\]]+\]:\s*[\s\S]*?<\/p>/gi, '');
+        content = content.replace(/<p>\s*<\/p>/g, '');
+        content = content.replace(/<p>\s*<br\s*[\/]?>\s*<\/p>/g, '');
+        
+        entry.innerHTML = content;
+        
+        // Create the footnotes section
+        var fnKeys = Object.keys(footnoteDefs);
+        if (fnKeys.length > 0 && footnotesContainer) {
+            var footnotesSection = document.createElement('section');
+            footnotesSection.className = 'footnotes';
+            
+            var heading = document.createElement('h4');
+            heading.className = 'footnotes-title';
+            heading.textContent = '参考资料';
+            footnotesSection.appendChild(heading);
+            
+            var ol = document.createElement('ol');
+            ol.className = 'footnotes-list';
+            
+            fnKeys.forEach(function(fnName) {
+                var li = document.createElement('li');
+                li.id = 'fn-' + fnName;
+                li.innerHTML = '<span class="footnote-content">' + footnoteDefs[fnName] + '</span> <a href="#fnref-' + fnName + '" class="footnote-backref">↩</a>';
+                ol.appendChild(li);
+            });
+            
+            footnotesSection.appendChild(ol);
+            footnotesContainer.appendChild(footnotesSection);
+        }
+    });
+
+    // Fetch random quote from API (override default text)
+    document.addEventListener('DOMContentLoaded', function() {
+        const quoteContainer = document.getElementById('quote-container');
+        if (!quoteContainer) return;
+
+        fetch('https://v1.hitokoto.cn/?c=i&encode=json')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                const textEl = document.getElementById('quote-text');
+                const authorEl = document.getElementById('quote-author');
+                if (textEl && data.hitokoto) {
+                    textEl.textContent = data.hitokoto;
+                }
+                if (authorEl && data.from) {
+                    authorEl.textContent = '—— ' + data.from;
+                }
+            })
+            .catch(function(err) {
+                // Use default text if API fails
+            });
+    });
+</script>
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="怡海 · 明达 · 弘益 · 芙蓉 · 卓华 · 恒定 · 师大思沁 · 博纳二附中 · 数据来源：2025年高考公开成绩及各校招生资料 核心数据速览 指标 数值 备注 分析学校 8所 长沙市主要民办高中 民办整体本科率 53.16% 全长沙民办均值 学费最低 **&amp;hellip;">
+<link rel="canonical" href="https://tam.haywoo.com/post/changsha_8schools_analysis/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"长沙8所民办高中综合分析","url":"https://tam.haywoo.com/post/changsha_8schools_analysis/","description":"怡海 · 明达 · 弘益 · 芙蓉 · 卓华 · 恒定 · 师大思沁 · 博纳二附中 · 数据来源：2025年高考公开成绩及各校招生资料 核心数据速览 指标 数值 备注 分析学校 8所 长沙市主要民办高中 民办整体本科率 53.16% 全长沙民办均值 学费最低 **\u0026hellip;","datePublished":"2026-07-02T14:48:58+08:00","dateModified":"2026-07-02T14:50:47+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/changsha_8schools_analysis/","name":"长沙8所民办高中综合分析","position":2}]}</script>
+<meta property="og:title" content="长沙8所民办高中综合分析">
+<meta property="og:description" content="怡海 · 明达 · 弘益 · 芙蓉 · 卓华 · 恒定 · 师大思沁 · 博纳二附中 · 数据来源：2025年高考公开成绩及各校招生资料 核心数据速览 指标 数值 备注 分析学校 8所 长沙市主要民办高中 民办整体本科率 53.16% 全长沙民办均值 学费最低 **&amp;hellip;">
+<meta property="og:url" content="https://tam.haywoo.com/post/changsha_8schools_analysis/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/changsha_8schools_analysis/">
+<meta name="twitter:title" content="长沙8所民办高中综合分析">
+<meta name="twitter:description" content="怡海 · 明达 · 弘益 · 芙蓉 · 卓华 · 恒定 · 师大思沁 · 博纳二附中 · 数据来源：2025年高考公开成绩及各校招生资料 核心数据速览 指标 数值 备注 分析学校 8所 长沙市主要民办高中 民办整体本科率 53.16% 全长沙民办均值 学费最低 **&amp;hellip;">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark-theme');
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        长沙8所民办高中综合分析
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2026-07-02">
+                        2026-07-02
+                    </time> • 14 分钟阅读 •
+                        
+                            
+                                <a href="/category/study_notes/">学习笔记</a>
+                                
+                            
+                        
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <blockquote>
+<p>怡海 · 明达 · 弘益 · 芙蓉 · 卓华 · 恒定 · 师大思沁 · 博纳二附中 · 数据来源：2025年高考公开成绩及各校招生资料</p>
+</blockquote>
+<h2 id="heading">核心数据速览</h2>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分析学校</td>
+<td><strong>8所</strong></td>
+<td>长沙市主要民办高中</td>
+</tr>
+<tr>
+<td>民办整体本科率</td>
+<td><strong>53.16%</strong></td>
+<td>全长沙民办均值</td>
+</tr>
+<tr>
+<td>学费最低</td>
+<td><strong>¥15,800</strong></td>
+<td>怡海中学/学期</td>
+</tr>
+<tr>
+<td>学费最高</td>
+<td><strong>¥24,600</strong></td>
+<td>博纳二附中/学期</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="heading-1">一、学校总览</h2>
+<h3 id="1---">1. 湖南师大思沁高级中学 — 复读一哥</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>特控率（复读）</td>
+<td><strong>73.2%</strong></td>
+</tr>
+<tr>
+<td>本科率（复读）</td>
+<td><strong>94.8%</strong></td>
+</tr>
+<tr>
+<td>清北录取（复读）</td>
+<td><strong>12人</strong></td>
+</tr>
+<tr>
+<td>600分以上</td>
+<td><strong>260+人</strong></td>
+</tr>
+<tr>
+<td>复读参考人数</td>
+<td>~1800人</td>
+</tr>
+</tbody>
+</table>
+<p>由湖南师范大学附属中学全面托管，复读部实力冠绝长沙乃至全省。2025年复读4人高考屏蔽，全省前100名10人，清北强基过线20人，平均提分75分。应届部设宏志部与创新拔尖部，已累计为清北输送25+学子。</p>
+<p><strong>标签</strong>：师大全托管 · 复读省内第一 · 应届+复读双轨 · 竞赛强 · 全国生物金牌</p>
+<hr />
+<h3 id="2---">2. 长沙市弘益高级中学 — 应届头部</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>特控率（含复读）</td>
+<td><strong>~50%+</strong></td>
+</tr>
+<tr>
+<td>应届本科率</td>
+<td><strong>50%+</strong></td>
+</tr>
+<tr>
+<td>重点班特控率</td>
+<td><strong>75%</strong></td>
+</tr>
+<tr>
+<td>重点班本科上线率</td>
+<td><strong>95%</strong></td>
+</tr>
+<tr>
+<td>中考录取分</td>
+<td>河东民办第一</td>
+</tr>
+</tbody>
+</table>
+<p>依托湖南师大资源，地处长沙县，办学历史较长，初中部口碑支撑高中生源。重点班成绩在民办高中中名列前茅。近年开办复读部。</p>
+<p><strong>标签</strong>：河东民办第一梯队 · 卓越班/广益班 · 周假制 · 生涯规划体系</p>
+<hr />
+<h3 id="3---">3. 长沙博纳二附中 — 复读强校</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>特控率（复读）</td>
+<td><strong>72.5%</strong></td>
+</tr>
+<tr>
+<td>本科率（复读）</td>
+<td><strong>98.5%</strong></td>
+</tr>
+<tr>
+<td>应届特控率</td>
+<td><strong>50.4%</strong></td>
+</tr>
+<tr>
+<td>应届本科率</td>
+<td><strong>71.2%</strong></td>
+</tr>
+<tr>
+<td>复读平均提分</td>
+<td><strong>71分</strong></td>
+</tr>
+<tr>
+<td>600分以上（复读）</td>
+<td><strong>141人</strong></td>
+</tr>
+<tr>
+<td>应届参考人数</td>
+<td>545人</td>
+</tr>
+</tbody>
+</table>
+<p>湖南师大二附中品牌，坐落湘江新区，2016年建校。强基班应届本科率100%、特控率95%。连续5年长沙民办优秀单位。</p>
+<p><strong>标签</strong>：师大二附中品牌 · 奥赛团队 · 艺术/国防/外语班 · 强基班 · 55个班2500人</p>
+<hr />
+<h3 id="4---">4. 长沙市怡海中学 — 雅礼系</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>特控率（综合）</td>
+<td><strong>~40%</strong></td>
+</tr>
+<tr>
+<td>本科率（综合）</td>
+<td><strong>~70%</strong></td>
+</tr>
+<tr>
+<td>2024应届招生</td>
+<td><strong>500人</strong></td>
+</tr>
+<tr>
+<td>录取分数线</td>
+<td>河东民办第二</td>
+</tr>
+<tr>
+<td>正高级/特级教师</td>
+<td><strong>7人</strong></td>
+</tr>
+</tbody>
+</table>
+<p>2010年怡海集团联合百年雅礼创办（原怡雅中学），2022年更名。小学初中高中高复一体，220名教师。复读生比例较高，2024年应届生扩至500人。</p>
+<p><strong>标签</strong>：怡海+雅礼联合品牌 · 实验班/创新班 · 周假制 · 心理健康教育 · 天心区</p>
+<hr />
+<h3 id="5---">5. 长沙市明达高级中学 — 复读为主</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>特控率（复读）</td>
+<td><strong>53.8%</strong></td>
+</tr>
+<tr>
+<td>本科率（复读）</td>
+<td><strong>95.2%</strong></td>
+</tr>
+<tr>
+<td>复读平均提分</td>
+<td><strong>74.1分</strong></td>
+</tr>
+<tr>
+<td>复读参考人数</td>
+<td><strong>3000人</strong></td>
+</tr>
+<tr>
+<td>600分以上</td>
+<td><strong>134人</strong></td>
+</tr>
+</tbody>
+</table>
+<p>传承百年明德中学文化，是长沙规模最大的复读学校之一。复读人数超2000人。应届生成绩相对普通，录取分数线居河东民办第四。</p>
+<p><strong>标签</strong>：规模最大复读 · 国防工科班 · 黄兴班 · 艺术特长 · 长沙县</p>
+<hr />
+<h3 id="6---">6. 长沙市芙蓉高级中学 — 复读性价比</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复读一本上线率</td>
+<td><strong>56.8%</strong></td>
+</tr>
+<tr>
+<td>复读本科率</td>
+<td><strong>96.5%</strong></td>
+</tr>
+<tr>
+<td>专职教师</td>
+<td><strong>168名</strong></td>
+</tr>
+<tr>
+<td>硕士及以上占比</td>
+<td><strong>77%</strong></td>
+</tr>
+<tr>
+<td>录取分数线</td>
+<td><strong>421分</strong>（2025）</td>
+</tr>
+</tbody>
+</table>
+<p>168名专职教师，77%硕士及以上学历，高级教师55人。采用&quot;五环互动&quot;教学模式。清北班本科率92.3%，重点班一本率68.7%，提升班本科率98.1%。</p>
+<p><strong>标签</strong>：高学历师资77%硕士+ · 清北班/重点班/提升班 · 五环互动模式 · 普高+艺术+高复</p>
+<hr />
+<h3 id="7---">7. 长沙市恒定高级中学 — 体艺特色</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复读本科率（2024）</td>
+<td><strong>97.8%</strong></td>
+</tr>
+<tr>
+<td>高三经验教师占比</td>
+<td><strong>80%+</strong></td>
+</tr>
+<tr>
+<td>校园建设投入</td>
+<td><strong>7.9亿</strong></td>
+</tr>
+<tr>
+<td>托管方</td>
+<td>颐华学校（2025起）</td>
+</tr>
+</tbody>
+</table>
+<p>北大新世纪教育集团创办，2025年起由颐华学校托管。7.9亿智慧校园，配备恒温泳池、纳米黑板。强调&quot;严管厚爱&quot;理念，分层设恒远班、恒艺班。</p>
+<p><strong>标签</strong>：7.9亿智慧校园 · 体艺优势突出 · 颐华托管 · 分层教学 · 恒温泳池</p>
+<hr />
+<h3 id="8---">8. 长沙卓华高级中学 — 文艺科技</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复读班本科上线率</td>
+<td><strong>92%</strong></td>
+</tr>
+<tr>
+<td>重点班一本率</td>
+<td><strong>85%+</strong></td>
+</tr>
+<tr>
+<td>复读平均提分</td>
+<td><strong>100+分</strong></td>
+</tr>
+<tr>
+<td>在校学生规模</td>
+<td><strong>2000+人</strong></td>
+</tr>
+</tbody>
+</table>
+<p>周其凤院士亲题校名，&ldquo;文化+艺术+科技&quot;融合特色，获评2024年长沙民办学校评估优秀。双博士教研团队领衔高复部，独创&quot;三维赋能体系&rdquo;。</p>
+<p><strong>标签</strong>：周其凤院士题名 · 文艺科技融合 · 双博士教研团队 · 击剑全国冠军 · 开福区</p>
+<hr />
+<h2 id="heading-2">二、升学数据深度对比</h2>
+<h3 id="2025">复读部核心指标（2025年高考）</h3>
+<p><strong>特控率（一本率）</strong></p>
+<table>
+<thead>
+<tr>
+<th>排名</th>
+<th>学校</th>
+<th>特控率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>思沁中学</td>
+<td><strong>73.2%</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>博纳二附中</td>
+<td><strong>72.5%</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>芙蓉高级中学</td>
+<td><strong>56.8%</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>明达高级中学</td>
+<td><strong>53.8%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>本科率</strong></p>
+<table>
+<thead>
+<tr>
+<th>排名</th>
+<th>学校</th>
+<th>本科率</th>
+<th>口径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>博纳二附中</td>
+<td><strong>98.5%</strong></td>
+<td>复读</td>
+</tr>
+<tr>
+<td>2</td>
+<td>恒定中学</td>
+<td><strong>97.8%</strong></td>
+<td>复读（2024）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>芙蓉高级中学</td>
+<td><strong>96.5%</strong></td>
+<td>复读</td>
+</tr>
+<tr>
+<td>4</td>
+<td>明达高级中学</td>
+<td><strong>95.2%</strong></td>
+<td>复读</td>
+</tr>
+<tr>
+<td>5</td>
+<td>思沁中学</td>
+<td><strong>94.8%</strong></td>
+<td>复读</td>
+</tr>
+<tr>
+<td>6</td>
+<td>博纳二附中</td>
+<td><strong>71.2%</strong></td>
+<td>应届</td>
+</tr>
+<tr>
+<td>7</td>
+<td>怡海中学</td>
+<td><strong>~70%</strong></td>
+<td>含复读</td>
+</tr>
+<tr>
+<td>8</td>
+<td>弘益高级中学</td>
+<td><strong>50%+</strong></td>
+<td>应届</td>
+</tr>
+</tbody>
+</table>
+<p><strong>600分以上人数（复读部）</strong></p>
+<table>
+<thead>
+<tr>
+<th>排名</th>
+<th>学校</th>
+<th>600分以上</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>思沁中学</td>
+<td><strong>260人</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>博纳二附中</td>
+<td><strong>141人</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>明达高级中学</td>
+<td><strong>134人</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>博纳二附中(应届)</td>
+<td><strong>6人</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="heading-3">应届生实力横向对比</h3>
+<table>
+<thead>
+<tr>
+<th>学校</th>
+<th>应届本科率</th>
+<th>应届特控率</th>
+<th>中考录取分</th>
+<th>招生规模</th>
+<th>综合优势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>弘益高级中学</td>
+<td>~60%+</td>
+<td>~50%+</td>
+<td>河东民办第一</td>
+<td>640人</td>
+<td>河东应届最强</td>
+</tr>
+<tr>
+<td>博纳二附中</td>
+<td>71.2%</td>
+<td>50.4%</td>
+<td>湘江新区前列</td>
+<td>550人</td>
+<td>应届数据最清晰</td>
+</tr>
+<tr>
+<td>怡海中学</td>
+<td>~70%（含复读）</td>
+<td>~40%</td>
+<td>河东民办第二</td>
+<td>500人</td>
+<td>应届复读混合</td>
+</tr>
+<tr>
+<td>思沁中学</td>
+<td>—</td>
+<td>73%+（应届）</td>
+<td>全省招生</td>
+<td>—</td>
+<td>应届拔尖+竞赛强</td>
+</tr>
+<tr>
+<td>明达高级中学</td>
+<td>一般</td>
+<td>一般</td>
+<td>河东民办第四</td>
+<td>700人</td>
+<td>应届弱·复读强</td>
+</tr>
+<tr>
+<td>芙蓉高级中学</td>
+<td>—</td>
+<td>—</td>
+<td>421分（2025）</td>
+<td>—</td>
+<td>复读为主</td>
+</tr>
+<tr>
+<td>恒定高级中学</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>体艺应届/复读</td>
+</tr>
+<tr>
+<td>卓华高级中学</td>
+<td>85%+（重点班）</td>
+<td>—</td>
+<td>—</td>
+<td>2000+人</td>
+<td>复读+艺体特色</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注</strong>：思沁、弘益部分数据来源于各校官宣/媒体报道，非教育局统一口径。复读与应届混合披露是长沙民办高中普遍现象，家长择校时建议重点核实应届生单独数据。2025年长沙民办高中整体本科率53.16%，特控率21.37%；头部9所本科率均超50%。</p>
+<hr />
+<h2 id="heading-4">三、学费与性价比</h2>
+<h3 id="2025-2026">2025-2026年学费标准</h3>
+<table>
+<thead>
+<tr>
+<th>学校</th>
+<th>学费/学期</th>
+<th>住宿费/学期</th>
+<th>年总费用(估)</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>怡海中学</td>
+<td><strong>¥15,800</strong></td>
+<td>¥1,600</td>
+<td>~¥3.9万</td>
+<td>天心区·周假制</td>
+</tr>
+<tr>
+<td>弘益高级中学</td>
+<td><strong>¥16,580</strong></td>
+<td>¥2,100</td>
+<td>~¥4.2万</td>
+<td>书本费¥1,000·周假制</td>
+</tr>
+<tr>
+<td>卓华高级中学</td>
+<td><strong>¥16,000+</strong></td>
+<td>—</td>
+<td>—</td>
+<td>开福区·41亩生态园</td>
+</tr>
+<tr>
+<td>芙蓉高级中学</td>
+<td><strong>¥16,800</strong></td>
+<td>—</td>
+<td>—</td>
+<td>普高+艺术+高复</td>
+</tr>
+<tr>
+<td>恒定高级中学</td>
+<td><strong>¥17,000+</strong></td>
+<td>—</td>
+<td>—</td>
+<td>颐华托管后调整</td>
+</tr>
+<tr>
+<td>明达高级中学</td>
+<td><strong>¥17,600</strong></td>
+<td>¥1,600</td>
+<td>~¥4.1万</td>
+<td>长沙县·黄兴镇</td>
+</tr>
+<tr>
+<td>师大思沁中学</td>
+<td><strong>¥20,000+</strong></td>
+<td>—</td>
+<td>—</td>
+<td>应届+复读均开放</td>
+</tr>
+<tr>
+<td>博纳二附中</td>
+<td><strong>¥24,600</strong></td>
+<td>¥1,200</td>
+<td>~¥5.6万</td>
+<td>湘江新区·全日制</td>
+</tr>
+</tbody>
+</table>
+<h3 id="heading-5">综合性价比分析</h3>
+<table>
+<thead>
+<tr>
+<th>学校</th>
+<th>学费/期</th>
+<th>核心指标（最优数据）</th>
+<th>性价比</th>
+<th>适合人群</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>怡海中学</td>
+<td>¥15,800</td>
+<td>~70%本科率（含复读）</td>
+<td>★★★★</td>
+<td>预算适中、想借雅礼品牌</td>
+</tr>
+<tr>
+<td>弘益高级中学</td>
+<td>¥16,580</td>
+<td>重点班特控75%（应届）</td>
+<td>★★★★★</td>
+<td>应届优先、追求实力</td>
+</tr>
+<tr>
+<td>芙蓉高级中学</td>
+<td>¥16,800</td>
+<td>复读本科率96.5%</td>
+<td>★★★★</td>
+<td>复读生、预算控制</td>
+</tr>
+<tr>
+<td>明达高级中学</td>
+<td>¥17,600</td>
+<td>复读特控率53.8%</td>
+<td>★★★</td>
+<td>复读生、追求规模环境</td>
+</tr>
+<tr>
+<td>卓华高级中学</td>
+<td>¥16,000+</td>
+<td>复读平均提分100+</td>
+<td>★★★★</td>
+<td>艺体生、创新类学生</td>
+</tr>
+<tr>
+<td>恒定高级中学</td>
+<td>¥17,000+</td>
+<td>复读本科率97.8%（2024）</td>
+<td>★★★</td>
+<td>体艺特长、追求环境</td>
+</tr>
+<tr>
+<td>师大思沁中学</td>
+<td>¥20,000+</td>
+<td>复读特控73.2%、12清北</td>
+<td>★★★★</td>
+<td>目标名校的复读生</td>
+</tr>
+<tr>
+<td>博纳二附中</td>
+<td>¥24,600</td>
+<td>复读本科98.5%、应届71.2%</td>
+<td>★★★</td>
+<td>有一定经济实力</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注</strong>：部分学费为2025年公开信息，思沁、卓华、恒定最新学费以学校官方招生公告为准。博纳二附中学费¥24,600/期为8所中最高，但应届和复读成绩均属头部。奖学金政策：多所学校对中考高分段学生有大额奖学金减免，实际费用可大幅降低。</p>
+<hr />
+<h2 id="8">四、8校多维评分</h2>
+<h3 id="--no1">师大思沁中学 — 复读No.1</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复读实力</td>
+<td>★★★★★ 5.0</td>
+<td>省内无对手，清北12人，600分260+</td>
+</tr>
+<tr>
+<td>应届实力</td>
+<td>★★★★ 4.0</td>
+<td>竞赛突出，生物全国金牌</td>
+</tr>
+<tr>
+<td>师资力量</td>
+<td>★★★★★ 5.0</td>
+<td>师大全托管</td>
+</tr>
+<tr>
+<td>性价比</td>
+<td>★★★ 3.0</td>
+<td>学费偏高</td>
+</tr>
+<tr>
+<td>特色课程</td>
+<td>★★★★☆ 4.5</td>
+<td>竞赛+强基双轨</td>
+</tr>
+</tbody>
+</table>
+<p>复读首选，全省顶尖。目标985/强基，非思沁不可。学费偏高是主要门槛。</p>
+<h3 id="--">弘益高级中学 — 应届强校</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复读实力</td>
+<td>★★★★ 4.0</td>
+<td>近年开办复读部</td>
+</tr>
+<tr>
+<td>应届实力</td>
+<td>★★★★★ 5.0</td>
+<td>河东录取分第一，重点班特控75%</td>
+</tr>
+<tr>
+<td>师资力量</td>
+<td>★★★★ 4.0</td>
+<td>依托师大资源</td>
+</tr>
+<tr>
+<td>性价比</td>
+<td>★★★★☆ 4.5</td>
+<td>¥16,580/期，优惠实在</td>
+</tr>
+<tr>
+<td>特色课程</td>
+<td>★★★★ 4.0</td>
+<td>卓越班/广益班</td>
+</tr>
+</tbody>
+</table>
+<p>应届生最佳选择之一。缺点：晚自习无教师坐班，周末补课额外收费。</p>
+<h3 id="---1">博纳二附中 — 应届复读双强</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复读实力</td>
+<td>★★★★☆ 4.5</td>
+<td>特控72.5%，本科98.5%</td>
+</tr>
+<tr>
+<td>应届实力</td>
+<td>★★★★☆ 4.5</td>
+<td>71.2%本科率，数据最透明</td>
+</tr>
+<tr>
+<td>师资力量</td>
+<td>★★★★ 4.0</td>
+<td>奥赛团队突出</td>
+</tr>
+<tr>
+<td>性价比</td>
+<td>★★☆ 2.5</td>
+<td>¥24,600最贵</td>
+</tr>
+<tr>
+<td>特色课程</td>
+<td>★★★★ 4.0</td>
+<td>强基班、美术精英班</td>
+</tr>
+</tbody>
+</table>
+<p>应届+复读双强，数据最透明。最大短板是学费8所中最贵。</p>
+<h3 id="---2">怡海中学 — 雅礼品牌</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复读实力</td>
+<td>★★★☆ 3.5</td>
+<td>复读生比例较高</td>
+</tr>
+<tr>
+<td>应届实力</td>
+<td>★★★☆ 3.5</td>
+<td>2024扩招至500人</td>
+</tr>
+<tr>
+<td>师资力量</td>
+<td>★★★★ 4.0</td>
+<td>7位正高级/特级教师</td>
+</tr>
+<tr>
+<td>性价比</td>
+<td>★★★★ 4.0</td>
+<td>学费最低¥15,800</td>
+</tr>
+<tr>
+<td>特色课程</td>
+<td>★★★ 3.0</td>
+<td>心理健康教育</td>
+</tr>
+</tbody>
+</table>
+<p>雅礼品牌背书，学费最低。复读生占比较高导致应届数据不透明，家长需单独核实应届成绩。</p>
+<h3 id="---3">芙蓉高级中学 — 师资最强</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复读实力</td>
+<td>★★★★ 4.0</td>
+<td>本科96.5%，一本56.8%</td>
+</tr>
+<tr>
+<td>应届实力</td>
+<td>★★★ 3.0</td>
+<td>应届数据较弱</td>
+</tr>
+<tr>
+<td>师资力量</td>
+<td>★★★★★ 5.0</td>
+<td>168教师·77%硕士+</td>
+</tr>
+<tr>
+<td>性价比</td>
+<td>★★★★ 4.0</td>
+<td>¥16,800/期中档</td>
+</tr>
+<tr>
+<td>特色课程</td>
+<td>★★★ 3.0</td>
+<td>五环互动模式</td>
+</tr>
+</tbody>
+</table>
+<p>师资实力强劲——168名专职教师77%硕士以上，是8所中学历结构最优的。适合复读生。</p>
+<h3 id="---4">明达高级中学 — 规模最大</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复读实力</td>
+<td>★★★★ 4.0</td>
+<td>本科95.2%，3000人参考</td>
+</tr>
+<tr>
+<td>应届实力</td>
+<td>★★☆ 2.5</td>
+<td>应届较弱</td>
+</tr>
+<tr>
+<td>师资力量</td>
+<td>★★★ 3.0</td>
+<td>生均资源稀释</td>
+</tr>
+<tr>
+<td>性价比</td>
+<td>★★★ 3.0</td>
+<td>¥17,600/期</td>
+</tr>
+<tr>
+<td>特色课程</td>
+<td>★★★ 3.0</td>
+<td>国防科工班</td>
+</tr>
+</tbody>
+</table>
+<p>规模最大复读基地。适合应届成绩在400-500分区间、追求稳健提升的复读生，需做好&quot;大班教学&quot;准备。</p>
+<h3 id="---5">恒定高级中学 — 硬件顶尖</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复读实力</td>
+<td>★★★★ 4.0</td>
+<td>本科率97.8%（2024）</td>
+</tr>
+<tr>
+<td>应届实力</td>
+<td>★★☆ 2.5</td>
+<td>普通生数据不透明</td>
+</tr>
+<tr>
+<td>师资力量</td>
+<td>★★★★ 4.0</td>
+<td>80%+高三经验教师</td>
+</tr>
+<tr>
+<td>性价比</td>
+<td>★★☆ 2.5</td>
+<td>¥17,000+/期</td>
+</tr>
+<tr>
+<td>特色课程</td>
+<td>★★★★☆ 4.5</td>
+<td>体艺+C9高校输出</td>
+</tr>
+</tbody>
+</table>
+<p>2025年起颐华托管，7.9亿智慧校园硬件全省民办顶尖。体育特长赛道首选。</p>
+<h3 id="---6">卓华高级中学 — 三维融合</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复读实力</td>
+<td>★★★☆ 3.5</td>
+<td>本科上线92%</td>
+</tr>
+<tr>
+<td>应届实力</td>
+<td>★★★ 3.0</td>
+<td>纯学术排名不具优势</td>
+</tr>
+<tr>
+<td>师资力量</td>
+<td>★★★★ 4.0</td>
+<td>双博士教研团队</td>
+</tr>
+<tr>
+<td>性价比</td>
+<td>★★★★ 4.0</td>
+<td>¥16,000+/期</td>
+</tr>
+<tr>
+<td>特色课程</td>
+<td>★★★★★ 5.0</td>
+<td>文化+艺术+科技融合</td>
+</tr>
+</tbody>
+</table>
+<p>特色课程体系最丰富，全国击剑冠军、省艺术联考桂冠均产自此校。三维度均衡培养的选择。</p>
+<hr />
+<h2 id="heading-6">五、选校建议</h2>
+<h3 id="490211985">目标冲名校（本科成绩490+，目标211/985）</h3>
+<table>
+<thead>
+<tr>
+<th>推荐</th>
+<th>学校</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>首选</strong></td>
+<td>师大思沁中学</td>
+<td>复读省内第一，2025年清北12人，600分260+，平均提分75分</td>
+</tr>
+<tr>
+<td><strong>备选</strong></td>
+<td>博纳二附中</td>
+<td>复读特控72.5%，600分以上141人，强基班特控率95%。学费最贵¥24,600/期</td>
+</tr>
+</tbody>
+</table>
+<h3 id="400-490">稳升本科（本科成绩400-490，目标稳上本科/冲一本）</h3>
+<table>
+<thead>
+<tr>
+<th>推荐</th>
+<th>学校</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>首选</strong></td>
+<td>芙蓉高级中学</td>
+<td>提升班本科率98.1%，重点班一本率68.7%，师资学历全省民办最高</td>
+</tr>
+<tr>
+<td><strong>备选</strong></td>
+<td>明达高级中学</td>
+<td>复读本科率95.2%，规模大，国防工科班有特色。学生多、个人关注度低</td>
+</tr>
+<tr>
+<td><strong>备选</strong></td>
+<td>恒定高级中学</td>
+<td>2024年复读本科率97.8%，颐华托管后实力提升</td>
+</tr>
+</tbody>
+</table>
+<h3 id="430-500">应届直升（中考成绩430-500，不参加复读）</h3>
+<table>
+<thead>
+<tr>
+<th>推荐</th>
+<th>学校</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>首选</strong></td>
+<td>弘益高级中学</td>
+<td>应届头部民办，重点班特控75%、本科95%，中考录取分河东最高</td>
+</tr>
+<tr>
+<td><strong>次选</strong></td>
+<td>博纳二附中</td>
+<td>应届71.2%本科率、50.4%特控率，数据最透明，强基班本科100%</td>
+</tr>
+<tr>
+<td><strong>次选</strong></td>
+<td>怡海中学</td>
+<td>雅礼品牌、学费最低，220名教师7位特级/正高</td>
+</tr>
+</tbody>
+</table>
+<h3 id="heading-7">艺体特长（体育/美术/音乐/击剑等特长方向）</h3>
+<table>
+<thead>
+<tr>
+<th>推荐</th>
+<th>学校</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>首选</strong></td>
+<td>恒定高级中学</td>
+<td>体艺特长生最强，已有多名学生考入C9高校（体艺赛道），7.9亿硬件</td>
+</tr>
+<tr>
+<td><strong>并列</strong></td>
+<td>卓华高级中学</td>
+<td>全国击剑冠军、省艺术联考桂冠，文化+艺术+科技三维融合</td>
+</tr>
+<tr>
+<td><strong>补充</strong></td>
+<td>博纳二附中</td>
+<td>美术精英班、音乐精英班，文化专业双过线率100%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="---7">一图速览 · 风险收益对照</h3>
+<table>
+<thead>
+<tr>
+<th>学校</th>
+<th>最适合谁</th>
+<th>最大优势</th>
+<th>主要风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>师大思沁</td>
+<td>目标985/清北的复读生</td>
+<td>复读省内无对手，清北12人</td>
+<td>学费较高，竞争压力大</td>
+</tr>
+<tr>
+<td>弘益高级中学</td>
+<td>中考430+的应届生</td>
+<td>应届成绩最强，性价比高</td>
+<td>补课额外收费，自习无坐班</td>
+</tr>
+<tr>
+<td>博纳二附中</td>
+<td>有实力+预算充足</td>
+<td>应届复读双强，数据透明</td>
+<td>学费¥24,600最贵</td>
+</tr>
+<tr>
+<td>怡海中学</td>
+<td>预算有限的应届/复读生</td>
+<td>学费最低，雅礼品牌</td>
+<td>应届/复读数据混淆</td>
+</tr>
+<tr>
+<td>芙蓉高级中学</td>
+<td>400-490分复读生</td>
+<td>师资硕士77%，复读稳</td>
+<td>应届数据较弱</td>
+</tr>
+<tr>
+<td>明达高级中学</td>
+<td>规模感不敏感的复读生</td>
+<td>规模最大，经验丰富</td>
+<td>生均资源少，管理粗放</td>
+</tr>
+<tr>
+<td>恒定高级中学</td>
+<td>体艺特长生</td>
+<td>7.9亿硬件+颐华托管</td>
+<td>普通生成绩数据不透明</td>
+</tr>
+<tr>
+<td>卓华高级中学</td>
+<td>艺体/创新类学生</td>
+<td>三维融合，提分100+</td>
+<td>纯升学成绩排名不突出</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>重要提醒</strong>：长沙民办高中普遍存在&quot;应届+复读合并公布成绩&quot;的问题，家长在择校时应重点追问：①应届生单独本科率；②应届生录取中考分数线；③近3年喜报中应届生与复读生占比。以上分析综合多方公开资料，供参考，具体以各校官方最新招生政策为准。</p>
+</blockquote>
+
+                </div>
+
+                <div id="post-footnotes" class="post-footnotes"></div>
+
+            </article>
+
+                        
+                        <div class="post-tags">
+                            <span class="post-tags-label">文章标签：</span>
+                            
+                                <a href="/tag/jiao-yu/" class="post-tag">教育</a>
+                            
+                                <a href="/tag/xue-xiao/" class="post-tag">学校</a>
+                            
+                        </div>
+                        
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : 已经是第一篇文章了~
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/changsha_public_highschools/">长沙公办高中全维度横向对比</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>
