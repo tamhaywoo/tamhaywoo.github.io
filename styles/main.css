@@ -147,6 +147,22 @@ sup a:hover {
   height: 100%;
   background: var(--accent-color);
   border-radius: 3px;
+  transition: width 0.6s ease-out;
+}
+
+.skillscontainer {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+.skills.life {
+  height: 100%;
+  background: var(--accent-color);
+  border-radius: 3px;
+  width: 70%;
+  transition: width 0.6s ease-out;
 }
 
 blockquote {
@@ -1256,6 +1272,7 @@ ol.footnotes-list li::before {
 
 .dark-theme hr { border-top-color: var(--dark-border); }
 .dark-theme .skills-life__bar { background: rgba(255, 255, 255, 0.1); }
+.dark-theme .skillscontainer { background: rgba(255, 255, 255, 0.1); }
 .dark-theme .mod-post__entry table th,
 .dark-theme .mod-post__entry table td {
   border-color: var(--dark-border);
