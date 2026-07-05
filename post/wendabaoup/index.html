@@ -1,0 +1,1177 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="generator" content="Gridea Pro 1.2.2">
+    <title>文大宝高中三年关键时间节点 | 百川随笔</title>
+
+    
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1a1b1e" media="(prefers-color-scheme: dark)">
+
+    
+    <link rel="shortcut icon" href="/images/theme/favicon.ico">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+    
+    <script>
+        (function () {
+            var configDefault = 'light';
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || configDefault;
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+            if (!savedTheme) {
+                localStorage.setItem('theme', theme);
+            }
+        })();
+    </script>
+
+    
+    <style>:root{--accent-color:#28df99;}</style>
+    
+
+    <script>
+    // 自动为所有 target="_blank" 的链接添加 rel="noopener noreferrer"
+    document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(function(link) {
+            var rel = link.getAttribute('rel') || '';
+            if (rel.indexOf('noopener') === -1) {
+                rel += ' noopener';
+            }
+            if (rel.indexOf('noreferrer') === -1) {
+                rel += ' noreferrer';
+            }
+            link.setAttribute('rel', rel.trim());
+        });
+    });
+</script>
+
+
+
+    
+<script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Theme toggle buttons
+        var sunBtn = document.getElementById('theme-toggle-sun');
+        var moonBtn = document.getElementById('theme-toggle-moon');
+        
+        function toggleTheme() {
+            var isDark = document.documentElement.classList.contains('dark-theme');
+            if (isDark) {
+                document.documentElement.classList.remove('dark-theme');
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark-theme');
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        if (sunBtn) {
+            sunBtn.addEventListener('click', toggleTheme);
+        }
+        if (moonBtn) {
+            moonBtn.addEventListener('click', toggleTheme);
+        }
+    });
+
+    // Footnotes support for Markdown footnotes [^1]
+    document.addEventListener('DOMContentLoaded', function() {
+        var entry = document.querySelector('.mod-post__entry');
+        var footnotesContainer = document.querySelector('#post-footnotes');
+        
+        if (!entry) return;
+
+        // Get the raw HTML content
+        var content = entry.innerHTML;
+        
+        // Find footnote definitions - standard format [^1]: definition
+        // Handle both markdown [^1]: and HTML encoded versions
+        var footnoteDefs = {};
+        
+        // Try various patterns to find footnote definitions
+        var patterns = [
+            /\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|\n\s*\n|\n\s*<h2|\n\s*$|$)/gi,
+            /<p>\[\^([^\]]+)\]:\s*([\s\S]*?)<\/p>/gi,
+            /<p>\[\^([^\]]+)\]:\s*([\s\S]*?)(?=<br\s*[\/]?>|$)/gi,
+            /\[\^([^\]]+)\]:\s*([\s\S]{1,300}?)(?=<\/p>|$)/gi
+        ];
+        
+        patterns.forEach(function(defRegex) {
+            var match;
+            while ((match = defRegex.exec(content)) !== null) {
+                var fnName = match[1];
+                var fnContent = match[2]
+                    .trim()
+                    .replace(/<br\s*[\/]?>/gi, ' ')
+                    .replace(/<[^>]+>/g, '')
+                    .replace(/&nbsp;/g, ' ')
+                    .replace(/\s+/g, ' ');
+                if (fnContent && fnContent.length > 2) {
+                    footnoteDefs[fnName] = fnContent;
+                }
+            }
+        });
+        
+        // If no definitions found, try to find definitions at the end of content
+        // by looking for footnote links that contain the definition content in href
+        if (Object.keys(footnoteDefs).length === 0) {
+            var footnoteLinks = content.match(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/g) || [];
+            footnoteLinks.forEach(function(link) {
+                var hrefMatch = link.match(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/);
+                if (hrefMatch) {
+                    try {
+                        var decodedHref = decodeURIComponent(hrefMatch[1]);
+                        var fnName = hrefMatch[2].replace(/^\^/, '');
+                        if (decodedHref && decodedHref.length > 2 && !decodedHref.match(/^https?:\/\//)) {
+                            footnoteDefs[fnName] = decodedHref;
+                        }
+                    } catch (e) {}
+                }
+            });
+        }
+        
+        // Also extract footnote definitions from the content before removing them
+        // This handles cases where definitions might be in a different format
+        if (Object.keys(footnoteDefs).length > 0) {
+            var definedFns = Object.keys(footnoteDefs);
+            var additionalDefs = content.match(/\[\^([^\]]+)\]:\s*([^\n<]+)/g) || [];
+            additionalDefs.forEach(function(def) {
+                var match = def.match(/\[\^([^\]]+)\]:\s*([^\n<]+)/);
+                if (match && !footnoteDefs[match[1]]) {
+                    footnoteDefs[match[1]] = match[2].trim();
+                }
+            });
+        }
+        
+        // Replace raw [^1] references with sup tags
+        var footnoteRefRegex = /\[\^([^\]]+)\](?!\s*:)/g;
+        content = content.replace(footnoteRefRegex, function(match, fnName) {
+            if (footnoteDefs[fnName]) {
+                return '<sup class="footnote-ref" id="fnref-' + fnName + '"><a href="#fn-' + fnName + '">[' + fnName + ']</a></sup>';
+            }
+            return match;
+        });
+        
+        // Handle Gridea's special link format: <a href="encoded-url">^1</a> or <a href="encoded-url">^亮哥</a>
+        // Also handle links where href is URL-encoded content (Gridea format)
+        content = content.replace(/<a\s+href="([^"]+)"\s*>(\^?[a-zA-Z0-9\u4e00-\u9fa5]+)<\/a>/g, function(match, href, fnName) {
+            fnName = fnName.replace(/^\^/, '');
+            try {
+                var decodedHref = decodeURIComponent(href);
+                // Check if footnote definition exists OR if href contains footnote content (non-URL)
+                if (footnoteDefs[fnName] || (decodedHref && decodedHref.length > 3 && !decodedHref.match(/^https?:\/\//))) {
+                    return '<sup class="footnote-ref" id="fnref-' + fnName + '"><a href="#fn-' + fnName + '">[' + fnName + ']</a></sup>';
+                }
+            } catch (e) {}
+            return match;
+        });
+        
+        // Remove footnote definitions from content
+        content = content.replace(/\[\^([^\]]+)\]:\s*[\s\S]*?(?=<br\s*[\/]?>|\n\s*\n|<h2|$)/gi, '');
+        content = content.replace(/<p>\[\^[^\]]+\]:\s*[\s\S]*?<\/p>/gi, '');
+        content = content.replace(/<p>\s*<\/p>/g, '');
+        content = content.replace(/<p>\s*<br\s*[\/]?>\s*<\/p>/g, '');
+        
+        entry.innerHTML = content;
+        
+        // Create the footnotes section
+        var fnKeys = Object.keys(footnoteDefs);
+        if (fnKeys.length > 0 && footnotesContainer) {
+            var footnotesSection = document.createElement('section');
+            footnotesSection.className = 'footnotes';
+            
+            var heading = document.createElement('h4');
+            heading.className = 'footnotes-title';
+            heading.textContent = '参考资料';
+            footnotesSection.appendChild(heading);
+            
+            var ol = document.createElement('ol');
+            ol.className = 'footnotes-list';
+            
+            fnKeys.forEach(function(fnName) {
+                var li = document.createElement('li');
+                li.id = 'fn-' + fnName;
+                li.innerHTML = '<span class="footnote-content">' + footnoteDefs[fnName] + '</span> <a href="#fnref-' + fnName + '" class="footnote-backref">↩</a>';
+                ol.appendChild(li);
+            });
+            
+            footnotesSection.appendChild(ol);
+            footnotesContainer.appendChild(footnotesSection);
+        }
+    });
+
+    // Fetch random quote from API (override default text)
+    document.addEventListener('DOMContentLoaded', function() {
+        const quoteContainer = document.getElementById('quote-container');
+        if (!quoteContainer) return;
+
+        fetch('https://v1.hitokoto.cn/?c=i&encode=json')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                const textEl = document.getElementById('quote-text');
+                const authorEl = document.getElementById('quote-author');
+                if (textEl && data.hitokoto) {
+                    textEl.textContent = data.hitokoto;
+                }
+                if (authorEl && data.from) {
+                    authorEl.textContent = '—— ' + data.from;
+                }
+            })
+            .catch(function(err) {
+                // Use default text if API fails
+            });
+    });
+</script>
+
+
+
+    
+
+    
+
+    <script>
+        (function() {
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            document.documentElement.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+            document.documentElement.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
+        })();
+    </script>
+<meta name="description" content="高中学习目标： 保持在雅礼班或雅礼强基班 保持在班级前五名 积极参与班级管理 积极参与综合素养活动 大学报考目标： 清华大学、北京大学、中国科学技术大学 复旦大学、厦门大学、上海交通大学 南开大学、浙江大学、华中科技大学 高一（2026年8月 — 2027年7月） 关键词：适应、选科、首轮学考 #&amp;hellip;">
+<link rel="canonical" href="https://tam.haywoo.com/post/wendabaoup/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"文大宝高中三年关键时间节点","url":"https://tam.haywoo.com/post/wendabaoup/","description":"高中学习目标： 保持在雅礼班或雅礼强基班 保持在班级前五名 积极参与班级管理 积极参与综合素养活动 大学报考目标： 清华大学、北京大学、中国科学技术大学 复旦大学、厦门大学、上海交通大学 南开大学、浙江大学、华中科技大学 高一（2026年8月 — 2027年7月） 关键词：适应、选科、首轮学考 #\u0026hellip;","datePublished":"2026-07-05T17:51:35+08:00","dateModified":"2026-07-05T18:21:55+08:00","author":{"@type":"Person","name":"百川随笔"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"百川随笔"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://tam.haywoo.com","name":"百川随笔","position":1},{"@type":"ListItem","item":"https://tam.haywoo.com/post/wendabaoup/","name":"文大宝高中三年关键时间节点","position":2}]}</script>
+<meta property="og:title" content="文大宝高中三年关键时间节点">
+<meta property="og:description" content="高中学习目标： 保持在雅礼班或雅礼强基班 保持在班级前五名 积极参与班级管理 积极参与综合素养活动 大学报考目标： 清华大学、北京大学、中国科学技术大学 复旦大学、厦门大学、上海交通大学 南开大学、浙江大学、华中科技大学 高一（2026年8月 — 2027年7月） 关键词：适应、选科、首轮学考 #&amp;hellip;">
+<meta property="og:url" content="https://tam.haywoo.com/post/wendabaoup/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="百川随笔">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://tam.haywoo.com/post/wendabaoup/">
+<meta name="twitter:title" content="文大宝高中三年关键时间节点">
+<meta name="twitter:description" content="高中学习目标： 保持在雅礼班或雅礼强基班 保持在班级前五名 积极参与班级管理 积极参与综合素养活动 大学报考目标： 清华大学、北京大学、中国科学技术大学 复旦大学、厦门大学、上海交通大学 南开大学、浙江大学、华中科技大学 高一（2026年8月 — 2027年7月） 关键词：适应、选科、首轮学考 #&amp;hellip;">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+
+    <body>
+
+        <script>
+    (function () {
+        const getSystemTheme = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+
+        const configDefault = 'light';
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || configDefault || getSystemTheme();
+
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark-theme');
+            document.body.classList.add('dark-theme');
+        }
+
+        if (!savedTheme) {
+            localStorage.setItem('theme', theme);
+        }
+    })();
+</script>
+<header class="mod-head">
+    <div class="mod-head__left">
+        <div class="mod-head__logo">
+            <a href="/">
+                
+                
+                    <img class="avatar" alt="avatar" src="/images/theme/me.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="mod-head__right">
+        <span>
+            <button id="theme-toggle-sun" class="tiptap-button theme-toggle-sun" aria-label="Switch to dark mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="currentColor"></path>
+                    <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z" fill="currentColor"></path>
+                    <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z" fill="currentColor"></path>
+                    <path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z" fill="currentColor"></path>
+                    <path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z" fill="currentColor"></path>
+                    <path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z" fill="currentColor"></path>
+                    <path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z" fill="currentColor"></path>
+                    <path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button id="theme-toggle-moon" class="tiptap-button theme-toggle-moon" aria-label="Switch to light mode">
+                <svg width="18" height="18" class="tiptap-button-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z" fill="currentColor"></path>
+                    <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z" fill="currentColor"></path>
+                </svg>
+            </button>
+        </span>
+    </div>
+</header>
+<!-- <a href="#" id="back-to-top" style="display: inline;"> ^ </a> -->
+
+            <article class="mod-post mod-post__type-post">
+                <header>
+                    <h1 class="mod-post__title">
+                        文大宝高中三年关键时间节点
+                    </h1>
+                </header>
+
+                <div class="mod-post__meta">
+                    <time datetime="2026-07-05">
+                        2026-07-05
+                    </time> • 16 分钟阅读 •
+                        
+                            
+                                <a href="/category/edu/">教育相关</a>
+                                
+                            
+                        
+                </div>
+
+
+
+                <div class="mod-post__entry wzulli">
+                    
+                            <blockquote>
+<p><strong>高中学习目标</strong>：</p>
+<ul>
+<li>保持在雅礼班或雅礼强基班</li>
+<li>保持在班级前五名</li>
+<li>积极参与班级管理</li>
+<li>积极参与综合素养活动</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>大学报考目标</strong>：</p>
+<ul>
+<li>清华大学、北京大学、中国科学技术大学</li>
+<li>复旦大学、厦门大学、上海交通大学</li>
+<li>南开大学、浙江大学、华中科技大学</li>
+</ul>
+</blockquote>
+<h1 id="20268--20277">高一（2026年8月 — 2027年7月）</h1>
+<p><strong>关键词：适应、选科、首轮学考</strong></p>
+<h2 id="2026820------">2026年8月20日左右 · 报到 + 入学考试 + 军训</h2>
+<h3 id="heading">报到材料清单</h3>
+<ul>
+<li>录取通知书（必须原件）</li>
+<li>户口本原件 + 复印件（户主页+学生本人页，各3份）</li>
+<li>身份证原件 + 复印件（3份）</li>
+<li>一寸证件照（蓝底/白底各10张，电子版也存好）</li>
+<li>学费15800元/学期 + 住宿费1600元/学期（如住宿）+ 校服费396元/套</li>
+</ul>
+<h3 id="heading-1">入学考试</h3>
+<ul>
+<li>怡海依托雅礼教研体系，考试难度可能高于普通学校</li>
+<li>考试科目预计：语文、数学、英语、物理、化学（以中考范围为主，可能含拔高题）</li>
+<li>成绩影响分班，认真对待，但也不用过度紧张</li>
+<li>考前一天保证睡眠，不要突击</li>
+</ul>
+<h3 id="heading-2">军训</h3>
+<ul>
+<li>长沙8月下旬高温，持续约1-2周</li>
+<li><strong>物理准备</strong>：防晒霜SPF50+（面部+身体各一瓶）、大容量水杯（1.5L以上）、透气运动鞋（别穿新鞋）、藿香正气水、创可贴、润喉糖</li>
+<li><strong>身体准备</strong>：从现在开始每天适当运动，避免突然高强度军训导致中暑或拉伤</li>
+<li>注意：如遇生理期，提前准备并向教官说明</li>
+</ul>
+<h3 id="heading-3">住宿安排</h3>
+<ul>
+<li>怡海宿舍8人间，配空调、24小时热水、洗衣机、暖气</li>
+<li>床上用品：提前确认学校是否统一采购（一般会统一，如不统一需自备）</li>
+<li>自备：洗漱用品、毛巾多条、拖鞋（宿舍+浴室各一双）、衣架、水杯、雨伞</li>
+<li>常用药：感冒药、肠胃药、创可贴、藿香正气水、布洛芬</li>
+<li><strong>全封闭管理，手机大概率被统一管理</strong>，提前做好心理准备</li>
+</ul>
+<h3 id="heading-4">入学后立刻做的事</h3>
+<ul>
+<li>加班主任微信/家长群</li>
+<li>确认学校网站/公众号关注（通知渠道）</li>
+<li>记下教务处、宿管、班主任电话</li>
+</ul>
+<h2 id="20269--">2026年9月 · 开学适应期</h2>
+<h3 id="heading-5">学业适应</h3>
+<ul>
+<li>9门课全开：语数英+理化生+政史地</li>
+<li>高中知识量是初中的2-3倍，最大的坎在<strong>数学</strong>（集合、函数、不等式）和<strong>物理</strong>（运动学、力学、矢量思维）</li>
+<li>建立高中学习闭环：<strong>预习15min → 课堂笔记 → 当天复习 → 作业 → 错题本</strong></li>
+<li>雅礼体系节奏快、要求高，前2-3周可能跟不上</li>
+<li>英语：高中词汇量要求3500+，比初中翻倍，开始每天背20个单词</li>
+</ul>
+<h3 id="heading-6">生活适应</h3>
+<ul>
+<li>全封闭管理下时间很紧（早读→上午课→午休→下午课→晚自习），尽快适应作息</li>
+<li>食堂档口提前踩点，摸清哪些吃的靠谱</li>
+<li>同学关系：主动融入，但不强求（高一换班后圈子会重洗）</li>
+</ul>
+<h3 id="heading-7">月底第一次月考</h3>
+<ul>
+<li>这是高中第一次正式考试，考9门全部科目</li>
+<li>成绩不重要（大家都不适应），重要的是<strong>发现哪些科目是你的弱项</strong></li>
+<li>这次月考成绩是选科的第一个参考数据</li>
+</ul>
+<h2 id="202610--">2026年10月 · 选科准备期（关键）</h2>
+<h3 id="7">国庆假期（约7天）</h3>
+<ul>
+<li>不建议完全放松，每天保持2-3小时学习状态</li>
+<li>重点复习弱科，提前预习10月新内容</li>
+<li>可以开始了解选科方向</li>
+</ul>
+<h3 id="heading-8">选科准备工作</h3>
+<p>需要搞清楚三件事：</p>
+<table>
+<thead>
+<tr>
+<th>要搞清楚的事</th>
+<th>怎么查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>各科年级排名</td>
+<td>看月考+平时测验的相对排名（不只看绝对分数）</td>
+</tr>
+<tr>
+<td>3+1+2组合方案</td>
+<td>物理/历史二选一 + 化/生/政/地四选二 = 12种</td>
+</tr>
+<tr>
+<td>目标大学选科要求</td>
+<td>登录湖南省教育考试院官网 → 查《选考科目要求指引》</td>
+</tr>
+<tr>
+<td>本校师资优势</td>
+<td>问班主任怡海哪些组合老师强、往年赋分好</td>
+</tr>
+</tbody>
+</table>
+<h3 id="heading-9">选科决策参考</h3>
+<ul>
+<li>学医 → 物+化+生（最优）</li>
+<li>工科/计算机 → 物+化+地理 或 物+化+生</li>
+<li>法学/新闻 → 历史+政治+地理/生物</li>
+<li>经济/管理 → 物理/历史均可，看分数</li>
+<li>怡海有雅礼竞赛资源 → 如果孩子有竞赛潜力，物化生组合竞赛通道最全</li>
+</ul>
+<h3 id="heading-10">家长做的事</h3>
+<ul>
+<li>参加学校选科家长会（一般10月中下旬开）</li>
+<li>不要把自己的期望强加给孩子</li>
+<li>如果举棋不定，<strong>选物理比选历史后续专业选择面宽得多</strong>（约95% vs 85%专业覆盖率）</li>
+</ul>
+<h2 id="202611----">2026年11月 · 期中考试 + 选科定夺</h2>
+<h3 id="11">第一次期中考试（约11月上旬）</h3>
+<ul>
+<li>高中第一次大型考试，各科都考</li>
+<li>成绩出来后，重点看各科的<strong>年级排名</strong>（不是绝对分数）</li>
+<li>结合月考+期中两次排名，基本能判断各科在年级中的相对强弱</li>
+</ul>
+<h3 id="heading-11">选科正式决策</h3>
+<ul>
+<li>怡海一般在高一上学期结束前完成选科登记</li>
+<li>选定后不要变动（有的学校允许第一学期末微调一次）</li>
+<li>选定后，未选科目虽然还要学到期末，但不计入高考</li>
+</ul>
+<h3 id="12">综评档案首次填写（12月底前上传）</h3>
+<ul>
+<li>使用EEID账号登录平台：http://zhpj.hnedu.cn</li>
+<li>第一学期重点填写<strong>思想品德</strong>（军训、入团申请）+ <strong>身心健康</strong>（军训、校运会）</li>
+<li>每个子维度上传≤10条，遴选上报≤5条</li>
+<li>注意仔细检查，<strong>上报后不能修改</strong>。</li>
+</ul>
+<h2 id="202612---20271--">2026年12月 - 2027年1月 · 期末冲刺</h2>
+<h3 id="202612">2026年12月</h3>
+<ul>
+<li>期末复习开始，重点抓弱科</li>
+<li><strong>12月底前必须上传综评材料</strong>（具体截止时间每学期关注平台通知）</li>
+<li>综评必填：思想品德（志愿服务记录）、学业水平（月考成绩+学习表现）、身心健康（锻炼记录）、艺术素养（如有参加校园活动）、社会实践（军训）</li>
+<li>照片要求：每张不超过500KB，需要用电脑压缩</li>
+</ul>
+<h3 id="20261--">2026年1月 · 期末考试</h3>
+<ul>
+<li>高一上学期最后一次考试</li>
+<li>成绩反映了选科前的综合能力，但不计入高考</li>
+<li>放寒假前：找班主任要下学期的预习建议</li>
+</ul>
+<h3 id="4">寒假规划（约4周）</h3>
+<ul>
+<li>第一周：彻底放松，调整状态</li>
+<li>第二三周：每天2-3小时，预习高一下内容（重点预习选科科目）</li>
+<li>第四周：社会实践（研学/志愿服务），积累综评素材</li>
+<li>英语单词每天背，别断</li>
+</ul>
+<h2 id="20273---">2027年3月 · 学考报名 ⚠️</h2>
+<h3 id="320-42--">3月20日-4月2日 · 报名窗口</h3>
+<ul>
+<li>高一统一报考：<strong>历史、化学、地理、生物</strong> 4科</li>
+<li>学校集体操作网上报名（家长只需确认信息无误）</li>
+<li><strong>4月7日前完成缴费</strong>，错过缴费窗口视为放弃，只能等下一年</li>
+<li>科目确认：确保只报了这4科，不报语文、数学、外语、物理（高二再报）</li>
+</ul>
+<h3 id="4-5--">4月-5月 · 学考复习</h3>
+<ul>
+<li>4科合格考难度不高（远低于高考），但必须<strong>保证全部合格</strong></li>
+<li>任何一科不合格 → 影响高中毕业证 → 影响综评/强基</li>
+<li>怡海学校会统一组织复习，跟紧学校节奏即可</li>
+<li>期末同步复习（语数外+选科3门不能放）</li>
+</ul>
+<h2 id="20275--">2027年5月底 · 综评第二次上传</h2>
+<ul>
+<li>检查上学期上传的材料是否审核通过</li>
+<li>本学期新增：学考报名记录、学科竞赛参与（如有）、研学旅行记录（如有）</li>
+<li><strong>军训材料</strong>必须这个学期内上传（此时已过半年，容易忘）</li>
+</ul>
+<h2 id="20276----">2027年6月 · 学考合格性考试 + 期末</h2>
+<h3 id="612-14--4">6月12日-14日 · 学考（高一4科）</h3>
+<ul>
+<li>6月14日（上午）：化学、地理 → <strong>高一参加</strong></li>
+<li>6月14日（下午）：历史、生物学 → <strong>高一参加</strong></li>
+<li>考试时长：每科60-90分钟</li>
+<li>全部为选择题+非选择题，合格线为60分</li>
+<li>（6月12-13日的语文/物理/数学/思想政治为高二年级考试）</li>
+</ul>
+<h3 id="heading-12">期末考试</h3>
+<ul>
+<li>学考结束后立即进入期末复习</li>
+<li>成绩决定高二分班时在同组合班级中的排名</li>
+</ul>
+<h3 id="8">暑假规划（约8周）</h3>
+<ul>
+<li>前2周：放松</li>
+<li>中间4周：预习高二选科科目（高二知识难度比高一大一个台阶）</li>
+<li>后2周：社会实践/研学旅行/志愿服务，集中积累综评素材</li>
+<li>英语单词继续，建议开始用高中词汇书系统背诵</li>
+</ul>
+<h1 id="20279--20287">高二（2027年9月 — 2028年7月）</h1>
+<p><strong>关键词：分班、提速、学考清零</strong></p>
+<h2 id="20279--">2027年9月 · 选科分班</h2>
+<h3 id="heading-13">分班</h3>
+<ul>
+<li>进入选科组合专属班级</li>
+<li>新班级新老师新同学，重新适应</li>
+<li>教学节奏明显加快，每科每周课时增加</li>
+<li>语数英不再按年级统排，而是按组合分班教学</li>
+<li><strong>开始接触高考难度题型</strong>，期中期末成绩开始有参考价值</li>
+</ul>
+<h3 id="heading-14">开学前准备</h3>
+<ul>
+<li>预习选科科目高二上内容（重点预习理科：数学的函数与导数、物理的力学进阶等）</li>
+<li>复习高一选科科目的基础，别出现断层</li>
+</ul>
+<h2 id="202710-11------">2027年10月-11月 · 期中 + 竞赛 + 艺体方向</h2>
+<h3 id="heading-15">期中考试</h3>
+<ul>
+<li>第一次在选科组合班级中的正式排名</li>
+<li>检验选科是否正确——如果排名大幅下滑，说明可能选科方向有问题</li>
+<li>高二上学期是知识密度最大的阶段，重点抓选科3门</li>
+</ul>
+<h3 id="heading-16">学科竞赛</h3>
+<ul>
+<li>怡海有雅礼拔尖创新人才培养基地 + 丘成桐少年班资源</li>
+<li>如果文大宝在某个学科有突出优势，高二上可以尝试竞赛</li>
+<li>常见竞赛时间：
+<ul>
+<li>数学竞赛：9月预赛/10月联赛</li>
+<li>物理竞赛：9月预赛/10月复赛</li>
+<li>化学竞赛：5月初赛/9月决赛</li>
+<li>生物竞赛：5月联赛</li>
+<li>信息学竞赛：10月初赛/11月复赛</li>
+</ul>
+</li>
+<li>竞赛路线一旦走，会大量占用时间，慎重权衡</li>
+</ul>
+<h3 id="heading-17">艺体方向</h3>
+<ul>
+<li>如果考虑走艺术/体育高考路线，高二上学期必须决定并开始集训</li>
+<li>艺体类培训费高、时间占用大</li>
+<li>如果没有这方面想法，直接跳过</li>
+</ul>
+<h2 id="202712--">2027年12月 · 期末前综评上传</h2>
+<ul>
+<li>12月底前上传本学期综评材料</li>
+<li>本学期重点：学业水平（竞赛获奖、研究性学习报告）、社会实践（寒暑假积累的）</li>
+<li>检查前三个学期材料完整性，不要有空白维度</li>
+</ul>
+<h2 id="20281--">2028年1月 · 期末考试</h2>
+<ul>
+<li>高二上期末考，知识密度最大阶段的总检验</li>
+<li>寒假重点：针对选科弱科集中突破，不要刷九门课</li>
+</ul>
+<h2 id="20283--">2028年3月 · 学考报名（最后窗口）⚠️</h2>
+<h3 id="heading-18">报名对象</h3>
+<ul>
+<li>高二学生可报全部9门科目</li>
+<li>已取得合格成绩的<strong>不重复报考</strong></li>
+<li>主要是补报高一时未报考的科目：<strong>语文、数学、外语、物理、思想政治</strong>（5科）</li>
+<li>如果高一学考有不合格科目，此次必须补考</li>
+<li>仍由学校集体报名，家长确认即可</li>
+</ul>
+<h3 id="heading-19">为什么这是最后窗口</h3>
+<ul>
+<li>高三不再安排学考</li>
+<li>任何一科在此时仍未合格 → 无法获得高中毕业证</li>
+<li>影响强基/综评/高校录取</li>
+<li><strong>务必确保所有科目全部通过</strong></li>
+</ul>
+<h2 id="20284-5--">2028年4月-5月 · 学考复习</h2>
+<ul>
+<li>5月中下旬学期末综评上传（最后一次正式综评——高三不再有时间）</li>
+<li>学考复习跟紧学校安排即可（难度远低于选考科目）</li>
+</ul>
+<h2 id="20286----">2028年6月中旬 · 学考 + 期末</h2>
+<h3 id="heading-20">学考合格性考试（剩余科目）</h3>
+<ul>
+<li>参考2026年安排：
+<ul>
+<li>6月12日上午语文/物理，下午外语</li>
+<li>6月13日上午数学/思想政治</li>
+<li>6月14日上午化学/地理，下午历史/生物</li>
+</ul>
+</li>
+<li>已通过高一学考的可不参加对应场次</li>
+</ul>
+<h3 id="heading-21">期末考试</h3>
+<ul>
+<li>高二结束，正式进入准高三状态</li>
+</ul>
+<h2 id="20287-8--">2028年7月-8月 · 暑假（最关键的一个暑假）</h2>
+<h3 id="heading-22">这个暑假不能大休</h3>
+<ul>
+<li>怡海高三大概率8月初就开学（雅礼系通常提前开学）</li>
+<li>暑假有效时间只有4-5周</li>
+</ul>
+<h3 id="heading-23">必须做的事</h3>
+<ol>
+<li>系统复习高一高二选科科目的全部知识点（买高考一轮复习资料）</li>
+<li>数学：函数与导数、解析几何、概率统计（三大板块必须过一遍）</li>
+<li>英语：背完高考3500词（如还没背完）</li>
+<li>错题本整理：<strong>把高二所有大考错题整理成册</strong></li>
+</ol>
+<h3 id="heading-24">证件检查</h3>
+<ul>
+<li>身份证是否2029年9月30日之后到期？（高考报名需要有效身份证）</li>
+</ul>
+<h1 id="20289--20297">高三（2028年9月 — 2029年7月）</h1>
+<p><strong>关键词：高考报名、强基综评、决战6月</strong></p>
+<h2 id="20289--">2028年9月 · 一轮复习启动</h2>
+<h3 id="heading-25">复习规划</h3>
+<ul>
+<li>各科开始地毯式一轮复习，覆盖高一高二全部知识点</li>
+<li>跟紧老师节奏是第一要务，不要自己另外搞一套</li>
+<li>每周做一套完整的模拟卷（限时），培养考试节奏</li>
+</ul>
+<h3 id="heading-26">检查事项</h3>
+<ul>
+<li>综评档案最后一次检查：高一高二四个学期材料是否齐全、审核是否通过</li>
+<li><strong>检查孩子身份证</strong>：是否在2029年9月30日前过期？过期的话立即去派出所补办（高考报名需要）</li>
+<li>确认户口本和身份证地址一致（不一致需去派出所更新）</li>
+</ul>
+<h3 id="heading-27">高三上学期心态</h3>
+<ul>
+<li>刚开始一轮复习会觉得&quot;好像什么都不会&quot;，这是正常的</li>
+<li>一轮复习是捡回来的过程，不要焦虑</li>
+</ul>
+<h2 id="202810---">2028年10月 · 高考报名 🔴（全年最重要的事，没有之一）</h2>
+<h3 id="1016-31">时间：10月16日-31日（仅工作日，周末不办理）</h3>
+<p><strong>为什么重要</strong></p>
+<ul>
+<li>这是高考报名的<strong>唯一窗口</strong>，<strong>过期不补，不设补报名</strong></li>
+<li>错过这个窗口 = 无法参加2029年高考 = 等一年</li>
+<li><strong>每年都有家长犯这个错误</strong></li>
+</ul>
+<p><strong>报名方式</strong></p>
+<ul>
+<li>平台：
+<ul>
+<li>潇湘高考APP（手机端）</li>
+<li>湖南省考生综合信息平台（电脑端 hneeb.cn）</li>
+</ul>
+</li>
+<li>学校会统一组织，但家长和学生必须亲自确认信息无误</li>
+</ul>
+<p><strong>报名需要准备的材料</strong></p>
+<ul>
+<li>身份证（在有效期内，建议办证时间不早于2025年1月）</li>
+<li>户口本（确保户籍信息与身份证一致）</li>
+<li>学籍信息（学校提供）</li>
+<li>近期免冠证件照（电子版，按要求格式）</li>
+</ul>
+<p><strong>报名步骤</strong></p>
+<ol>
+<li>注册/登录潇湘高考APP</li>
+<li>填写个人信息（姓名、身份证号、民族、户籍、学籍等）</li>
+<li>上传证件照</li>
+<li>选择报考类别（普通高考/对口招生/高职单招等）</li>
+<li>缴纳报名费</li>
+<li>确认提交 → 打印报名确认表 → 签字</li>
+</ol>
+<h3 id="-">⚠️ 特别重要</h3>
+<ul>
+<li>身份证报名后到大学报到前，<strong>不要修改姓名、照片、性别、民族、出生日期等关键信息</strong></li>
+<li>非湖南户籍考生需提前确认是否符合随迁子女报名条件</li>
+<li>具有普通高校学籍的学生（如已被大学录取但未报到）不能报名</li>
+</ul>
+<h2 id="2028113-10--">2028年11月3日-10日 · 艺术类/体育类统考报名缴费</h2>
+<ul>
+<li><strong>仅适用于走艺体路线的考生</strong></li>
+<li>如果文大宝不走艺体，此步跳过</li>
+<li>报名缴费也在潇湘高考APP上</li>
+</ul>
+<h2 id="202811--">2028年11月 · 期中考试（一模性质）</h2>
+<ul>
+<li>一轮复习进行到一半，期中考试检验复习效果</li>
+<li>成绩用于初步定位目标院校层次</li>
+</ul>
+<h2 id="2028126--">2028年12月6日起 · 艺术类统考</h2>
+<ul>
+<li>音乐类、舞蹈类、表导类、播音主持类、美术与设计类、书法类6科统考</li>
+<li>如果文大宝不考艺体，继续一轮复习，此项跳过</li>
+</ul>
+<h2 id="20291--">2029年1月 · 期末考试/全市一模</h2>
+<ul>
+<li>一轮复习收尾，第一次完整的全市统一模拟考</li>
+<li>成绩对后续复习策略和志愿定位有重要参考</li>
+</ul>
+<h3 id="heading-28">寒假安排</h3>
+<ul>
+<li>不宜长休，保持学习节奏，二轮复习启动</li>
+</ul>
+<h2 id="20292--">2029年2月 · 二轮复习</h2>
+<ul>
+<li><strong>专题突破阶段</strong>：按知识点板块刷题，不再是地毯式</li>
+<li>开始做近5年高考真题（限时模拟真实考试环境）</li>
+<li>错题本持续更新</li>
+</ul>
+<h2 id="20293--">2029年3月 · 综合评价报名启动</h2>
+<h3 id="3-5">综合评价报名（3月-5月）</h3>
+<ul>
+<li>部分高校（南科大、上科大、华南理工、港中文深圳等）开始报名</li>
+</ul>
+<h3 id="heading-29">报名材料清单（从高一开始积累）</h3>
+<ul>
+<li>高中各学期成绩单</li>
+<li>学考合格性考试成绩</li>
+<li>高三模拟考试（一模/二模）成绩</li>
+<li>获奖证书扫描件（教育部白名单赛事为佳）</li>
+<li>个人陈述/自荐信（800-1000字，围绕目标专业展开）</li>
+<li>推荐信（非必须，但有更好）</li>
+<li>综合素质评价档案</li>
+</ul>
+<h3 id="heading-30">报名平台</h3>
+<ul>
+<li>阳光高考平台（https://gaokao.chsi.com.cn）</li>
+<li>一个学校一般可报1-6个专业</li>
+<li><strong>注册阳光高考网账号</strong>（如果之前没注册）</li>
+<li>建议目标院校层级：冲1-2所 + 稳1-2所 + 保1-2所</li>
+</ul>
+<h3 id="heading-31">三月下旬</h3>
+<ul>
+<li>3月底-4月初通常有<strong>二模</strong></li>
+</ul>
+<h2 id="20294---">2029年4月 · 强基计划报名 ⚠️</h2>
+<h3 id="heading-32">时间</h3>
+<ul>
+<li>4月各高校陆续发布招生简章，发布后随即开始报名</li>
+</ul>
+<h3 id="heading-33">强基计划要点</h3>
+<ul>
+<li>39所985高校参与，只能报<strong>1所</strong></li>
+<li>招生专业偏基础学科：数学、物理、化学、生物、历史、哲学、古文字等</li>
+<li>录取依据：高考成绩（85%）+ 校测成绩（15%）</li>
+<li>录取在所有批次之前，一旦录取不再参加后续志愿</li>
+</ul>
+<h3 id="heading-34">报名流程</h3>
+<ol>
+<li>4月简章发布 → 阅读简章（招生专业、入围标准、校测形式）</li>
+<li>在阳光高考平台报名（多数高校不需要额外材料）</li>
+<li>选择一个合适的学校（太高的可能入围不了，太低的浪费机会）</li>
+</ol>
+<h3 id="heading-35">判断标准</h3>
+<ul>
+<li>强基计划不适合所有人。专业偏基础学科，如果对工科/应用型专业更感兴趣，强基可能不是最优解</li>
+<li>适合的画像：某一基础学科特别强 + 对科研有兴趣 + 能接受偏基础的专业</li>
+<li>部分高校（复旦、上交、南大等12所）校测在出分前，意味着高考完就得马上去考</li>
+</ul>
+<h3 id="heading-36">综合评价报名继续</h3>
+<ul>
+<li>多数综评报名在4月底-5月截止</li>
+</ul>
+<h2 id="20295------">2029年5月 · 三轮复习 + 综评初审 + 综合素质材料上报</h2>
+<h3 id="heading-37">三轮复习</h3>
+<ul>
+<li>回归基础 + 查漏补缺 + 保持状态</li>
+<li>不再刷新题，以真题和错题本为主</li>
+</ul>
+<h3 id="5">综评初审公示（5月底）</h3>
+<ul>
+<li>登录报名系统查看是否入围</li>
+<li>入围者需进行<strong>考试确认及缴费</strong></li>
+</ul>
+<h3 id="5-1">综合素质材料上报（5月底前）</h3>
+<ul>
+<li>强基计划考生各省市组织综合素质评价材料补充填写</li>
+<li>学校统一操作，家长确认即可</li>
+</ul>
+<h3 id="5-6--">5月底-6月初 · 考前调整</h3>
+<ul>
+<li>调整作息，保证睡眠</li>
+<li>不再刷难题，以保持手感和信心为主</li>
+<li>提前看考场、准备考试用品</li>
+</ul>
+<h2 id="202967-10---">2029年6月7日-10日 · 高考 🔴🔴🔴</h2>
+<h3 id="heading-38">考试安排（参考）</h3>
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>上午</th>
+<th>下午</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6月7日</td>
+<td>语文<br >150分，150分钟</td>
+<td>数学<br >150分，120分钟</td>
+</tr>
+<tr>
+<td>6月8日</td>
+<td>—</td>
+<td>外语 150分<br >100分钟笔试+20分钟听力</td>
+</tr>
+<tr>
+<td>6月9日</td>
+<td>物理/历史<br >100分，75分钟</td>
+<td>再选科目1<br >100分，75分钟，赋分制</td>
+</tr>
+<tr>
+<td>6月10日</td>
+<td>再选科目2 <br >100分，75分钟，赋分制</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="heading-39">考前准备</h3>
+<ul>
+<li><strong>考试用品</strong>：准考证、身份证、2B铅笔（多支削好）、黑色签字笔（多支）、橡皮、无标签矿泉水、透明笔袋</li>
+<li><strong>手表</strong>：机械表或石英表（禁止电子表）</li>
+<li><strong>不要带</strong>：手机、电子设备、修正液/修正带</li>
+<li><strong>路线踩点</strong>：提前确认从住处到考场的路线和时间</li>
+</ul>
+<h3 id="heading-40">考试期间</h3>
+<ul>
+<li>每科考完不要对答案</li>
+<li>保证饮食清淡、充足睡眠</li>
+</ul>
+<h2 id="20296--">2029年6月中旬 · 强基/综评校测</h2>
+<h3 id="heading-41">出分前校测</h3>
+<ul>
+<li>12所高校（复旦、上交、南大、浙大、中科大、人大、北航、同济、西交大、东南、厦大、兰大）</li>
+<li>高考后立即进行，备考时间极短</li>
+<li>校测形式：笔试/面试 + 体质测试</li>
+<li>笔试难度接近竞赛水平</li>
+</ul>
+<h3 id="heading-42">出分后校测（其余高校）</h3>
+<ul>
+<li>等6月23-26日出分后，按高考成绩3-6倍确定入围名单</li>
+</ul>
+<h3 id="heading-43">综合评价校测</h3>
+<ul>
+<li>集中在6月中下旬</li>
+<li>多数为面试，部分有笔试和体测</li>
+</ul>
+<h2 id="2029623-26--">2029年6月23日-26日 · 高考出分</h2>
+<ul>
+<li>湖南公布高考成绩和分数线</li>
+<li>登录湖南省教育考试院网站或潇湘高考APP查分</li>
+<li><strong>名次比分数更重要</strong>（各校录取看省排名）</li>
+<li>准备志愿填报方案（出分前就应该有预案）</li>
+<li>强基计划入围名单公布</li>
+</ul>
+<h2 id="20296-7--">2029年6月底-7月 · 志愿填报与录取</h2>
+<h3 id="heading-44">录取顺序</h3>
+<ol>
+<li><strong>强基计划录取</strong>（最早，一旦录取不再参与后续）</li>
+<li><strong>综合评价录取</strong>（提前批）</li>
+<li><strong>普通批次</strong>（平行志愿）</li>
+</ol>
+<h3 id="heading-45">志愿填报注意事项</h3>
+<ul>
+<li>湖南实行&quot;院校专业组&quot;模式，选科决定了能报哪些专业组</li>
+<li>注意&quot;冲稳保&quot;梯度安排</li>
+<li>服从调剂选项慎重选择（不服从有退档风险）</li>
+</ul>
+<h1 id="heading-46">三年关键节点速查表</h1>
+<table>
+<thead>
+<tr>
+<th align="left">时间节点</th>
+<th align="center">年级</th>
+<th align="center">事项</th>
+<th align="center">严重程度</th>
+<th align="center">过期后果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">2026年8月</td>
+<td align="center">高一</td>
+<td align="center">报到+入学考试+军训</td>
+<td align="center">中</td>
+<td align="center">影响分班</td>
+</tr>
+<tr>
+<td align="left">2026年11月</td>
+<td align="center">高一</td>
+<td align="center">选科决策</td>
+<td align="center">高</td>
+<td align="center">影响三年方向</td>
+</tr>
+<tr>
+<td align="left">2026年12月底</td>
+<td align="center">高一</td>
+<td align="center">综评材料上传</td>
+<td align="center">中</td>
+<td align="center">档案无法补</td>
+</tr>
+<tr>
+<td align="left">2027年3月20日至4月2日</td>
+<td align="center">高一</td>
+<td align="center">学考报名（4科）</td>
+<td align="center">高</td>
+<td align="center">影响毕业证</td>
+</tr>
+<tr>
+<td align="left">2027年5月底</td>
+<td align="center">高一</td>
+<td align="center">综评材料上传</td>
+<td align="center">中</td>
+<td align="center">档案无法补</td>
+</tr>
+<tr>
+<td align="left">2027年6月中旬</td>
+<td align="center">高一</td>
+<td align="center">学考合格性考试（4科）</td>
+<td align="center">高</td>
+<td align="center">影响毕业证</td>
+</tr>
+<tr>
+<td align="left">2027年12月底</td>
+<td align="center">高二</td>
+<td align="center">综评材料上传</td>
+<td align="center">中</td>
+<td align="center">档案无法补</td>
+</tr>
+<tr>
+<td align="left">2028年3月</td>
+<td align="center">高二</td>
+<td align="center">学考报名（剩余5科）</td>
+<td align="center">高</td>
+<td align="center">最后窗口</td>
+</tr>
+<tr>
+<td align="left">2028年5月底</td>
+<td align="center">高二</td>
+<td align="center">综评材料上传</td>
+<td align="center">中</td>
+<td align="center">档案无法补</td>
+</tr>
+<tr>
+<td align="left">2028年6月中旬</td>
+<td align="center">高二</td>
+<td align="center">学考（全部科目）</td>
+<td align="center">高</td>
+<td align="center">任何1科不通过无毕业证</td>
+</tr>
+<tr>
+<td align="left"><strong>2028年10月16日31日</strong></td>
+<td align="center"><strong>高三</strong></td>
+<td align="center"><strong>高考报名</strong></td>
+<td align="center"><strong>🔴致命</strong></td>
+<td align="center"><strong>不能参加高考</strong></td>
+</tr>
+<tr>
+<td align="left">2028年11月3日至10日</td>
+<td align="center">高三</td>
+<td align="center">艺体统考报名</td>
+<td align="center">艺体生致命</td>
+<td align="center">不能参加统考</td>
+</tr>
+<tr>
+<td align="left">2028年12月底</td>
+<td align="center">高三</td>
+<td align="center">综评材料上传</td>
+<td align="center">中</td>
+<td align="center">档案无法补</td>
+</tr>
+<tr>
+<td align="left">2029年5月底</td>
+<td align="center">高三</td>
+<td align="center">综评材料上传</td>
+<td align="center">中</td>
+<td align="center">档案无法补</td>
+</tr>
+<tr>
+<td align="left">2029年4月</td>
+<td align="center">高三</td>
+<td align="center">强基计划报名</td>
+<td align="center">高</td>
+<td align="center">错过招生</td>
+</tr>
+<tr>
+<td align="left">2029年3-5月</td>
+<td align="center">高三</td>
+<td align="center">综合评价报名</td>
+<td align="center">中</td>
+<td align="center">错过招生</td>
+</tr>
+<tr>
+<td align="left">2029年6月7日至10日</td>
+<td align="center">高三</td>
+<td align="center">高考</td>
+<td align="center">🔴致命</td>
+<td align="center">一切归零</td>
+</tr>
+</tbody>
+</table>
+<h1 id="heading-47">容易踩的坑</h1>
+<ol>
+<li><strong>合格考不当回事</strong> —— 合格考不过拿不到毕业证，也会影响强基/综评材料。高一4科（史化地生）一定要认真准备</li>
+<li><strong>选科拖到高二才定</strong> —— 高一上学期期中后就该定，拖太久会跟不上选科班的进度</li>
+<li><strong>高考报名错过窗口</strong> —— 10月16-31日，只有半个月窗口，<strong>逾期绝对不补</strong>，这是每年都有家长犯的致命错误</li>
+<li><strong>强基只报不看要求</strong> —— 强基只能报1所，且专业偏基础学科（数理化生文史哲），不是所有孩子都适合，提前了解别盲目报</li>
+<li><strong>综评材料临时准备</strong> —— 综合评价需要高中三年成绩、获奖证书、个人陈述，临时抱佛脚来不及，<strong>从高一开始就有意识积累</strong></li>
+<li><strong>忽视综合素质评价档案</strong> —— 这个档案贯穿三年，强基面试会问到档案内容，必须如实填写、认真对待</li>
+</ol>
+
+                </div>
+
+                <div id="post-footnotes" class="post-footnotes"></div>
+
+            </article>
+
+                        
+                        <div class="post-tags">
+                            <span class="post-tags-label">文章标签：</span>
+                            
+                                <a href="/tag/jiao-yu/" class="post-tag">教育</a>
+                            
+                                <a href="/tag/wen-da-bao/" class="post-tag">文大宝</a>
+                            
+                        </div>
+                        
+
+                        <div class="mod-post__poster">
+                        </div>
+
+                        </div>
+
+                        
+                            
+<br>
+
+<div style="margin-bottom: 5px;">
+    上一篇 : <a href="/post/wendabaosuzhi/">文大宝综合素质评价档案积累指南</a>
+</div>
+
+
+
+<div style="margin-bottom: 10px;">
+    下一篇 : <a href="/post/whyyihai/">为什么最终选择了长沙市怡海中学</a>
+</div>
+
+
+</div>	
+
+                                
+
+                                    
+                                        <!-- Reading Progress Component -->
+<div class="reading-progress-container">
+  <span class="reading-label">阅读进度</span>
+  <span class="reading-value">0%</span>
+  <svg class="progress-ring" viewBox="0 0 24 24">
+    <!-- Background Circle -->
+    <circle class="progress-ring__circle-bg" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+    <!-- Progress Circle -->
+    <circle class="progress-ring__circle" stroke-width="3" fill="transparent" r="10" cx="12" cy="12" />
+  </svg>
+</div>
+                                            <footer id="footer" class="footer">
+    <nav>
+        
+            
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post">
+                        博客
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/memos">
+                        闪念
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/links">
+                        友链
+                    </a>
+                    
+             · 
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+    </nav>
+
+    <div class="Copyright">Copyright &copy; 2026 <a href="https://tam.haywoo.com">
+                百川随笔
+            </a></div>
+
+    <div class="index_footer">
+        
+    </div>
+</footer>
+
+
+
+
+    <script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: amore v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+
+    </html>
